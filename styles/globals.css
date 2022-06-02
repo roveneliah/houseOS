@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* TODO: uh how do I choose between base, components, and utilities? */
+@layer components {
+  .badge {
+    @apply min-w-fit select-none rounded-md border-none bg-gray-50 p-3 font-semibold text-gray-500;
+  }
+  .badge-dark {
+    @apply bg-gray-700 text-gray-300;
+  }
+  .badge-mid {
+    @apply bg-gray-400 text-gray-700;
+  }
+}
