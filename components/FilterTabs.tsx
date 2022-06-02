@@ -21,6 +21,8 @@ const useGetProposalStats = (proposalId: string) => [
 const useSingleSelect = (arr: Array<any>) => {
   const [selected, setSelected] = useState(arr.map(() => false));
   const toggle = (index: number) => () => {
+    console.log(selected);
+    console.log("toggled, bitch");
     setSelected((s) => s.map((val, i) => i === index && !val));
   };
 
@@ -36,13 +38,13 @@ export default function ChoiceFilters({ proposal }: any) {
   const enhancedOutcomes = useSingleSelect(outcomes);
 
   return (
-    <div className="flex flex-row justify-start space-x-4">
+    <div className="flex flex-row justify-between space-x-4">
       {enhancedOutcomes.map(
         ({ choice, percentage, votingPower, selected, toggle }: any) => (
           <div
-            className={`${
-              selected && "bg-gray-500"
-            } flex w-[20vw] flex-col items-start space-y-4 rounded-t-lg bg-gray-700 p-5 text-gray-300 hover:bg-gray-500 `}
+            className={`flex w-[20vw] cursor-pointer flex-col items-start space-y-4 rounded-t-lg p-5 text-gray-300 ${
+              selected ? "bg-gray-500" : "bg-gray-700"
+            }`}
             onClick={toggle}
           >
             <div className="flex w-full flex-row justify-between">

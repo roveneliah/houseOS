@@ -16,15 +16,12 @@ const commands = [
   createLink("Discord", ""),
   createLink("Twitter", "https://twitter.com/krausehousedao"),
   createLink("Website", "https://krausehouse.club"),
-  { name: "Wallet", action: () => console.log("WALLET"), type: "PAGE" },
-  { name: "Proposals", action: () => console.log("Proposals"), type: "PAGE" },
-  { name: "Treasury", action: () => console.log("Treasury"), type: "PAGE" },
+  createLink("Proposals", "/proposals"),
 ];
 
 enum Filters {
   ALL = "ALL",
   PROPOSAL = "PROPOSAL",
-  PAGE = "PAGE",
   LINK = "LINK",
 }
 
@@ -33,6 +30,33 @@ export default function CommandPalette({}: any) {
   const [isOpen, setIsOpen] = useState(true);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState(Filters.ALL);
+
+  const nextFilter = () => {
+    switch (filter) {
+      case Filters.ALL:
+        setFilter(Filters.PROPOSAL);
+        break;
+      case Filters.PROPOSAL:
+        setFilter(Filters.LINK);
+        break;
+      case Filters.LINK:
+        setFilter(Filters.ALL);
+        break;
+    }
+  };
+  const prevFilter = () => {
+    switch (filter) {
+      case Filters.ALL:
+        setFilter(Filters.LINK);
+        break;
+      case Filters.PROPOSAL:
+        setFilter(Filters.ALL);
+        break;
+      case Filters.LINK:
+        setFilter(Filters.PROPOSAL);
+        break;
+    }
+  };
 
   const filteredCommands = commands
     .filter(({ type }) => (filter === Filters.ALL ? type : type === filter))
@@ -54,10 +78,12 @@ export default function CommandPalette({}: any) {
 
   useEffect(() => {
     function onKeydown(event: any) {
-      event.key === "1" && event.ctrlKey && setFilter(Filters.ALL);
-      event.key === "2" && event.ctrlKey && setFilter(Filters.PROPOSAL);
-      event.key === "3" && event.ctrlKey && setFilter(Filters.PAGE);
-      event.key === "4" && event.ctrlKey && setFilter(Filters.LINK);
+      event.key === "ArrowLeft" &&
+        (event.metaKey || event.ctrlKey) &&
+        prevFilter();
+      event.key === "ArrowRight" &&
+        (event.metaKey || event.ctrlKey) &&
+        nextFilter();
     }
     window.addEventListener("keydown", onKeydown);
     return () => {
@@ -97,6 +123,7 @@ export default function CommandPalette({}: any) {
           leaveTo="opacity-0 sacle-95"
         >
           <Combobox
+            value={undefined}
             onChange={(command: any) => {
               // navigate if link, otherwise execute command?
               command.link && router.push(command.link);
@@ -127,17 +154,7 @@ export default function CommandPalette({}: any) {
                   Proposals
                 </p>
               </div>
-              <div
-                className={`flex w-full flex-row justify-start space-x-3  p-5 ${
-                  filter === Filters.PAGE && "bg-gray-50"
-                }`}
-                onClick={() => setFilter(Filters.PAGE)}
-              >
-                <p className="badge badge-mid">⌃3</p>
-                <p className={` cursor-pointer font-semibold text-gray-700`}>
-                  Pages
-                </p>
-              </div>
+
               <div
                 className={`flex w-full flex-row justify-start space-x-3 p-5 ${
                   filter === Filters.LINK && "bg-gray-50"
@@ -153,7 +170,7 @@ export default function CommandPalette({}: any) {
             <div className="flex flex-row items-center space-x-2 p-4">
               <SearchIcon />
               <Combobox.Input
-                className="h-12 w-full border-0 bg-transparent text-sm text-gray-800 placeholder-gray-400 focus:ring-0"
+                className="focus:ring-5 h-12 w-full border-0 border-white bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-0"
                 placeholder="Search..."
                 onChange={(event) => {
                   setQuery(event.target.value);
