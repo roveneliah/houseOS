@@ -1,23 +1,70 @@
 import { Dialog, Combobox, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import SearchIcon from "./icons/SearchIcon";
+import { useOnKeydown } from "../hooks/useOnKeydown";
 
-const createLink = (name: string, link: string) => ({
+type EthereumAddress = string;
+interface Proposal {
+  author: EthereumAddress;
+  title: string;
+  body: string;
+  id: string;
+}
+
+const proposals: Array<Proposal> = [
+  {
+    author: "flexchapman.eth",
+    title: "Full Time Team v1",
+    body: "Proposal\n\nRenew the full time team's payments for the next six months...",
+    id: "0x34134123",
+  },
+  {
+    author: "spicemaster",
+    title: "NFT.NYC Event Costs",
+    body: "World",
+    id: "0x3453245345",
+  },
+  {
+    author: "mario",
+    title: "Add Ice Cube to Stewards team",
+    body: "World",
+    id: "0x4543523453",
+  },
+];
+const links = [
+  {
+    name: "Treasury (Etherscan)",
+    link: "https://etherscan.io/address/0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
+  },
+  {
+    name: "Discord",
+    link: "",
+  },
+  {
+    name: "Twitter",
+    link: "https://twitter.com/krausehousedao",
+  },
+  {
+    name: "Website",
+    link: "https://krausehouse.club",
+  },
+  {
+    name: "Proposals",
+    link: "/",
+  },
+];
+
+const createLinkCommand = ({ name, link }: any): Command => ({
   name,
   link,
-  type: "LINK",
+  type: Filters.LINK,
 });
-const commands = [
-  createLink(
-    "Treasury (Etherscan)",
-    "https://etherscan.io/address/0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2"
-  ),
-  createLink("Discord", ""),
-  createLink("Twitter", "https://twitter.com/krausehousedao"),
-  createLink("Website", "https://krausehouse.club"),
-  createLink("Proposals", "/proposals"),
-];
+const createProposalCommand = (proposal: Proposal): Command => ({
+  name: proposal.title,
+  link: `/proposals/${proposal.id}`,
+  type: Filters.PROPOSAL,
+});
 
 enum Filters {
   ALL = "ALL",
@@ -25,13 +72,23 @@ enum Filters {
   LINK = "LINK",
 }
 
-export default function CommandPalette({}: any) {
+interface Command {
+  name: string;
+  link: string; // TODO: NEED URL type
+  type: Filters;
+}
+
+const commands: Array<Command> = [
+  ...links.map(createLinkCommand),
+  ...proposals.map(createProposalCommand),
+];
+export default function CommandPalette() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState(Filters.ALL);
 
-  const nextFilter = () => {
+  const nextFilter = (filter: Filters) => {
     switch (filter) {
       case Filters.ALL:
         setFilter(Filters.PROPOSAL);
@@ -44,7 +101,7 @@ export default function CommandPalette({}: any) {
         break;
     }
   };
-  const prevFilter = () => {
+  const prevFilter = (filter: Filters) => {
     switch (filter) {
       case Filters.ALL:
         setFilter(Filters.LINK);
@@ -64,32 +121,10 @@ export default function CommandPalette({}: any) {
       query ? option.name.toLowerCase().includes(query.toLowerCase()) : option
     );
 
-  useEffect(() => {
-    function onKeydown(event: any) {
-      event.key === "k" &&
-        (event.metaKey || event.ctrlKey) &&
-        setIsOpen(!isOpen);
-    }
-    window.addEventListener("keydown", onKeydown);
-    return () => {
-      window.removeEventListener("keydown", onKeydown);
-    };
-  }, [isOpen]);
+  useOnKeydown("k", setIsOpen, !isOpen);
 
-  useEffect(() => {
-    function onKeydown(event: any) {
-      event.key === "ArrowLeft" &&
-        (event.metaKey || event.ctrlKey) &&
-        prevFilter();
-      event.key === "ArrowRight" &&
-        (event.metaKey || event.ctrlKey) &&
-        nextFilter();
-    }
-    window.addEventListener("keydown", onKeydown);
-    return () => {
-      window.removeEventListener("keydown", onKeydown);
-    };
-  }, [filter]);
+  useOnKeydown("ArrowLeft", prevFilter, filter);
+  useOnKeydown("ArrowRight", nextFilter, filter);
 
   return (
     <Transition.Root
@@ -180,13 +215,10 @@ export default function CommandPalette({}: any) {
             {filteredCommands.length > 0 ? (
               <Combobox.Options
                 static
-                className="max-h-96 divide-y divide-gray-100 overflow-y-auto py-8"
+                className="max-h-96 divide-y divide-gray-100 overflow-y-auto"
               >
                 {filteredCommands.map((command, i) => (
-                  <Combobox.Option
-                    onClick={command.action || (() => {})}
-                    value={command}
-                  >
+                  <Combobox.Option value={command}>
                     {({ active }) => (
                       <div
                         className={`space-x-1 p-4 ${active && "bg-gray-200"}`}
@@ -218,3 +250,28 @@ export default function CommandPalette({}: any) {
     </Transition.Root>
   );
 }
+
+// [[ARCHIVED]]
+// useEffect(() => {
+//   function onKeydown(event: any) {
+//     event.key === "k" &&
+//       (event.metaKey || event.ctrlKey) &&
+//       setIsOpen(!isOpen);
+//   }
+//   window.addEventListener("keydown", onKeydown);
+//   return () => window.removeEventListener("keydown", onKeydown);
+// }, [isOpen]);
+// useEffect(() => {
+//   function onKeydown(event: any) {
+//     event.key === "ArrowLeft" &&
+//       (event.metaKey || event.ctrlKey) &&
+//       prevFilter(filter);
+//     event.key === "ArrowRight" &&
+//       (event.metaKey || event.ctrlKey) &&
+//       nextFilter(filter);
+//   }
+//   window.addEventListener("keydown", onKeydown);
+//   return () => {
+//     window.removeEventListener("keydown", onKeydown);
+//   };
+// }, [filter]);
