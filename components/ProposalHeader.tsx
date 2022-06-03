@@ -1,11 +1,7 @@
-const useLoadProposalAnnotations = (proposalId: string) => [
-  "Compensation",
-  "Community",
-  "Lolz",
-];
+import { useGetProposalTags } from "../hooks/tags/useLoadProposalTags";
 
 export default function ProposalHeader({ proposal }: any) {
-  const tags = useLoadProposalAnnotations(proposal.id);
+  const tags: string[] = useGetProposalTags(proposal.id);
   return (
     <div className="flex w-full flex-col items-start space-y-4 bg-gray-800 py-10 text-gray-300">
       <div className="flex flex-row justify-start space-x-2">
@@ -16,7 +12,7 @@ export default function ProposalHeader({ proposal }: any) {
       </div>
       <p className="text-left text-6xl font-semibold">{proposal.title}</p>
       <div className="flex flex-row justify-start space-x-2">
-        {tags.map((tag) => (
+        {tags.map((tag: string) => (
           <p className="badge badge-outline">{tag}</p>
         ))}
         <p className="badge badge-outline hover:bg-gray-400">+</p>

@@ -1,37 +1,5 @@
-import { useState } from "react";
-
-const useGetProposalStats = (proposalId: string) => [
-  {
-    choice: "For",
-    percentage: "69%",
-    votingPower: 1200,
-  },
-  {
-    choice: "Against",
-    percentage: "21%",
-    votingPower: 400,
-  },
-  {
-    choice: "Abstain",
-    percentage: "10%",
-    votingPower: 170,
-  },
-];
-
-const useSingleSelect = (arr: Array<any>) => {
-  const [selected, setSelected] = useState(arr.map(() => false));
-  const toggle = (index: number) => () => {
-    console.log(selected);
-    console.log("toggled, bitch");
-    setSelected((s) => s.map((val, i) => i === index && !val));
-  };
-
-  return arr.map((x, i) => ({
-    ...x,
-    selected: selected[i],
-    toggle: toggle(i),
-  }));
-};
+import { useGetProposalStats } from "../hooks/useGetProposalStats";
+import { useSingleSelect } from "../hooks/useSingleSelect";
 
 export default function ChoiceFilters({ proposal }: any) {
   const outcomes = useGetProposalStats(proposal.id);

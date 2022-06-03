@@ -3,129 +3,60 @@ import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import SearchIcon from "./icons/SearchIcon";
 import { useOnKeydown } from "../hooks/useOnKeydown";
+import { CommandFilters } from "../hooks/useGetCommands";
+import { Command } from "../types/Command";
 
-type EthereumAddress = string;
-interface Proposal {
-  author: EthereumAddress;
-  title: string;
-  body: string;
-  id: string;
+interface Props {
+  commands: Array<Command>;
+  startsOpen?: boolean;
 }
 
-const proposals: Array<Proposal> = [
-  {
-    author: "flexchapman.eth",
-    title: "Full Time Team v1",
-    body: "Proposal\n\nRenew the full time team's payments for the next six months...",
-    id: "0x34134123",
-  },
-  {
-    author: "spicemaster",
-    title: "NFT.NYC Event Costs",
-    body: "World",
-    id: "0x3453245345",
-  },
-  {
-    author: "mario",
-    title: "Add Ice Cube to Stewards team",
-    body: "World",
-    id: "0x4543523453",
-  },
-];
-const links = [
-  {
-    name: "Treasury (Etherscan)",
-    link: "https://etherscan.io/address/0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
-  },
-  {
-    name: "Discord",
-    link: "",
-  },
-  {
-    name: "Twitter",
-    link: "https://twitter.com/krausehousedao",
-  },
-  {
-    name: "Website",
-    link: "https://krausehouse.club",
-  },
-  {
-    name: "Proposals",
-    link: "/",
-  },
-];
-
-const createLinkCommand = ({ name, link }: any): Command => ({
-  name,
-  link,
-  type: Filters.LINK,
-});
-const createProposalCommand = (proposal: Proposal): Command => ({
-  name: proposal.title,
-  link: `/proposals/${proposal.id}`,
-  type: Filters.PROPOSAL,
-});
-
-enum Filters {
-  ALL = "ALL",
-  PROPOSAL = "PROPOSAL",
-  LINK = "LINK",
-}
-
-interface Command {
-  name: string;
-  link: string; // TODO: NEED URL type
-  type: Filters;
-}
-
-const commands: Array<Command> = [
-  ...links.map(createLinkCommand),
-  ...proposals.map(createProposalCommand),
-];
-export default function CommandPalette() {
+export default function CommandPalette({
+  commands,
+  startsOpen = false,
+}: Props) {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(startsOpen);
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState(Filters.ALL);
+  const [filter, setFilter] = useState(CommandFilters.ALL);
 
-  const nextFilter = (filter: Filters) => {
+  const nextFilter = (filter: CommandFilters) => {
     switch (filter) {
-      case Filters.ALL:
-        setFilter(Filters.PROPOSAL);
+      case CommandFilters.ALL:
+        setFilter(CommandFilters.PROPOSAL);
         break;
-      case Filters.PROPOSAL:
-        setFilter(Filters.LINK);
+      case CommandFilters.PROPOSAL:
+        setFilter(CommandFilters.LINK);
         break;
-      case Filters.LINK:
-        setFilter(Filters.ALL);
+      case CommandFilters.LINK:
+        setFilter(CommandFilters.ALL);
         break;
     }
   };
-  const prevFilter = (filter: Filters) => {
+  const prevFilter = (filter: CommandFilters) => {
     switch (filter) {
-      case Filters.ALL:
-        setFilter(Filters.LINK);
+      case CommandFilters.ALL:
+        setFilter(CommandFilters.LINK);
         break;
-      case Filters.PROPOSAL:
-        setFilter(Filters.ALL);
+      case CommandFilters.PROPOSAL:
+        setFilter(CommandFilters.ALL);
         break;
-      case Filters.LINK:
-        setFilter(Filters.PROPOSAL);
+      case CommandFilters.LINK:
+        setFilter(CommandFilters.PROPOSAL);
         break;
     }
   };
-
-  const filteredCommands = commands
-    .filter(({ type }) => (filter === Filters.ALL ? type : type === filter))
-    .filter((option) =>
-      query ? option.name.toLowerCase().includes(query.toLowerCase()) : option
-    );
-
   useOnKeydown("k", setIsOpen, !isOpen);
-
   useOnKeydown("ArrowLeft", prevFilter, filter);
   useOnKeydown("ArrowRight", nextFilter, filter);
 
+  const filteredCommands = commands
+    .filter(({ type }) =>
+      filter === CommandFilters.ALL ? type : type === filter
+    )
+    .filter((option) =>
+      query ? option.name.toLowerCase().includes(query.toLowerCase()) : option
+    );
   return (
     <Transition.Root
       show={isOpen}
@@ -159,7 +90,7 @@ export default function CommandPalette() {
         >
           <Combobox
             value={undefined}
-            onChange={(command: any) => {
+            onChange={(command: Command) => {
               // navigate if link, otherwise execute command?
               command.link && router.push(command.link);
             }}
@@ -169,9 +100,9 @@ export default function CommandPalette() {
             <div className="flex flex-row justify-start bg-gray-300">
               <div
                 className={`flex w-full flex-row justify-start space-x-3 p-5 ${
-                  filter === Filters.ALL && "bg-gray-50"
+                  filter === CommandFilters.ALL && "bg-gray-50"
                 }`}
-                onClick={() => setFilter(Filters.ALL)}
+                onClick={() => setFilter(CommandFilters.ALL)}
               >
                 <p className="badge badge-mid">⌃1</p>
                 <p className={` cursor-pointer font-semibold text-gray-700`}>
@@ -180,9 +111,9 @@ export default function CommandPalette() {
               </div>
               <div
                 className={`flex w-full flex-row justify-start space-x-3 p-5 ${
-                  filter === Filters.PROPOSAL && "bg-gray-50"
+                  filter === CommandFilters.PROPOSAL && "bg-gray-50"
                 }`}
-                onClick={() => setFilter(Filters.PROPOSAL)}
+                onClick={() => setFilter(CommandFilters.PROPOSAL)}
               >
                 <p className="badge badge-mid">⌃2</p>
                 <p className={` cursor-pointer font-semibold text-gray-700`}>
@@ -192,9 +123,9 @@ export default function CommandPalette() {
 
               <div
                 className={`flex w-full flex-row justify-start space-x-3 p-5 ${
-                  filter === Filters.LINK && "bg-gray-50"
+                  filter === CommandFilters.LINK && "bg-gray-50"
                 }`}
-                onClick={() => setFilter(Filters.LINK)}
+                onClick={() => setFilter(CommandFilters.LINK)}
               >
                 <p className="badge badge-mid">⌃4</p>
                 <p className={` cursor-pointer font-semibold text-gray-700`}>
