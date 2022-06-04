@@ -63,6 +63,13 @@ export default function CommandPalette({
     .filter((option) =>
       query ? option.name.toLowerCase().includes(query.toLowerCase()) : option
     );
+
+  const views = [
+    { name: "All", view: CommandFilters.ALL },
+    { name: "Proposals", view: CommandFilters.PROPOSAL },
+    { name: "Links", view: CommandFilters.LINK },
+    { name: "Users", view: CommandFilters.USER },
+  ];
   return (
     <Transition.Root
       show={isOpen}
@@ -104,51 +111,19 @@ export default function CommandPalette({
             className="relative overflow-hidden rounded-lg bg-gray-50 shadow-2xl ring-1 ring-black/5"
           >
             <div className="flex flex-row justify-start bg-gray-300">
-              <div
-                className={`flex w-full flex-row justify-start space-x-3 p-5 ${
-                  filter === CommandFilters.ALL && "bg-gray-50"
-                }`}
-                onClick={() => setFilter(CommandFilters.ALL)}
-              >
-                <p className="badge badge-mid">⌃1</p>
-                <p className={` cursor-pointer font-semibold text-gray-700`}>
-                  All
-                </p>
-              </div>
-              <div
-                className={`flex w-full flex-row justify-start space-x-3 p-5 ${
-                  filter === CommandFilters.PROPOSAL && "bg-gray-50"
-                }`}
-                onClick={() => setFilter(CommandFilters.PROPOSAL)}
-              >
-                <p className="badge badge-mid">⌃2</p>
-                <p className={` cursor-pointer font-semibold text-gray-700`}>
-                  Proposals
-                </p>
-              </div>
-
-              <div
-                className={`flex w-full flex-row justify-start space-x-3 p-5 ${
-                  filter === CommandFilters.LINK && "bg-gray-50"
-                }`}
-                onClick={() => setFilter(CommandFilters.LINK)}
-              >
-                <p className="badge badge-mid">⌃4</p>
-                <p className={` cursor-pointer font-semibold text-gray-700`}>
-                  Links
-                </p>
-              </div>
-              <div
-                className={`flex w-full flex-row justify-start space-x-3 p-5 ${
-                  filter === CommandFilters.USER && "bg-gray-50"
-                }`}
-                onClick={() => setFilter(CommandFilters.USER)}
-              >
-                <p className="badge badge-mid">⌃4</p>
-                <p className={` cursor-pointer font-semibold text-gray-700`}>
-                  Users
-                </p>
-              </div>
+              {views.map(({ name, view }): any => (
+                <div
+                  className={`flex w-full flex-row justify-start space-x-3 p-5 ${
+                    filter === view && "bg-gray-50"
+                  }`}
+                  onClick={() => setFilter(view)}
+                >
+                  <p className="badge badge-mid">⌃1</p>
+                  <p className={` cursor-pointer font-semibold text-gray-700`}>
+                    {name}
+                  </p>
+                </div>
+              ))}
             </div>
             <div className="flex flex-row items-center space-x-2 p-4">
               <SearchIcon />
