@@ -29,6 +29,9 @@ export default function CommandPalette({
         setFilter(CommandFilters.LINK);
         break;
       case CommandFilters.LINK:
+        setFilter(CommandFilters.USER);
+        break;
+      case CommandFilters.USER:
         setFilter(CommandFilters.ALL);
         break;
     }
@@ -36,13 +39,16 @@ export default function CommandPalette({
   const prevFilter = (filter: CommandFilters) => {
     switch (filter) {
       case CommandFilters.ALL:
-        setFilter(CommandFilters.LINK);
+        setFilter(CommandFilters.USER);
         break;
       case CommandFilters.PROPOSAL:
         setFilter(CommandFilters.ALL);
         break;
       case CommandFilters.LINK:
         setFilter(CommandFilters.PROPOSAL);
+        break;
+      case CommandFilters.USER:
+        setFilter(CommandFilters.LINK);
         break;
     }
   };
@@ -130,6 +136,17 @@ export default function CommandPalette({
                 <p className="badge badge-mid">⌃4</p>
                 <p className={` cursor-pointer font-semibold text-gray-700`}>
                   Links
+                </p>
+              </div>
+              <div
+                className={`flex w-full flex-row justify-start space-x-3 p-5 ${
+                  filter === CommandFilters.USER && "bg-gray-50"
+                }`}
+                onClick={() => setFilter(CommandFilters.USER)}
+              >
+                <p className="badge badge-mid">⌃4</p>
+                <p className={` cursor-pointer font-semibold text-gray-700`}>
+                  Users
                 </p>
               </div>
             </div>
