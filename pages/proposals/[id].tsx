@@ -8,7 +8,8 @@ import { useGetComments } from "../../hooks/useGetComments";
 import { Comment } from "../../types/Comment";
 import Layout from "../../components/Layout";
 import { Proposal } from "../../types/Proposal";
-import { useGetProposals } from "../../hooks/useGetProposals";
+import { fetchProposals, useGetProposals } from "../../hooks/useGetProposals";
+import { useBalance, useConnect } from "wagmi";
 
 enum View {
   Comment = "Comment",
@@ -18,7 +19,7 @@ enum View {
 const ProposalPage: NextPage = ({ proposal }: any) => {
   console.log(proposal);
   const [view, setView] = useState(View.CommentList);
-  const comments: Array<Comment> = useGetComments();
+  const comments: Array<Comment> = useGetComments(proposal.id);
 
   return (
     <Layout>
@@ -52,7 +53,7 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
 };
 
 export async function getStaticProps({ params }: any) {
-  const proposals = useGetProposals();
+  const proposals = await fetchProposals("krausehouse.eth");
   const proposal = proposals.find((p) => p.id === params.id);
   return {
     props: {
@@ -62,7 +63,7 @@ export async function getStaticProps({ params }: any) {
 }
 
 export async function getStaticPaths() {
-  const proposals = useGetProposals();
+  const proposals = await fetchProposals("krausehouse.eth");
   const paths = proposals.map((proposal: Proposal) => ({
     params: { id: proposal.id },
   }));

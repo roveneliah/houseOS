@@ -1,57 +1,42 @@
 import type { NextPage } from "next";
 import Layout from "../../components/Layout";
 import { ClockIcon } from "../../components/icons/ClockIcon";
-import { compose, intersection, length } from "ramda";
+import { length } from "ramda";
 import { Proposal } from "../../types/Proposal";
-import ChoiceFilters from "../../components/FilterTabs";
 import { StatusFilterTabs } from "../../components/StatusFilterTabs";
 import TagSelector from "../../components/TagSelector";
-import { useGetProposalTags } from "../../hooks/tags/useLoadProposalTags";
 import { useGetAllProposalTags } from "../../hooks/useGetAllProposalTags";
 import { useGetProposals } from "../../hooks/useGetProposals";
-import { useGetTimeLeft } from "../../hooks/useGetTimeLeft";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { useMemo, useState } from "react";
+import { ProposalListItem } from "../../components/ProposalListItem";
+import { LockedIcon } from "../../components/icons/LockedIcon";
+import { ListIcon } from "../../components/icons/ListIcon";
+import { useSingleSelect } from "../../hooks/useSingleSelect";
 
-interface Props {
-  proposal: Proposal;
-  selectedTags: Array<string>;
+enum StateFilters {
+  All = "all",
+  Active = "active",
+  Closed = "closed",
 }
-function ProposalListItem({ proposal, selectedTags }: Props) {
-  const timeLeft = useGetTimeLeft(proposal.id);
-  const proposalTags = useGetProposalTags(proposal.id);
-  const router = useRouter();
-
-  const hasMatchingTag = (tags: Array<string>) =>
-    intersection(tags, selectedTags).length > 0;
-
-  return hasMatchingTag(proposalTags) ? (
-    <div
-      className="flex flex-row justify-between py-4"
-      onClick={() => {
-        router.push(`/proposals/${proposal.id}`);
-      }}
-    >
-      <div className="flex cursor-pointer flex-row space-x-4">
-        <p className="badge">{timeLeft}</p>
-        <p className={`font-bold text-gray-800`}>{proposal.title}</p>
-      </div>
-      <div className="flex flex-row space-x-2">
-        {proposalTags.map((tag) => (
-          <p className="badge badge-dark">{tag}</p>
-        ))}
-      </div>
-    </div>
-  ) : (
-    <></>
-  );
-}
+const { All, Active, Closed } = StateFilters;
 
 const ProposalsListPage: NextPage = () => {
-  const proposals = useGetProposals();
+  const proposals = useGetProposals("krausehouse.eth");
   const tags = useGetAllProposalTags();
-  const countActive = length(proposals.filter(({ state }) => state === "open"));
+  const countActive = length(
+    proposals.filter(({ state }) => state === "active")
+  );
   const [selectedTags, setSelectedTags] = useState([]);
+  const [stateFilter, setStateFilter] = useState(Active);
+  const options = useSingleSelect([
+    { name: "Active", icon: ClockIcon, onClick: () => setStateFilter(Active) },
+    { name: "Closed", icon: LockedIcon, onClick: () => setStateFilter(Closed) },
+    { name: "All", icon: ListIcon, onClick: () => setStateFilter(All) },
+  ]);
+
+  const filteredProposals = proposals.filter(
+    ({ state }) => stateFilter === All || state === stateFilter
+  );
 
   return (
     <Layout paletteOpen={true}>
@@ -65,13 +50,13 @@ const ProposalsListPage: NextPage = () => {
             <p className="text-6xl font-bold">Proposals</p>
           </div>
         </div>
-        <StatusFilterTabs proposals={proposals} />
+        <StatusFilterTabs options={options} />
       </div>
       <div className="w-full px-72">
         <div className="flex flex-col space-y-4 rounded-b-lg bg-gray-200 p-6">
           <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
-          <div className="flex flex-col">
-            {proposals.map((proposal: Proposal) => (
+          <div className="flex h-[60vh] flex-col overflow-y-auto">
+            {filteredProposals.map((proposal: Proposal) => (
               <ProposalListItem
                 proposal={proposal}
                 selectedTags={selectedTags}

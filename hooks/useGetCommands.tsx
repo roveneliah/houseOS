@@ -36,7 +36,7 @@ const links = [
 ];
 
 export const useGetCommands = () => {
-  const proposals = useGetProposals();
+  const proposals = useGetProposals("krausehouse.eth");
   const users = useGetUsers();
   const createLinkCommand = ({ name, link }: any): Command => ({
     name,

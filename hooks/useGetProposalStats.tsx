@@ -1,17 +1,14 @@
-export const useGetProposalStats = (proposalId: string) => [
-  {
-    choice: "For",
-    percentage: "69%",
-    votingPower: 1200,
-  },
-  {
-    choice: "Against",
-    percentage: "21%",
-    votingPower: 400,
-  },
-  {
-    choice: "Abstain",
-    percentage: "10%",
-    votingPower: 170,
-  },
-];
+import { Proposal } from "../types/Proposal";
+
+export const useGetProposalStats = (proposal: Proposal) => {
+  // want to add { percentage, votingPower } to proposal choices
+
+  return {
+    ...proposal,
+    choices: proposal.choices.map((choice) => ({
+      choice,
+      percentage: "0%",
+      votingPower: 0,
+    })),
+  };
+};

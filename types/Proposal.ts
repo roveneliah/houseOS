@@ -5,5 +5,6 @@ export interface Proposal {
   title: string;
   body: string;
   id: string;
-  state: "open" | "closed";
+  state: "active" | "closed";
+  choices: Array<string>;
 }

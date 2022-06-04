@@ -14,13 +14,13 @@ export const useGetComments = (proposalId: string = ""): Array<Comment> => {
       body: "LGTM.  Some execution risk since it’s a trusted swap, but Big3 has more to lose.  Blah blah, this is a comment on the comment view showing what it’s like when comments are opened on an individual level.  This is to push readers to look at opinions more dilligently and not just scroll Insta-style.",
     },
     {
-      author: "flexchapman",
+      author: "mario lopes",
       src: "/flex.png",
       body: "LGTM.  Some execution risk since it’s a trusted swap, but Big3 has more to lose.  Blah blah, this is a comment on the comment view showing what it’s like when comments are opened on an individual level.  This is to push readers to look at opinions more dilligently and not just scroll Insta-style.",
       active: true,
     },
     {
-      author: "commodore",
+      author: "spicemaster",
       src: "/commodore.png",
       body: "LGTM.  Some execution risk since it’s a trusted swap, but Big3 has more to lose.  Blah blah, this is a comment on the comment view showing what it’s like when comments are opened on an individual level.  This is to push readers to look at opinions more dilligently and not just scroll Insta-style.",
     },

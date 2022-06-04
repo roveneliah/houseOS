@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useGetUserTags } from "./CommentListItem";
+import { useGetUserTags } from "../hooks/tags/useGetUserTags";
 
 interface Homie {
   name: String;
@@ -25,7 +25,7 @@ export default function CommentView({ comment, back }: any) {
       </div>
       <div className="flex flex-col space-y-8 rounded-lg bg-gray-50/50 px-6 pb-4 pt-8">
         <textarea
-          className="w-full rounded-lg border border-gray-500 bg-transparent text-lg font-semibold text-gray-900"
+          className="w-full rounded-lg border border-gray-500 bg-transparent p-6 text-lg font-semibold text-gray-900 outline-0"
           rows={6}
         />
         <div className="flex flex-row items-center justify-between">
