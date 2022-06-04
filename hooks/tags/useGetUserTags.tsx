@@ -1,4 +1,4 @@
-export const useGetUserTags = (proposalId: string) => {
+export const useGetUserTags = (userId: string) => {
   return [
     "Steward",
     "Contributor",

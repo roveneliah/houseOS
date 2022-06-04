@@ -1,33 +1,17 @@
 import { EthereumAddress } from "../types/EthereumAddress";
 import { Proposal } from "../types/Proposal";
 import { Command } from "../types/Command";
+import { useGetProposals } from "./useGetProposals";
+import { useGetUsers } from "./useGetUsers";
+import { User } from "../types/User";
 
 export enum CommandFilters {
   ALL = "ALL",
   PROPOSAL = "PROPOSAL",
   LINK = "LINK",
+  USER = "USER",
 }
 
-const proposals: Array<Proposal> = [
-  {
-    author: "flexchapman.eth",
-    title: "Full Time Team v1",
-    body: "Proposal\n\nRenew the full time team's payments for the next six months...",
-    id: "0x34134123",
-  },
-  {
-    author: "spicemaster",
-    title: "NFT.NYC Event Costs",
-    body: "World",
-    id: "0x3453245345",
-  },
-  {
-    author: "mario",
-    title: "Add Ice Cube to Stewards team",
-    body: "World",
-    id: "0x4543523453",
-  },
-];
 const links = [
   {
     name: "Treasury (Etherscan)",
@@ -47,11 +31,13 @@ const links = [
   },
   {
     name: "Proposals",
-    link: "/",
+    link: "/proposals",
   },
 ];
 
 export const useGetCommands = () => {
+  const proposals = useGetProposals();
+  const users = useGetUsers();
   const createLinkCommand = ({ name, link }: any): Command => ({
     name,
     link,
@@ -62,9 +48,15 @@ export const useGetCommands = () => {
     link: `/proposals/${proposal.id}`,
     type: CommandFilters.PROPOSAL,
   });
+  const createUserCommand = (user: User): Command => ({
+    name: user.name,
+    link: `/profiles/${user.address}`,
+    type: CommandFilters.USER,
+  });
   const commands: Array<Command> = [
     ...links.map(createLinkCommand),
     ...proposals.map(createProposalCommand),
+    ...users.map(createUserCommand),
   ];
   return commands;
 };

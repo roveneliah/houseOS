@@ -2,14 +2,16 @@ import CommentListItem from "./CommentListItem";
 import TagSelector from "./TagSelector";
 import { useGetUserTags } from "../hooks/tags/useGetUserTags";
 import { Comment } from "../types/Comment";
+import { useState } from "react";
 
 interface Props {
   comments: Array<Comment>;
-  toggleCommentView: Function;
+  toggleCommentView: any;
 }
 
-export default function CommentList({ comments, toggleCommentView }: any) {
+export default function CommentList({ comments, toggleCommentView }: Props) {
   const tags = useGetUserTags("0x1234");
+  const [selectedTags, setSelectedTags] = useState([]);
 
   return (
     <div className="flex flex-col space-y-4">
@@ -22,10 +24,10 @@ export default function CommentList({ comments, toggleCommentView }: any) {
           Vote
         </p>
       </div>
-      <TagSelector tags={tags} />
+      <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
       <div>
         {comments.map((comment: any) => (
-          <CommentListItem comment={comment} />
+          <CommentListItem comment={comment} selectedTags={selectedTags} />
         ))}
       </div>
     </div>

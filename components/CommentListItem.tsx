@@ -1,10 +1,15 @@
 import Image from "next/image";
+import { gt, lt, intersection, length, compose } from "ramda";
+import { useGetUserTags } from "../hooks/tags/useGetUserTags";
 
-export const useGetUserTags = (user: any) => ["Contributor", "Steward"];
-
-export default function CommentListItem({ comment }: any) {
+export default function CommentListItem({
+  comment,
+  selectedTags = ["Contributor"],
+}: any) {
   const tags = useGetUserTags(comment.author);
-  return (
+  const isSelected = length(intersection(selectedTags, tags)) > 0;
+
+  return isSelected ? (
     <div
       className={`flex flex-row space-x-2 ${
         comment.active ? "bg-gray-50" : "bg-gray-300"
@@ -36,5 +41,7 @@ export default function CommentListItem({ comment }: any) {
         <p className="pr-4 text-left text-gray-900">{comment.body}</p>
       </div>
     </div>
+  ) : (
+    <></>
   );
 }

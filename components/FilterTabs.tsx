@@ -1,3 +1,5 @@
+import { prop } from "ramda";
+import { useEffect, useMemo } from "react";
 import { useGetProposalStats } from "../hooks/useGetProposalStats";
 import { useSingleSelect } from "../hooks/useSingleSelect";
 
@@ -15,6 +17,7 @@ export default function ChoiceFilters({ proposal }: any) {
             }`}
             onClick={toggle}
           >
+            {/* // TODO: generalize this to pass in these components */}
             <div className="flex w-full flex-row justify-between">
               <p className="badge badge-outline">{percentage}</p>
               <p className="badge badge-outline">{votingPower} $KRAUSE</p>
