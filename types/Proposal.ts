@@ -7,4 +7,10 @@ export interface Proposal {
   id: string;
   state: "active" | "closed";
   choices: Array<string>;
+  space: string;
+  totalVotes: number;
+  scores_total: number;
+  scores: Array<number>;
+  start: number;
+  end: number;
 }

@@ -3,14 +3,20 @@ import TagSelector from "./TagSelector";
 import { useGetUserTags } from "../hooks/tags/useGetUserTags";
 import { Comment } from "../types/Comment";
 import { useState } from "react";
+import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
 
 interface Props {
   comments: Array<Comment>;
   toggleCommentView: any;
+  votes: Array<any>;
 }
 
-export default function CommentList({ comments, toggleCommentView }: Props) {
-  const tags = useGetUserTags("0x1234");
+export default function CommentList({
+  comments,
+  votes,
+  toggleCommentView,
+}: Props) {
+  const tags = useGetAllUserTags();
   const [selectedTags, setSelectedTags] = useState([]);
 
   return (
@@ -26,8 +32,16 @@ export default function CommentList({ comments, toggleCommentView }: Props) {
       </div>
       <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
       <div>
-        {comments.map((comment: any) => (
-          <CommentListItem comment={comment} selectedTags={selectedTags} />
+        {/* TODO: HANDLE VOTE */}
+        {/* {votes.map((vote: any, i: number) => (
+          <CommentListItem key={i} comment={vote} selectedTags={selectedTags} />
+        ))} */}
+        {comments.map((comment: any, i: number) => (
+          <CommentListItem
+            key={i}
+            comment={comment}
+            selectedTags={selectedTags}
+          />
         ))}
       </div>
     </div>

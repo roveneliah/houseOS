@@ -29,8 +29,10 @@ export function ProposalListItem({ proposal, selectedTags }: Props) {
         <p className={`font-bold text-gray-800`}>{proposal.title}</p>
       </div>
       <div className="flex flex-row space-x-2">
-        {proposalTags.map((tag) => (
-          <p className="badge badge-dark">{tag}</p>
+        {proposalTags.map((tag, i) => (
+          <p key={i} className="badge badge-dark">
+            {tag}
+          </p>
         ))}
       </div>
     </div>

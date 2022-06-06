@@ -8,18 +8,34 @@ import { useGetComments } from "../../hooks/useGetComments";
 import { Comment } from "../../types/Comment";
 import Layout from "../../components/Layout";
 import { Proposal } from "../../types/Proposal";
-import { fetchProposals, useGetProposals } from "../../hooks/useGetProposals";
-import { useBalance, useConnect } from "wagmi";
+import { snapshotSpace } from "../../config";
+import { fetchProposals } from "../../utils/fetchProposals";
+import { createHook } from "../../hooks/useGetProposals";
+import { fetchVotes } from "../../utils/fetchVotes";
+import { fetchProposal } from "../../utils/fetchProposal";
 
 enum View {
   Comment = "Comment",
   CommentList = "CommentList",
 }
 
+const useGetVotes = (proposalId: string): Array<Comment> => {
+  const votes = createHook(fetchVotes)(proposalId);
+
+  return votes.map((vote: any) => ({
+    ...vote,
+    body: "YOLO?",
+    author: vote.voter,
+    src: "/flex.png",
+  }));
+};
+
 const ProposalPage: NextPage = ({ proposal }: any) => {
-  console.log(proposal);
   const [view, setView] = useState(View.CommentList);
   const comments: Array<Comment> = useGetComments(proposal.id);
+  const [selectedChoice] = useState(0);
+  const votes: Array<Comment> = useGetVotes(proposal.id);
+  console.log(votes);
 
   return (
     <Layout>
@@ -33,16 +49,13 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
             <CommentList
               toggleCommentView={() => setView(View.Comment)}
               comments={comments}
+              votes={votes}
             />
           )}
           {view === View.Comment && (
             <CommentView
-              comment={{
-                author: "flexchapman",
-                src: "/flex.png",
-                body: "LGTM.  Some execution risk since it’s a trusted swap, but Big3 has more to lose.  Blah blah, this is a comment on the comment view showing what it’s like when comments are opened on an individual level.  This is to push readers to look at opinions more dilligently and not just scroll Insta-style.",
-                active: true,
-              }}
+              proposal={proposal}
+              choice={selectedChoice}
               back={() => setView(View.CommentList)}
             />
           )}
@@ -52,9 +65,13 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
   );
 };
 
-export async function getStaticProps({ params }: any) {
-  const proposals = await fetchProposals("krausehouse.eth");
-  const proposal = proposals.find((p) => p.id === params.id);
+export async function getStaticProps({ params }: { params: { id: string } }) {
+  // const proposals = await fetchProposals(snapshotSpace); // TODO: fetch singular from a cache
+  // const proposal: Proposal = proposals.find((p) => p.id === params.id);
+
+  const proposal = await fetchProposal(params.id);
+  console.log(proposal);
+
   return {
     props: {
       proposal,
@@ -63,7 +80,7 @@ export async function getStaticProps({ params }: any) {
 }
 
 export async function getStaticPaths() {
-  const proposals = await fetchProposals("krausehouse.eth");
+  const proposals = await fetchProposals(snapshotSpace);
   const paths = proposals.map((proposal: Proposal) => ({
     params: { id: proposal.id },
   }));

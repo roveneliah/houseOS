@@ -7,11 +7,12 @@ import { StatusFilterTabs } from "../../components/StatusFilterTabs";
 import TagSelector from "../../components/TagSelector";
 import { useGetAllProposalTags } from "../../hooks/useGetAllProposalTags";
 import { useGetProposals } from "../../hooks/useGetProposals";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { ProposalListItem } from "../../components/ProposalListItem";
 import { LockedIcon } from "../../components/icons/LockedIcon";
 import { ListIcon } from "../../components/icons/ListIcon";
 import { useSingleSelect } from "../../hooks/useSingleSelect";
+import { snapshotSpace } from "../../config";
 
 enum StateFilters {
   All = "all",
@@ -21,13 +22,13 @@ enum StateFilters {
 const { All, Active, Closed } = StateFilters;
 
 const ProposalsListPage: NextPage = () => {
-  const proposals = useGetProposals("krausehouse.eth");
+  const proposals = useGetProposals(snapshotSpace);
   const tags = useGetAllProposalTags();
   const countActive = length(
     proposals.filter(({ state }) => state === "active")
   );
   const [selectedTags, setSelectedTags] = useState([]);
-  const [stateFilter, setStateFilter] = useState(Active);
+  const [stateFilter, setStateFilter] = useState(All);
   const options = useSingleSelect([
     { name: "Active", icon: ClockIcon, onClick: () => setStateFilter(Active) },
     { name: "Closed", icon: LockedIcon, onClick: () => setStateFilter(Closed) },
@@ -56,10 +57,11 @@ const ProposalsListPage: NextPage = () => {
         <div className="flex flex-col space-y-4 rounded-b-lg bg-gray-200 p-6">
           <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
           <div className="flex h-[60vh] flex-col overflow-y-auto">
-            {filteredProposals.map((proposal: Proposal) => (
+            {filteredProposals.map((proposal: Proposal, i: number) => (
               <ProposalListItem
                 proposal={proposal}
                 selectedTags={selectedTags}
+                key={i}
               />
             ))}
           </div>

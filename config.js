@@ -1,4 +1,5 @@
 module.exports = {
+  snapshotSpace: "krausehouse.eth",
   themes: [
     {
       mytheme: {

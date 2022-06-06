@@ -1,5 +1,10 @@
 import Image from "next/image";
+import { useState } from "react";
+import { useAccount, useEnsAvatar, useEnsName } from "wagmi";
+import { snapshotSpace } from "../config";
 import { useGetUserTags } from "../hooks/tags/useGetUserTags";
+import { useVote } from "../hooks/useVote";
+import { useGetAvatar } from "../hooks/useGetAvatar";
 
 interface Homie {
   name: String;
@@ -10,8 +15,14 @@ interface Comment {
   author: Homie;
 }
 
-export default function CommentView({ comment, back }: any) {
-  const authorTags = useGetUserTags(comment.author);
+export default function CommentView({ proposal, back, choice }: any) {
+  const vote = useVote(snapshotSpace, proposal.id, choice);
+  const [message, setMessage] = useState("");
+  const { data: account } = useAccount();
+  const authorTags = useGetUserTags(account?.address);
+  const avatarSrc = useGetAvatar(account?.address);
+  const { data: name } = useEnsName({ address: account?.address });
+
   return (
     <div className="flex flex-col space-y-4">
       <div className="flex flex-row items-end justify-between border-b-2 border-gray-900">
@@ -27,12 +38,15 @@ export default function CommentView({ comment, back }: any) {
         <textarea
           className="w-full rounded-lg border border-gray-500 bg-transparent p-6 text-lg font-semibold text-gray-900 outline-0"
           rows={6}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
+
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center space-x-5">
             <div className="min-w-fit">
               <Image
-                src={comment.src}
+                src={avatarSrc}
                 width={75}
                 height={75}
                 className="rounded-full"
@@ -44,10 +58,14 @@ export default function CommentView({ comment, back }: any) {
                   <p className="badge">{tag}</p>
                 ))}
               </div>
-              <p className="text-xl font-semibold">{comment.author}</p>
+              <p className="text-xl font-semibold">
+                {name || account?.address}
+              </p>
             </div>
           </div>
-          <button className="btn">Submit</button>
+          <button className="btn" onClick={() => vote(message)}>
+            Submit
+          </button>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useState } from "react";
 type Option = {
   name: string;
   onClick: Function;
+  icon?: any;
 };
 
 export const useSingleSelect = (arr: Array<Option>) => {

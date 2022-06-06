@@ -4,6 +4,7 @@ import { Command } from "../types/Command";
 import { useGetProposals } from "./useGetProposals";
 import { useGetUsers } from "./useGetUsers";
 import { User } from "../types/User";
+import { snapshotSpace } from "../config";
 
 export enum CommandFilters {
   ALL = "ALL",
@@ -36,7 +37,7 @@ const links = [
 ];
 
 export const useGetCommands = () => {
-  const proposals = useGetProposals("krausehouse.eth");
+  const proposals = useGetProposals(snapshotSpace);
   const users = useGetUsers();
   const createLinkCommand = ({ name, link }: any): Command => ({
     name,
