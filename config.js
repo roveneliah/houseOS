@@ -1,5 +1,6 @@
 module.exports = {
   snapshotSpace: "krausehouse.eth",
+  defaultAvatar: "/coachrick.png",
   themes: [
     {
       mytheme: {

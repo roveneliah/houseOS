@@ -1,77 +1,73 @@
-import {
-  usePublicRecord,
-  useViewerRecord,
-  ViewerConnectedContainer,
-} from "@self.id/framework";
-import { createHook } from "async_hooks";
+import { useViewerRecord } from "@self.id/framework";
 import Image from "next/image";
 import { compose, prop } from "ramda";
 import { useState } from "react";
-import { useAccount, useBalance, useConnect, useEnsName } from "wagmi";
-import ConnectButton from "../../components/CeramicConnectButton";
+import { useAccount, useEnsName } from "wagmi";
 import Layout from "../../components/Layout";
 import { defaultAvatar } from "../../config";
-import { useGetUserTags } from "../../hooks/tags/useGetUserTags";
 import { $KRAUSE, useGetBalanceOf } from "../../hooks/useGetBalanceOf";
 import { useGetUser } from "../../hooks/useGetUser";
-import { useGetUsers } from "../../hooks/useGetUsers";
+import { LoadingView, ProfilePreview } from "./[address]";
 import { EthereumAddress } from "../../types/EthereumAddress";
-import { fetchProposal } from "../../utils/fetchProposal";
 
-export function ProfilePreview({ address }: any) {
-  const { content: profile } = useGetUser(address);
+// Mutate the record
+export function SetViewerName() {
+  const record = useViewerRecord("basicProfile");
+  const [name, setName] = useState("");
 
-  return (
-    <div className="">
-      <div className="ring-primary flex flex-row space-x-4 rounded-full border-4 ring-4">
-        <Image
-          src={profile?.avatar || defaultAvatar}
-          width={80}
-          height={80}
-          className="rounded-full"
-        />
-        <div className="flex flex-col items-start justify-center">
-          <p className="text-lg font-semibold text-gray-200">{profile?.name}</p>
-          <p>{address.slice(0, 8)}</p>
-        </div>
-      </div>
-    </div>
+  console.log(
+    record.isMutable,
+    record.isMutating,
+    record.isError,
+    record.isLoading
   );
-}
 
-function SignupView({ address }) {
   return (
     <div>
-      <p className="text-3xl font-bold text-gray-600">
-        No account linked to {address}
-      </p>
-      <ConnectButton />
-    </div>
-  );
-}
-export function LoadingView({ address }) {
-  return (
-    <div>
-      <p className="text-3xl font-bold text-gray-600">
-        Loading profile at {address}...
-      </p>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <button
+        disabled={!record.isMutable || record.isMutating}
+        onClick={async () => {
+          await record.merge({
+            name,
+            // friends: ["0xaD9637425622590226f7ca75b54Be2BfB403E2b4"],
+            // delegates: ["did:3:asdfasdfasf23423dsf"],
+            // tags: ["Tester", "Dev Team"],
+            // team: "Killers 3s (jk)",
+            // avatar:
+            //   "https://pbs.twimg.com/profile_images/1518835085679734785/osnHKbcw_400x400.jpg",
+          });
+        }}
+        className="btn btn-outline"
+      >
+        Set name
+      </button>
     </div>
   );
 }
 
-export default function Profile({ user }: any) {
-  const { address } = user;
+export function LoginView() {
+  return (
+    <div>
+      <p>Please log in!</p>
+    </div>
+  );
+}
+
+export default function MyProfile() {
+  const address = compose(prop("address"), prop("data"), useAccount)();
   const { content: profile, isError, isLoading, error } = useGetUser(address); // TODO: preload this in static props
   const krauseBalance = useGetBalanceOf({
     tokenAddress: $KRAUSE,
     address,
   });
   const { data: ensName } = useEnsName({ address });
-
   return (
     <Layout>
       <div className="flex w-full flex-col space-y-32 px-72 pt-20">
         {!address ? (
+          <LoginView />
+        ) : isLoading ? (
           <LoadingView address={ensName || address} />
         ) : (
           <>
@@ -92,7 +88,7 @@ export default function Profile({ user }: any) {
               </div>
               <div className="ring-primary rounded-full border-4 ring-4">
                 <Image
-                  src={profile?.avatar || user.avatarUrl}
+                  src={profile?.avatar || defaultAvatar}
                   width={150}
                   height={150}
                   className="rounded-full"
@@ -119,20 +115,4 @@ export default function Profile({ user }: any) {
       </div>
     </Layout>
   );
-}
-
-export function getStaticProps({ params }: any) {
-  const users = useGetUsers();
-  const user = users.find((p) => p.address === params.address);
-  return {
-    props: {
-      user,
-    },
-  };
-}
-
-export function getStaticPaths() {
-  const users = useGetUsers();
-  const paths = users.map(({ address }) => ({ params: { address } }));
-  return { paths, fallback: false };
 }

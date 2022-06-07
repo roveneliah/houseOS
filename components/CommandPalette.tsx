@@ -111,8 +111,9 @@ export default function CommandPalette({
             className="relative overflow-hidden rounded-lg bg-gray-50 shadow-2xl ring-1 ring-black/5"
           >
             <div className="flex flex-row justify-start bg-gray-300">
-              {views.map(({ name, view }): any => (
+              {views.map(({ name, view }, i): any => (
                 <div
+                  key={i}
                   className={`flex w-full flex-row justify-start space-x-3 p-5 ${
                     filter === view && "bg-gray-50"
                   }`}
@@ -141,7 +142,7 @@ export default function CommandPalette({
                 className="max-h-96 divide-y divide-gray-100 overflow-y-auto"
               >
                 {filteredCommands.map((command, i) => (
-                  <Combobox.Option value={command}>
+                  <Combobox.Option value={command} key={i}>
                     {({ active }) => (
                       <div
                         className={`space-x-1 p-4 ${active && "bg-gray-200"}`}

@@ -14,6 +14,12 @@ export const useGetUsers = (): Array<User> => {
       avatarUrl: "/flex.png",
       address: "0x5715e8a86c4b785de5114ed9b2233c566f73756c",
     },
+    {
+      id: "2",
+      name: "Spice",
+      avatarUrl: "/commodore.png",
+      address: "0x2CaF76EcED128a986A42Bd1CC709155523816B1c",
+    },
     // {
     //   id: "3",
     //   name: "Mario Lopes",
