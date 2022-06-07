@@ -8,6 +8,7 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { InjectedConnector } from "@wagmi/core";
 import { ReactNode } from "react";
+import { Provider as SelfIdProvider } from "@self.id/react";
 
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
   alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }),
@@ -39,5 +40,11 @@ interface Props {
 }
 
 export default function Web3Provider({ children }: Props) {
-  return <WagmiConfig client={client}>{children}</WagmiConfig>;
+  return (
+    <WagmiConfig client={client}>
+      <SelfIdProvider client={{ ceramic: "testnet-clay" }}>
+        {children}
+      </SelfIdProvider>
+    </WagmiConfig>
+  );
 }
