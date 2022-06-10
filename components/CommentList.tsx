@@ -43,13 +43,15 @@ export default function CommentList({
         {/* {votes.map((vote: any, i: number) => (
           <CommentListItem key={i} comment={vote} selectedTags={selectedTags} />
         ))} */}
-        {comments.map((comment: any, i: number) => (
-          <CommentListItem
-            key={i}
-            comment={comment}
-            selectedTags={selectedTags}
-          />
-        ))}
+        {comments
+          .filter((comment) => comment.choice === choice)
+          .map((comment: Comment, i: number) => (
+            <CommentListItem
+              key={i}
+              comment={comment}
+              selectedTags={selectedTags}
+            />
+          ))}
       </div>
     </div>
   );

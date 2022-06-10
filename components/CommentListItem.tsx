@@ -9,6 +9,7 @@ export default function CommentListItem({
 }: any) {
   const tags = useMemo(() => useGetUserTags(comment.author), [comment.author]);
   const isSelected = length(intersection(selectedTags, tags)) > 0;
+  const votingPower = 1000;
 
   return isSelected ? (
     <div
@@ -39,7 +40,7 @@ export default function CommentListItem({
               {comment.author}
             </p>
           </div>
-          <p className="badge">1000 $KRAUSE</p>
+          <p className="badge">{votingPower} $KRAUSE</p>
         </div>
         <p className="pr-4 text-left text-gray-900">{comment.body}</p>
       </div>
