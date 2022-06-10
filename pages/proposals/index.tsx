@@ -7,17 +7,17 @@ import { StatusFilterTabs } from "../../components/StatusFilterTabs";
 import TagSelector from "../../components/TagSelector";
 import { useGetAllProposalTags } from "../../hooks/proposals/useGetAllProposalTags";
 import { useGetProposals } from "../../hooks/proposals/useGetProposals";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ProposalListItem } from "../../components/ProposalListItem";
 import { LockedIcon } from "../../components/icons/LockedIcon";
 import { ListIcon } from "../../components/icons/ListIcon";
 import { useSingleSelect } from "../../hooks/generic/useSingleSelect";
 import { snapshotSpace } from "../../config";
 
-enum StateFilters {
-  All = "all",
-  Active = "active",
-  Closed = "closed",
+export enum StateFilters {
+  Active,
+  Closed,
+  All,
 }
 const { All, Active, Closed } = StateFilters;
 
@@ -30,13 +30,22 @@ const ProposalsListPage: NextPage = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [stateFilter, setStateFilter] = useState(All);
   const options = useSingleSelect([
-    { name: "Active", icon: ClockIcon, onClick: () => setStateFilter(Active) },
+    {
+      name: "Active",
+      icon: ClockIcon,
+      onClick: () => setStateFilter(Active),
+    },
     { name: "Closed", icon: LockedIcon, onClick: () => setStateFilter(Closed) },
     { name: "All", icon: ListIcon, onClick: () => setStateFilter(All) },
   ]);
 
-  const filteredProposals = proposals.filter(
-    ({ state }) => stateFilter === All || state === stateFilter
+  const stateToId = (state: string) => (state === "active" ? 0 : 1);
+  const filteredProposals = useMemo(
+    () =>
+      proposals.filter(
+        ({ state }) => stateFilter === All || stateToId(state) === stateFilter
+      ),
+    [proposals, stateFilter]
   );
 
   return (
@@ -51,7 +60,11 @@ const ProposalsListPage: NextPage = () => {
             <p className="text-6xl font-bold">Proposals</p>
           </div>
         </div>
-        <StatusFilterTabs options={options} />
+        <StatusFilterTabs
+          options={options}
+          stateFilter={stateFilter}
+          setStateFilter={setStateFilter}
+        />
       </div>
       <div className="w-full px-72">
         <div className="flex flex-col space-y-4 rounded-b-lg bg-gray-200 p-6">

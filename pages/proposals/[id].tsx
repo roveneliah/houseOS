@@ -21,7 +21,7 @@ enum View {
 const ProposalPage: NextPage = ({ proposal }: any) => {
   const [view, setView] = useState(View.CommentList);
   const comments: Array<Comment> = useGetComments(proposal.id);
-  const [selectedChoice, setSelectedChoice] = useState(0); // TODO:
+  const [selectedChoice, setSelectedChoice] = useState(0);
   const votes: Array<Comment> = useGetVotes(proposal.id);
 
   return (

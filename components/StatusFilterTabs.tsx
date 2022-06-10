@@ -1,19 +1,25 @@
+import { StateFilters } from "../pages/proposals";
+
 interface Props {
   options: Array<{
     name: string;
     icon: SVGAElement;
     toggle: Function;
-    selected: boolean;
+    selected: StateFilters;
   }>;
+  stateFilter: number;
+  setStateFilter: Function;
 }
 
-export function StatusFilterTabs({ options }: Props) {
+export function StatusFilterTabs({ options, stateFilter }: Props) {
   return (
     <div className="flex flex-row justify-between space-x-4">
-      {options.map(({ name, icon, selected, toggle }: any, i: number) => (
+      {options.map(({ name, icon, toggle }: any, i: number) => (
         <div
           className={`flex w-[20vw] cursor-pointer flex-row justify-start space-y-4 rounded-t-lg p-5  ${
-            selected ? "bg-gray-200 text-gray-800" : "bg-gray-700 text-gray-300"
+            i === stateFilter
+              ? "bg-gray-200 text-gray-800"
+              : "bg-gray-700 text-gray-300"
           }`}
           onClick={toggle}
           key={i}

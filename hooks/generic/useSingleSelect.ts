@@ -2,7 +2,7 @@ import { useState } from "react";
 
 type Option = {
   name: string;
-  onClick: Function;
+  onClick?: Function;
   icon?: any;
 };
 

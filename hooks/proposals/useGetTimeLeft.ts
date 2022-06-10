@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import { useProvider } from "wagmi";
 
 export const useGetTimeLeft = (proposal: any): string => {
-  const provider = useProvider();
-  const [timestamp, setTimestamp] = useState<any>();
+  // const timestamp = proposal.end;
+  // const formattedTime = new Date(timestamp).toDateString();
 
-  useEffect(() => {
-    provider && provider.getBlock(proposal.end).then(setTimestamp);
-  }, [provider]);
-  return proposal.state === "closed" ? "Closed" : timestamp;
+  return proposal.state === "closed" ? "Closed" : proposal.end;
 };
