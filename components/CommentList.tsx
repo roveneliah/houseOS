@@ -2,7 +2,7 @@ import CommentListItem from "./CommentListItem";
 import TagSelector from "./TagSelector";
 import { useGetUserTags } from "../hooks/tags/useGetUserTags";
 import { Comment } from "../types/Comment";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
 import { Proposal } from "@snapshot-labs/snapshot.js/dist/sign/types";
 
@@ -23,6 +23,10 @@ export default function CommentList({
 }: Props) {
   const tags = useGetAllUserTags();
   const [selectedTags, setSelectedTags] = useState([]);
+  const sortedComments = useMemo(
+    () => comments.sort((a, b) => b.votingPower - a.votingPower),
+    comments
+  );
 
   return (
     <div className="flex flex-col space-y-4">
