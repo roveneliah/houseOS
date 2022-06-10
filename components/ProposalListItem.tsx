@@ -11,7 +11,7 @@ export interface Props {
 }
 
 export function ProposalListItem({ proposal, selectedTags }: Props) {
-  const timeLeft = useGetTimeLeft(proposal.id);
+  const timeLeft = useGetTimeLeft(proposal);
   const proposalTags = useMemo(
     () => useGetProposalTags(proposal.id),
     [proposal.id]
