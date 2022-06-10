@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useAccount, useEnsAvatar, useEnsName } from "wagmi";
 import { snapshotSpace } from "../config";
 import { useGetUserTags } from "../hooks/tags/useGetUserTags";
-import { useVote } from "../hooks/useVote";
-import { useGetAvatar } from "../hooks/useGetAvatar";
+import { useVote } from "../hooks/proposals/useVote";
+import { useGetAvatar } from "../hooks/users/useGetAvatar";
 
 interface Homie {
   name: String;

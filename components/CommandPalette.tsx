@@ -2,9 +2,13 @@ import { Dialog, Combobox, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import SearchIcon from "./icons/SearchIcon";
-import { useOnKeydown } from "../hooks/useOnKeydown";
+import { useOnKeydown } from "../hooks/generic/useOnKeydown";
 import { CommandFilters } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
+import { ListIcon } from "./icons/ListIcon";
+import { ClockIcon } from "./icons/ClockIcon";
+import UsersIcon from "./icons/UsersIcon";
+import LinkIcon from "./icons/LinkIcon";
 
 interface Props {
   commands: Array<Command>;
@@ -65,10 +69,10 @@ export default function CommandPalette({
     );
 
   const views = [
-    { name: "All", view: CommandFilters.ALL },
-    { name: "Proposals", view: CommandFilters.PROPOSAL },
-    { name: "Links", view: CommandFilters.LINK },
-    { name: "Users", view: CommandFilters.USER },
+    { name: "All", view: CommandFilters.ALL, icon: ListIcon },
+    { name: "Proposals", view: CommandFilters.PROPOSAL, icon: ClockIcon },
+    { name: "Links", view: CommandFilters.LINK, icon: LinkIcon },
+    { name: "Users", view: CommandFilters.USER, icon: UsersIcon },
   ];
   return (
     <Transition.Root
@@ -110,8 +114,8 @@ export default function CommandPalette({
             as="div"
             className="relative overflow-hidden rounded-lg bg-gray-50 shadow-2xl ring-1 ring-black/5"
           >
-            <div className="flex flex-row justify-start bg-gray-300">
-              {views.map(({ name, view }, i): any => (
+            <div className="flex flex-row justify-start bg-gray-300 text-gray-700">
+              {views.map(({ name, view, icon }, i): any => (
                 <div
                   key={i}
                   className={`flex w-full flex-row justify-start space-x-3 p-5 ${
@@ -119,7 +123,8 @@ export default function CommandPalette({
                   }`}
                   onClick={() => setFilter(view)}
                 >
-                  <p className="badge badge-mid">⌃1</p>
+                  {/* <p className="badge badge-mid">⌃1</p> */}
+                  {icon()}
                   <p className={` cursor-pointer font-semibold text-gray-700`}>
                     {name}
                   </p>

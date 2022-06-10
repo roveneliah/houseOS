@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { gt, lt, intersection, length, compose } from "ramda";
+import { useMemo } from "react";
 import { useGetUserTags } from "../hooks/tags/useGetUserTags";
 
 export default function CommentListItem({
   comment,
   selectedTags = ["Contributor"],
 }: any) {
-  const tags = useGetUserTags(comment.author);
+  const tags = useMemo(() => useGetUserTags(comment.author), [comment.author]);
   const isSelected = length(intersection(selectedTags, tags)) > 0;
 
   return isSelected ? (
@@ -28,8 +29,10 @@ export default function CommentListItem({
         <div className="flex flex-row justify-between space-x-4">
           <div className="flex flex-col justify-start space-y-2">
             <div className="flex flex-row space-x-2">
-              {tags.map((tag: String) => (
-                <p className="badge">{tag}</p>
+              {tags.map((tag: String, i: number) => (
+                <p className="badge" key={i}>
+                  {tag}
+                </p>
               ))}
             </div>
             <p className="text-left text-xl font-bold text-gray-700">

@@ -1,6 +1,6 @@
 import { prop } from "ramda";
 import { useEffect, useMemo } from "react";
-import { useOrderedMultiselect } from "../hooks/useOrderedMultiselect";
+import { useOrderedMultiselect } from "../hooks/generic/useOrderedMultiselect";
 
 export const prioritize =
   (predicate: (a: any) => boolean) => (arr: Array<any>) =>

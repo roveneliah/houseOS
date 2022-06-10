@@ -10,15 +10,11 @@ import {
   useDisconnect,
   useEnsAvatar,
   useEnsName,
-  useProvider,
-  useSigner,
-  useWebSocketProvider,
 } from "wagmi";
-import Web3Provider from "./Web3Provider";
-import { $KRAUSE, useGetBalanceOf } from "../hooks/useGetBalanceOf";
 import SearchIcon from "./icons/SearchIcon";
-import ConnectButton from "./CeramicConnectButton";
+import CeramicConnectButton from "./CeramicConnectButton";
 import { useViewerConnection } from "@self.id/framework";
+import { useKrauseBalance } from "../hooks/ethereum/useKrauseBalance";
 
 export default function Layout({
   children,
@@ -30,26 +26,12 @@ export default function Layout({
   const [themeIndex, setThemeIndex] = useState<number>(0);
   const themeName = themes[themeIndex]?.toString();
   const commands: Array<Command> = useGetCommands();
-
   const { data: account } = useAccount();
-  const { data: ensAvatar } = useEnsAvatar({ addressOrName: account?.address });
   const { data: ensName } = useEnsName({ address: account?.address });
-  const {
-    connect,
-    connectors,
-    error,
-    isConnecting,
-    pendingConnector,
-    isConnected,
-  } = useConnect();
+  const { connect, connectors, isConnected } = useConnect();
   const { disconnect } = useDisconnect();
   const connector = connectors[1];
-  const krauseBalance = useGetBalanceOf({
-    tokenAddress: $KRAUSE,
-    address: account?.address,
-  });
-  const provider = useWebSocketProvider();
-  const [connection, connectCeramic, disconnectCeramic] = useViewerConnection();
+  const krauseBalance = useKrauseBalance(account?.address);
 
   return (
     <div data-theme={themeName} className="min-h-screen">
@@ -63,7 +45,7 @@ export default function Layout({
         <div className="fixed top-0 flex w-full flex-row justify-between">
           <div></div>
           <div className="flex flex-row space-x-2 p-4">
-            <ConnectButton />
+            <CeramicConnectButton />
             {!isConnected ? (
               <button
                 // disabled={!connector.ready}

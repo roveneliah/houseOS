@@ -1,4 +1,4 @@
-import { Comment } from "../types/Comment";
+import { Comment } from "../../types/Comment";
 
 export const useGetComments = (proposalId: string = ""): Array<Comment> => {
   return [

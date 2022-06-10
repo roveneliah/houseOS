@@ -1,4 +1,4 @@
-import { Proposal } from "../types/Proposal";
+import { Proposal } from "../../types/Proposal";
 
 export const useGetProposalStats = (proposal: Proposal) => {
   // want to add { percentage, votingPower } to proposal choices

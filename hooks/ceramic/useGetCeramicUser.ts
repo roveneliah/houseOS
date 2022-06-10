@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { EthereumAddress } from "../types/EthereumAddress";
+import { EthereumAddress } from "../../types/EthereumAddress";
 import {
   usePublicRecord,
   useClient as useCeramicClient,
@@ -9,7 +9,7 @@ import {
 export const useGetUserByDID = (did: string) =>
   usePublicRecord("basicProfile", did);
 
-export const useGetUser = (address: EthereumAddress) =>
+export const useGetCeramicUser = (address: EthereumAddress) =>
   usePublicRecord("basicProfile", `eip155:1:${address}`);
 
 // export const useGetUser = (address: EthereumAddress) => {

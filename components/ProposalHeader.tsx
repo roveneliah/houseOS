@@ -15,8 +15,10 @@ export default function ProposalHeader({ proposal }: any) {
       </div>
       <p className="text-left text-6xl font-semibold">{proposal.title}</p>
       <div className="flex flex-row justify-start space-x-2">
-        {tags.map((tag: string) => (
-          <p className="badge badge-outline">{tag}</p>
+        {tags.map((tag: string, i: number) => (
+          <p className="badge badge-outline" key={i}>
+            {tag}
+          </p>
         ))}
         <p className="badge badge-outline hover:bg-gray-400">+</p>
       </div>

@@ -4,38 +4,25 @@ import ChoiceFilters from "../../components/FilterTabs";
 import ProposalHeader from "../../components/ProposalHeader";
 import CommentList from "../../components/CommentList";
 import CommentView from "../../components/CommentView";
-import { useGetComments } from "../../hooks/useGetComments";
+import { useGetComments } from "../../hooks/proposals/useGetComments";
 import { Comment } from "../../types/Comment";
 import Layout from "../../components/Layout";
 import { Proposal } from "../../types/Proposal";
 import { snapshotSpace } from "../../config";
 import { fetchProposals } from "../../utils/fetchProposals";
-import { createHook } from "../../hooks/useGetProposals";
-import { fetchVotes } from "../../utils/fetchVotes";
 import { fetchProposal } from "../../utils/fetchProposal";
+import { useGetVotes } from "../../hooks/proposals/useGetVotes";
 
 enum View {
   Comment = "Comment",
   CommentList = "CommentList",
 }
 
-const useGetVotes = (proposalId: string): Array<Comment> => {
-  const votes = createHook(fetchVotes)(proposalId);
-
-  return votes.map((vote: any) => ({
-    ...vote,
-    body: "YOLO?",
-    author: vote.voter,
-    src: "/flex.png",
-  }));
-};
-
 const ProposalPage: NextPage = ({ proposal }: any) => {
   const [view, setView] = useState(View.CommentList);
   const comments: Array<Comment> = useGetComments(proposal.id);
-  const [selectedChoice] = useState(0);
+  const [selectedChoice] = useState(0); // TODO:
   const votes: Array<Comment> = useGetVotes(proposal.id);
-  console.log(votes);
 
   return (
     <Layout>

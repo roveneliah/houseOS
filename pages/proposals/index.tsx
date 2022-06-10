@@ -5,13 +5,13 @@ import { length } from "ramda";
 import { Proposal } from "../../types/Proposal";
 import { StatusFilterTabs } from "../../components/StatusFilterTabs";
 import TagSelector from "../../components/TagSelector";
-import { useGetAllProposalTags } from "../../hooks/useGetAllProposalTags";
-import { useGetProposals } from "../../hooks/useGetProposals";
+import { useGetAllProposalTags } from "../../hooks/proposals/useGetAllProposalTags";
+import { useGetProposals } from "../../hooks/proposals/useGetProposals";
 import { useState } from "react";
 import { ProposalListItem } from "../../components/ProposalListItem";
 import { LockedIcon } from "../../components/icons/LockedIcon";
 import { ListIcon } from "../../components/icons/ListIcon";
-import { useSingleSelect } from "../../hooks/useSingleSelect";
+import { useSingleSelect } from "../../hooks/generic/useSingleSelect";
 import { snapshotSpace } from "../../config";
 
 enum StateFilters {

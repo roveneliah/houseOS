@@ -1,5 +1,5 @@
-import { useGetProposalStats } from "../hooks/useGetProposalStats";
-import { useSingleSelect } from "../hooks/useSingleSelect";
+import { useGetProposalStats } from "../hooks/proposals/useGetProposalStats";
+import { useSingleSelect } from "../hooks/generic/useSingleSelect";
 import { Proposal } from "../types/Proposal";
 import { toPercent } from "../utils/toPercent";
 

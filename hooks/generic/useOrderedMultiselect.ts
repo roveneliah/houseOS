@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { prioritize } from "../components/TagSelector";
+import { prioritize } from "../../components/TagSelector";
 
 export const useOrderedMultiselect = (arr: Array<any>): Array<any> => {
   const [selected, setSelected] = useState(arr.map(() => false));

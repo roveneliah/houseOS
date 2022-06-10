@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 // A simple button to initiate the connection flow. A Provider must be present at a higher level
 // in the component tree for the `useViewerConnection()` hook to work.
-export default function ConnectButton() {
+export default function CeramicConnectButton() {
   const [connection, connect, disconnect] = useViewerConnection();
 
   const [window1, setWindow] = useState(null);
@@ -32,7 +32,7 @@ export default function ConnectButton() {
         await connect(new EthereumAuthProvider(window1?.ethereum, accounts[0]));
       }}
     >
-      Sign In
+      {connection.status === "connecting" ? "Connecting" : "Sign In"}
     </button>
   ) : (
     <p>

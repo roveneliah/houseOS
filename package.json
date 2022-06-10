@@ -8,6 +8,7 @@
     "deploy": "vercel"
   },
   "dependencies": {
+    "@glazed/devtools": "^0.2.0",
     "@headlessui/react": "^1.6.4",
     "@heroicons/react": "^1.0.6",
     "@self.id/framework": "^0.3.2",

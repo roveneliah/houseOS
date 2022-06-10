@@ -1,9 +1,3 @@
-import { ClockIcon } from "./icons/ClockIcon";
-import { Proposal } from "../types/Proposal";
-import { useSingleSelect } from "../hooks/useSingleSelect";
-import { LockedIcon } from "./icons/LockedIcon";
-import { ListIcon } from "./icons/ListIcon";
-
 interface Props {
   options: Array<{
     name: string;
