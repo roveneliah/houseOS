@@ -2,7 +2,7 @@ import { Dialog, Combobox, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import SearchIcon from "./icons/SearchIcon";
-import { useOnKeydown } from "../hooks/generic/useOnKeydown";
+import { useCommand } from "../hooks/generic/useCommand";
 import { CommandFilters } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
 import { ListIcon } from "./icons/ListIcon";
@@ -56,9 +56,9 @@ export default function CommandPalette({
         break;
     }
   };
-  useOnKeydown("k", setIsOpen, !isOpen);
-  useOnKeydown("ArrowLeft", prevFilter, filter);
-  useOnKeydown("ArrowRight", nextFilter, filter);
+  useCommand("k", setIsOpen, !isOpen);
+  useCommand("ArrowLeft", prevFilter, filter);
+  useCommand("ArrowRight", nextFilter, filter);
 
   const filteredCommands = commands
     .filter(({ type }) =>

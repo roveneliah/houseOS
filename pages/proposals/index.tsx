@@ -13,6 +13,7 @@ import { LockedIcon } from "../../components/icons/LockedIcon";
 import { ListIcon } from "../../components/icons/ListIcon";
 import { useSingleSelect } from "../../hooks/generic/useSingleSelect";
 import { snapshotSpace } from "../../config";
+import { useCommand } from "../../hooks/generic/useCommand";
 
 export enum StateFilters {
   Active,
@@ -27,6 +28,7 @@ const ProposalsListPage: NextPage = () => {
   const countActive = length(
     proposals.filter(({ state }) => state === "active")
   );
+
   const [selectedTags, setSelectedTags] = useState([]);
   const [stateFilter, setStateFilter] = useState(All);
   const options = useSingleSelect([
@@ -38,6 +40,13 @@ const ProposalsListPage: NextPage = () => {
     { name: "Closed", icon: LockedIcon, onClick: () => setStateFilter(Closed) },
     { name: "All", icon: ListIcon, onClick: () => setStateFilter(All) },
   ]);
+
+  useCommand("ArrowRight", () =>
+    setStateFilter((current) => (current + 1) % 3)
+  );
+  useCommand("ArrowLeft", () =>
+    setStateFilter((current) => (3 + current - 1) % 3)
+  );
 
   const stateToId = (state: string) => (state === "active" ? 0 : 1);
   const filteredProposals = useMemo(

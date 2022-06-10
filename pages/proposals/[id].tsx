@@ -12,10 +12,11 @@ import { snapshotSpace } from "../../config";
 import { fetchProposals } from "../../utils/fetchProposals";
 import { fetchProposal } from "../../utils/fetchProposal";
 import { useGetVotes } from "../../hooks/proposals/useGetVotes";
+import { useCommand, useOnKeydown } from "../../hooks/generic/useCommand";
 
 enum View {
-  Comment = "Comment",
-  CommentList = "CommentList",
+  Comment,
+  CommentList,
 }
 
 const ProposalPage: NextPage = ({ proposal }: any) => {
@@ -23,6 +24,13 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
   const comments: Array<Comment> = useGetComments(proposal.id);
   const [selectedChoice, setSelectedChoice] = useState(0);
   const votes: Array<Comment> = useGetVotes(proposal.id);
+
+  useCommand("ArrowRight", () =>
+    setSelectedChoice((choice) => (choice + 1) % 3)
+  );
+  useCommand("ArrowLeft", () =>
+    setSelectedChoice((choice) => (choice + 2) % 3)
+  );
 
   return (
     <Layout>
