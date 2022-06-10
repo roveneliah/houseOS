@@ -2,23 +2,32 @@ import { useGetProposalStats } from "../hooks/proposals/useGetProposalStats";
 import { useSingleSelect } from "../hooks/generic/useSingleSelect";
 import { Proposal } from "../types/Proposal";
 import { toPercent } from "../utils/toPercent";
+import { useEffect } from "react";
 
 interface Props {
   proposal: Proposal;
+  selectedChoice: number;
+  setSelectedChoice: Function;
 }
 
-export default function ChoiceFilters({ proposal }: Props) {
+export default function ChoiceFilters({
+  proposal,
+  selectedChoice,
+  setSelectedChoice,
+}: Props) {
   const enhancedProposal = useGetProposalStats(proposal);
-  const enhancedOutcomes = useSingleSelect(enhancedProposal.choices);
+  const { choices } = enhancedProposal;
+
+  // const enhancedOutcomes = useSingleSelect(enhancedProposal.choices);
 
   return (
     <div className="flex w-full flex-row justify-between space-x-4 overflow-y-auto">
-      {enhancedOutcomes.map(({ choice, selected, toggle }: any, i: number) => (
+      {choices.map(({ choice }: any, i: number) => (
         <div
           className={`flex w-full min-w-[18vw] cursor-pointer flex-col items-start space-y-4 rounded-t-lg p-5 text-gray-300 ${
-            selected ? "bg-gray-500" : "bg-gray-700"
+            selectedChoice === i ? "bg-gray-500" : "bg-gray-700"
           }`}
-          onClick={toggle}
+          onClick={() => setSelectedChoice(i)}
         >
           {/* // TODO: generalize this to pass in these components */}
           <div className="flex w-full flex-row justify-between">

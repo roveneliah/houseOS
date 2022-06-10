@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAccount, useEnsAvatar, useEnsName } from "wagmi";
 import { snapshotSpace } from "../config";
 import { useGetUserTags } from "../hooks/tags/useGetUserTags";
@@ -19,14 +19,16 @@ export default function CommentView({ proposal, back, choice }: any) {
   const vote = useVote(snapshotSpace, proposal.id, choice);
   const [message, setMessage] = useState("");
   const { data: account } = useAccount();
-  const authorTags = useGetUserTags(account?.address);
+  const authorTags = useMemo(() => useGetUserTags(account?.address), []);
   const avatarSrc = useGetAvatar(account?.address);
   const { data: name } = useEnsName({ address: account?.address });
 
   return (
     <div className="flex flex-col space-y-4">
       <div className="flex flex-row items-end justify-between border-b-2 border-gray-900">
-        <p className="text-4xl font-bold text-gray-900">For</p>
+        <p className="text-4xl font-bold text-gray-900">
+          {proposal.choices[choice]}
+        </p>
         <p
           className="font-semibold text-gray-900 hover:text-gray-700"
           onClick={back}

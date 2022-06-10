@@ -1,9 +1,10 @@
+import { useMemo } from "react";
 import { useGetProposalTags } from "../hooks/tags/useLoadProposalTags";
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 export default function ProposalHeader({ proposal }: any) {
-  const tags: string[] = useGetProposalTags(proposal.id);
+  const tags: string[] = useMemo(() => useGetProposalTags(proposal.id), []);
   return (
     <div className="flex w-full flex-col items-start space-y-4 bg-gray-800 py-10 text-gray-300">
       <div className="flex flex-row justify-start space-x-2">

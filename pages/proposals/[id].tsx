@@ -21,14 +21,18 @@ enum View {
 const ProposalPage: NextPage = ({ proposal }: any) => {
   const [view, setView] = useState(View.CommentList);
   const comments: Array<Comment> = useGetComments(proposal.id);
-  const [selectedChoice] = useState(0); // TODO:
+  const [selectedChoice, setSelectedChoice] = useState(0); // TODO:
   const votes: Array<Comment> = useGetVotes(proposal.id);
 
   return (
     <Layout>
       <div className="flex w-full flex-col items-start space-y-10 bg-gray-800 px-72 pt-20">
         <ProposalHeader proposal={proposal} />
-        <ChoiceFilters proposal={proposal} />
+        <ChoiceFilters
+          proposal={proposal}
+          selectedChoice={selectedChoice}
+          setSelectedChoice={setSelectedChoice}
+        />
       </div>
       <div className="items flex w-full flex-col items-start bg-gray-500 px-72 pt-20">
         <div className="flex w-full flex-col space-y-4 pt-4">
@@ -36,6 +40,8 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
             <CommentList
               toggleCommentView={() => setView(View.Comment)}
               comments={comments}
+              proposal={proposal}
+              choice={selectedChoice}
               votes={votes}
             />
           )}
