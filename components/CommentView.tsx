@@ -1,10 +1,12 @@
 import Image from "next/image";
-import { useMemo, useState } from "react";
-import { useAccount, useEnsAvatar, useEnsName } from "wagmi";
+import { useEffect, useMemo, useState } from "react";
+import { useAccount, useEnsAvatar, useEnsName, useSignMessage } from "wagmi";
 import { snapshotSpace } from "../config";
 import { useGetUserTags } from "../hooks/tags/useGetUserTags";
-import { useVote } from "../hooks/proposals/useVote";
+import { useVote } from "../hooks/snapshot/useVote";
 import { useGetAvatar } from "../hooks/users/useGetAvatar";
+import { postComment } from "../utils/firebase/post";
+import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
 
 interface Homie {
   name: String;
@@ -17,11 +19,23 @@ interface Comment {
 
 export default function CommentView({ proposal, back, choice }: any) {
   const vote = useVote(snapshotSpace, proposal.id, choice);
-  const [message, setMessage] = useState("");
   const { data: account } = useAccount();
-  const authorTags = useMemo(() => useGetUserTags(account?.address), []);
-  const avatarSrc = useGetAvatar(account?.address);
-  const { data: name } = useEnsName({ address: account?.address });
+  const { address, hodler, name } = useGetUserProfile();
+  console.log(address, hodler, name);
+  const authorTags = useGetUserTags(address);
+  const avatarSrc = useGetAvatar(address);
+  const { data: signature, isSuccess, signMessage } = useSignMessage();
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    isSuccess && signature && postComment(proposal.id, comment, signature);
+  }, [isSuccess]);
+
+  const comment = {
+    body: message,
+    author: account?.address,
+    choice: choice + 1,
+  };
 
   return (
     <div className="flex flex-col space-y-4">
@@ -37,38 +51,54 @@ export default function CommentView({ proposal, back, choice }: any) {
         </p>
       </div>
       <div className="flex flex-col space-y-8 rounded-lg bg-gray-50/50 px-6 pb-4 pt-8">
-        <textarea
-          className="w-full rounded-lg border border-gray-500 bg-transparent p-6 text-lg font-semibold text-gray-900 outline-0"
-          rows={6}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-
-        <div className="flex flex-row items-center justify-between">
-          <div className="flex flex-row items-center space-x-5">
-            <div className="min-w-fit">
-              <Image
-                src={avatarSrc}
-                width={75}
-                height={75}
-                className="rounded-full"
-              />
-            </div>
-            <div className="space-between flex flex-col items-start space-y-2 text-gray-900">
-              <div className="flex flex-row space-x-2">
-                {authorTags.map((tag) => (
-                  <p className="badge">{tag}</p>
-                ))}
+        {hodler ? (
+          <>
+            <textarea
+              className="w-full rounded-lg border border-gray-500 bg-transparent p-6 text-lg font-semibold text-gray-900 outline-0"
+              rows={6}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-row items-center space-x-5">
+                <div className="min-w-fit">
+                  <Image
+                    src={avatarSrc}
+                    width={75}
+                    height={75}
+                    className="rounded-full"
+                  />
+                </div>
+                <div className="space-between flex flex-col items-start space-y-2 text-gray-900">
+                  <div className="flex flex-row space-x-2">
+                    {authorTags.map((tag) => (
+                      <p className="badge">{tag}</p>
+                    ))}
+                  </div>
+                  <p className="text-xl font-semibold">
+                    {name || account?.address}
+                  </p>
+                </div>
               </div>
-              <p className="text-xl font-semibold">
-                {name || account?.address}
-              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  signMessage({
+                    message: JSON.stringify(comment),
+                  });
+                  // postComment();
+                  // vote(message)
+                }}
+              >
+                Submit
+              </button>
             </div>
-          </div>
-          <button className="btn" onClick={() => vote(message)}>
-            Submit
-          </button>
-        </div>
+          </>
+        ) : (
+          <p className="p-5 text-xl font-bold text-gray-900">
+            Must be a $KRAUSE hodler to post.
+          </p>
+        )}
       </div>
     </div>
   );

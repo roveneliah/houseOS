@@ -25,6 +25,7 @@ const proposalQuery = (proposalId: string) => `query {
     author
     created
     scores
+    votes
     scores_by_strategy
     scores_total
     scores_updated

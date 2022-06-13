@@ -1,7 +1,7 @@
 import { Proposal } from "../types/Proposal";
 import { Command } from "../types/Command";
-import { useGetProposals } from "./proposals/useGetProposals";
-import { useGetUsers } from "./users/useGetUsers";
+import { useGetProposals } from "./snapshot/useGetProposals";
+import { useGetUsers } from "./database/useGetUsers";
 import { User } from "../types/User";
 import { commands, snapshotSpace } from "../config";
 
@@ -34,13 +34,13 @@ export const useGetCommands = (): Array<Command> => {
   const proposals = useGetProposals(snapshotSpace);
   const users = useGetUsers();
   return [
-    ...commands.links.map(createLinkCommand),
-    ...proposals.map(createProposalCommand),
+    ...commands?.links?.map(createLinkCommand),
+    ...proposals?.map(createProposalCommand),
     {
       name: "Me",
       link: `/profile`,
       type: CommandFilters.USER,
     },
-    ...users.map(createUserCommand),
+    ...users?.map(createUserCommand),
   ];
 };

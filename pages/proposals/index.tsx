@@ -2,11 +2,11 @@ import type { NextPage } from "next";
 import Layout from "../../components/Layout";
 import { ClockIcon } from "../../components/icons/ClockIcon";
 import { length } from "ramda";
-import { Proposal } from "../../types/Proposal";
+import { Proposal, ProposalState } from "../../types/Proposal";
 import { StatusFilterTabs } from "../../components/StatusFilterTabs";
 import TagSelector from "../../components/TagSelector";
 import { useGetAllProposalTags } from "../../hooks/proposals/useGetAllProposalTags";
-import { useGetProposals } from "../../hooks/proposals/useGetProposals";
+import { useGetProposals } from "../../hooks/snapshot/useGetProposals";
 import { useMemo, useState } from "react";
 import { ProposalListItem } from "../../components/ProposalListItem";
 import { LockedIcon } from "../../components/icons/LockedIcon";
@@ -26,7 +26,7 @@ const ProposalsListPage: NextPage = () => {
   const proposals = useGetProposals(snapshotSpace);
   const tags = useGetAllProposalTags();
   const countActive = length(
-    proposals.filter(({ state }) => state === "active")
+    proposals.filter(({ state }) => state === ProposalState.Active)
   );
 
   const [selectedTags, setSelectedTags] = useState([]);

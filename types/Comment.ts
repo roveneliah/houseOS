@@ -1,9 +1,8 @@
 export interface Comment {
+  proposalId: string;
   author: string;
   body: string;
   choice: number;
-  votingPower: number;
-  id?: string;
-  src?: string;
+  votingPower?: number;
   active?: boolean;
 }

@@ -1,11 +1,11 @@
 import { EthereumAddress } from "./EthereumAddress";
 
 export interface User {
-  address?: string;
+  address: EthereumAddress;
   id?: string;
-  name?: string;
+  name: string;
   avatarSrc?: string;
-  tags?: Array<string>;
+  tags: Array<string>;
   friends?: Array<EthereumAddress>;
   removeTag: (tag: string) => void;
   addTags: (...tags: Array<string>) => void;

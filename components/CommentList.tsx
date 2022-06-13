@@ -1,6 +1,5 @@
 import CommentListItem from "./CommentListItem";
 import TagSelector from "./TagSelector";
-import { useGetUserTags } from "../hooks/tags/useGetUserTags";
 import { Comment } from "../types/Comment";
 import { useMemo, useState } from "react";
 import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
@@ -9,24 +8,24 @@ import { Proposal } from "@snapshot-labs/snapshot.js/dist/sign/types";
 interface Props {
   comments: Array<Comment>;
   toggleCommentView: any;
-  votes: Array<any>;
   proposal: Proposal;
   choice: number;
 }
 
 export default function CommentList({
   comments,
-  votes,
   toggleCommentView,
   proposal,
   choice,
 }: Props) {
   const tags = useGetAllUserTags();
   const [selectedTags, setSelectedTags] = useState([]);
-  const sortedComments = useMemo(
-    () => comments.sort((a, b) => b.votingPower - a.votingPower),
-    comments
-  );
+
+  // TODO: #8 Load in voting power
+  // const sortedComments = useMemo(
+  //   () => comments.sort((a, b) => b.votingPower - a.votingPower),
+  //   comments
+  // );
 
   return (
     <div className="flex flex-col space-y-4">
@@ -48,7 +47,7 @@ export default function CommentList({
           <CommentListItem key={i} comment={vote} selectedTags={selectedTags} />
         ))} */}
         {comments
-          .filter((comment) => comment.choice === choice)
+          .filter((comment) => comment.choice === choice + 1)
           .map((comment: Comment, i: number) => (
             <CommentListItem
               key={i}

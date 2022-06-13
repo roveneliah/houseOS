@@ -4,14 +4,13 @@ import ChoiceFilters from "../../components/FilterTabs";
 import ProposalHeader from "../../components/ProposalHeader";
 import CommentList from "../../components/CommentList";
 import CommentView from "../../components/CommentView";
-import { useGetComments } from "../../hooks/proposals/useGetComments";
+import { useGetComments } from "../../hooks/database/useGetComments";
 import { Comment } from "../../types/Comment";
 import Layout from "../../components/Layout";
 import { Proposal } from "../../types/Proposal";
 import { snapshotSpace } from "../../config";
 import { fetchProposals } from "../../utils/fetchProposals";
 import { fetchProposal } from "../../utils/fetchProposal";
-import { useGetVotes } from "../../hooks/proposals/useGetVotes";
 import { useCommand, useOnKeydown } from "../../hooks/generic/useCommand";
 
 enum View {
@@ -23,7 +22,6 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
   const [view, setView] = useState(View.CommentList);
   const comments: Array<Comment> = useGetComments(proposal.id);
   const [selectedChoice, setSelectedChoice] = useState(0);
-  const votes: Array<Comment> = useGetVotes(proposal.id);
 
   useCommand("ArrowRight", () =>
     setSelectedChoice((choice) => (choice + 1) % 3)
@@ -50,7 +48,6 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
               comments={comments}
               proposal={proposal}
               choice={selectedChoice}
-              votes={votes}
             />
           )}
           {view === View.Comment && (

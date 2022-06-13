@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Proposal } from "../../types/Proposal";
 import { fetchProposals } from "../../utils/fetchProposals";
 import { createHook } from "../createHook";

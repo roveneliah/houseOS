@@ -1,5 +1,8 @@
 import { Proposal } from "../../types/Proposal";
 
+/**
+ * DEPRECATED: useGetProposalStats is deprecated and will be removed
+ */
 export const useGetProposalStats = (proposal: Proposal) => {
   // want to add { percentage, votingPower } to proposal choices
 

@@ -23,8 +23,7 @@ export const useVote = (
       type: "single-choice",
       choice: choice + 1,
       metadata: JSON.stringify({
-        // TODO: METADATA DOES NOT GET WRITTEN
-        message: "TEST",
+        comment: message,
       }),
     });
   };

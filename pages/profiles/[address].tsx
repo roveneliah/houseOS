@@ -1,27 +1,13 @@
-import { ModelManager } from "@glazed/devtools";
-import {
-  EthereumAuthProvider,
-  useClient,
-  usePublicRecord,
-  useViewerConnection,
-  useViewerRecord,
-  ViewerConnectedContainer,
-} from "@self.id/framework";
-import { createHook } from "async_hooks";
 import Image from "next/image";
-import { compose, prop } from "ramda";
 import { useEffect, useState } from "react";
 import { useAccount, useBalance, useConnect, useEnsName } from "wagmi";
 import Layout from "../../components/Layout";
-import { useGetUserTags } from "../../hooks/tags/useGetUserTags";
-import { $KRAUSE, useGetBalanceOf } from "../../hooks/ethereum/useGetBalanceOf";
-import { useGetUsers } from "../../hooks/users/useGetUsers";
 import { EthereumAddress } from "../../types/EthereumAddress";
-import { fetchProposal } from "../../utils/fetchProposal";
 import { LoadingView } from "./components/LoadingView";
 import { ProfilePreview } from "./components/ProfilePreview";
 import { useKrauseBalance } from "../../hooks/ethereum/useKrauseBalance";
-import { useGetUser } from "../../hooks/users/useGetUser";
+import { useGetUser } from "../../hooks/ceramic/useGetUser";
+import { getUser, getUsers } from "../../utils/firebase/user";
 
 export const simpleNoteSchema = {
   $schema: "http://json-schema.org/draft-07/schema#",
@@ -58,9 +44,9 @@ export default function Profile({ user }: any) {
             <div className="flex w-full flex-row items-center justify-between">
               <div className="justfiy-start flex flex-col items-start space-y-2">
                 <div className="flex flex-row space-x-2">
-                  {user.tags?.map((tag: string, i: number) => (
+                  {user.tags?.map((tag: any, i: number) => (
                     <p className="badge badge-dark" key={i}>
-                      {tag}
+                      {tag.tag} [{tag.taggers.length || ""}]
                     </p>
                   ))}
                 </div>
@@ -105,9 +91,8 @@ export default function Profile({ user }: any) {
   );
 }
 
-export function getStaticProps({ params }: any) {
-  const users = useGetUsers();
-  const user = users.find((p) => p.address === params.address);
+export async function getStaticProps({ params }: any) {
+  const user = await getUser(params.address);
   return {
     props: {
       user,
@@ -115,8 +100,10 @@ export function getStaticProps({ params }: any) {
   };
 }
 
-export function getStaticPaths() {
-  const users = useGetUsers();
-  const paths = users.map(({ address }) => ({ params: { address } }));
+export async function getStaticPaths() {
+  const users = await getUsers();
+  const paths = users.map((user) => ({
+    params: { address: user.address },
+  }));
   return { paths, fallback: false };
 }

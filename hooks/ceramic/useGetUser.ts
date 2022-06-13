@@ -1,5 +1,5 @@
 import { EthereumAddress } from "../../types/EthereumAddress";
-import { useGetCeramicUser } from "../ceramic/useGetCeramicUser";
+import { useGetCeramicUser } from "./useGetCeramicUser";
 import { User } from "../../types/User";
 import { useEffect, useState } from "react";
 import { Maybe } from "../../types/Maybe";
