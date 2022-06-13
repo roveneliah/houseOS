@@ -42,3 +42,18 @@ export const listenComments = (proposalId: string, callback: Function) =>
     (querySnapshot: QuerySnapshot) =>
       callback(querySnapshot.docs.map((doc) => doc.data()))
   );
+
+export const getProposalTags = (proposalId: string, callback: Function) =>
+  onSnapshot(collection(db, `proposals/${proposalId}/tags`), (querySnapshot) =>
+    callback(querySnapshot.docs.map((doc) => doc.data()))
+  );
+
+export const tagProposal = (
+  proposalId: string,
+  tag: string,
+  tagger: EthereumAddress
+) =>
+  setDoc(doc(db, `proposals/${proposalId}/tags/${tag}`), {
+    tag,
+    taggers: [tagger],
+  });

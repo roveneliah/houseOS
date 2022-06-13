@@ -10,7 +10,10 @@ interface Props {
 }
 
 export default function ProposalHeader({ proposal }: Props) {
-  const tags: string[] = useMemo(() => useGetProposalTags(proposal.id), []);
+  const tags: string[] = useGetProposalTags(proposal.id);
+
+  console.log(proposal);
+  console.log(tags);
 
   return (
     <div className="flex w-full flex-col items-start space-y-4 bg-gray-800 py-10 text-gray-300">
@@ -23,7 +26,7 @@ export default function ProposalHeader({ proposal }: Props) {
       </div>
       <p className="text-left text-6xl font-semibold">{proposal.title}</p>
       <div className="flex flex-row justify-start space-x-2">
-        {tags.map((tag: string, i: number) => (
+        {tags.map(({ tag }: any, i: number) => (
           <p className="badge badge-outline" key={i}>
             {tag}
           </p>

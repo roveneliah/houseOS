@@ -25,6 +25,7 @@ export default function ChoiceFilters({
             selectedChoice === i ? "bg-gray-500" : "bg-gray-700"
           }`}
           onClick={() => setSelectedChoice(i)}
+          key={i}
         >
           {/* // TODO: generalize this to pass in these components */}
           <div className="flex w-full flex-row justify-between">
