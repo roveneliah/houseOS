@@ -1,7 +1,7 @@
 export function LoginView() {
   return (
     <div>
-      <p>Please log in!</p>
+      <p className="text-6xl font-bold">Please log in!</p>
     </div>
   );
 }

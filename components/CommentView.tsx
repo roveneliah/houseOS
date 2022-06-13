@@ -2,11 +2,11 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useAccount, useEnsAvatar, useEnsName, useSignMessage } from "wagmi";
 import { snapshotSpace } from "../config";
-import { useGetUserTags } from "../hooks/tags/useGetUserTags";
 import { useVote } from "../hooks/snapshot/useVote";
 import { useGetAvatar } from "../hooks/users/useGetAvatar";
 import { postComment } from "../utils/firebase/post";
 import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
+import { useListenUserTags } from "../hooks/database/useListenUserTags";
 
 interface Homie {
   name: String;
@@ -21,8 +21,7 @@ export default function CommentView({ proposal, back, choice }: any) {
   const vote = useVote(snapshotSpace, proposal.id, choice);
   const { data: account } = useAccount();
   const { address, hodler, name } = useGetUserProfile();
-  console.log(address, hodler, name);
-  const authorTags = useGetUserTags(address);
+  const authorTags = useListenUserTags(address);
   const avatarSrc = useGetAvatar(address);
   const { data: signature, isSuccess, signMessage } = useSignMessage();
   const [message, setMessage] = useState("");

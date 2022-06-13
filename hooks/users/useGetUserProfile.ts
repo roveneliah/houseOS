@@ -1,6 +1,8 @@
 import { useViewerRecord } from "@self.id/framework";
-import { useAccount } from "wagmi";
+import { useAccount, useEnsAddress, useEnsName } from "wagmi";
+import { EthereumAddress } from "../../types/EthereumAddress";
 import { User } from "../../types/User";
+import { addFriend, removeFriend } from "../../utils/firebase/user";
 import { recordToUser } from "../../utils/recordToUser";
 import { useGetUser } from "../database/useGetUser";
 import { useKrauseBalance } from "../ethereum/useKrauseBalance";
@@ -13,14 +15,20 @@ import { useKrauseBalance } from "../ethereum/useKrauseBalance";
 
 export const useGetUserProfile = () => {
   const { data: account } = useAccount();
-  const user = useGetUser(account?.address || "");
+  const user = useGetUser(account?.address);
+  const krauseBalance = Number(useKrauseBalance(account?.address));
+  const hodler = krauseBalance > 0;
+  const { data: ensName } = useEnsName({ address: account?.address });
 
-  const hodler = Number(useKrauseBalance(account?.address)) > 0;
-
-  return {
-    ...user,
-    hodler,
-    address: user.address,
-    name: user.name,
-  };
+  return (
+    user && {
+      ...user,
+      hodler,
+      krauseBalance,
+      ensName,
+      addFriend: (friend: EthereumAddress) => addFriend(user.address, friend),
+      removeFriend: (friend: EthereumAddress) =>
+        removeFriend(user.address, friend),
+    }
+  );
 };

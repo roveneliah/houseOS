@@ -1,15 +1,14 @@
 import Image from "next/image";
 import { gt, lt, intersection, length, compose } from "ramda";
-import { useMemo } from "react";
 import { defaultAvatar } from "../config";
-import { useGetUserTags } from "../hooks/tags/useGetUserTags";
+import { useGetUser } from "../hooks/database/useGetUser";
+import { useListenUserTags } from "../hooks/database/useListenUserTags";
 
-export default function CommentListItem({
-  comment,
-  selectedTags = ["Contributor"],
-}: any) {
-  const tags = useGetUserTags(comment.author);
-  const isSelected = length(intersection(selectedTags, tags)) > 0;
+export default function CommentListItem({ comment, selectedTags }: any) {
+  const user = useGetUser(comment.author);
+  const tags = useListenUserTags(comment.author);
+  const isSelected =
+    selectedTags.length !== 0 || length(intersection(selectedTags, tags)) > 0;
 
   return isSelected ? (
     <div
@@ -20,7 +19,7 @@ export default function CommentListItem({
       <div className="flex flex-row">
         <div className="flex min-w-fit flex-row items-start justify-end">
           <Image
-            src={comment.src || defaultAvatar}
+            src={user?.avatarSrc || defaultAvatar}
             width={75}
             height={75}
             className="rounded-full"
@@ -31,14 +30,14 @@ export default function CommentListItem({
           <div className="flex flex-row justify-between space-x-4">
             <div className="flex flex-col justify-start space-y-2">
               <div className="flex flex-row space-x-2">
-                {tags.map((tag: any, i: number) => (
+                {tags.map(({ tag }: any, i: number) => (
                   <p className="badge" key={i}>
                     {tag}
                   </p>
                 ))}
               </div>
               <p className="text-left text-xl font-bold text-gray-700">
-                {comment.author}
+                {user?.name}
               </p>
             </div>
           </div>

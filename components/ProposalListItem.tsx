@@ -1,9 +1,8 @@
 import { intersection } from "ramda";
-import { useGetProposalTags } from "../hooks/tags/useLoadProposalTags";
+import { useListenProposalTags } from "../hooks/tags/useListenProposalTags";
 import { useGetTimeLeft } from "../hooks/proposals/useGetTimeLeft";
 import { useRouter } from "next/router";
 import { Proposal } from "../types/Proposal";
-import { useMemo } from "react";
 
 export interface Props {
   proposal: Proposal;
@@ -12,14 +11,11 @@ export interface Props {
 
 export function ProposalListItem({ proposal, selectedTags }: Props) {
   const timeLeft = useGetTimeLeft(proposal);
-  const proposalTags = useMemo(
-    () => useGetProposalTags(proposal.id),
-    [proposal.id]
-  );
+  const proposalTags = useListenProposalTags(proposal.id).map(({ tag }) => tag);
   const router = useRouter();
 
   const hasMatchingTag = (tags: Array<string>) =>
-    intersection(tags, selectedTags).length > 0;
+    proposalTags.length === 0 || intersection(tags, selectedTags).length > 0;
 
   return hasMatchingTag(proposalTags) ? (
     <div

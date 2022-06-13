@@ -1,5 +1,6 @@
 import {
   addDoc,
+  arrayUnion,
   collection,
   doc,
   getDoc,
@@ -7,6 +8,7 @@ import {
   onSnapshot,
   QuerySnapshot,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { Comment } from "../../types/Comment";
 import { db } from ".";
@@ -43,7 +45,7 @@ export const listenComments = (proposalId: string, callback: Function) =>
       callback(querySnapshot.docs.map((doc) => doc.data()))
   );
 
-export const getProposalTags = (proposalId: string, callback: Function) =>
+export const listenProposalTags = (proposalId: string, callback: Function) =>
   onSnapshot(collection(db, `proposals/${proposalId}/tags`), (querySnapshot) =>
     callback(querySnapshot.docs.map((doc) => doc.data()))
   );
@@ -53,7 +55,11 @@ export const tagProposal = (
   tag: string,
   tagger: EthereumAddress
 ) =>
-  setDoc(doc(db, `proposals/${proposalId}/tags/${tag}`), {
-    tag,
-    taggers: [tagger],
-  });
+  setDoc(
+    doc(db, `proposals/${proposalId}/tags/${tag}`),
+    {
+      tag,
+      taggers: arrayUnion(tagger),
+    },
+    { merge: true }
+  );

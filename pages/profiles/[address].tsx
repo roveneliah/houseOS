@@ -7,7 +7,9 @@ import { LoadingView } from "./components/LoadingView";
 import { ProfilePreview } from "./components/ProfilePreview";
 import { useKrauseBalance } from "../../hooks/ethereum/useKrauseBalance";
 import { useGetUser } from "../../hooks/ceramic/useGetUser";
-import { getUser, getUsers } from "../../utils/firebase/user";
+import { addFriend, getUser, getUsers } from "../../utils/firebase/user";
+import { useListenUserTags } from "../../hooks/database/useListenUserTags";
+import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
 
 export const simpleNoteSchema = {
   $schema: "http://json-schema.org/draft-07/schema#",
@@ -29,10 +31,14 @@ export const simpleNoteSchema = {
 };
 
 export default function Profile({ user }: any) {
-  const { address } = user;
-  const u = useGetUser(address); // TODO: preload this in static props
+  const { address, friends } = user;
+  const profile = useGetUserProfile();
+  const tags = useListenUserTags(address);
   const krauseBalance = useKrauseBalance(address);
   const { data: ensName } = useEnsName({ address });
+  const isFriend = profile.friends?.includes(address);
+
+  console.log(user);
 
   return (
     <Layout>
@@ -44,7 +50,22 @@ export default function Profile({ user }: any) {
             <div className="flex w-full flex-row items-center justify-between">
               <div className="justfiy-start flex flex-col items-start space-y-2">
                 <div className="flex flex-row space-x-2">
-                  {user.tags?.map((tag: any, i: number) => (
+                  {isFriend ? (
+                    <p
+                      className="badge hover:bg-opacity-50"
+                      onClick={() => profile?.removeFriend(address)}
+                    >
+                      Friend
+                    </p>
+                  ) : (
+                    <p
+                      className="badge hover:bg-opacity-50"
+                      onClick={() => profile?.addFriend(address)}
+                    >
+                      Add Friend
+                    </p>
+                  )}
+                  {tags.map((tag: any, i: number) => (
                     <p className="badge badge-dark" key={i}>
                       {tag.tag} [{tag.taggers.length || ""}]
                     </p>
@@ -53,7 +74,6 @@ export default function Profile({ user }: any) {
                 <p className="text-left text-5xl font-bold text-gray-700">
                   {user.name || ensName || "Anon Jerry"}
                 </p>
-                <p className="font-semibold text-gray-200">followed by </p>
                 <p className="font-semibold text-gray-200">
                   {Number(krauseBalance)} $KRAUSE
                 </p>
@@ -77,11 +97,9 @@ export default function Profile({ user }: any) {
                 Friends
               </p>
               <div className="flex flex-col space-y-4">
-                {user.profile?.friends?.map(
-                  (address: EthereumAddress, i: number) => (
-                    <ProfilePreview address={address} key={i} />
-                  )
-                )}
+                {friends?.map((address: EthereumAddress, i: number) => (
+                  <ProfilePreview address={address} key={i} />
+                ))}
               </div>
             </div>
           </>

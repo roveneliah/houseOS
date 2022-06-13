@@ -1,5 +1,4 @@
-import { useMemo } from "react";
-import { useGetProposalTags } from "../hooks/tags/useLoadProposalTags";
+import { useListenProposalTags } from "../hooks/tags/useListenProposalTags";
 import { Proposal, ProposalState } from "../types/Proposal";
 import { AddTag } from "./AddTag";
 
@@ -10,10 +9,7 @@ interface Props {
 }
 
 export default function ProposalHeader({ proposal }: Props) {
-  const tags: string[] = useGetProposalTags(proposal.id);
-
-  console.log(proposal);
-  console.log(tags);
+  const tags = useListenProposalTags(proposal.id);
 
   return (
     <div className="flex w-full flex-col items-start space-y-4 bg-gray-800 py-10 text-gray-300">

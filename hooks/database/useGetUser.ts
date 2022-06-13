@@ -5,9 +5,10 @@ import { listenUser } from "../../utils/firebase/user";
 
 export const useGetUser = (address: EthereumAddress): User => {
   const [user, setUser] = useState<any>([]);
+
   useEffect(() => {
     listenUser(address, setUser);
-  }, []);
+  }, [address]);
 
   return user;
 };
