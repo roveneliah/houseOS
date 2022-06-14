@@ -10,6 +10,7 @@ import { useGetUser } from "../../hooks/ceramic/useGetUser";
 import { addFriend, getUser, getUsers } from "../../utils/firebase/user";
 import { useListenUserTags } from "../../hooks/database/useListenUserTags";
 import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
+import { connect } from "http2";
 
 export const simpleNoteSchema = {
   $schema: "http://json-schema.org/draft-07/schema#",
@@ -32,13 +33,12 @@ export const simpleNoteSchema = {
 
 export default function Profile({ user }: any) {
   const { address, friends } = user;
+  const { data: account } = useAccount();
   const profile = useGetUserProfile();
   const tags = useListenUserTags(address);
   const krauseBalance = useKrauseBalance(address);
   const { data: ensName } = useEnsName({ address });
-  const isFriend = profile.friends?.includes(address);
-
-  console.log(user);
+  const isFriend = profile?.friends?.includes(address);
 
   return (
     <Layout>
@@ -50,21 +50,22 @@ export default function Profile({ user }: any) {
             <div className="flex w-full flex-row items-center justify-between">
               <div className="justfiy-start flex flex-col items-start space-y-2">
                 <div className="flex flex-row space-x-2">
-                  {isFriend ? (
-                    <p
-                      className="badge hover:bg-opacity-50"
-                      onClick={() => profile?.removeFriend(address)}
-                    >
-                      Friend
-                    </p>
-                  ) : (
-                    <p
-                      className="badge hover:bg-opacity-50"
-                      onClick={() => profile?.addFriend(address)}
-                    >
-                      Add Friend
-                    </p>
-                  )}
+                  {account &&
+                    (isFriend ? (
+                      <p
+                        className="badge hover:bg-opacity-50"
+                        onClick={() => profile?.removeFriend(address)}
+                      >
+                        Friend
+                      </p>
+                    ) : (
+                      <p
+                        className="badge hover:bg-opacity-50"
+                        onClick={() => profile?.addFriend(address)}
+                      >
+                        Add Friend
+                      </p>
+                    ))}
                   {tags.map((tag: any, i: number) => (
                     <p className="badge badge-dark" key={i}>
                       {tag.tag} [{tag.taggers.length || ""}]

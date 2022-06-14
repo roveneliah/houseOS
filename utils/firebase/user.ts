@@ -12,7 +12,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from ".";
-import { useUserAddress } from "../../hooks/ethereum/useUserAddress";
 import { EthereumAddress } from "../../types/EthereumAddress";
 
 export const createUser = async (
