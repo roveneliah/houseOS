@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { ReactNode, useEffect, useState } from "react";
-import { themes } from "../config";
+import { dao, themes } from "../config";
 import { useGetCommands } from "../hooks/useGetCommands";
 import CommandPalette from "./CommandPalette";
 import { Command } from "../types/Command";
@@ -60,16 +60,20 @@ export default function Layout({
   const { data: ensName } = useEnsName({ address });
   const connector = connectors[1];
 
-  const tagUser = useTagUser();
+  const [isOpen, setIsOpen] = useState<boolean>(paletteOpen);
 
   return (
     <div data-theme={themeName} className="min-h-screen">
       <Head>
-        <title>LFG</title>
+        <title>{dao.name}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <CommandPalette commands={commands} startsOpen={paletteOpen} />
+      <CommandPalette
+        commands={commands}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
       <main className="flex h-[100vh] w-full flex-1 flex-col items-start justify-start bg-gray-500">
         <div className="fixed top-0 flex w-full flex-row justify-between">
           <div>
@@ -135,7 +139,13 @@ export default function Layout({
                 </button>
               </>
             )}
-            <button className="btn btn-outline group" onClick={() => {}}>
+            <button
+              className="btn btn-outline group"
+              onClick={() => {
+                console.log("Yo");
+                setIsOpen(!isOpen);
+              }}
+            >
               <p className="hidden group-hover:block">⌘k</p>
               <div className="block group-hover:hidden">
                 <SearchIcon />

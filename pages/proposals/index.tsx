@@ -26,7 +26,9 @@ const ProposalsListPage: NextPage = () => {
   const proposals = useGetProposals(snapshotSpace);
   const tags = proposalTags;
   const countActive = length(
-    proposals.filter(({ state }) => state === ProposalState.Active)
+    proposals.filter(
+      ({ state }: { state: ProposalState }) => state === ProposalState.Active
+    )
   );
 
   const [selectedTags, setSelectedTags] = useState([]);
@@ -52,7 +54,8 @@ const ProposalsListPage: NextPage = () => {
   const filteredProposals = useMemo(
     () =>
       proposals.filter(
-        ({ state }) => stateFilter === All || stateToId(state) === stateFilter
+        ({ state }: { state: ProposalState }) =>
+          stateFilter === All || stateToId(state) === stateFilter
       ),
     [proposals, stateFilter]
   );

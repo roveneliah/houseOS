@@ -1,4 +1,15 @@
 module.exports = {
+  dao: {
+    name: "Krause House",
+    treasury: "0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
+    gnosisSafes: [
+      {
+        name: "Main Treasury",
+        network: 1,
+        address: "0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
+      },
+    ],
+  },
   snapshotSpace: "krausehouse.eth",
   defaultAvatar: "/coachrick.png",
   userTags: [

@@ -12,15 +12,16 @@ import LinkIcon from "./icons/LinkIcon";
 
 interface Props {
   commands: Array<Command>;
-  startsOpen?: boolean;
+  isOpen: boolean;
+  setIsOpen: Function;
 }
 
 export default function CommandPalette({
   commands,
-  startsOpen = false,
+  isOpen = false,
+  setIsOpen,
 }: Props) {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(startsOpen);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState(CommandFilters.ALL);
 
@@ -108,8 +109,8 @@ export default function CommandPalette({
           <Combobox
             value={undefined}
             onChange={(command: Command) => {
-              // navigate if link, otherwise execute command?
               command.link && router.push(command.link);
+              setIsOpen(false);
             }}
             as="div"
             className="relative overflow-hidden rounded-lg bg-gray-50 shadow-2xl ring-1 ring-black/5"
