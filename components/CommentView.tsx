@@ -20,9 +20,9 @@ interface Comment {
 export default function CommentView({ proposal, back, choice }: any) {
   const vote = useVote(snapshotSpace, proposal.id, choice);
   const { data: account } = useAccount();
-  const { address, hodler, name } = useGetUserProfile();
-  const authorTags = useListenUserTags(address);
-  const avatarSrc = useGetAvatar(address);
+  const user = useGetUserProfile();
+  const authorTags = useListenUserTags(user?.address);
+  const avatarSrc = useGetAvatar(user?.address);
   const { data: signature, isSuccess, signMessage } = useSignMessage();
   const [message, setMessage] = useState("");
 
@@ -50,7 +50,7 @@ export default function CommentView({ proposal, back, choice }: any) {
         </p>
       </div>
       <div className="flex flex-col space-y-8 rounded-lg bg-gray-50/50 px-6 pb-4 pt-8">
-        {hodler ? (
+        {user?.hodler ? (
           <>
             <textarea
               className="w-full rounded-lg border border-gray-500 bg-transparent p-6 text-lg font-semibold text-gray-900 outline-0"
@@ -70,12 +70,12 @@ export default function CommentView({ proposal, back, choice }: any) {
                 </div>
                 <div className="space-between flex flex-col items-start space-y-2 text-gray-900">
                   <div className="flex flex-row space-x-2">
-                    {authorTags.map((tag) => (
+                    {authorTags.map(({ tag }) => (
                       <p className="badge">{tag}</p>
                     ))}
                   </div>
                   <p className="text-xl font-semibold">
-                    {name || account?.address}
+                    {user?.name || account?.address}
                   </p>
                 </div>
               </div>

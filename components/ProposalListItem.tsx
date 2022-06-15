@@ -15,7 +15,7 @@ export function ProposalListItem({ proposal, selectedTags }: Props) {
   const router = useRouter();
 
   const hasMatchingTag = (tags: Array<string>) =>
-    selectedTags.length == 0 || intersection(tags, selectedTags).length > 0;
+    selectedTags.length === 0 || intersection(tags, selectedTags).length > 0;
 
   return hasMatchingTag(proposalTags) ? (
     <div

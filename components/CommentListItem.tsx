@@ -10,7 +10,13 @@ export default function CommentListItem({ comment, selectedTags }: any) {
   const user: User = useGetUser(comment.author);
   const tags = useListenUserTags(comment.author);
   const isSelected =
-    selectedTags.length !== 0 || length(intersection(selectedTags, tags)) > 0;
+    selectedTags.length === 0 ||
+    length(
+      intersection(
+        selectedTags,
+        tags.map(({ tag }) => tag)
+      )
+    ) > 0;
 
   return isSelected ? (
     <div
