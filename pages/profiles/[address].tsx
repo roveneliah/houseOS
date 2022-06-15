@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { useAccount, useBalance, useConnect, useEnsName } from "wagmi";
 import Layout from "../../components/Layout";
 import { EthereumAddress } from "../../types/EthereumAddress";
@@ -11,25 +10,11 @@ import { addFriend, getUser, getUsers } from "../../utils/firebase/user";
 import { useListenUserTags } from "../../hooks/database/useListenUserTags";
 import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
 import { connect } from "http2";
-
-export const simpleNoteSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  title: "SimpleNote",
-  type: "object",
-  properties: {
-    body: {
-      type: "string",
-      title: "body",
-      maxLength: 4000,
-    },
-    title: {
-      type: "string",
-      title: "title",
-      maxLength: 4000,
-    },
-  },
-  required: ["body", "title"],
-};
+import { Comment } from "../../types/Comment";
+import { useComments } from "../../hooks/database/useComments";
+import Link from "next/link";
+import { Proposal } from "../../types/Proposal";
+import { useGetProposals } from "../../hooks/snapshot/useGetProposals";
 
 export default function Profile({ user }: any) {
   const { address, friends } = user;
@@ -39,6 +24,7 @@ export default function Profile({ user }: any) {
   const krauseBalance = useKrauseBalance(address);
   const { data: ensName } = useEnsName({ address });
   const isFriend = profile?.friends?.includes(address);
+  const comments: Array<Comment> = useComments(address);
 
   return (
     <Layout>
@@ -92,6 +78,22 @@ export default function Profile({ user }: any) {
               <p className="text-left text-3xl font-bold text-gray-200">
                 Comments
               </p>
+              {comments.map((comment: Comment, i: number) => {
+                return (
+                  <Link href={`/proposals/${comment.proposalId}`} key={i}>
+                    <div className="rounded-lg bg-gray-300/50 p-5">
+                      <p className="font-semibold text-gray-700">
+                        {comment.proposalTitle}
+                      </p>
+                      <p className="font-semibold text-gray-700">
+                        {comment.body}
+                      </p>
+                      <p className="badge">{comment.choice}</p>
+                      <p className="badge">{comment.votingPower}</p>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
             <div className="flex flex-col space-y-6">
               <p className="text-left text-3xl font-bold text-gray-200">

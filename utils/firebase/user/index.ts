@@ -10,9 +10,12 @@ import {
   arrayUnion,
   arrayRemove,
   updateDoc,
+  query,
+  where,
+  collectionGroup,
 } from "firebase/firestore";
-import { db } from ".";
-import { EthereumAddress } from "../../types/EthereumAddress";
+import { db } from "..";
+import { EthereumAddress } from "../../../types/EthereumAddress";
 
 export const createUser = async (
   address: EthereumAddress,
@@ -80,3 +83,24 @@ export const removeFriend = async (
     },
     { merge: true }
   );
+
+export const listenUserComments = async (address: EthereumAddress) => {
+  const q = query(
+    collectionGroup(db, `comments`),
+    where("author", "==", address)
+  );
+  const querySnapshot: QuerySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((doc) => doc.data());
+};
+
+export const userDb = {
+  createUser,
+  getUser,
+  getUsers,
+  addFriend,
+  removeFriend,
+  tagUser,
+  listenUser,
+  listenUserComments,
+  listenUserTags,
+};
