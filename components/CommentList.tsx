@@ -22,11 +22,12 @@ export default function CommentList({
   const tags = userTags;
   const [selectedTags, setSelectedTags] = useState([]);
 
-  // TODO: #8 Load in voting power
-  // const sortedComments = useMemo(
-  //   () => comments.sort((a, b) => b.votingPower - a.votingPower),
-  //   comments
-  // );
+  const sortedComments = useMemo(
+    () => comments.sort((a, b) => (b.vp || 0) - (a.vp || 0)),
+    [comments]
+  );
+  console.log(comments);
+  console.log(sortedComments);
 
   return (
     <div className="flex flex-col space-y-4">
@@ -43,11 +44,7 @@ export default function CommentList({
       </div>
       <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
       <div>
-        {/* TODO: HANDLE VOTE */}
-        {/* {votes.map((vote: any, i: number) => (
-          <CommentListItem key={i} comment={vote} selectedTags={selectedTags} />
-        ))} */}
-        {comments
+        {sortedComments
           .filter((comment) => comment.choice === choice + 1)
           .map((comment: Comment, i: number) => (
             <CommentListItem

@@ -11,7 +11,7 @@ import { Proposal } from "../../types/Proposal";
 import { snapshotSpace } from "../../config";
 import { fetchProposals } from "../../utils/fetchProposals";
 import { fetchProposal } from "../../utils/fetchProposal";
-import { useCommand, useOnKeydown } from "../../hooks/generic/useCommand";
+import { useCommand } from "../../hooks/generic/useCommand";
 
 enum View {
   Comment,
@@ -22,6 +22,8 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
   const [view, setView] = useState(View.CommentList);
   const comments: Array<Comment> = useGetComments(proposal.id);
   const [selectedChoice, setSelectedChoice] = useState(0);
+
+  console.log(comments);
 
   useCommand("ArrowRight", () =>
     setSelectedChoice((choice) => (choice + 1) % 3)
@@ -64,12 +66,7 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
 };
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
-  // const proposals = await fetchProposals(snapshotSpace); // TODO: fetch singular from a cache
-  // const proposal: Proposal = proposals.find((p) => p.id === params.id);
-
   const proposal = await fetchProposal(params.id);
-  console.log(proposal);
-
   return {
     props: {
       proposal,

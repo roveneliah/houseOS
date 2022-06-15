@@ -51,10 +51,12 @@ export default function CommentListItem({ comment, selectedTags }: any) {
               </p>
             </div>
           </div>
-          <p className="pr-4 text-left text-gray-900">{comment.body}</p>
+          <p className="whitespace-pre-wrap pr-4 text-left text-gray-900">
+            {comment.body}
+          </p>
         </div>
       </div>
-      <p className="badge">{comment.votingPower} $KRAUSE</p>
+      {comment.vp && <p className="badge">{comment.vp.toFixed()} $KRAUSE</p>}
     </div>
   ) : (
     <></>

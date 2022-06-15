@@ -10,6 +10,15 @@ module.exports = {
       },
     ],
   },
+  tokenGating: {
+    status: true,
+    filters: [
+      {
+        address: "0x9",
+        gt: 0,
+      },
+    ],
+  },
   snapshotSpace: "krausehouse.eth",
   defaultAvatar: "/coachrick.png",
   userTags: [

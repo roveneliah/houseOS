@@ -3,6 +3,6 @@ export interface Comment {
   author: string;
   body: string;
   choice: string;
-  votingPower: number;
+  vp: number;
   proposalTitle: string;
 }

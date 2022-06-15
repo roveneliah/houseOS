@@ -27,7 +27,13 @@ export default function CommentView({ proposal, back, choice }: any) {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    isSuccess && signature && postComment(proposal.id, comment, signature);
+    if (isSuccess && signature) {
+      postComment(proposal.id, comment, signature).then((res) => {
+        console.log("Posted Comment: ", res);
+        setMessage("");
+        back();
+      });
+    }
   }, [isSuccess]);
 
   const comment = {

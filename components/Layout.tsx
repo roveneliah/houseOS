@@ -74,7 +74,7 @@ export default function Layout({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <main className="flex h-[100vh] w-full flex-1 flex-col items-start justify-start bg-gray-500">
+      <main className="flex min-h-[100vh] w-full flex-1 flex-col items-start justify-start bg-gray-500 pb-20">
         <div className="fixed top-0 flex w-full flex-row justify-between">
           <div>
             {/* <button
