@@ -15,6 +15,7 @@ import { useComments } from "../../hooks/database/useComments";
 import Link from "next/link";
 import { Proposal } from "../../types/Proposal";
 import { useGetProposals } from "../../hooks/snapshot/useGetProposals";
+import { defaultAvatar } from "../../config";
 
 export default function Profile({ user }: any) {
   const { address, friends } = user;
@@ -53,7 +54,11 @@ export default function Profile({ user }: any) {
                       </p>
                     ))}
                   {tags.map((tag: any, i: number) => (
-                    <p className="badge badge-dark" key={i}>
+                    <p
+                      className="badge badge-dark"
+                      key={i}
+                      onClick={tag.toggle}
+                    >
                       {tag.tag} [{tag.taggers.length || ""}]
                     </p>
                   ))}
@@ -67,7 +72,7 @@ export default function Profile({ user }: any) {
               </div>
               <div className="ring-primary rounded-full border-4 ring-4">
                 <Image
-                  src={user.avatarSrc || user.avatarUrl}
+                  src={user.avatarSrc || defaultAvatar}
                   width={150}
                   height={150}
                   className="rounded-full"

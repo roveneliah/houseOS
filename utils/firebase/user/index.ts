@@ -60,6 +60,20 @@ export const tagUser = async (
     { merge: true }
   );
 
+export const untagUser = async (
+  userAddress: EthereumAddress,
+  tag: string,
+  tagger: EthereumAddress
+) =>
+  setDoc(
+    doc(db, `users/${userAddress}/tags/${tag}`),
+    {
+      tag,
+      taggers: arrayRemove(tagger),
+    },
+    { merge: true }
+  );
+
 export const addFriend = async (
   userAddress: EthereumAddress,
   friend: EthereumAddress
