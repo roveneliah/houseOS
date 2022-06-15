@@ -140,16 +140,16 @@ export default function Layout({
               </>
             )}
             <button
-              className="btn btn-outline group"
+              className="btn btn-outline flex flex-row space-x-2"
               onClick={() => {
                 console.log("Yo");
                 setIsOpen(!isOpen);
               }}
             >
-              <p className="hidden group-hover:block">⌘k</p>
-              <div className="block group-hover:hidden">
+              <div className="">
                 <SearchIcon />
               </div>
+              <p className="">⌘k</p>
             </button>
           </div>
         </div>
