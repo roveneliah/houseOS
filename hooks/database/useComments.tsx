@@ -18,8 +18,6 @@ export const useComments = (address: EthereumAddress): Array<Comment> => {
       setComments(
         comments.map(({ author, body, proposalId, choice }) => {
           const proposal = proposals.find((p: Proposal) => p.id === proposalId);
-          console.log(proposal);
-
           return {
             author,
             body,
@@ -27,11 +25,12 @@ export const useComments = (address: EthereumAddress): Array<Comment> => {
             votingPower: -1,
             proposalTitle: proposal?.title,
             choice: proposal?.choices[choice + 1],
+            // proposal,
           };
         })
       );
     });
-  }, []);
+  }, [address]);
 
   return comments;
 };
