@@ -21,10 +21,16 @@ export const createUser = async (
   address: EthereumAddress,
   name: string = "Jerry"
 ) => {
-  return await setDoc(doc(db, "users", address), {
-    name,
-    address,
-  });
+  return await setDoc(
+    doc(db, "users", address),
+    {
+      name,
+      address,
+    },
+    {
+      merge: true,
+    }
+  );
 };
 
 export const getUser = async (address: EthereumAddress) => {

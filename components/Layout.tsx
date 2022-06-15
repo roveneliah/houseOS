@@ -32,8 +32,8 @@ const useCreateProfile = () => {
   const address = useUserAddress();
 
   useEffect(() => {
-    const newUser = isConnected && !user;
-    if (newUser && address) {
+    const newUser = user && !user.loading && user.name;
+    if (isConnected && newUser && address) {
       console.log("Creating account @", address);
       createUser(address);
     }

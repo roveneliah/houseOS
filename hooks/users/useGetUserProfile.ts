@@ -21,8 +21,9 @@ export const useGetUserProfile = () => {
   const { data: ensName } = useEnsName({ address: account?.address });
 
   return (
-    user && {
+    !user.loading && {
       ...user,
+      loading: false,
       hodler,
       krauseBalance,
       ensName,
