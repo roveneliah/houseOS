@@ -5,32 +5,38 @@ import { listenUserComments } from "../../utils/firebase/user";
 import { useGetProposals } from "../snapshot/useGetProposals";
 import { snapshotSpace } from "../../config";
 import { Proposal } from "../../types/Proposal";
+import { fetchVote } from "../../utils/fetchVote";
 
 /**
  * Get all of a users' comments.
  */
 export const useComments = (address: EthereumAddress): Array<Comment> => {
-  const [comments, setComments] = useState<Array<Comment>>([]);
+  const [comments, setComments] = useState<any>([]);
   const proposals = useGetProposals(snapshotSpace);
 
   useEffect(() => {
     listenUserComments(address).then((comments: Array<any>) => {
-      setComments(
-        comments.map(({ author, body, proposalId, choice }) => {
-          const proposal = proposals.find((p: Proposal) => p.id === proposalId);
-          return {
-            author,
-            body,
-            proposalId,
-            votingPower: -1,
-            proposalTitle: proposal?.title,
-            choice: proposal?.choices[choice + 1],
-            // proposal,
-          };
-        })
-      );
+      address &&
+        proposals &&
+        Promise.all(
+          comments.map(async ({ author, body, proposalId, choice }) => {
+            const proposal = proposals.find(
+              (p: Proposal) => p.id === proposalId
+            );
+            const [vote] = await fetchVote(proposalId, address);
+            return {
+              author,
+              body,
+              proposalId,
+              proposalTitle: proposal?.title,
+              choice: proposal?.choices[choice + 1],
+              vp: vote?.vp,
+              end: proposal?.end,
+            };
+          })
+        ).then(setComments);
     });
-  }, [address]);
+  }, [address, proposals]);
 
   return comments;
 };

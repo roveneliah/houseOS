@@ -26,8 +26,6 @@ export default function CommentList({
     () => comments.sort((a, b) => (b.vp || 0) - (a.vp || 0)),
     [comments]
   );
-  console.log(comments);
-  console.log(sortedComments);
 
   return (
     <div className="flex flex-col space-y-4">

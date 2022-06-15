@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
  * Originally designed to read metadata, for comment, but this does not work.
  */
 const useFetchVotes = createHook(fetchVotes);
-export const useGetVotes = (proposalId: string): Array<Comment> => {
+export const useGetVotes = (proposalId: string): Array<any> => {
   const votes = useFetchVotes(proposalId);
   const [labeledVotes, setLabeledVotes] = useState([]);
 
