@@ -2,7 +2,13 @@ import { useViewerRecord } from "@self.id/framework";
 import { useAccount, useEnsAddress, useEnsName } from "wagmi";
 import { EthereumAddress } from "../../types/EthereumAddress";
 import { User } from "../../types/User";
-import { addFriend, removeFriend } from "../../utils/firebase/user";
+import { tagProposal, untagProposal } from "../../utils/firebase/post";
+import {
+  addFriend,
+  removeFriend,
+  tagUser,
+  untagUser,
+} from "../../utils/firebase/user";
 import { recordToUser } from "../../utils/recordToUser";
 import { useGetUser } from "../database/useGetUser";
 import { useKrauseBalance } from "../ethereum/useKrauseBalance";
@@ -20,16 +26,20 @@ export const useGetUserProfile = () => {
   const hodler = krauseBalance > 0;
   const { data: ensName } = useEnsName({ address: account?.address });
 
-  return (
-    !user.loading && {
-      ...user,
-      loading: false,
-      hodler,
-      krauseBalance,
-      ensName,
-      addFriend: (friend: EthereumAddress) => addFriend(user.address, friend),
-      removeFriend: (friend: EthereumAddress) =>
-        removeFriend(user.address, friend),
-    }
-  );
+  return !user.loading
+    ? {
+        ...user,
+        loading: false,
+        hodler,
+        krauseBalance,
+        ensName,
+        addFriend: (friend: EthereumAddress) => addFriend(user.address, friend),
+        removeFriend: (friend: EthereumAddress) =>
+          removeFriend(user.address, friend),
+        tagUser: (userAddress: EthereumAddress, tag: string) =>
+          tagUser(userAddress, tag, user.address),
+        untagUser: (userAddress: EthereumAddress, tag: string) =>
+          untagUser(userAddress, tag, user.address),
+      }
+    : undefined;
 };

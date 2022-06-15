@@ -9,6 +9,16 @@ module.exports = {
     "Dev Team",
     "Pig Pen",
   ],
+  proposalTags: [
+    "Compensation",
+    "Ball Hogs",
+    "Big3",
+    "Community",
+    "Full-Time",
+    "Project",
+    "Investment",
+    "Treasury",
+  ],
   commands: {
     links: [
       {

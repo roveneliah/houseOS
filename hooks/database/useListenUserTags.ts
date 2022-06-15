@@ -14,23 +14,21 @@ export const useListenUserTags = (address: EthereumAddress) => {
   useEffect(() => {
     listenUserTags(address, (tags: any) => {
       setTags(
-        tags.map(({ tag, taggers }: any) => ({
-          tag,
-          taggers,
-          toggle: () => {
-            if (account?.address) {
-              if (taggers.includes(account?.address)) {
-                console.log("Untagging", address, " with ", tag);
-                untagUser(address, tag);
-              } else {
-                console.log("Tagging", address, " with ", tag);
-                tagUser(address, tag);
-              }
-            } else console.log("NO USER");
-          },
-        }))
+        tags
+          .filter(({ taggers }) => taggers.length > 0)
+          .map(({ tag, taggers }: any) => ({
+            tag,
+            taggers,
+            toggle: () => {
+              if (account?.address) {
+                taggers.includes(account?.address)
+                  ? untagUser(address, tag)
+                  : tagUser(address, tag);
+              } else console.log("NO USER");
+            },
+          }))
       );
     });
-  }, [account?.address]);
+  }, [account?.address, tagUser, untagUser]);
   return tags;
 };

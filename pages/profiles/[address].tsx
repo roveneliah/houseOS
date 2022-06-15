@@ -19,7 +19,7 @@ import { defaultAvatar } from "../../config";
 import { useGetAllUserTags } from "../../hooks/tags/useGetAllUserTags";
 
 export default function Profile({ user }: any) {
-  const { address, friends } = user;
+  const { address, friends, name } = user;
   const { data: account } = useAccount();
   const profile = useGetUserProfile();
   const tags = useListenUserTags(address);
@@ -69,7 +69,7 @@ export default function Profile({ user }: any) {
                   )}
                 </div>
                 <p className="text-left text-5xl font-bold">
-                  {user.name || ensName || "Anon Jerry"}
+                  {name || ensName || "Anon Jerry"}
                 </p>
                 <p className="font-semibold text-gray-200">
                   {Number(krauseBalance)} $KRAUSE

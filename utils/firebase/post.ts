@@ -1,5 +1,6 @@
 import {
   addDoc,
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
@@ -60,6 +61,20 @@ export const tagProposal = (
     {
       tag,
       taggers: arrayUnion(tagger),
+    },
+    { merge: true }
+  );
+
+export const untagProposal = (
+  proposalId: string,
+  tag: string,
+  tagger: EthereumAddress
+) =>
+  setDoc(
+    doc(db, `proposals/${proposalId}/tags/${tag}`),
+    {
+      tag,
+      taggers: arrayRemove(tagger),
     },
     { merge: true }
   );

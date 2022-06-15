@@ -12,7 +12,7 @@ import { ProposalListItem } from "../../components/ProposalListItem";
 import { LockedIcon } from "../../components/icons/LockedIcon";
 import { ListIcon } from "../../components/icons/ListIcon";
 import { useSingleSelect } from "../../hooks/generic/useSingleSelect";
-import { snapshotSpace } from "../../config";
+import { proposalTags, snapshotSpace } from "../../config";
 import { useCommand } from "../../hooks/generic/useCommand";
 
 export enum StateFilters {
@@ -24,7 +24,7 @@ const { All, Active, Closed } = StateFilters;
 
 const ProposalsListPage: NextPage = () => {
   const proposals = useGetProposals(snapshotSpace);
-  const tags = useGetAllProposalTags();
+  const tags = proposalTags;
   const countActive = length(
     proposals.filter(({ state }) => state === ProposalState.Active)
   );

@@ -37,6 +37,6 @@ export const useGetAllUserTags = (address: EthereumAddress): Array<any> => {
         }))
       );
     });
-  }, [account?.address]);
+  }, [account?.address, untagUser, tagUser]);
   return tags;
 };

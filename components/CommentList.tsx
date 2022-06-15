@@ -4,6 +4,7 @@ import { Comment } from "../types/Comment";
 import { useMemo, useState } from "react";
 import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
 import { Proposal } from "@snapshot-labs/snapshot.js/dist/sign/types";
+import { userTags } from "../config";
 
 interface Props {
   comments: Array<Comment>;
@@ -18,7 +19,7 @@ export default function CommentList({
   proposal,
   choice,
 }: Props) {
-  const tags = useGetAllUserTags();
+  const tags = userTags;
   const [selectedTags, setSelectedTags] = useState([]);
 
   // TODO: #8 Load in voting power

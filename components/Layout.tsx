@@ -32,7 +32,7 @@ const useCreateProfile = () => {
   const address = useUserAddress();
 
   useEffect(() => {
-    const newUser = user && !user.loading && user.name;
+    const newUser = user && !user.loading && !user.name;
     if (isConnected && newUser && address) {
       console.log("Creating account @", address);
       createUser(address);
@@ -57,11 +57,10 @@ export default function Layout({
 
   const { connect, connectors, isConnected } = useConnect();
   const { disconnect } = useDisconnect();
+  const { data: ensName } = useEnsName({ address });
   const connector = connectors[1];
 
   const tagUser = useTagUser();
-
-  const { data: ensName } = useEnsName({ address });
 
   return (
     <div data-theme={themeName} className="min-h-screen">
