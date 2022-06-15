@@ -1,6 +1,7 @@
 import { Comment } from "../../types/Comment";
 import { createHook } from "../createHook";
 import { fetchVotes } from "../../utils/fetchVotes";
+import { useEffect, useState } from "react";
 
 /**
  * Get votes for a proposal from Snapshot.
@@ -9,10 +10,18 @@ import { fetchVotes } from "../../utils/fetchVotes";
 const useFetchVotes = createHook(fetchVotes);
 export const useGetVotes = (proposalId: string): Array<Comment> => {
   const votes = useFetchVotes(proposalId);
-  return votes.map((vote: any) => ({
-    author: vote.voter,
-    src: "/flex.png",
-    comment: vote.metadata?.comment,
-    ...vote,
-  }));
+  const [labeledVotes, setLabeledVotes] = useState([]);
+
+  useEffect(() => {
+    setLabeledVotes(
+      votes.map((vote: any) => ({
+        author: vote.voter,
+        src: "/flex.png",
+        comment: vote.metadata?.comment,
+        ...vote,
+      }))
+    );
+  }, [votes]);
+
+  return labeledVotes;
 };

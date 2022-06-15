@@ -36,11 +36,7 @@ export const useGetCommands = (): Array<Command> => {
   return [
     ...commands?.links?.map(createLinkCommand),
     ...proposals?.map(createProposalCommand),
-    {
-      name: "Me",
-      link: `/profile`,
-      type: CommandFilters.USER,
-    },
+
     ...users?.map(createUserCommand),
   ];
 };

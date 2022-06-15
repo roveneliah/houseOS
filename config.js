@@ -43,7 +43,7 @@ module.exports = {
     links: [
       {
         name: "Profile",
-        link: "/profile",
+        link: "/me",
       },
       {
         name: "Proposals",

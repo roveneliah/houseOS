@@ -101,7 +101,7 @@ export default function Profile({ user }: any) {
                         {comment.body}
                       </p>
                       <p className="badge">{comment.choice}</p>
-                      <p className="badge">{comment.votingPower}</p>
+                      <p className="badge">{comment.vp}</p>
                     </div>
                   </Link>
                 );

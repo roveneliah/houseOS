@@ -10,18 +10,21 @@ import { LoginView } from "./components/LoginView";
 import { useKrauseBalance } from "../../hooks/ethereum/useKrauseBalance";
 import { useListenUserTags } from "../../hooks/database/useListenUserTags";
 import { useUserAddress } from "../../hooks/ethereum/useUserAddress";
-
-const useGetAllComments = (address: EthereumAddress) => {
-  return [];
-};
+import { useState } from "react";
+import { useGetAllUserTags } from "../../hooks/tags/useGetAllUserTags";
+import { useGetComments } from "../../hooks/database/useGetComments";
+import { useComments } from "../../hooks/database/useComments";
+import { Comment } from "../../types/Comment";
+import Link from "next/link";
 
 export default function MyProfile() {
   const user: User = useGetUserProfile();
   const address = useUserAddress();
   const tags = useListenUserTags(address);
+  const allTags = useGetAllUserTags(address);
   const krauseBalance = useKrauseBalance(address);
 
-  const comments = useGetAllComments(address);
+  const comments = useComments(address);
 
   const avatarSrc = user?.avatarSrc;
   const friends = user?.friends;
@@ -35,20 +38,13 @@ export default function MyProfile() {
           <div className="flex w-full flex-row items-center justify-between">
             <div className="justfiy-start flex flex-col items-start space-y-2">
               <div className="flex flex-row space-x-2">
-                {tags.map((tag: any, i: number) => (
-                  <p
-                    key={i}
-                    className="badge badge-dark"
-                    onClick={() => user?.removeTag(tag)}
-                  >
-                    {tag.tag}
+                {tags.map(({ tag }: any, i: number) => (
+                  <p key={i} className="badge badge-dark">
+                    {tag}
                   </p>
                 ))}
               </div>
-              <p
-                onClick={() => user?.addTags("Steward", "Ohhh yea!")}
-                className="text-left text-5xl font-bold text-gray-700"
-              >
+              <p className="text-left text-5xl font-bold text-gray-700">
                 {user?.name}
               </p>
               <p className="font-semibold text-gray-200">
@@ -68,17 +64,22 @@ export default function MyProfile() {
             <p className="text-left text-3xl font-bold text-gray-200">
               Comments
             </p>
-            {comments && comments.length > 0 ? (
-              <div className="flex flex-col">
-                {comments.map((comment, i) => (
-                  <p>{i}</p>
-                ))}
-              </div>
-            ) : (
-              <p className="font-semibold">
-                Any comments you leave on proposals will show up here.
-              </p>
-            )}
+            {comments.map((comment: Comment, i: number) => {
+              return (
+                <Link href={`/proposals/${comment.proposalId}`} key={i}>
+                  <div className="rounded-lg bg-gray-300/50 p-5">
+                    <p className="font-semibold text-gray-700">
+                      {comment.proposalTitle}
+                    </p>
+                    <p className="font-semibold text-gray-700">
+                      {comment.body}
+                    </p>
+                    <p className="badge">{comment.choice}</p>
+                    <p className="badge">{comment.vp}</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
           <div className="flex flex-col space-y-4">
             <p className="text-left text-3xl font-bold text-gray-200">
@@ -97,6 +98,26 @@ export default function MyProfile() {
                 proposals.
               </p>
             )}
+          </div>
+          <div className="flex flex-col space-y-4">
+            <p className="text-left text-3xl font-bold text-gray-200">
+              Help others understand a bit about you.
+            </p>
+            <div className="border-1 flex flex-row flex-wrap justify-start space-x-2 overflow-auto rounded-lg border  p-3">
+              {allTags.map(({ tag, taggers, toggle }: any, i: number) => (
+                <p
+                  className={`badge my-1 ${
+                    taggers.includes(address)
+                      ? "badge-dark"
+                      : "hover:bg-gray-400"
+                  }`}
+                  key={i}
+                  onClick={toggle}
+                >
+                  {tag} {taggers.length}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
       )}

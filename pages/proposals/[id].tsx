@@ -23,8 +23,6 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
   const comments: Array<Comment> = useGetComments(proposal.id);
   const [selectedChoice, setSelectedChoice] = useState(0);
 
-  console.log(comments);
-
   useCommand("ArrowRight", () =>
     setSelectedChoice((choice) => (choice + 1) % 3)
   );
