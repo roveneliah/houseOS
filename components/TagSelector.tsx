@@ -10,7 +10,7 @@ export default function TagSelector({ tags, setSelectedTags }: any) {
   const enhancedTags = useOrderedMultiselect(tags); // (1) selected first, (2) tag selected, (3) expose toggle
   const selectedTags = useMemo(() => {
     const selected = enhancedTags.filter(prop("selected")).map(prop("x"));
-    return selected.length > 0 ? selected : enhancedTags.map(prop("x"));
+    return selected.length > 0 ? selected : [];
   }, [...enhancedTags.map((tag) => tag.selected)]);
 
   useEffect(() => {
