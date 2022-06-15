@@ -16,12 +16,14 @@ import Link from "next/link";
 import { Proposal } from "../../types/Proposal";
 import { useGetProposals } from "../../hooks/snapshot/useGetProposals";
 import { defaultAvatar } from "../../config";
+import { useGetAllUserTags } from "../../hooks/tags/useGetAllUserTags";
 
 export default function Profile({ user }: any) {
   const { address, friends } = user;
   const { data: account } = useAccount();
   const profile = useGetUserProfile();
   const tags = useListenUserTags(address);
+  const allTags = useGetAllUserTags(address);
   const krauseBalance = useKrauseBalance(address);
   const { data: ensName } = useEnsName({ address });
   const isFriend = profile?.friends?.includes(address);
@@ -29,11 +31,11 @@ export default function Profile({ user }: any) {
 
   return (
     <Layout>
-      <div className="flex w-full flex-col space-y-32 px-72 pt-20">
-        {!address ? (
-          <LoadingView address={ensName || address} />
-        ) : (
-          <>
+      {!address ? (
+        <LoadingView address={ensName || address} />
+      ) : (
+        <>
+          <div className="flex w-full flex-col space-y-32 bg-gray-700 px-72 pt-28 pb-12">
             <div className="flex w-full flex-row items-center justify-between">
               <div className="justfiy-start flex flex-col items-start space-y-2">
                 <div className="flex flex-row space-x-2">
@@ -53,17 +55,20 @@ export default function Profile({ user }: any) {
                         Add Friend
                       </p>
                     ))}
-                  {tags.map((tag: any, i: number) => (
-                    <p
-                      className="badge badge-dark"
-                      key={i}
-                      onClick={tag.toggle}
-                    >
-                      {tag.tag} [{tag.taggers.length || ""}]
-                    </p>
-                  ))}
+                  {tags.map(
+                    (tag: any, i: number) =>
+                      tag.taggers.length > 0 && (
+                        <p
+                          className="badge badge-light"
+                          key={i}
+                          onClick={tag.toggle}
+                        >
+                          {tag.tag} [{tag.taggers.length || ""}]
+                        </p>
+                      )
+                  )}
                 </div>
-                <p className="text-left text-5xl font-bold text-gray-700">
+                <p className="text-left text-5xl font-bold">
                   {user.name || ensName || "Anon Jerry"}
                 </p>
                 <p className="font-semibold text-gray-200">
@@ -79,6 +84,8 @@ export default function Profile({ user }: any) {
                 />
               </div>
             </div>
+          </div>
+          <div className="flex w-full flex-col space-y-32 px-72 py-20">
             <div>
               <p className="text-left text-3xl font-bold text-gray-200">
                 Comments
@@ -110,9 +117,27 @@ export default function Profile({ user }: any) {
                 ))}
               </div>
             </div>
-          </>
-        )}
-      </div>
+            <div className="flex flex-col space-y-6">
+              <p className="text-left text-3xl font-bold text-gray-200">Tags</p>
+              <div className="flex flex-row flex-wrap space-x-2">
+                {allTags?.map(({ tag, toggle, taggers }: any, i: number) => (
+                  <p
+                    className={`badge my-1 ${
+                      taggers.includes(account?.address)
+                        ? "badge-dark"
+                        : "hover:bg-gray-400"
+                    }`}
+                    key={i}
+                    onClick={toggle}
+                  >
+                    {tag}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </Layout>
   );
 }

@@ -1,6 +1,14 @@
 module.exports = {
   snapshotSpace: "krausehouse.eth",
   defaultAvatar: "/coachrick.png",
+  userTags: [
+    "Steward",
+    "Contributor",
+    "Full-Time",
+    "Media Team",
+    "Dev Team",
+    "Pig Pen",
+  ],
   commands: {
     links: [
       {
