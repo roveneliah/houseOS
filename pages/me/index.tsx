@@ -28,6 +28,9 @@ export default function MyProfile() {
   const allTags = useGetAllUserTags(address);
   const krauseBalance = useKrauseBalance(address);
 
+  const [editView, setEditView] = useState<boolean>(false);
+  const [nameInput, setNameInput] = useState<string>(user?.name);
+
   const comments = useComments(address);
   const sortedComments = useMemo(
     () => comments.sort((a, b) => b.end - a.end),
@@ -47,9 +50,27 @@ export default function MyProfile() {
             <div className="flex w-full flex-row items-center justify-between">
               <div className="justfiy-start flex flex-col items-start space-y-4">
                 <TagsList tags={tags} />
-                <p className="text-left text-5xl font-bold text-gray-300">
-                  {user?.name}
-                </p>
+                {editView ? (
+                  <input
+                    value={nameInput}
+                    onBlur={() => {
+                      nameInput.length > 2 &&
+                        nameInput != "..." &&
+                        user.updateName(nameInput);
+                      setEditView(false);
+                    }}
+                    onChange={(e) => setNameInput(e.target.value)}
+                    defaultValue="..."
+                    className="border-b-2 bg-transparent text-left text-5xl font-semibold text-gray-300 caret-current outline-none"
+                  />
+                ) : (
+                  <p
+                    onDoubleClick={() => setEditView(true)}
+                    className="text-left text-5xl font-bold text-gray-300"
+                  >
+                    {user?.name}
+                  </p>
+                )}
                 <p className="font-semibold text-gray-200">
                   {Number(krauseBalance)} $KRAUSE
                 </p>

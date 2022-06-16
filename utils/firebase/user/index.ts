@@ -45,6 +45,9 @@ export const createUser = async (
   await batch.commit();
 };
 
+export const updateName = async (address: EthereumAddress, name: string) =>
+  updateDoc(doc(db, "users", address), { name });
+
 export const getUser = async (address: EthereumAddress) => {
   return await getDoc(doc(db, `users/${address}`)).then((doc) => doc.data());
 };

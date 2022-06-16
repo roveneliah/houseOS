@@ -8,8 +8,10 @@ import {
   removeFriend,
   tagUser,
   untagUser,
+  updateName,
 } from "../../utils/firebase/user";
 import { recordToUser } from "../../utils/recordToUser";
+// import { updateName } from "../ceramic/ceramic";
 import { useGetUser } from "../database/useGetUser";
 import { useKrauseBalance } from "../ethereum/useKrauseBalance";
 
@@ -40,6 +42,7 @@ export const useGetUserProfile = () => {
           tagUser(userAddress, tag, user.address),
         untagUser: (userAddress: EthereumAddress, tag: string) =>
           untagUser(userAddress, tag, user.address),
+        updateName: (name: string) => updateName(user.address, name),
       }
     : undefined;
 };
