@@ -15,8 +15,33 @@ import { useComments } from "../../hooks/database/useComments";
 import Link from "next/link";
 import { Proposal } from "../../types/Proposal";
 import { useGetProposals } from "../../hooks/snapshot/useGetProposals";
-import { defaultAvatar } from "../../config";
+import { dao, defaultAvatar } from "../../config";
 import { useGetAllUserTags } from "../../hooks/tags/useGetAllUserTags";
+
+export function CommentList({ comments }: { comments: Array<Comment> }) {
+  return (
+    <div>
+      {comments.map((comment: Comment, i: number) => {
+        return (
+          <Link href={`/proposals/${comment.proposalId}`} key={i}>
+            <div className="flex flex-col space-y-4 rounded-lg bg-gray-300/50 p-5">
+              <p className="text-xl font-normal text-gray-700">
+                {comment.body}
+              </p>
+              <div className="flex flex-row justify-between">
+                <p className="font-semibold text-gray-700">
+                  {comment.proposalTitle}
+                </p>
+                <p className="badge">{comment.choice}</p>
+              </div>
+              {comment.vp && <p className="badge">{comment.vp}</p>}
+            </div>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function Profile({ user }: any) {
   const { address, friends, name } = user;
@@ -36,9 +61,9 @@ export default function Profile({ user }: any) {
       ) : (
         <>
           <div className="flex w-full flex-col space-y-32 bg-gray-700 px-72 pt-28 pb-12">
-            <div className="flex w-full flex-row items-center justify-between">
-              <div className="justfiy-start flex flex-col items-start space-y-2">
-                <div className="flex flex-row space-x-2">
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-col items-start justify-start space-y-2">
+                <div className="flex flex-row justify-start space-x-2">
                   {account &&
                     (isFriend ? (
                       <p
@@ -55,25 +80,29 @@ export default function Profile({ user }: any) {
                         Add Friend
                       </p>
                     ))}
+                  <p className="badge">{Number(krauseBalance)} $KRAUSE</p>
+                </div>
+
+                <p className="text-left text-5xl font-bold">
+                  {name || ensName || `Anon ${dao.memberName}`}
+                </p>
+                <div className="flex flex-row space-x-2 pt-6">
                   {tags.map(
                     (tag: any, i: number) =>
                       tag.taggers.length > 0 && (
                         <p
-                          className="badge badge-light"
+                          className="badge badge-light overflow-hidden"
                           key={i}
                           onClick={tag.toggle}
                         >
-                          {tag.tag} [{tag.taggers.length || ""}]
+                          <span className="mr-2 -ml-3 bg-gray-400 p-2 text-gray-700">
+                            {tag.taggers.length || ""}
+                          </span>
+                          {tag.tag}
                         </p>
                       )
                   )}
                 </div>
-                <p className="text-left text-5xl font-bold">
-                  {name || ensName || "Anon Jerry"}
-                </p>
-                <p className="font-semibold text-gray-200">
-                  {Number(krauseBalance)} $KRAUSE
-                </p>
               </div>
               <div className="ring-primary rounded-full border-4 ring-4">
                 <Image
@@ -86,26 +115,11 @@ export default function Profile({ user }: any) {
             </div>
           </div>
           <div className="flex w-full flex-col space-y-32 px-72 py-20">
-            <div>
+            <div className="flex flex-col space-y-6">
               <p className="text-left text-3xl font-bold text-gray-200">
                 Comments
               </p>
-              {comments.map((comment: Comment, i: number) => {
-                return (
-                  <Link href={`/proposals/${comment.proposalId}`} key={i}>
-                    <div className="rounded-lg bg-gray-300/50 p-5">
-                      <p className="font-semibold text-gray-700">
-                        {comment.proposalTitle}
-                      </p>
-                      <p className="font-semibold text-gray-700">
-                        {comment.body}
-                      </p>
-                      <p className="badge">{comment.choice}</p>
-                      <p className="badge">{comment.vp}</p>
-                    </div>
-                  </Link>
-                );
-              })}
+              <CommentList comments={comments} />
             </div>
             <div className="flex flex-col space-y-6">
               <p className="text-left text-3xl font-bold text-gray-200">

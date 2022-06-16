@@ -12,14 +12,18 @@ import LinkIcon from "./icons/LinkIcon";
 
 interface Props {
   commands: Array<Command>;
-  isOpen: boolean;
   setIsOpen: Function;
+  isOpen?: boolean;
+  noOpacity?: boolean;
+  deactivated?: boolean;
 }
 
 export default function CommandPalette({
   commands,
   isOpen = false,
   setIsOpen,
+  noOpacity = false,
+  deactivated = false,
 }: Props) {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -96,7 +100,9 @@ export default function CommandPalette({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="fixed inset-0 bg-gray-500/75" />
+          {noOpacity || (
+            <Dialog.Overlay className="fixed inset-0 bg-gray-500/75" />
+          )}
         </Transition.Child>
         <Transition.Child
           enter="duration-300 ease-out"
@@ -109,8 +115,10 @@ export default function CommandPalette({
           <Combobox
             value={undefined}
             onChange={(command: Command) => {
-              command.link && router.push(command.link);
-              setIsOpen(false);
+              if (!deactivated) {
+                command.link && router.push(command.link);
+                setIsOpen(false);
+              }
             }}
             as="div"
             className="relative overflow-hidden rounded-lg bg-gray-50 shadow-2xl ring-1 ring-black/5"

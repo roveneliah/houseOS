@@ -13,15 +13,20 @@ import {
   query,
   where,
   collectionGroup,
+  runTransaction,
+  writeBatch,
 } from "firebase/firestore";
 import { db } from "..";
+import { dao } from "../../../config";
 import { EthereumAddress } from "../../../types/EthereumAddress";
 
 export const createUser = async (
   address: EthereumAddress,
-  name: string = "Jerry"
+  name: string = dao.memberName,
+  tags: Array<string> = []
 ) => {
-  return await setDoc(
+  const batch = writeBatch(db);
+  batch.set(
     doc(db, "users", address),
     {
       name,
@@ -31,6 +36,13 @@ export const createUser = async (
       merge: true,
     }
   );
+  tags.forEach(async (tag) =>
+    batch.set(doc(db, `users/${address}/tags/${tag}`), {
+      tag,
+      taggers: [address],
+    })
+  );
+  await batch.commit();
 };
 
 export const getUser = async (address: EthereumAddress) => {

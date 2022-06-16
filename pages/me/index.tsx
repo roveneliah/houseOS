@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Layout from "../../components/Layout";
-import { defaultAvatar } from "../../config";
+import { dao, defaultAvatar } from "../../config";
 import { ProfilePreview } from "../profiles/components/ProfilePreview";
 import { LoadingView } from "../profiles/components/LoadingView";
 import { EthereumAddress } from "../../types/EthereumAddress";
@@ -29,7 +29,6 @@ export default function MyProfile() {
     () => comments.sort((a, b) => b.end - a.end),
     [comments]
   );
-  console.log(comments);
 
   const avatarSrc = user?.avatarSrc;
   const friends = user?.friends;
@@ -72,26 +71,39 @@ export default function MyProfile() {
               <p className="text-left text-3xl font-bold text-gray-200">
                 Comments
               </p>
-              {comments?.map((comment: Comment, i: number) => {
-                return (
-                  <Link href={`/proposals/${comment.proposalId}`} key={i}>
-                    <div className="flex flex-col space-y-4 rounded-lg bg-gray-300/50 p-5">
-                      <p className="text-lg font-normal text-gray-700">
-                        {comment.body}
-                      </p>
-                      <div className="flex flex-row space-x-2">
-                        <p className="badge">{comment.choice}</p>
-                        {comment.vp && (
-                          <p className="badge">{comment.vp} $KRAUSE</p>
-                        )}
+              {comments && comments.length > 0 ? (
+                comments.map((comment: Comment, i: number) => {
+                  return (
+                    <Link href={`/proposals/${comment.proposalId}`} key={i}>
+                      <div className="flex flex-col space-y-4 rounded-lg bg-gray-300/50 p-5">
+                        <p className="text-lg font-normal text-gray-700">
+                          {comment.body}
+                        </p>
+                        <div className="flex flex-row space-x-2">
+                          <p className="badge">{comment.choice}</p>
+                          {comment.vp && (
+                            <p className="badge">{comment.vp} $KRAUSE</p>
+                          )}
+                        </div>
+                        <p className="font-semibold text-gray-700">
+                          {comment.proposalTitle}
+                        </p>
                       </div>
-                      <p className="font-semibold text-gray-700">
-                        {comment.proposalTitle}
-                      </p>
-                    </div>
-                  </Link>
-                );
-              })}
+                    </Link>
+                  );
+                })
+              ) : (
+                <div>
+                  <p className="font-semibold">
+                    Your comments will appear here. You can also check out other
+                    peoples' activity on their profiles.
+                  </p>
+                  <p className="font-semibold">
+                    Open the Command Palette with ⌘k or ctrl k and search
+                    proposals.
+                  </p>
+                </div>
+              )}
             </div>
             <div className="flex flex-col space-y-4">
               <p className="text-left text-3xl font-bold text-gray-200">
@@ -106,8 +118,8 @@ export default function MyProfile() {
               ) : (
                 <p className="font-semibold">
                   You can add friends by searching in the command palette. By
-                  friending Jerry's, you borrow their labels on other users and
-                  proposals.
+                  friending ${dao.memberName}'s, you borrow their labels on
+                  other users and proposals.
                 </p>
               )}
             </div>

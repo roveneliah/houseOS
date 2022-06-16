@@ -1,6 +1,7 @@
 module.exports = {
   dao: {
     name: "Krause House",
+    memberName: "Jerry",
     treasury: "0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
     gnosisSafes: [
       {
