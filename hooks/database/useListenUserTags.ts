@@ -34,6 +34,6 @@ export const useListenUserTags = (address: Maybe<EthereumAddress>) => {
             }))
         );
       });
-  }, [account?.address, tagUser, untagUser]);
+  }, [account?.address, tagUser, untagUser, address]);
   return tags;
 };

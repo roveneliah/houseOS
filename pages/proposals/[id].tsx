@@ -32,16 +32,18 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
 
   return (
     <Layout>
-      <div className="flex w-full flex-col items-start space-y-10 bg-gray-800 px-72 pt-20">
-        <ProposalHeader proposal={proposal} />
-        <ChoiceFilters
-          proposal={proposal}
-          selectedChoice={selectedChoice}
-          setSelectedChoice={setSelectedChoice}
-        />
+      <div className="flex w-full flex-row justify-center bg-gray-800 pt-20">
+        <div className="flex w-2/3 flex-col items-start space-y-10 ">
+          <ProposalHeader proposal={proposal} />
+          <ChoiceFilters
+            proposal={proposal}
+            selectedChoice={selectedChoice}
+            setSelectedChoice={setSelectedChoice}
+          />
+        </div>
       </div>
-      <div className="items flex w-full flex-col items-start bg-gray-500 px-72 pt-20">
-        <div className="flex w-full flex-col space-y-4 pt-4">
+      <div className="flex w-full  flex-row justify-center bg-gray-500 pt-20">
+        <div className="flex w-2/3 flex-col space-y-4 pt-4">
           {view === View.CommentList && (
             <CommentList
               toggleCommentView={() => setView(View.Comment)}

@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
 import { Proposal } from "@snapshot-labs/snapshot.js/dist/sign/types";
 import { userTags } from "../config";
+import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 
 interface Props {
   comments: Array<Comment>;
@@ -21,36 +22,50 @@ export default function CommentList({
 }: Props) {
   const tags = userTags;
   const [selectedTags, setSelectedTags] = useState([]);
+  const address = useUserAddress();
 
-  const sortedComments = useMemo(
-    () => comments.sort((a, b) => (b.vp || 0) - (a.vp || 0)),
+  const sortedFilteredComments = useMemo(
+    () =>
+      comments
+        .sort((a, b) => (b.vp || 0) - (a.vp || 0))
+        .filter((comment) => comment.choice === choice + 1),
     [comments]
   );
 
   return (
     <div className="flex flex-col space-y-4">
-      <div className="flex w-full flex-row justify-between border-b-2 border-gray-900">
+      <div className="flex w-full flex-row items-baseline justify-between border-b-2 border-gray-900">
         <p className="text-4xl font-bold text-gray-900">
           {proposal.choices[choice]}
         </p>
-        <p
-          className="cursor-pointer text-4xl font-bold text-gray-900 hover:text-gray-600"
-          onClick={toggleCommentView}
-        >
-          Vote
-        </p>
+        {address ? (
+          <p
+            className="cursor-pointer text-4xl font-bold text-gray-900 hover:text-gray-600"
+            onClick={toggleCommentView}
+          >
+            Vote
+          </p>
+        ) : (
+          <p className="cursor-pointer text-xl font-bold text-gray-900 hover:text-gray-600">
+            Sign in to Vote
+          </p>
+        )}
       </div>
-      <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
+      {address && <TagSelector tags={tags} setSelectedTags={setSelectedTags} />}
       <div>
-        {sortedComments
-          .filter((comment) => comment.choice === choice + 1)
-          .map((comment: Comment, i: number) => (
+        {sortedFilteredComments?.length > 0 ? (
+          sortedFilteredComments.map((comment: Comment, i: number) => (
             <CommentListItem
               key={i}
               comment={comment}
               selectedTags={selectedTags}
             />
-          ))}
+          ))
+        ) : (
+          <p className="text-left text-3xl font-semibold text-gray-800">
+            No comments yet.
+          </p>
+        )}
       </div>
     </div>
   );

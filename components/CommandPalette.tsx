@@ -132,7 +132,6 @@ export default function CommandPalette({
                   }`}
                   onClick={() => setFilter(view)}
                 >
-                  {/* <p className="badge badge-mid">⌃1</p> */}
                   {icon()}
                   <p className={` cursor-pointer font-semibold text-gray-700`}>
                     {name}
@@ -159,16 +158,20 @@ export default function CommandPalette({
                   <Combobox.Option value={command} key={i}>
                     {({ active }) => (
                       <div
-                        className={`space-x-1 p-4 ${active && "bg-gray-200"}`}
+                        className={`space-x-1 p-4 px-6 ${
+                          active && "bg-gray-200"
+                        }`}
                       >
                         <div className="flex flex-row justify-between">
                           <div className="flex flex-row space-x-2">
-                            <p className="badge badge-mid">⌘{i}</p>
+                            {/* <p className="badge badge-mid">⌘{i}</p> */}
                             <p className="font-semibold text-gray-800">
                               {command.name}
                             </p>
                           </div>
-                          <p className="badge badge-dark">{command.type}</p>
+                          <p className="badge badge-dark badge-sm">
+                            {command.type}
+                          </p>
                         </div>
                       </div>
                     )}

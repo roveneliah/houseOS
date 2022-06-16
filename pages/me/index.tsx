@@ -16,6 +16,10 @@ import { useGetComments } from "../../hooks/database/useGetComments";
 import { useComments } from "../../hooks/database/useComments";
 import { Comment } from "../../types/Comment";
 import Link from "next/link";
+import { CommentList } from "../profiles/CommentList";
+import { FriendsList } from "../profiles/FriendsList";
+import { TagListBox } from "../profiles/TagListBox";
+import { TagsList } from "../profiles/TagsList";
 
 export default function MyProfile() {
   const user: User = useGetUserProfile();
@@ -38,17 +42,11 @@ export default function MyProfile() {
       {!address ? (
         <LoginView />
       ) : (
-        <div>
-          <div className="flex w-full flex-col space-y-32 bg-gray-700 px-72 pt-28 pb-12">
+        <div className="w-full">
+          <div className="flex min-w-full flex-col space-y-32 bg-gray-700 px-72 pt-36 pb-12">
             <div className="flex w-full flex-row items-center justify-between">
-              <div className="justfiy-start flex flex-col items-start space-y-2">
-                <div className="flex flex-row space-x-2">
-                  {tags.map(({ tag }: any, i: number) => (
-                    <p key={i} className="badge">
-                      {tag}
-                    </p>
-                  ))}
-                </div>
+              <div className="justfiy-start flex flex-col items-start space-y-4">
+                <TagsList tags={tags} />
                 <p className="text-left text-5xl font-bold text-gray-300">
                   {user?.name}
                 </p>
@@ -72,26 +70,7 @@ export default function MyProfile() {
                 Comments
               </p>
               {comments && comments.length > 0 ? (
-                comments.map((comment: Comment, i: number) => {
-                  return (
-                    <Link href={`/proposals/${comment.proposalId}`} key={i}>
-                      <div className="flex flex-col space-y-4 rounded-lg bg-gray-300/50 p-5">
-                        <p className="text-lg font-normal text-gray-700">
-                          {comment.body}
-                        </p>
-                        <div className="flex flex-row space-x-2">
-                          <p className="badge">{comment.choice}</p>
-                          {comment.vp && (
-                            <p className="badge">{comment.vp} $KRAUSE</p>
-                          )}
-                        </div>
-                        <p className="font-semibold text-gray-700">
-                          {comment.proposalTitle}
-                        </p>
-                      </div>
-                    </Link>
-                  );
-                })
+                <CommentList comments={comments} />
               ) : (
                 <div>
                   <p className="font-semibold">
@@ -110,11 +89,7 @@ export default function MyProfile() {
                 Friends
               </p>
               {friends && friends.length > 0 ? (
-                <div className="flex flex-col space-y-4">
-                  {friends?.map((address: EthereumAddress, i: number) => (
-                    <ProfilePreview address={address} key={i} />
-                  ))}
-                </div>
+                <FriendsList friends={friends} />
               ) : (
                 <p className="font-semibold">
                   You can add friends by searching in the command palette. By
@@ -127,21 +102,7 @@ export default function MyProfile() {
               <p className="text-left text-3xl font-bold text-gray-200">
                 Help others understand a bit about you.
               </p>
-              <div className="border-1 flex flex-row flex-wrap justify-start space-x-2 overflow-auto rounded-lg border  p-3">
-                {allTags.map(({ tag, taggers, toggle }: any, i: number) => (
-                  <p
-                    className={`badge my-1 ${
-                      taggers.includes(address)
-                        ? "badge-dark"
-                        : "hover:bg-gray-400"
-                    }`}
-                    key={i}
-                    onClick={toggle}
-                  >
-                    {tag} {taggers.length}
-                  </p>
-                ))}
-              </div>
+              <TagListBox allTags={allTags} address={address} />
             </div>
           </div>
         </div>

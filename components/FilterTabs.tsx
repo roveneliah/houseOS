@@ -32,7 +32,7 @@ export default function ChoiceFilters({
             <p className="badge badge-outline">
               {toPercent(proposal.scores[i] / proposal.scores_total)}
             </p>
-            <p className="badge badge-outline">
+            <p className="badge badge-outline invisible xl:visible">
               {proposal.scores[i].toFixed(0)} $KRAUSE
             </p>
           </div>

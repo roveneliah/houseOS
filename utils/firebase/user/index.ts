@@ -117,12 +117,14 @@ export const removeFriend = async (
   );
 
 export const listenUserComments = async (address: EthereumAddress) => {
-  const q = query(
-    collectionGroup(db, `comments`),
-    where("author", "==", address)
-  );
-  const querySnapshot: QuerySnapshot = await getDocs(q);
-  return querySnapshot.docs.map((doc) => doc.data());
+  if (address) {
+    const q = query(
+      collectionGroup(db, `comments`),
+      where("author", "==", address)
+    );
+    const querySnapshot: QuerySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => doc.data());
+  }
 };
 
 export const userDb = {
