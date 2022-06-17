@@ -1,11 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import { defaultAvatar } from "../../../config";
-import { useGetUser } from "../../../hooks/database/useGetUser";
-import { useListenUserTags } from "../../../hooks/database/useListenUserTags";
-import { TagsList } from "../TagsList";
+import { EthereumAddress } from "../../types/EthereumAddress";
+import { defaultAvatar } from "../../config";
+import { useGetUser } from "../../hooks/database/useGetUser";
+import { useListenUserTags } from "../../hooks/database/useListenUserTags";
+import TagsList from "./TagsList";
 
-export function ProfilePreview({ address, i }: any) {
+export default function ProfilePreview({
+  address,
+  i,
+}: {
+  address: EthereumAddress;
+  i: number;
+}) {
   const user = useGetUser(address);
   const { avatarSrc, name } = user;
   const tags = useListenUserTags(address);

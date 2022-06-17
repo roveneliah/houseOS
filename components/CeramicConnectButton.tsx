@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 export default function CeramicConnectButton() {
   const [connection, connect, disconnect] = useViewerConnection();
 
-  const [window1, setWindow] = useState(null);
+  const [window1, setWindow] = useState<any>(null);
   useEffect(() => {
     setWindow(window);
   }, []);

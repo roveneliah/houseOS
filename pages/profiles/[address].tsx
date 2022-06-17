@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useAccount, useBalance, useConnect, useEnsName } from "wagmi";
 import Layout from "../../components/Layout";
-import { LoadingView } from "./components/LoadingView";
 import { useKrauseBalance } from "../../hooks/ethereum/useKrauseBalance";
 import { useGetUser } from "../../hooks/ceramic/useGetUser";
 import { addFriend, getUser, getUsers } from "../../utils/firebase/user";
@@ -11,10 +10,11 @@ import { Comment } from "../../types/Comment";
 import { useComments } from "../../hooks/database/useComments";
 import { dao, defaultAvatar } from "../../config";
 import { useGetAllUserTags } from "../../hooks/tags/useGetAllUserTags";
-import { CommentList } from "./CommentList";
-import { FriendsList } from "./FriendsList";
-import { TagListBox } from "./TagListBox";
-import { TagsList } from "./TagsList";
+import CommentList from "../../components/profiles/CommentList";
+import LoadingView from "../../components/profiles/LoadingView";
+import FriendsList from "../../components/profiles/FriendsList";
+import TagListBox from "../../components/profiles/TagListBox";
+import TagsList from "../../components/profiles/TagsList";
 
 export default function Profile({ user }: any) {
   const { address, friends, name } = user;

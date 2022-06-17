@@ -1,25 +1,19 @@
 import Image from "next/image";
 import Layout from "../../components/Layout";
 import { dao, defaultAvatar } from "../../config";
-import { ProfilePreview } from "../profiles/components/ProfilePreview";
-import { LoadingView } from "../profiles/components/LoadingView";
-import { EthereumAddress } from "../../types/EthereumAddress";
 import { User } from "../../types/User";
 import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
-import { LoginView } from "./components/LoginView";
+import LoginView from "../../components/LoginView";
 import { useKrauseBalance } from "../../hooks/ethereum/useKrauseBalance";
 import { useListenUserTags } from "../../hooks/database/useListenUserTags";
 import { useUserAddress } from "../../hooks/ethereum/useUserAddress";
 import { useMemo, useState } from "react";
 import { useGetAllUserTags } from "../../hooks/tags/useGetAllUserTags";
-import { useGetComments } from "../../hooks/database/useGetComments";
 import { useComments } from "../../hooks/database/useComments";
-import { Comment } from "../../types/Comment";
-import Link from "next/link";
-import { CommentList } from "../profiles/CommentList";
-import { FriendsList } from "../profiles/FriendsList";
-import { TagListBox } from "../profiles/TagListBox";
-import { TagsList } from "../profiles/TagsList";
+import CommentList from "../../components/profiles/CommentList";
+import FriendsList from "../../components/profiles/FriendsList";
+import TagsList from "../../components/profiles/TagsList";
+import TagListBox from "../../components/profiles/TagListBox";
 
 export default function MyProfile() {
   const user: User = useGetUserProfile();

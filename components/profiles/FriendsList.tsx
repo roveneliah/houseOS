@@ -1,7 +1,11 @@
 import { EthereumAddress } from "../../types/EthereumAddress";
-import { ProfilePreview } from "./components/ProfilePreview";
+import ProfilePreview from "./ProfilePreview";
 
-export function FriendsList({ friends }: { friends: Array<EthereumAddress> }) {
+export default function FriendsList({
+  friends,
+}: {
+  friends: Array<EthereumAddress>;
+}) {
   return (
     <div className="flex flex-col overflow-hidden rounded-lg">
       {friends?.map((address: EthereumAddress, i: number) => (

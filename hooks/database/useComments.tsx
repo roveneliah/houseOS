@@ -6,36 +6,40 @@ import { useGetProposals } from "../snapshot/useGetProposals";
 import { snapshotSpace } from "../../config";
 import { Proposal } from "../../types/Proposal";
 import { fetchVote } from "../../utils/fetchVote";
+import { Maybe } from "../../types/Maybe";
 
 /**
  * Get all of a users' comments.
  */
-export const useComments = (address: EthereumAddress): Array<Comment> => {
+export const useComments = (
+  address: Maybe<EthereumAddress>
+): Array<Comment> => {
   const [comments, setComments] = useState<any>([]);
   const proposals = useGetProposals(snapshotSpace);
 
   useEffect(() => {
-    listenUserComments(address).then((comments: Array<any>) => {
-      address &&
-        proposals &&
-        Promise.all(
-          comments.map(async ({ author, body, proposalId, choice }) => {
-            const proposal = proposals.find(
-              (p: Proposal) => p.id === proposalId
-            );
-            const [vote] = await fetchVote(proposalId, address);
-            return {
-              author,
-              body,
-              proposalId,
-              proposalTitle: proposal?.title,
-              choice: proposal?.choices[choice + 1],
-              vp: vote?.vp,
-              end: proposal?.end,
-            };
-          })
-        ).then(setComments);
-    });
+    address &&
+      listenUserComments(address).then((comments: any) => {
+        address &&
+          proposals &&
+          Promise.all(
+            comments.map(async (comment: any) => {
+              const proposal = proposals.find(
+                (p: Proposal) => p.id === comment.proposalId
+              );
+              const [vote] = await fetchVote(comment.proposalId, address);
+              return {
+                author: comment.author,
+                body: comment.body,
+                proposalId: comment.proposalId,
+                proposalTitle: proposal?.title,
+                choice: proposal?.choices[comment.choice + 1],
+                vp: vote?.vp,
+                end: proposal?.end,
+              };
+            })
+          ).then(setComments);
+      });
   }, [address, proposals]);
 
   return comments;

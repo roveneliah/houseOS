@@ -61,7 +61,7 @@ const ProposalsListPage: NextPage = () => {
   );
 
   return (
-    <Layout paletteOpen={true}>
+    <Layout paletteStartsOpen={true}>
       <div className="flex w-full flex-col items-start space-y-10 bg-gray-800 px-72 pt-20">
         <div className="bg-gray-7000 flex w-full flex-row justify-start">
           <div className="flex flex-col items-start space-y-2 text-gray-300">

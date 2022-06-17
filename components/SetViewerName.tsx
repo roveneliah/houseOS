@@ -2,9 +2,7 @@ import { useViewerRecord } from "@self.id/framework";
 import { useState } from "react";
 import { useAccount } from "wagmi";
 
-// Mutate the record
-
-export function SetViewerName() {
+export default function SetViewerName() {
   const record = useViewerRecord("basicProfile");
   const [name, setName] = useState("");
   const { data: address } = useAccount();
@@ -22,7 +20,7 @@ export function SetViewerName() {
       <button
         disabled={!record.isMutable || record.isMutating}
         onClick={async () => {
-          await record.merge({
+          await record?.merge?.({
             name,
           });
         }}

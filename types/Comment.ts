@@ -5,4 +5,5 @@ export interface Comment {
   choice: string;
   vp: number;
   proposalTitle: string;
+  end: number;
 }

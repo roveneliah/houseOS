@@ -1,4 +1,4 @@
-export function TagListBox({ address, allTags }: any) {
+export default function TagListBox({ address, allTags }: any) {
   return (
     <div className="border-1 flex flex-row flex-wrap justify-start space-x-2 overflow-auto rounded-lg border  p-3">
       {allTags?.map(({ tag, toggle, taggers }: any, i: number) => (

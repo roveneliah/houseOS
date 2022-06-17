@@ -28,7 +28,7 @@ export default function CommentList({
     () =>
       comments
         .sort((a, b) => (b.vp || 0) - (a.vp || 0))
-        .filter((comment) => comment.choice === choice + 1),
+        .filter((comment) => Number(comment.choice) === choice + 1),
     [comments]
   );
 

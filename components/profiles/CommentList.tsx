@@ -1,7 +1,11 @@
 import { Comment } from "../../types/Comment";
 import Link from "next/link";
 
-export function CommentList({ comments }: { comments: Array<Comment> }) {
+export default function CommentList({
+  comments,
+}: {
+  comments: Array<Comment>;
+}) {
   return (
     <div className="overflow-hidden rounded-lg">
       {comments.map((comment: Comment, i: number) => {

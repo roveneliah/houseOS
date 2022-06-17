@@ -5,9 +5,10 @@ import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
 import { useRouter } from "next/router";
 import { useCommand } from "../hooks/generic/useCommand";
+import { Maybe } from "../types/Maybe";
 
 export function NewUserFlow() {
-  const [name, setName] = useState();
+  const [name, setName] = useState<Maybe<string>>();
   const address = useUserAddress();
   const allTags = useGetAllUserTags(address);
   const router = useRouter();
@@ -134,7 +135,7 @@ export function NewUserFlow() {
             <button
               className="badge badge-lg"
               onClick={() => {
-                createUser(address, name, selectedTags);
+                address && createUser(address, name, selectedTags);
                 router.push("/me");
               }}
             >

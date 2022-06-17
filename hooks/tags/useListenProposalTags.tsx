@@ -14,7 +14,9 @@ export const useListenProposalTags = (proposalId: string) => {
     listenProposalTags(proposalId, (tags: any) => {
       setTags(
         tags
-          .filter(({ taggers }) => taggers.length > 0)
+          .filter(
+            ({ taggers }: { taggers: Array<string> }) => taggers.length > 0
+          )
           .map(({ tag, taggers }: any) => ({
             tag,
             taggers,

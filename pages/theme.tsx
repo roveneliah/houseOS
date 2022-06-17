@@ -36,54 +36,54 @@ const Home: NextPage = () => {
           <div className="flex flex-col items-start space-y-4">
             <a
               href="https://daisyui.com/components/button/"
-              className="text-3xl font-bold text-primary-content"
+              className="text-primary-content text-3xl font-bold"
             >
               Colors
             </a>
             <div className="flex flex-row space-x-2">
-              <p className="rounded-lg bg-base-100 px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-base-100 rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Base-100
               </p>
-              <p className="rounded-lg bg-base-200 px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-base-200 rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Base-200
               </p>
-              <p className="rounded-lg bg-base-300 px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-base-300 rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Base-300
               </p>
-              <p className="rounded-lg bg-base-content px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-base-content rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Base Content
               </p>
             </div>
             <div className="flex flex-row space-x-2">
-              <p className="rounded-lg bg-neutral px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-neutral rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Neutral
               </p>
-              <p className="rounded-lg bg-neutral-focus px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-neutral-focus rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Neutral Focus
               </p>
-              <p className="rounded-lg bg-neutral-content px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-neutral-content rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Neutral Content
               </p>
             </div>
             <div className="flex flex-row space-x-2">
-              <p className="rounded-lg bg-primary px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-primary rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Primary
               </p>
-              <p className="rounded-lg bg-primary-focus px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-primary-focus rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Primary Focus
               </p>
-              <p className="rounded-lg bg-primary-content px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-primary-content rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Primary Content
               </p>
             </div>
             <div className="flex flex-row space-x-2">
-              <p className="rounded-lg bg-secondary px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-secondary rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Secondary
               </p>
-              <p className="rounded-lg bg-secondary-focus px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-secondary-focus rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Secondary Focus
               </p>
-              <p className="rounded-lg bg-secondary-content px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-secondary-content rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Secondary Content
               </p>
             </div>
@@ -91,51 +91,51 @@ const Home: NextPage = () => {
           <div className="flex flex-col items-start space-y-4">
             <a
               href="https://daisyui.com/components/button/"
-              className="text-3xl font-bold text-primary"
+              className="text-primary text-3xl font-bold"
             >
               Accents
             </a>
             <div className="flex flex-row space-x-2">
-              <p className="rounded-lg bg-accent px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-accent rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Accent
               </p>
-              <p className="rounded-lg bg-accent-focus px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-accent-focus rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Accent Focus
               </p>
-              <p className="rounded-lg bg-accent-content px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-accent-content rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Accent Content
               </p>
             </div>
 
             <div className="flex flex-row space-x-2">
-              <p className="rounded-lg bg-info px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-info rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Info
               </p>
-              <p className="rounded-lg bg-info-content px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-info-content rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Info Content
               </p>
             </div>
             <div className="flex flex-row space-x-2">
-              <p className="rounded-lg bg-success px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-success rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Success
               </p>
-              <p className="rounded-lg bg-success-content px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-success-content rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Success Content
               </p>
             </div>
             <div className="flex flex-row space-x-2">
-              <p className="rounded-lg bg-warning px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-warning rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Warning
               </p>
-              <p className="rounded-lg bg-warning-content px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-warning-content rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Warning Content
               </p>
             </div>
             <div className="flex flex-row space-x-2">
-              <p className="rounded-lg bg-error px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-error rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Error
               </p>
-              <p className="rounded-lg bg-error-content px-6 py-4 text-xl font-semibold text-white">
+              <p className="bg-error-content rounded-lg px-6 py-4 text-xl font-semibold text-white">
                 Error Content
               </p>
             </div>
@@ -145,7 +145,7 @@ const Home: NextPage = () => {
         <div className="flex flex-col items-start space-y-2">
           <a
             href="https://daisyui.com/components/button/"
-            className="text-3xl font-bold text-primary"
+            className="text-primary text-3xl font-bold"
           >
             Buttons
           </a>
@@ -170,7 +170,7 @@ const Home: NextPage = () => {
           <div className="flex flex-col items-start space-y-4">
             <a
               href="https://daisyui.com/components/button/"
-              className="text-3xl font-bold text-primary-content"
+              className="text-primary-content text-3xl font-bold"
             >
               Alerts
             </a>
@@ -180,7 +180,7 @@ const Home: NextPage = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  className="h-6 w-6 flex-shrink-0 stroke-info"
+                  className="stroke-info h-6 w-6 flex-shrink-0"
                 >
                   <path
                     strokeLinecap="round"
@@ -270,7 +270,7 @@ const Home: NextPage = () => {
           <div className="flex flex-col items-start space-y-3">
             <a
               href="https://daisyui.com/components/button/"
-              className="text-3xl font-bold text-primary-content"
+              className="text-primary-content text-3xl font-bold"
             >
               Badges
             </a>
@@ -290,10 +290,10 @@ const Home: NextPage = () => {
               <div className="badge badge-accent badge-outline">accent</div>
             </div>
             <div className="space-x-2">
-              <div class="badge badge-info gap-2">info</div>
-              <div class="badge badge-success gap-2">success</div>
-              <div class="badge badge-warning gap-2">warning</div>
-              <div class="badge badge-error gap-2">error</div>
+              <div className="badge badge-info gap-2">info</div>
+              <div className="badge badge-success gap-2">success</div>
+              <div className="badge badge-warning gap-2">warning</div>
+              <div className="badge badge-error gap-2">error</div>
             </div>
           </div>
         </div>

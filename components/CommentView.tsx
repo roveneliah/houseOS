@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useAccount, useEnsAvatar, useEnsName, useSignMessage } from "wagmi";
-import { snapshotSpace } from "../config";
+import { defaultAvatar, snapshotSpace } from "../config";
 import { useVote } from "../hooks/snapshot/useVote";
-import { useGetAvatar } from "../hooks/users/useGetAvatar";
 import { postComment } from "../utils/firebase/post";
 import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
 import { useListenUserTags } from "../hooks/database/useListenUserTags";
@@ -22,7 +21,6 @@ export default function CommentView({ proposal, back, choice }: any) {
   const { data: account } = useAccount();
   const user = useGetUserProfile();
   const authorTags = useListenUserTags(user?.address);
-  const avatarSrc = useGetAvatar(user?.address);
   const { data: signature, isSuccess, signMessage } = useSignMessage();
   const [message, setMessage] = useState("");
 
@@ -68,7 +66,7 @@ export default function CommentView({ proposal, back, choice }: any) {
               <div className="flex flex-row items-center space-x-5">
                 <div className="min-w-fit">
                   <Image
-                    src={avatarSrc}
+                    src={user.avatarSrc || defaultAvatar}
                     width={75}
                     height={75}
                     className="rounded-full"

@@ -3,10 +3,9 @@ import { addTags, removeTag, updateName } from "../hooks/ceramic/ceramic";
 import { User } from "../types/User";
 import { Maybe } from "../types/Maybe";
 
-export const recordToUser = (
-  record: ViewerRecord<BasicProfile | null>
-): User => ({
+export const recordToUser = (record: any): User => ({
   name: record?.content?.name,
+  address: "0x123",
   tags: record?.content?.tags || [],
   friends: record?.content?.friends || [],
   id: "",

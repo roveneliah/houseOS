@@ -1,1 +1,1 @@
-export type Maybe<A> = A | undefined | null;
+export type Maybe<A> = A | undefined;

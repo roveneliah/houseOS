@@ -13,10 +13,9 @@ export const useVote = (
   const vote = async (message: string) => {
     console.log("VOTING");
 
-    const web3 = new Web3Provider(window.ethereum);
+    const web3 = new Web3Provider(<any>window.ethereum);
     const [account] = await web3.listAccounts();
 
-    // message: message === "" ? undefined : message,
     return await client.vote(web3, account, {
       space: snapshotSpace,
       proposal: proposalId,
