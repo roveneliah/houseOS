@@ -9,6 +9,7 @@ import {
   tagUser,
   untagUser,
   updateName,
+  setProfilePic,
 } from "../../utils/firebase/user";
 import { recordToUser } from "../../utils/recordToUser";
 // import { updateName } from "../ceramic/ceramic";
@@ -43,6 +44,7 @@ export const useGetUserProfile = () => {
         untagUser: (userAddress: EthereumAddress, tag: string) =>
           untagUser(userAddress, tag, user.address),
         updateName: (name: string) => updateName(user.address, name),
+        setProfilePic: (file: any) => setProfilePic(user.address, file),
       }
     : undefined;
 };

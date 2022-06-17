@@ -13,7 +13,7 @@ export default function CommentList({
           <Link href={`/proposals/${comment.proposalId}`} key={i}>
             <div
               className={`flex cursor-pointer flex-col space-y-4 ${
-                i % 2 ? "bg-gray-200" : "bg-gray-100"
+                i % 2 ? "bg-gray-300" : "bg-gray-200"
               } p-10`}
             >
               <p className="text-xl font-normal text-gray-700">

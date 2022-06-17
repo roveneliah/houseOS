@@ -16,7 +16,9 @@ import {
   runTransaction,
   writeBatch,
 } from "firebase/firestore";
-import { db } from "..";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import Image from "next/image";
+import { db, storage } from "..";
 import { dao } from "../../../config";
 import { EthereumAddress } from "../../../types/EthereumAddress";
 
@@ -128,6 +130,15 @@ export const listenUserComments = async (address: EthereumAddress) => {
     const querySnapshot: QuerySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => doc.data());
   }
+};
+
+export const getPfp = async (address: EthereumAddress) =>
+  getDownloadURL(ref(storage, `pfps/${address}.png`));
+
+export const setProfilePic = async (address: EthereumAddress, pic: File) => {
+  console.log("Setting pfp: ", pic);
+
+  return await uploadBytes(ref(storage, `pfps/${address}.png`), pic);
 };
 
 export const userDb = {

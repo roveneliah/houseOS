@@ -19,7 +19,10 @@
     "ramda": "^0.28.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "wagmi": "^0.4.7"
+    "wagmi": "^0.4.7",
+    "@glazed/devtools": "^0.2.0",
+    "@self.id/framework": "^0.3.2",
+    "key-did-provider-ed25519": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "17.0.4",
@@ -32,10 +35,5 @@
     "prettier-plugin-tailwindcss": "^0.1.1",
     "tailwindcss": "^3.0.7",
     "typescript": "4.5.4"
-  },
-  "other": {
-    "@glazed/devtools": "^0.2.0",
-    "@self.id/framework": "^0.3.2",
-    "key-did-provider-ed25519": "^2.0.0"
   }
 }

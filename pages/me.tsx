@@ -1,22 +1,24 @@
 import Image from "next/image";
-import Layout from "../../components/Layout";
-import { dao, defaultAvatar } from "../../config";
-import { User } from "../../types/User";
-import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
-import LoginView from "../../components/LoginView";
-import { useKrauseBalance } from "../../hooks/ethereum/useKrauseBalance";
-import { useListenUserTags } from "../../hooks/database/useListenUserTags";
-import { useUserAddress } from "../../hooks/ethereum/useUserAddress";
-import { useMemo, useState } from "react";
-import { useGetAllUserTags } from "../../hooks/tags/useGetAllUserTags";
-import { useComments } from "../../hooks/database/useComments";
-import CommentList from "../../components/profiles/CommentList";
-import FriendsList from "../../components/profiles/FriendsList";
-import TagsList from "../../components/profiles/TagsList";
-import TagListBox from "../../components/profiles/TagListBox";
+import Layout from "../components/Layout";
+import { dao, defaultAvatar } from "../config";
+import { User } from "../types/User";
+import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
+import LoginView from "../components/LoginView";
+import { useKrauseBalance } from "../hooks/ethereum/useKrauseBalance";
+import { useListenUserTags } from "../hooks/database/useListenUserTags";
+import { useUserAddress } from "../hooks/ethereum/useUserAddress";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
+import { useComments } from "../hooks/database/useComments";
+import CommentList from "../components/profiles/CommentList";
+import FriendsList from "../components/profiles/FriendsList";
+import TagsList from "../components/profiles/TagsList";
+import TagListBox from "../components/profiles/TagListBox";
+import { createHook } from "../hooks/createHook";
+import { getPfp } from "../utils/firebase/user";
 
 export default function MyProfile() {
-  const user: User = useGetUserProfile();
+  const user = useGetUserProfile();
   const address = useUserAddress();
   const tags = useListenUserTags(address);
   const allTags = useGetAllUserTags(address);
@@ -31,18 +33,56 @@ export default function MyProfile() {
     [comments]
   );
 
+  const uploadRef = useRef<any>(null);
+  const triggerUpload = () => {
+    console.log("Trigger upload");
+    uploadRef?.current?.click();
+  };
+
   const avatarSrc = user?.avatarSrc;
   const friends = user?.friends;
+
+  const createPfp = (pfp?: string) => (
+    <Image
+      src={pfp || defaultAvatar}
+      width={150}
+      height={150}
+      className="rounded-full"
+    />
+  );
+
+  const [pfpUrl, setPfpUrl] = useState<string>();
+  const [pfp, setPfp] = useState<any>(createPfp());
+  useEffect(() => {
+    if (address) {
+      console.log("trying to get at address: ", address);
+      getPfp(address).then(setPfpUrl);
+    }
+  }, [address]);
+
+  const [refetch, setRefetch] = useState<boolean>(false);
+  useEffect(() => {
+    setPfp(createPfp(pfpUrl));
+  }, [pfpUrl]);
+  useEffect(() => {
+    refetch &&
+      setTimeout(() => {
+        console.log("Generating new pfp");
+
+        setPfp(createPfp(pfpUrl + "/"));
+        setRefetch(false);
+      }, 8000);
+  }, [refetch]);
 
   return (
     <Layout>
       {!address ? (
         <LoginView />
       ) : (
-        <div className="w-full">
+        <div className="w-[100vw]">
           <div className="flex min-w-full flex-col space-y-32 bg-gray-700 px-72 pt-36 pb-12">
             <div className="flex w-full flex-row items-center justify-between">
-              <div className="justfiy-start flex flex-col items-start space-y-4">
+              <div className="flex flex-col items-start justify-start space-y-4">
                 <TagsList tags={tags} />
                 {editView ? (
                   <input
@@ -60,7 +100,7 @@ export default function MyProfile() {
                 ) : (
                   <p
                     onDoubleClick={() => setEditView(true)}
-                    className="text-left text-5xl font-bold text-gray-300"
+                    className="-ml-2 rounded-md p-2 pr-4 text-left text-5xl font-bold text-gray-300 hover:bg-black/25"
                   >
                     {user?.name}
                   </p>
@@ -69,12 +109,20 @@ export default function MyProfile() {
                   {Number(krauseBalance)} $KRAUSE
                 </p>
               </div>
-              <div className="ring-primary rounded-full border-4 ring-4">
-                <Image
-                  src={avatarSrc || defaultAvatar}
-                  width={150}
-                  height={150}
-                  className="rounded-full"
+              <div
+                className="group relative flex flex-col items-center justify-center overflow-hidden rounded-full border-4"
+                onClick={triggerUpload}
+              >
+                {pfp}
+                <div className="absolute hidden min-h-full min-w-full flex-col items-center justify-center rounded-full bg-black/50 group-hover:flex"></div>
+                <input
+                  type="file"
+                  className="hidden"
+                  ref={uploadRef}
+                  onChange={(e) => {
+                    user.setProfilePic(e.target.files?.[0]);
+                    setRefetch(true);
+                  }}
                 />
               </div>
             </div>
