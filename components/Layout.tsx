@@ -76,7 +76,7 @@ export default function Layout({
         deactivated={newUserFlow}
       />
       <main className="flex min-h-[100vh] w-full flex-1 flex-col items-start justify-start bg-gray-500 pb-20">
-        <div className="fixed top-0 flex w-full flex-row justify-between">
+        <div className="fixed top-0 z-50 flex w-full flex-row justify-between">
           <div>
             {/* <button
               className="btn btn-accent"

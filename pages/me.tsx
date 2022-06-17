@@ -42,37 +42,13 @@ export default function MyProfile() {
   const avatarSrc = user?.avatarSrc;
   const friends = user?.friends;
 
-  const createPfp = (pfp?: string) => (
-    <Image
-      src={pfp || defaultAvatar}
-      width={150}
-      height={150}
-      className="rounded-full"
-    />
-  );
-
   const [pfpUrl, setPfpUrl] = useState<string>();
-  const [pfp, setPfp] = useState<any>(createPfp());
   useEffect(() => {
     if (address) {
       console.log("trying to get at address: ", address);
       getPfp(address).then(setPfpUrl);
     }
   }, [address]);
-
-  const [refetch, setRefetch] = useState<boolean>(false);
-  useEffect(() => {
-    setPfp(createPfp(pfpUrl));
-  }, [pfpUrl]);
-  useEffect(() => {
-    refetch &&
-      setTimeout(() => {
-        console.log("Generating new pfp");
-
-        setPfp(createPfp(pfpUrl + "/"));
-        setRefetch(false);
-      }, 8000);
-  }, [refetch]);
 
   return (
     <Layout>
@@ -113,15 +89,21 @@ export default function MyProfile() {
                 className="group relative flex flex-col items-center justify-center overflow-hidden rounded-full border-4"
                 onClick={triggerUpload}
               >
-                {pfp}
+                <Image
+                  src={pfpUrl || defaultAvatar}
+                  width={150}
+                  height={150}
+                  className="rounded-full"
+                />
                 <div className="absolute hidden min-h-full min-w-full flex-col items-center justify-center rounded-full bg-black/50 group-hover:flex"></div>
                 <input
                   type="file"
                   className="hidden"
                   ref={uploadRef}
                   onChange={(e) => {
-                    user.setProfilePic(e.target.files?.[0]);
-                    setRefetch(true);
+                    user
+                      .setProfilePic(e.target.files?.[0])
+                      .then(() => setPfpUrl(pfpUrl + "/"));
                   }}
                 />
               </div>
