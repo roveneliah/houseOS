@@ -4,19 +4,15 @@ import { dao, themes } from "../config";
 import { useGetCommands } from "../hooks/useGetCommands";
 import CommandPalette from "./CommandPalette";
 import { Command } from "../types/Command";
-import {
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useEnsAvatar,
-  useEnsName,
-} from "wagmi";
+import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
 import SearchIcon from "./icons/SearchIcon";
 import { useKrauseBalance } from "../hooks/ethereum/useKrauseBalance";
 import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { NewUserFlow } from "./NewUserFlow";
+import { useSIWE } from "../hooks/useSIWE";
 
+// TODO: #10 Refactor, clarify, and move to module
 const useCreateProfile = () => {
   const user = useGetUserProfile();
   const { isConnected } = useConnect();
@@ -61,6 +57,9 @@ export default function Layout({
   const [isOpen, setIsOpen] = useState<boolean>(paletteStartsOpen);
   const open = isOpen || fixedOpen;
 
+  const { data: account } = useAccount();
+  const { state, signIn, signOut, signedIn } = useSIWE();
+
   return (
     <div data-theme={themeName} className="min-h-screen">
       <Head>
@@ -76,45 +75,15 @@ export default function Layout({
         deactivated={newUserFlow}
       />
       <main className="flex min-h-[100vh] w-full flex-1 flex-col items-start justify-start bg-gray-500 pb-20">
-        <div className="fixed top-0 z-50 flex w-full flex-row justify-between">
-          <div>
-            {/* <button
-              className="btn btn-accent"
-              onClick={() => populateComments()}
-            >
-              Populate Comments
-            </button>
-            <button className="btn btn-accent" onClick={() => populateUsers()}>
-              Populate Users
-            </button>
-            <button
-              className="btn btn-accent"
-              onClick={() =>
-                tagProposal(
-                  "",
-                  "Big3",
-                  "0x234"
-                )
-              }
-            >
-              Tag
-            </button>
-            <button
-              className="btn btn-accent"
-              onClick={() =>
-                tagUser("", "SOI")
-              }
-            >
-              Tag User
-            </button> */}
-          </div>
+        <div className="fixed top-0 z-50 flex w-full flex-row justify-end">
           <div className="flex flex-row space-x-2 p-4">
             {/* <CeramicConnectButton /> */}
-            {!isConnected ? (
+            {!signedIn ? (
               <button
                 // disabled={!connector.ready}
                 onClick={() => {
                   connect(connector);
+                  signIn();
                 }}
                 className="btn btn-outline"
               >
@@ -127,14 +96,16 @@ export default function Layout({
                 </button>
                 <button
                   className="btn btn-outline group "
-                  onClick={() => {
-                    disconnect();
-                  }}
+                  onClick={() => disconnect()}
                 >
                   <p className="block group-hover:hidden">
                     {user?.name ||
                       ensName ||
                       address?.slice(0, 9).concat("...")}
+                    {"  "}
+                    {signedIn && "✅"}
+                    {state?.loading && "⏳"}
+                    {state?.error && "❌"}
                   </p>
                   <p className="hidden group-hover:block">Disconnect</p>
                 </button>
@@ -142,10 +113,7 @@ export default function Layout({
             )}
             <button
               className="btn btn-outline flex flex-row space-x-2"
-              onClick={() => {
-                console.log("Yo");
-                setIsOpen(!isOpen);
-              }}
+              onClick={() => setIsOpen(!isOpen)}
             >
               <div className="">
                 <SearchIcon />
@@ -154,6 +122,7 @@ export default function Layout({
             </button>
           </div>
         </div>
+
         {newUserFlow ? <NewUserFlow /> : children}
       </main>
     </div>
