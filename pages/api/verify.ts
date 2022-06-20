@@ -22,24 +22,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case "POST":
       try {
         const { message, signature, address } = req.body;
-        const siweMessage = new SiweMessage(message);
-        const fields = await siweMessage.validate(signature);
-
-        if (fields.nonce !== req.session.nonce)
-          return res.status(422).json({ message: "Invalid nonce." });
-
-        req.session.siwe = fields;
-        await req.session.save();
-
         admin
           .auth()
           .createCustomToken(address)
-          .then((customToken) => {
-            // Send token back to client
-            console.log("customToken: ", customToken);
+          .then(async (customToken: string) => {
+            const siweMessage = new SiweMessage(message);
+            const fields = await siweMessage.validate(signature);
+            if (fields.nonce !== req.session.nonce)
+              return res.status(422).json({ message: "Invalid nonce." });
+            req.session.siwe = new SiweMessage({
+              ...fields,
+              resources: [customToken],
+            });
+            await req.session.save();
+
+            // TODO: wait where does this go?? if we're creating a new user, do we need this?
             res.json({
               ok: true,
-              token: customToken,
             });
           })
           .catch((error) => {

@@ -1,21 +1,20 @@
 import Image from "next/image";
 import Layout from "../components/Layout";
 import { dao, defaultAvatar } from "../config";
-import { User } from "../types/User";
 import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
 import LoginView from "../components/LoginView";
 import { useKrauseBalance } from "../hooks/ethereum/useKrauseBalance";
 import { useListenUserTags } from "../hooks/database/useListenUserTags";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
 import { useComments } from "../hooks/database/useComments";
 import CommentList from "../components/profiles/CommentList";
 import FriendsList from "../components/profiles/FriendsList";
 import TagsList from "../components/profiles/TagsList";
 import TagListBox from "../components/profiles/TagListBox";
-import { createHook } from "../hooks/createHook";
-import { getPfp } from "../utils/firebase/user";
+import { useSIWE } from "../hooks/useSIWE";
+import { usePFP } from "../hooks/usePFP";
 
 export default function MyProfile() {
   const user = useGetUserProfile();
@@ -23,6 +22,7 @@ export default function MyProfile() {
   const tags = useListenUserTags(address);
   const allTags = useGetAllUserTags(address);
   const krauseBalance = useKrauseBalance(address);
+  const { signedIn } = useSIWE();
 
   const [editView, setEditView] = useState<boolean>(false);
   const [nameInput, setNameInput] = useState<string>(user?.name);
@@ -39,20 +39,12 @@ export default function MyProfile() {
     uploadRef?.current?.click();
   };
 
-  const avatarSrc = user?.avatarSrc;
   const friends = user?.friends;
-
-  const [pfpUrl, setPfpUrl] = useState<string>();
-  useEffect(() => {
-    if (address) {
-      console.log("trying to get at address: ", address);
-      getPfp(address).then(setPfpUrl);
-    }
-  }, [address]);
+  const [pfpUrl, setPfpUrl] = usePFP(address);
 
   return (
     <Layout>
-      {!address ? (
+      {!signedIn ? (
         <LoginView />
       ) : (
         <div className="w-[100vw]">

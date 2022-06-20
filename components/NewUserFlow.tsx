@@ -6,6 +6,7 @@ import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
 import { useRouter } from "next/router";
 import { useCommand } from "../hooks/generic/useCommand";
 import { Maybe } from "../types/Maybe";
+import { useSignIn } from "../hooks/useSignIn";
 
 export function NewUserFlow() {
   const [name, setName] = useState<Maybe<string>>();
@@ -27,6 +28,8 @@ export function NewUserFlow() {
             selectedTags.filter((t) => t !== tag.tag)
           ),
   }));
+
+  const { signIn, signedIn } = useSignIn();
 
   useCommand("k", () => setTask1a(true));
   useCommand("ArrowRight", () => setTask1b(true));
@@ -135,8 +138,12 @@ export function NewUserFlow() {
             <button
               className="badge badge-lg"
               onClick={() => {
-                address && createUser(address, name, selectedTags);
-                router.push("/me");
+                signIn().then(() => {
+                  signedIn &&
+                    address &&
+                    createUser(address, name, selectedTags);
+                  router.push("/me");
+                });
               }}
             >
               Create Profile
