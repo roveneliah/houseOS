@@ -1,6 +1,38 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAccount, useConnect, useNetwork, useSignMessage } from "wagmi";
 import { SiweMessage } from "siwe";
+import {
+  getAuth,
+  signOut as signOutFirebase,
+  signInWithCustomToken,
+} from "firebase/auth";
+import { app, auth } from "../utils/firebase";
+import { Maybe } from "../types/Maybe";
+import { useGetUserProfile } from "./users/useGetUserProfile";
+
+export const useFirebase = (token: Maybe<string>) => {
+  useEffect(() => {
+    console.log("token updated");
+
+    if (token) {
+      console.log("Attempting sign in with: ", token);
+      signInWithCustomToken(getAuth(), token)
+        .then((userCredential) => {
+          // Signed in
+          var user = userCredential.user;
+          // ...
+          console.log("VERIFIED");
+          console.log(userCredential);
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+          console.log("ERROR SIGNING IN", error);
+        });
+    }
+  }, [token]);
+};
 
 export const useSIWE = () => {
   const { data: account } = useAccount();
@@ -11,12 +43,19 @@ export const useSIWE = () => {
     address?: string;
     error?: Error;
     loading?: boolean;
+    token?: string;
   }>({});
+  const user = useGetUserProfile();
+  const hodler = user?.hodler;
+  useFirebase(state.token);
   const signedIn = !!state.address && !state.error && !state.loading;
 
   const signIn = useCallback(async () => {
     console.log("trying to sign in");
-
+    if (!hodler) {
+      console.log("Not a hodler, won't make account");
+      return;
+    }
     try {
       const address = account?.address;
       const chainId = activeChain?.id;
@@ -41,22 +80,28 @@ export const useSIWE = () => {
       });
 
       // Verify signature
-      const verifyRes = await fetch("/api/verify", {
+      const verifyRes: Response = await fetch("/api/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message, signature }),
+        body: JSON.stringify({ message, signature, address }),
       });
       if (!verifyRes.ok) throw new Error("Error verifying message");
-      console.log("verifyRes: ", verifyRes);
 
-      console.log("Signed in successfully");
-      setState((x) => ({ ...x, address, loading: false }));
+      verifyRes.json().then(({ token, ok }) => {
+        if (!ok) throw new Error("Error verifying message");
+        setState((x) => ({
+          ...x,
+          address,
+          token,
+          loading: false,
+        }));
+      });
     } catch (error) {
       setState((x: any) => ({ ...x, error, loading: false }));
     }
-  }, [account?.address, activeChain]);
+  }, [account?.address, activeChain, hodler]);
 
   // Fetch user when:
   useEffect(() => {
@@ -80,6 +125,11 @@ export const useSIWE = () => {
   const signOut = async () => {
     console.log("signing out");
     await fetch("/api/logout");
+    signOutFirebase(auth)
+      .then((res) => {
+        console.log("signed out of firebase");
+      })
+      .catch((e: any) => console.log("error signing out of firebase", e));
     setState({});
   };
 
