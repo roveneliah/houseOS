@@ -13,8 +13,9 @@ import CommentList from "../components/profiles/CommentList";
 import FriendsList from "../components/profiles/FriendsList";
 import TagsList from "../components/profiles/TagsList";
 import TagListBox from "../components/profiles/TagListBox";
-import { useSIWE } from "../hooks/useSIWE";
 import { usePFP } from "../hooks/usePFP";
+import { useSignIn } from "../hooks/useSignIn";
+import { useFirebase } from "../hooks/useFirebase";
 
 export default function MyProfile() {
   const user = useGetUserProfile();
@@ -22,7 +23,8 @@ export default function MyProfile() {
   const tags = useListenUserTags(address);
   const allTags = useGetAllUserTags(address);
   const krauseBalance = useKrauseBalance(address);
-  const { signedIn } = useSIWE();
+  const { signedIn, loadingFirebase } = useSignIn();
+  const { loading } = useFirebase();
 
   const [editView, setEditView] = useState<boolean>(false);
   const [nameInput, setNameInput] = useState<string>(user?.name);
@@ -51,7 +53,7 @@ export default function MyProfile() {
           <div className="flex min-w-full flex-col space-y-32 bg-gray-700 px-72 pt-36 pb-12">
             <div className="flex w-full flex-row items-center justify-between">
               <div className="flex flex-col items-start justify-start space-y-4">
-                <TagsList tags={tags} />
+                <TagsList tags={tags} disabled={true} />
                 {editView ? (
                   <input
                     value={nameInput}

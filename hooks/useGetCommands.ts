@@ -34,9 +34,8 @@ export const useGetCommands = (): Array<Command> => {
   const proposals = useGetProposals(snapshotSpace);
   const users = useGetUsers();
   return [
-    ...commands?.links?.map(createLinkCommand),
-    ...proposals?.map(createProposalCommand),
-
-    ...users?.map(createUserCommand),
+    ...(commands?.links?.map(createLinkCommand) || []),
+    ...(proposals?.map(createProposalCommand) || []),
+    ...(users?.map(createUserCommand) || []),
   ];
 };

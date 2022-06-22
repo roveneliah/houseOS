@@ -14,7 +14,7 @@ export default function CommentList({
             <div
               className={`flex cursor-pointer flex-col space-y-4 ${
                 i % 2 ? "bg-gray-300" : "bg-gray-200"
-              } p-10`}
+              } p-6`}
             >
               <p className="text-xl font-normal text-gray-700">
                 {comment.body}

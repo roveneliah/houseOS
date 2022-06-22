@@ -144,6 +144,7 @@ export default function CommandPalette({
               <Combobox.Input
                 className="focus:ring-5 h-12 w-full border-0 border-white bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-0"
                 placeholder="Search..."
+                autoComplete="false"
                 onChange={(event) => {
                   setQuery(event.target.value);
                 }}

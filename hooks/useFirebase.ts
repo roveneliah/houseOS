@@ -10,20 +10,20 @@ import { auth } from "../utils/firebase";
 export const useFirebase = () => {
   // TODO: init value should be the result of the api call...
   const [signedIn, setSignedIn] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const signIn = useCallback((token: Maybe<string>) => {
     if (token) {
+      setLoading(true);
       signInWithCustomToken(getAuth(), token)
         .then((userCredential) => {
-          // Signed in
           var user = userCredential.user;
-          // console.log("VERIFIED", userCredential);
           setSignedIn(true);
+          setLoading(false);
         })
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-          // ...
           console.log("ERROR SIGNING IN", error);
           setSignedIn(false);
         });
@@ -39,5 +39,5 @@ export const useFirebase = () => {
       .catch((e: any) => console.log("error signing out of firebase", e));
   };
 
-  return { signedIn, signIn, signOut };
+  return { signedIn, signIn, signOut, loading };
 };

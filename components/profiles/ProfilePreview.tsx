@@ -18,31 +18,31 @@ export default function ProfilePreview({
   const tags = useListenUserTags(address);
 
   return (
-    <Link href={`/profiles/${address}`}>
+    <div
+      className={`flex w-full flex-row items-center justify-between`}
+      key={i}
+    >
       <div
-        className={`flex w-full cursor-pointer flex-row items-center justify-between`}
-        key={i}
+        className={`flex w-full flex-row space-x-4 px-6 py-4 ${
+          i % 2 === 0 ? "bg-gray-100" : "bg-gray-300"
+        }`}
       >
-        <div
-          className={`flex w-full flex-row space-x-4 px-6 py-4 ${
-            i % 2 === 0 ? "bg-gray-100" : "bg-gray-300"
-          }`}
-        >
+        <Link href={`/profiles/${address}`}>
           <Image
             src={avatarSrc || defaultAvatar}
             width={80}
             height={80}
-            className="rounded-full"
+            className="cursor-pointer rounded-full"
           />
-          <div className="flex w-full flex-col items-start justify-center space-y-2">
-            <div className="flex w-full flex-row items-baseline justify-between space-x-2">
-              <p className="text-lg font-semibold text-gray-700">{name}</p>
-              <p className="badge badge-dark badge-sm">{address.slice(0, 8)}</p>
-            </div>
-            <TagsList tags={tags} disabled={true} />
+        </Link>
+        <div className="flex w-full flex-col items-start justify-center space-y-2">
+          <div className="flex w-full flex-row items-baseline justify-between space-x-2">
+            <p className="text-lg font-semibold text-gray-700">{name}</p>
+            <p className="badge badge-dark badge-sm">{address.slice(0, 8)}</p>
           </div>
+          <TagsList tags={tags} max={3} disabled={true} />
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

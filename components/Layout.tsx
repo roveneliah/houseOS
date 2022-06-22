@@ -9,12 +9,9 @@ import SearchIcon from "./icons/SearchIcon";
 import { useKrauseBalance } from "../hooks/ethereum/useKrauseBalance";
 import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
-import { NewUserFlow } from "./NewUserFlow";
-import { useSIWE } from "../hooks/useSIWE";
 import { useSignIn } from "../hooks/useSignIn";
-import { useFirebase } from "../hooks/useFirebase";
 import { useIsNewUser } from "../hooks/useIsNewUser";
-import { stat } from "fs";
+import { useRouter } from "next/router";
 
 export default function Layout({
   children,
@@ -34,7 +31,6 @@ export default function Layout({
   const address = useUserAddress();
   const krauseBalance = useKrauseBalance(address);
   const user = useGetUserProfile();
-  const newUserFlow = useIsNewUser();
 
   const { connect, connectors, isConnected } = useConnect();
 
@@ -47,6 +43,12 @@ export default function Layout({
 
   const { signOut, signIn, signedIn } = useSignIn();
 
+  const newUserFlow = useIsNewUser();
+  const router = useRouter();
+  useEffect(() => {
+    newUserFlow && router.push("/signup"); // don't want to redirect again if i'm here...
+  }, [newUserFlow]);
+
   return (
     <div data-theme={themeName} className="min-h-screen">
       <Head>
@@ -56,7 +58,7 @@ export default function Layout({
 
       <CommandPalette
         commands={commands}
-        isOpen={!newUserFlow && open}
+        isOpen={open}
         setIsOpen={setIsOpen}
         noOpacity={noOpacity}
         deactivated={newUserFlow}
@@ -118,8 +120,7 @@ export default function Layout({
             </button>
           </div>
         </div>
-
-        {newUserFlow ? <NewUserFlow /> : children}
+        {children}
       </main>
     </div>
   );

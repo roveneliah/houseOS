@@ -36,7 +36,7 @@ export default function Profile({ user }: any) {
           <div className="flex w-full flex-col space-y-32 bg-gray-700 px-72 pt-36 pb-12">
             <div className="flex flex-row items-center justify-between">
               <div className="flex flex-col items-start justify-start space-y-4">
-                <TagsList tags={tags}></TagsList>
+                <TagsList tags={tags} max={3} />
                 <p className="text-left text-5xl font-bold">
                   {name || ensName || `Anon ${dao.memberName}`}
                 </p>

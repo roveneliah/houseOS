@@ -8,6 +8,7 @@ export const useSignIn = () => {
     signIn: signInFirebase,
     signOut: signOutFirebase,
     signedIn: signedInFirebase,
+    loading: loadingFirebase,
   } = useFirebase();
   const {
     state,
@@ -31,5 +32,10 @@ export const useSignIn = () => {
     state.token && signInFirebase(state.token);
   }, [state.token]);
 
-  return { signOut, signIn, signedIn: signedInFirebase && signedInSIWE };
+  return {
+    signOut,
+    signIn,
+    signedIn: signedInFirebase && signedInSIWE,
+    loadingFirebase,
+  };
 };

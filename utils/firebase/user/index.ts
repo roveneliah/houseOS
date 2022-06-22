@@ -133,7 +133,9 @@ export const listenUserComments = async (address: EthereumAddress) => {
 };
 
 export const getPfp = async (address: EthereumAddress) =>
-  getDownloadURL(ref(storage, `pfps/${address}.png`));
+  getDownloadURL(ref(storage, `pfps/${address}.png`)).catch(() =>
+    console.log("Error getting PFP for user", address)
+  );
 
 export const setProfilePic = async (address: EthereumAddress, pic: File) => {
   console.log("Setting pfp: ", pic);

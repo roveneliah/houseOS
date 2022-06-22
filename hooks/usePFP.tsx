@@ -5,7 +5,7 @@ import { EthereumAddress } from "../types/EthereumAddress";
 import { Maybe } from "../types/Maybe";
 
 export const usePFP = (address: Maybe<EthereumAddress>) => {
-  const [pfpUrl, setPfpUrl] = useState<string>();
+  const [pfpUrl, setPfpUrl] = useState<any>();
   const { signedIn } = useSIWE();
   useEffect(() => {
     if (signedIn && address) {

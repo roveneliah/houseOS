@@ -17,6 +17,11 @@ export function NewUserFlow() {
   const [task1b, setTask1b] = useState<boolean>(false);
   const [step, setStep] = useState<number>(0);
 
+  useCommand("k", () => setTask1a(true));
+  useCommand("ArrowRight", () => setTask1b(true));
+
+  const { signedIn } = useSignIn();
+
   const [selectedTags, setSelectedTags] = useState<Array<string>>([]);
   const task2 = selectedTags.length > 0;
   const demoTags = allTags.map((tag) => ({
@@ -28,11 +33,6 @@ export function NewUserFlow() {
             selectedTags.filter((t) => t !== tag.tag)
           ),
   }));
-
-  const { signIn, signedIn } = useSignIn();
-
-  useCommand("k", () => setTask1a(true));
-  useCommand("ArrowRight", () => setTask1b(true));
 
   return (
     <div className="flex min-h-[70vh] w-full flex-col justify-center space-y-8 px-72 pt-36">
@@ -79,7 +79,10 @@ export function NewUserFlow() {
             </p>
           </div>
           {task1a && task1b && (
-            <button className="badge badge-lg" onClick={() => setStep(1)}>
+            <button
+              className="btn btn-outline w-fit"
+              onClick={() => setStep(1)}
+            >
               Next
             </button>
           )}
@@ -117,7 +120,10 @@ export function NewUserFlow() {
             </div>
           </div>
           {task2 && (
-            <button className="badge badge-lg" onClick={() => setStep(2)}>
+            <button
+              className="btn btn-outline w-fit"
+              onClick={() => setStep(2)}
+            >
               Next
             </button>
           )}
@@ -136,14 +142,10 @@ export function NewUserFlow() {
           />
           {name && name.length > 2 && (
             <button
-              className="badge badge-lg"
+              className="btn btn-outline w-fit"
               onClick={() => {
-                signIn().then(() => {
-                  signedIn &&
-                    address &&
-                    createUser(address, name, selectedTags);
-                  router.push("/me");
-                });
+                signedIn && address && createUser(address, name, selectedTags);
+                router.push("/me");
               }}
             >
               Create Profile
