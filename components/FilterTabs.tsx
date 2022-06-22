@@ -16,7 +16,7 @@ export default function ChoiceFilters({
 
   return (
     <div className="flex w-full flex-row justify-between space-x-4 overflow-y-auto">
-      {choices.map((choice: string, i: number) => (
+      {choices?.map((choice: string, i: number) => (
         <div
           className={`flex w-full min-w-[18vw] cursor-pointer flex-col items-start space-y-4 rounded-t-lg p-5 text-gray-300 ${
             selectedChoice === i ? "bg-gray-500" : "bg-gray-700"

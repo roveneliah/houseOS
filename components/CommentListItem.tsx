@@ -5,8 +5,9 @@ import { defaultAvatar } from "../config";
 import { useGetUser } from "../hooks/database/useGetUser";
 import { useListenUserTags } from "../hooks/database/useListenUserTags";
 import { User } from "../types/User";
+import TagsList from "./profiles/TagsList";
 
-export default function CommentListItem({ comment, selectedTags }: any) {
+export default function CommentListItem({ comment, selectedTags, index }: any) {
   const user: User = useGetUser(comment.author);
   const tags = useListenUserTags(comment.author);
   const isSelected =
@@ -21,7 +22,7 @@ export default function CommentListItem({ comment, selectedTags }: any) {
   return isSelected ? (
     <div
       className={`flex flex-row justify-between space-x-2 overflow-hidden whitespace-nowrap ${
-        comment.active ? "bg-gray-50" : "bg-gray-300"
+        index % 2 ? "bg-gray-200" : "bg-gray-300"
       } px-8 py-8`}
     >
       <div className="flex flex-row">
@@ -39,13 +40,7 @@ export default function CommentListItem({ comment, selectedTags }: any) {
         <div className="flex flex-col justify-between space-y-2 px-4">
           <div className="flex flex-row justify-between space-x-4">
             <div className="flex flex-col justify-start space-y-2">
-              <div className="flex flex-row space-x-2 overflow-x-auto">
-                {tags.map(({ tag }: any, i: number) => (
-                  <p className="badge" key={i}>
-                    {tag}
-                  </p>
-                ))}
-              </div>
+              <TagsList tags={tags} disabled={true} max={4} numbered={false} />
               <p className="text-left text-xl font-bold text-gray-700">
                 {user?.name}
               </p>

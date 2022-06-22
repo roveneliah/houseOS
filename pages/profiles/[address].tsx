@@ -5,6 +5,7 @@ import { useKrauseBalance } from "../../hooks/ethereum/useKrauseBalance";
 import { getUser, getUsers } from "../../utils/firebase/user";
 import { useListenUserTags } from "../../hooks/database/useListenUserTags";
 import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
+import { useGetUser } from "@/hooks/database/useGetUser";
 import { Comment } from "../../types/Comment";
 import { useComments } from "../../hooks/database/useComments";
 import { dao, defaultAvatar } from "../../config";
@@ -25,7 +26,8 @@ const TagListBox = dynamic(
 );
 const TagsList = dynamic(() => import("../../components/profiles/TagsList"));
 
-export default function Profile({ user }: any) {
+export default function Profile({ address: userAddress }: any) {
+  const user = useGetUser(userAddress);
   const { address, friends, name } = user;
   const { data: account } = useAccount();
   const profile = useGetUserProfile();
@@ -33,9 +35,9 @@ export default function Profile({ user }: any) {
   const allTags = useGetAllUserTags(address);
   const krauseBalance = useKrauseBalance(address);
   const { data: ensName } = useEnsName({ address });
-  const isFriend = profile?.friends?.includes(address);
   const comments: Array<Comment> = useComments(address);
 
+  const isFriend = profile?.friends?.includes(address);
   return (
     <Layout>
       {!address ? (
@@ -122,11 +124,8 @@ export default function Profile({ user }: any) {
 }
 
 export async function getStaticProps({ params }: any) {
-  const user = await getUser(params.address);
   return {
-    props: {
-      user,
-    },
+    props: params,
   };
 }
 

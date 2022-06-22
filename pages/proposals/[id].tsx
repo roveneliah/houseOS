@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { useGetComments } from "../../hooks/database/useGetComments";
 import { snapshotSpace } from "../../config";
@@ -9,6 +9,7 @@ import { useCommand } from "../../hooks/generic/useCommand";
 
 import { Comment } from "../../types/Comment";
 import { Proposal } from "../../types/Proposal";
+import createHook from "@/hooks/createHook";
 
 const Layout = dynamic(() => import("../../components/Layout"));
 const ChoiceFilters = dynamic(() => import("../../components/FilterTabs"));
@@ -21,7 +22,8 @@ enum View {
   CommentList,
 }
 
-const ProposalPage: NextPage = ({ proposal }: any) => {
+const ProposalPage: NextPage = ({ id }: any) => {
+  const proposal = createHook(fetchProposal)(id);
   const [view, setView] = useState(View.CommentList);
   const comments: Array<Comment> = useGetComments(proposal.id);
   const [selectedChoice, setSelectedChoice] = useState(0);
@@ -69,11 +71,8 @@ const ProposalPage: NextPage = ({ proposal }: any) => {
 };
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
-  const proposal = await fetchProposal(params.id);
   return {
-    props: {
-      proposal,
-    },
+    props: { id: params.id },
   };
 }
 

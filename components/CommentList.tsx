@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function CommentList({
-  comments,
+  comments = [],
   toggleCommentView,
   proposal,
   choice,
@@ -38,7 +38,7 @@ export default function CommentList({
       <div className="flex flex-col space-y-4">
         <div className="flex w-full flex-row items-baseline justify-between border-b-2 border-gray-900">
           <p className="text-4xl font-bold text-gray-900">
-            {proposal.choices[choice]}
+            {proposal?.choices?.[choice]}
           </p>
           {address ? (
             <p
@@ -58,10 +58,11 @@ export default function CommentList({
         )}
       </div>
       <div>
-        {sortedFilteredComments?.length > 0 ? (
+        {sortedFilteredComments.length > 0 ? (
           sortedFilteredComments.map((comment: Comment, i: number) => (
             <CommentListItem
               key={i}
+              index={i}
               comment={comment}
               selectedTags={selectedTags}
             />

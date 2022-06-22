@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-export const createHook =
-  (fn: Function): Function =>
-  (param: any) => {
+export default function createHook(fn: Function): Function {
+  return (param: any) => {
     const [state, setState] = useState([]);
 
     useEffect(() => {
       fn(param).then(setState);
-    }, []);
+    }, [param]);
 
     return state;
   };
+}

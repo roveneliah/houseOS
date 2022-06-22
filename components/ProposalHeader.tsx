@@ -4,7 +4,8 @@ import { useGetAllProposalTags } from "../hooks/proposals/useGetAllProposalTags"
 import { useListenProposalTags } from "../hooks/tags/useListenProposalTags";
 import { Proposal, ProposalState } from "../types/Proposal";
 
-const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+const capitalize = (str: string) =>
+  str?.charAt(0).toUpperCase() + str?.slice(1);
 
 interface Props {
   proposal: Proposal;
@@ -16,7 +17,7 @@ export default function ProposalHeader({ proposal }: Props) {
   const address = useUserAddress();
   const [showTags, setShowTags] = useState(false);
 
-  return (
+  return proposal ? (
     <div className="flex w-full flex-col items-start space-y-10 bg-gray-800 py-12 text-gray-300">
       <div className="flex w-full flex-col space-y-4">
         <div className="flex flex-row justify-start space-x-2">
@@ -58,5 +59,7 @@ export default function ProposalHeader({ proposal }: Props) {
         </div>
       )}
     </div>
+  ) : (
+    <p>Loading...</p>
   );
 }

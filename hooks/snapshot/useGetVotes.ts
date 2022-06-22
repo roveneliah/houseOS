@@ -1,5 +1,5 @@
 import { Comment } from "../../types/Comment";
-import { createHook } from "../createHook";
+import createHook from "../createHook";
 import { fetchVotes } from "../../utils/fetchVotes";
 import { useEffect, useState } from "react";
 

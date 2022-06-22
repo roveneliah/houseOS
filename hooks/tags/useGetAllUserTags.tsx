@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
-import { userTags } from "../../config";
-import { EthereumAddress } from "../../types/EthereumAddress";
-import { listenUserTags } from "../../utils/firebase/user";
-import { useTagUser, useUntagUser } from "../database/useTagUser";
-import { Maybe } from "../../types/Maybe";
+import { EthereumAddress } from "@/types/EthereumAddress";
+import { Maybe } from "@/types/Maybe";
 import { useSignIn } from "../useSignIn";
+
+import { userTags } from "../../config";
+import { useTagUser, useUntagUser } from "../database/useTagUser";
+import { listenUserTags } from "../../utils/firebase/user";
 
 export const useGetAllUserTags = (
   address: Maybe<EthereumAddress>

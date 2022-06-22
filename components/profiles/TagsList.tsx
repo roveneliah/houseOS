@@ -1,10 +1,11 @@
 import { useMemo } from "react";
-import { Tag } from "../../types/Tag";
+import { Tag } from "@/types/Tag";
 
 export default function TagsList({
   tags,
   max = undefined,
   disabled = false,
+  numbered = true,
 }: any) {
   const sortedTags = useMemo(
     () => tags.sort((a: Tag, b: Tag) => b.taggers.length - a.taggers.length),
@@ -22,9 +23,11 @@ export default function TagsList({
               key={i}
               onClick={!disabled ? tag.toggle : () => {}}
             >
-              <span className="mr-2 -ml-3 bg-gray-400 p-2 text-gray-700">
-                {tag.taggers.length || ""}
-              </span>
+              {numbered && (
+                <span className="mr-2 -ml-3 bg-gray-400 p-2 text-gray-700">
+                  {tag.taggers.length || ""}
+                </span>
+              )}
               {tag.tag}
             </p>
           )

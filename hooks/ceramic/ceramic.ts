@@ -8,7 +8,7 @@ import {
 } from "@self.id/framework";
 import { useEffect, useState } from "react";
 import { EthereumAddress } from "../../types/EthereumAddress";
-import { createHook } from "../createHook";
+import createHook from "../createHook";
 
 export function useLoadTile(id: string) {
   const client = useClient();
