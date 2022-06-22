@@ -1,12 +1,14 @@
-import { Dialog, Combobox, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
-import SearchIcon from "./icons/SearchIcon";
 import { useCommand } from "../hooks/generic/useCommand";
 import { CommandFilters } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
-import { ListIcon } from "./icons/ListIcon";
-import { ClockIcon } from "./icons/ClockIcon";
+
+import dynamic from "next/dynamic";
+import { Dialog, Combobox, Transition } from "@headlessui/react";
+import ListIcon from "./icons/ListIcon";
+import ClockIcon from "./icons/ClockIcon";
+import SearchIcon from "./icons/SearchIcon";
 import UsersIcon from "./icons/UsersIcon";
 import LinkIcon from "./icons/LinkIcon";
 

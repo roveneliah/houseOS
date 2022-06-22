@@ -5,6 +5,7 @@ import { EthereumAddress } from "../../types/EthereumAddress";
 import { listenUserTags } from "../../utils/firebase/user";
 import { useTagUser, useUntagUser } from "../database/useTagUser";
 import { Maybe } from "../../types/Maybe";
+import { useSignIn } from "../useSignIn";
 
 export const useGetAllUserTags = (
   address: Maybe<EthereumAddress>
@@ -13,9 +14,11 @@ export const useGetAllUserTags = (
   const untagUser = useUntagUser();
   const { data: account } = useAccount();
   const [tags, setTags] = useState([]);
+  const { signedIn } = useSignIn();
 
   useEffect(() => {
-    address &&
+    signedIn &&
+      address &&
       listenUserTags(address, (tags: any) => {
         const allTags = tags.concat(
           userTags
@@ -41,6 +44,6 @@ export const useGetAllUserTags = (
           }))
         );
       });
-  }, [account?.address, untagUser, tagUser]);
+  }, [account?.address, untagUser, tagUser, signedIn]);
   return tags;
 };

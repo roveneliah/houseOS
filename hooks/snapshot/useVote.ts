@@ -1,5 +1,4 @@
 import snapshot from "@snapshot-labs/snapshot.js";
-import { useProvider, useAccount, useSigner } from "wagmi";
 import { Web3Provider } from "@ethersproject/providers";
 
 const hub = "https://hub.snapshot.org"; // or https://testnet.snapshot.org for testnet

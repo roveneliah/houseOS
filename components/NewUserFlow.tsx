@@ -5,10 +5,10 @@ import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
 import { useRouter } from "next/router";
 import { useCommand } from "../hooks/generic/useCommand";
-import { Maybe } from "../types/Maybe";
 import { useSignIn } from "../hooks/useSignIn";
+import { Maybe } from "../types/Maybe";
 
-export function NewUserFlow() {
+export default function NewUserFlow() {
   const [name, setName] = useState<Maybe<string>>();
   const address = useUserAddress();
   const allTags = useGetAllUserTags(address);

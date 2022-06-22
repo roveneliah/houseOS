@@ -2,16 +2,18 @@ import Head from "next/head";
 import { ReactNode, useEffect, useState } from "react";
 import { dao, themes } from "../config";
 import { useGetCommands } from "../hooks/useGetCommands";
-import CommandPalette from "./CommandPalette";
 import { Command } from "../types/Command";
-import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
-import SearchIcon from "./icons/SearchIcon";
+import { useConnect, useDisconnect, useEnsName } from "wagmi";
 import { useKrauseBalance } from "../hooks/ethereum/useKrauseBalance";
 import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useSignIn } from "../hooks/useSignIn";
 import { useIsNewUser } from "../hooks/useIsNewUser";
 import { useRouter } from "next/router";
+
+import dynamic from "next/dynamic";
+const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
+const CommandPalette = dynamic(() => import("./CommandPalette"));
 
 export default function Layout({
   children,
@@ -53,7 +55,9 @@ export default function Layout({
     <div data-theme={themeName} className="min-h-screen">
       <Head>
         <title>{dao.name}</title>
+        {/* TODO: #11 customize in config */}
         <link rel="icon" href="/favicon.ico" />
+        <meta name="DAO Social Network" />
       </Head>
 
       <CommandPalette

@@ -1,8 +1,5 @@
-import { useGetProposalStats } from "../hooks/proposals/useGetProposalStats";
-import { useSingleSelect } from "../hooks/generic/useSingleSelect";
 import { Proposal } from "../types/Proposal";
 import { toPercent } from "../utils/toPercent";
-import { useEffect } from "react";
 
 interface Props {
   proposal: Proposal;

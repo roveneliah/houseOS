@@ -1,17 +1,20 @@
-import type { NextPage, NextPageContext } from "next";
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import ChoiceFilters from "../../components/FilterTabs";
-import ProposalHeader from "../../components/ProposalHeader";
-import CommentList from "../../components/CommentList";
-import CommentView from "../../components/CommentView";
+import type { NextPage } from "next";
 import { useGetComments } from "../../hooks/database/useGetComments";
-import { Comment } from "../../types/Comment";
-import Layout from "../../components/Layout";
-import { Proposal } from "../../types/Proposal";
 import { snapshotSpace } from "../../config";
 import { fetchProposals } from "../../utils/fetchProposals";
 import { fetchProposal } from "../../utils/fetchProposal";
 import { useCommand } from "../../hooks/generic/useCommand";
+
+import { Comment } from "../../types/Comment";
+import { Proposal } from "../../types/Proposal";
+
+const Layout = dynamic(() => import("../../components/Layout"));
+const ChoiceFilters = dynamic(() => import("../../components/FilterTabs"));
+const ProposalHeader = dynamic(() => import("../../components/ProposalHeader"));
+const CommentList = dynamic(() => import("../../components/CommentList"));
+const CommentView = dynamic(() => import("../../components/CommentView"));
 
 enum View {
   Comment,

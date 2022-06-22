@@ -1,20 +1,29 @@
 import Image from "next/image";
-import { useAccount, useBalance, useConnect, useEnsName } from "wagmi";
+import { useAccount, useEnsName } from "wagmi";
 import Layout from "../../components/Layout";
 import { useKrauseBalance } from "../../hooks/ethereum/useKrauseBalance";
-import { useGetUser } from "../../hooks/ceramic/useGetUser";
-import { addFriend, getUser, getUsers } from "../../utils/firebase/user";
+import { getUser, getUsers } from "../../utils/firebase/user";
 import { useListenUserTags } from "../../hooks/database/useListenUserTags";
 import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
 import { Comment } from "../../types/Comment";
 import { useComments } from "../../hooks/database/useComments";
 import { dao, defaultAvatar } from "../../config";
 import { useGetAllUserTags } from "../../hooks/tags/useGetAllUserTags";
-import CommentList from "../../components/profiles/CommentList";
-import LoadingView from "../../components/profiles/LoadingView";
-import FriendsList from "../../components/profiles/FriendsList";
-import TagListBox from "../../components/profiles/TagListBox";
-import TagsList from "../../components/profiles/TagsList";
+
+import dynamic from "next/dynamic";
+const CommentList = dynamic(
+  () => import("../../components/profiles/CommentList")
+);
+const LoadingView = dynamic(
+  () => import("../../components/profiles/LoadingView")
+);
+const FriendsList = dynamic(
+  () => import("../../components/profiles/FriendsList")
+);
+const TagListBox = dynamic(
+  () => import("../../components/profiles/TagListBox")
+);
+const TagsList = dynamic(() => import("../../components/profiles/TagsList"));
 
 export default function Profile({ user }: any) {
   const { address, friends, name } = user;
@@ -102,7 +111,7 @@ export default function Profile({ user }: any) {
                 <p className="text-left text-3xl font-bold text-gray-200">
                   Tell us about {name}
                 </p>
-                <TagListBox address={account?.address} allTags={allTags} />
+                <TagListBox address={account?.address} tags={allTags} />
               </div>
             )}
           </div>

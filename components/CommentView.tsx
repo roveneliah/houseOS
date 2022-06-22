@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
-import { useAccount, useEnsAvatar, useEnsName, useSignMessage } from "wagmi";
+import { useEffect, useState } from "react";
+import { useAccount, useSignMessage } from "wagmi";
 import { defaultAvatar, snapshotSpace } from "../config";
 import { useVote } from "../hooks/snapshot/useVote";
 import { postComment } from "../utils/firebase/post";

@@ -1,11 +1,12 @@
-import CommentListItem from "./CommentListItem";
-import TagSelector from "./TagSelector";
 import { Comment } from "../types/Comment";
 import { useMemo, useState } from "react";
-import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
 import { Proposal } from "@snapshot-labs/snapshot.js/dist/sign/types";
 import { userTags } from "../config";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
+
+import dynamic from "next/dynamic";
+const CommentListItem = dynamic(() => import("./CommentListItem"));
+const TagSelector = dynamic(() => import("./TagSelector"));
 
 interface Props {
   comments: Array<Comment>;

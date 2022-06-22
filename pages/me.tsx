@@ -1,21 +1,24 @@
 import Image from "next/image";
-import Layout from "../components/Layout";
+
 import { dao, defaultAvatar } from "../config";
 import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
-import LoginView from "../components/LoginView";
 import { useKrauseBalance } from "../hooks/ethereum/useKrauseBalance";
 import { useListenUserTags } from "../hooks/database/useListenUserTags";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useMemo, useRef, useState } from "react";
 import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
 import { useComments } from "../hooks/database/useComments";
-import CommentList from "../components/profiles/CommentList";
-import FriendsList from "../components/profiles/FriendsList";
-import TagsList from "../components/profiles/TagsList";
-import TagListBox from "../components/profiles/TagListBox";
 import { usePFP } from "../hooks/usePFP";
 import { useSignIn } from "../hooks/useSignIn";
 import { useFirebase } from "../hooks/useFirebase";
+
+import dynamic from "next/dynamic";
+const Layout = dynamic(() => import("../components/Layout"));
+const CommentList = dynamic(() => import("../components/profiles/CommentList"));
+const FriendsList = dynamic(() => import("../components/profiles/FriendsList"));
+const TagsList = dynamic(() => import("../components/profiles/TagsList"));
+const TagListBox = dynamic(() => import("../components/profiles/TagListBox"));
+const LoginView = dynamic(() => import("../components/LoginView"));
 
 export default function MyProfile() {
   const user = useGetUserProfile();
@@ -141,7 +144,7 @@ export default function MyProfile() {
               <p className="text-left text-3xl font-bold text-gray-200">
                 Help others understand a bit about you.
               </p>
-              <TagListBox allTags={allTags} address={address} />
+              <TagListBox tags={allTags} address={address} />
             </div>
           </div>
         </div>

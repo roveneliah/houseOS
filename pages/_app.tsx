@@ -1,6 +1,7 @@
+import dynamic from "next/dynamic";
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import Web3Provider from "../components/Web3Provider";
+import type { AppProps, NextWebVitalsMetric } from "next/app";
+const Web3Provider = dynamic(() => import("../components/Web3Provider"));
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -8,6 +9,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
     </Web3Provider>
   );
+}
+
+export function reportWebVitals(metric: NextWebVitalsMetric) {
+  console.log(metric);
 }
 
 export default MyApp;

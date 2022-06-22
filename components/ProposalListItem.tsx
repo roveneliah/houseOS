@@ -9,7 +9,7 @@ export interface Props {
   selectedTags: Array<string>;
 }
 
-export function ProposalListItem({ proposal, selectedTags }: Props) {
+export default function ProposalListItem({ proposal, selectedTags }: Props) {
   const timeLeft = useGetTimeLeft(proposal);
   const proposalTags = useListenProposalTags(proposal.id).map(({ tag }) => tag);
   const router = useRouter();

@@ -1,5 +1,7 @@
+import dynamic from "next/dynamic";
 import { EthereumAddress } from "../../types/EthereumAddress";
-import ProfilePreview from "./ProfilePreview";
+
+const ProfilePreview = dynamic(() => import("./ProfilePreview"));
 
 export default function FriendsList({
   friends,

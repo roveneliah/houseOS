@@ -9,7 +9,7 @@ interface Props {
   setStateFilter: Function;
 }
 
-export function StatusFilterTabs({ options, stateFilter }: Props) {
+export default function StatusFilterTabs({ options, stateFilter }: Props) {
   return (
     <div className="flex flex-row justify-between space-x-4">
       {options.map(({ name, icon, onClick }: any, i: number) => (

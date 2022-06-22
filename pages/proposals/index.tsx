@@ -1,16 +1,23 @@
 import type { NextPage } from "next";
-import Layout from "../../components/Layout";
-import { ClockIcon } from "../../components/icons/ClockIcon";
 import { length } from "ramda";
 import { Proposal, ProposalState } from "../../types/Proposal";
-import { StatusFilterTabs } from "../../components/StatusFilterTabs";
-import TagSelector from "../../components/TagSelector";
-import { useGetAllProposalTags } from "../../hooks/proposals/useGetAllProposalTags";
 import { useGetProposals } from "../../hooks/snapshot/useGetProposals";
 import { useMemo, useState } from "react";
-import { ProposalListItem } from "../../components/ProposalListItem";
-import { LockedIcon } from "../../components/icons/LockedIcon";
-import { ListIcon } from "../../components/icons/ListIcon";
+
+import dynamic from "next/dynamic";
+import LockedIcon from "../../components/icons/LockedIcon";
+import ClockIcon from "../../components/icons/ClockIcon";
+import ListIcon from "../../components/icons/ListIcon";
+
+const StatusFilterTabs = dynamic(
+  () => import("../../components/StatusFilterTabs")
+);
+const ProposalListItem = dynamic(
+  () => import("../../components/ProposalListItem")
+);
+const Layout = dynamic(() => import("../../components/Layout"));
+const TagSelector = dynamic(() => import("../../components/TagSelector"));
+
 import { useSingleSelect } from "../../hooks/generic/useSingleSelect";
 import { proposalTags, snapshotSpace } from "../../config";
 import { useCommand } from "../../hooks/generic/useCommand";
