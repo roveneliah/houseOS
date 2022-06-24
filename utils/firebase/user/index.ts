@@ -17,7 +17,6 @@ import {
   writeBatch,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import Image from "next/image";
 import { db, storage } from "..";
 import { dao } from "../../../config";
 import { EthereumAddress } from "../../../types/EthereumAddress";
@@ -74,14 +73,16 @@ export const tagUser = async (
   tag: string,
   tagger: EthereumAddress
 ) =>
-  setDoc(
+  await setDoc(
     doc(db, `users/${userAddress}/tags/${tag}`),
     {
       tag,
       taggers: arrayUnion(tagger),
     },
     { merge: true }
-  );
+  )
+    .then((res) => console.log("Tagged User Successfully"))
+    .catch((e) => console.log("Error untagging user: ", e));
 
 export const untagUser = async (
   userAddress: EthereumAddress,
@@ -95,7 +96,9 @@ export const untagUser = async (
       taggers: arrayRemove(tagger),
     },
     { merge: true }
-  );
+  )
+    .then((res) => console.log("Untagged User Successfully"))
+    .catch((e) => console.log("Error untagging user: ", e));
 
 export const addFriend = async (
   userAddress: EthereumAddress,

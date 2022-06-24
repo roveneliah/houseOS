@@ -1,16 +1,23 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   getAuth,
+  onAuthStateChanged,
   signInWithCustomToken,
   signOut as signOutFirebase,
 } from "firebase/auth";
 import { Maybe } from "../types/Maybe";
-import { auth } from "../utils/firebase";
 
 export const useFirebase = () => {
   // TODO: init value should be the result of the api call...
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    onAuthStateChanged(getAuth(), (user) => {
+      setSignedIn(user != undefined);
+      setLoading(false);
+    });
+  }, []);
 
   const signIn = useCallback((token: Maybe<string>) => {
     if (token) {
@@ -18,6 +25,8 @@ export const useFirebase = () => {
       signInWithCustomToken(getAuth(), token)
         .then((userCredential) => {
           var user = userCredential.user;
+          console.log("Signed in ", userCredential);
+
           setSignedIn(true);
           setLoading(false);
         })

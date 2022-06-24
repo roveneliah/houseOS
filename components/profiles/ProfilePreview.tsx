@@ -23,7 +23,7 @@ export default function ProfilePreview({
       key={i}
     >
       <div
-        className={`flex w-full flex-row space-x-4 px-6 py-4 ${
+        className={`flex w-full flex-row space-x-4 rounded-md px-6 py-4 ${
           i % 2 === 0 ? "bg-gray-100" : "bg-gray-300"
         }`}
       >

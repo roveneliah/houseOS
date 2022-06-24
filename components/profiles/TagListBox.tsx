@@ -17,7 +17,7 @@ export default function TagListBox({
         ?.slice(0, max)
         .map(({ tag, toggle, taggers }: any, i: number) => (
           <p
-            className={`badge my-1 ${
+            className={`badge badge-lg my-1 ${
               taggers.includes(address) ? "badge-dark" : "hover:bg-gray-400"
             }`}
             key={i}

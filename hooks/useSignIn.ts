@@ -24,6 +24,8 @@ export const useSignIn = () => {
 
   const signIn = () => {
     signInSIWE().then(() => {
+      console.log("Trying to sign in with firebase");
+
       signInFirebase(state.token);
     });
   };

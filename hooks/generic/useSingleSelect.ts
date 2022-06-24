@@ -6,18 +6,26 @@ type Option = {
   icon?: any;
 };
 
-export const useSingleSelect = (arr: Array<Option>, initial: number = 0) => {
-  const [selected, setSelected] = useState(
-    arr.map((_, i: number) => i === initial)
-  );
-  const toggle = (index: number) =>
-    setSelected((s) => s.map((val, i) => i === index && !val));
-  return arr.map((x, i) => ({
+export const useSingleSelect = (arr: Array<Option>) => {
+  const [selected, setSelected] = useState<number>(0);
+
+  const options = arr.map((x, i) => ({
     ...x,
-    selected: selected[i],
+    selected: i === selected,
     toggle: () => {
-      toggle(i);
+      setSelected(i);
       x.onClick && x.onClick();
     },
   }));
+
+  const next = () => setSelected((i: number) => (i + 1) % arr.length);
+  const prev = () =>
+    setSelected((i: number) => (i + arr.length - 1) % arr.length);
+
+  return {
+    options,
+    selected,
+    next,
+    prev,
+  };
 };

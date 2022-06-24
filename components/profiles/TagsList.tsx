@@ -12,7 +12,7 @@ export default function TagsList({
     [tags]
   );
   return (
-    <div className="flex flex-row space-x-2 overflow-auto">
+    <div className="flex w-full flex-row space-x-2 overflow-auto">
       {sortedTags?.slice(0, max)?.map(
         (tag: any, i: number) =>
           tag.taggers.length > 0 && (

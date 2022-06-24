@@ -40,7 +40,7 @@ const ProposalsListPage: NextPage = () => {
 
   const [selectedTags, setSelectedTags] = useState([]);
   const [stateFilter, setStateFilter] = useState(All);
-  const options = useSingleSelect([
+  const { options } = useSingleSelect([
     {
       name: "Active",
       icon: ClockIcon,
@@ -70,23 +70,25 @@ const ProposalsListPage: NextPage = () => {
 
   return (
     <Layout paletteStartsOpen={true}>
-      <div className="flex w-full flex-col items-start space-y-10 bg-gray-800 px-72 pt-20">
-        <div className="bg-gray-7000 flex w-full flex-row justify-start">
-          <div className="flex flex-col items-start space-y-2 text-gray-300">
-            <div className="flex flex-row space-x-2">
-              <ClockIcon />
-              <p className="font-bold">{countActive} Active</p>
+      <div className="flex w-full flex-row justify-center bg-gray-800 pt-20">
+        <div className="flex w-2/3 flex-col space-y-10 ">
+          <div className="bg-gray-7000 flex w-2/3 flex-row justify-start">
+            <div className="flex flex-col items-start space-y-2 text-gray-300">
+              <div className="flex flex-row space-x-2">
+                <ClockIcon />
+                <p className="font-bold">{countActive} Active</p>
+              </div>
+              <p className="text-6xl font-bold">Proposals</p>
             </div>
-            <p className="text-6xl font-bold">Proposals</p>
           </div>
+          <StatusFilterTabs
+            options={options}
+            stateFilter={stateFilter}
+            setStateFilter={setStateFilter}
+          />
         </div>
-        <StatusFilterTabs
-          options={options}
-          stateFilter={stateFilter}
-          setStateFilter={setStateFilter}
-        />
       </div>
-      <div className="w-full px-72">
+      <div className="w-2/3">
         <div className="flex flex-col space-y-4 rounded-b-lg bg-gray-200 p-6">
           <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
           <div className="flex h-[60vh] flex-col overflow-y-auto">

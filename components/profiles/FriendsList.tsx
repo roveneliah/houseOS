@@ -9,7 +9,7 @@ export default function FriendsList({
   friends: Array<EthereumAddress>;
 }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg">
+    <div className="flex flex-col space-y-2">
       {friends?.map((address: EthereumAddress, i: number) => (
         <ProfilePreview address={address} key={i} i={i} />
       ))}
