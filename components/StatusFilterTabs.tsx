@@ -14,7 +14,7 @@ export default function StatusFilterTabs({ options, stateFilter }: Props) {
     <div className="flex flex-row justify-between space-x-4">
       {options.map(({ name, icon, onClick }: any, i: number) => (
         <div
-          className={`flex w-[20vw] cursor-pointer flex-row justify-start space-y-4 rounded-t-lg p-5  ${
+          className={`flex w-[20vw] cursor-pointer flex-row justify-start space-y-4 rounded-t-lg p-4  ${
             i === stateFilter
               ? "bg-gray-200 text-gray-800"
               : "bg-gray-700 text-gray-300"

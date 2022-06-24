@@ -20,7 +20,7 @@ const TagSelector = dynamic(() => import("../../components/TagSelector"));
 
 import { useSingleSelect } from "../../hooks/generic/useSingleSelect";
 import { proposalTags, snapshotSpace } from "../../config";
-import { useCommand } from "../../hooks/generic/useCommand";
+import { useOnKeydown } from "../../hooks/generic/useCommand";
 
 export enum StateFilters {
   Active,
@@ -50,10 +50,11 @@ const ProposalsListPage: NextPage = () => {
     { name: "All", icon: ListIcon, onClick: () => setStateFilter(All) },
   ]);
 
-  useCommand("ArrowRight", () =>
+  useOnKeydown("ArrowRight", () =>
     setStateFilter((current) => (current + 1) % 3)
   );
-  useCommand("ArrowLeft", () =>
+
+  useOnKeydown("ArrowLeft", () =>
     setStateFilter((current) => (3 + current - 1) % 3)
   );
 

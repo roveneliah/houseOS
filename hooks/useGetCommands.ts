@@ -1,9 +1,10 @@
 import { Proposal } from "../types/Proposal";
 import { Command } from "../types/Command";
 import { useGetProposals } from "./snapshot/useGetProposals";
-import { useGetUsers } from "./database/useGetUsers";
-import { User } from "../types/User";
-import { commands, snapshotSpace } from "../config";
+import { useGetUsers } from "@/hooks/database/useGetUsers";
+import { User } from "@/types/User";
+import { commands, snapshotSpace } from "@/config";
+import defaultCommands from "@/utils/defaultCommands";
 
 export enum CommandFilters {
   ALL = "ALL",
@@ -34,6 +35,8 @@ export const useGetCommands = (): Array<Command> => {
   const proposals = useGetProposals(snapshotSpace);
   const users = useGetUsers();
   return [
+    ...(defaultCommands.map((o) => ({ ...o, type: CommandFilters.LINK })) ||
+      []),
     ...(commands?.links?.map(createLinkCommand) || []),
     ...(proposals?.map(createProposalCommand) || []),
     ...(users?.map(createUserCommand) || []),

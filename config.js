@@ -43,14 +43,6 @@ module.exports = {
   commands: {
     links: [
       {
-        name: "Profile",
-        link: "/me",
-      },
-      {
-        name: "Proposals",
-        link: "/proposals",
-      },
-      {
         name: "Treasury (Etherscan)",
         link: "https://etherscan.io/address/0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
       },
@@ -58,23 +50,23 @@ module.exports = {
       //   name: "Discord",
       //   link: "",
       // },
-      // {
-      //   name: "Twitter",
-      //   link: "https://twitter.com/krausehousedao",
-      // },
-      // {
-      //   name: "Website",
-      //   link: "https://krausehouse.club",
-      // },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/krausehousedao",
+      },
+      {
+        name: "Website",
+        link: "https://krausehouse.club",
+      },
     ],
   },
   themes: [
     {
       mytheme: {
-        primary: "gray",
-        secondary: "white",
+        primary: "purple",
+        secondary: "pink",
         accent: "teal",
-        neutral: "#7D7259",
+        neutral: "gray",
         "base-100": "black",
         info: "#2463EB",
         success: "#16A249",

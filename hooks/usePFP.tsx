@@ -9,7 +9,6 @@ export const usePFP = (address: Maybe<EthereumAddress>) => {
   const { signedIn } = useSIWE();
   useEffect(() => {
     if (signedIn && address) {
-      console.log("trying to get at address: ", address);
       getPfp(address).then(setPfpUrl);
     }
   }, [address]);

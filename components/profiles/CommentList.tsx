@@ -12,22 +12,28 @@ export default function CommentList({
         return (
           <Link href={`/proposals/${comment.proposalId}`} key={i}>
             <div
-              className={`flex cursor-pointer flex-col space-y-4 ${
+              className={`flex cursor-pointer flex-col space-y-0 ${
                 i % 2 ? "bg-gray-300" : "bg-gray-200"
-              } p-6`}
+              }`}
             >
-              <p className="text-xl font-normal text-gray-700">
-                {comment.body}
-              </p>
-              <div className="flex flex-row justify-between">
-                <p className="font-semibold text-gray-700">
-                  {comment.proposalTitle}
-                </p>
-                <p className="badge badge-dark">{comment.choice}</p>
+              <div className="w-full bg-gray-300 px-8 py-3">
+                <p className="font-semibold text-gray-900">{comment.choice}</p>
               </div>
-              {comment.vp && (
+              <div className="flex flex-col space-y-3 px-8 py-6">
+                <div className="flex flex-row justify-between space-x-2 overflow-hidden whitespace-nowrap">
+                  <p className="text-lg font-semibold text-gray-800">
+                    {comment.proposalTitle}
+                  </p>
+                </div>
+                <div className="w-11/12">
+                  <p className="text-md font-normal text-gray-800">
+                    {comment.body}
+                  </p>
+                </div>
+                {/* {comment.vp && (
                 <p className="badge badge-dark">{comment.vp} $KRAUSE</p>
-              )}
+              )} */}
+              </div>
             </div>
           </Link>
         );

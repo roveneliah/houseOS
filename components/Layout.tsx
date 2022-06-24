@@ -20,11 +20,13 @@ export default function Layout({
   paletteStartsOpen = false,
   fixedOpen = false,
   noOpacity = false,
+  demo = false,
 }: {
   children?: ReactNode;
   paletteStartsOpen?: boolean;
   fixedOpen?: boolean;
   noOpacity?: boolean;
+  demo?: boolean;
 }) {
   const [themeIndex, setThemeIndex] = useState<number>(0);
   const themeName = themes[themeIndex]?.toString();
@@ -34,7 +36,14 @@ export default function Layout({
   const krauseBalance = useKrauseBalance(address);
   const user = useGetUserProfile();
 
-  const { connect, connectors, isConnected } = useConnect();
+  const {
+    connect,
+    connectors,
+    isConnected,
+    isDisconnected,
+    isConnecting,
+    isReconnecting,
+  } = useConnect();
 
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
@@ -66,9 +75,10 @@ export default function Layout({
         setIsOpen={setIsOpen}
         noOpacity={noOpacity}
         deactivated={newUserFlow}
+        demo={demo}
       />
       <main className="flex min-h-[100vh] w-full flex-1 flex-col items-start justify-start bg-gray-500 pb-20">
-        <div className="fixed top-0 z-50 flex w-full flex-row justify-end">
+        <div className="fixed top-0 z-20 flex w-full flex-row justify-end">
           <div className="flex flex-row space-x-2 p-4">
             {!signedIn ? (
               isConnected ? (
@@ -82,9 +92,7 @@ export default function Layout({
               ) : (
                 <button
                   // disabled={!connector.ready}
-                  onClick={() => {
-                    connect(connector);
-                  }}
+                  onClick={() => connect(connector)}
                   className="btn btn-outline"
                 >
                   Connect

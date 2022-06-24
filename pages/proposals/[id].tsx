@@ -1,16 +1,14 @@
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { NextPage } from "next";
 import { useGetComments } from "../../hooks/database/useGetComments";
 import { snapshotSpace } from "../../config";
 import { fetchProposals } from "../../utils/fetchProposals";
 import { fetchProposal } from "../../utils/fetchProposal";
 import { useCommand } from "../../hooks/generic/useCommand";
-
 import { Comment } from "../../types/Comment";
 import { Proposal } from "../../types/Proposal";
 import createHook from "@/hooks/createHook";
-
 const Layout = dynamic(() => import("../../components/Layout"));
 const ChoiceFilters = dynamic(() => import("../../components/FilterTabs"));
 const ProposalHeader = dynamic(() => import("../../components/ProposalHeader"));
@@ -26,14 +24,14 @@ const ProposalPage: NextPage = ({ id }: any) => {
   const proposal = createHook(fetchProposal)(id);
   const [view, setView] = useState(View.CommentList);
   const comments: Array<Comment> = useGetComments(proposal.id);
-  const [selectedChoice, setSelectedChoice] = useState(0);
 
-  useCommand("ArrowRight", () =>
-    setSelectedChoice((choice) => (choice + 1) % 3)
-  );
-  useCommand("ArrowLeft", () =>
-    setSelectedChoice((choice) => (choice + 2) % 3)
-  );
+  // TODO: #12 create hook to abstract all this and pass in iterators
+  const [selectedChoice, setSelectedChoice] = useState(0);
+  const next = () => setSelectedChoice((choice) => (choice + 1) % 3);
+  const prev = () => setSelectedChoice((choice) => (choice + 2) % 3);
+
+  useCommand("ArrowRight", next);
+  useCommand("ArrowLeft", prev);
 
   return (
     <Layout>

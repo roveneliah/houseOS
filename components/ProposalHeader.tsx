@@ -3,6 +3,7 @@ import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useGetAllProposalTags } from "../hooks/proposals/useGetAllProposalTags";
 import { useListenProposalTags } from "../hooks/tags/useListenProposalTags";
 import { Proposal, ProposalState } from "../types/Proposal";
+import TagsList from "./profiles/TagsList";
 
 const capitalize = (str: string) =>
   str?.charAt(0).toUpperCase() + str?.slice(1);
@@ -21,21 +22,19 @@ export default function ProposalHeader({ proposal }: Props) {
     <div className="flex w-full flex-col items-start space-y-10 bg-gray-800 py-12 text-gray-300">
       <div className="flex w-full flex-col space-y-4">
         <div className="flex flex-row justify-start space-x-2">
-          <p className="badge badge-outline">{capitalize(proposal.state)}</p>
-          <p className="badge badge-outline">{proposal.votes} Votes</p>
+          {proposal.state && (
+            <p className="badge badge-outline">{capitalize(proposal.state)}</p>
+          )}
+          {proposal.votes && (
+            <p className="badge badge-outline">{proposal.votes} Votes</p>
+          )}
           {proposal.state === ProposalState.Active && (
             <p className="badge badge-outline">Closes in {}</p>
           )}
         </div>
         <p className="text-left text-6xl font-semibold">{proposal.title}</p>
         <div className="flex w-full flex-row justify-between">
-          <div className="flex flex-row justify-start space-x-2">
-            {tags.map(({ tag, taggers, toggle }: any, i: number) => (
-              <p className="badge badge-outline" key={i}>
-                {tag} {taggers.length}
-              </p>
-            ))}
-          </div>
+          <TagsList tags={tags} />
           {address && (
             <button className="badge" onClick={() => setShowTags(!showTags)}>
               {showTags ? "Hide" : "Show"} Tags

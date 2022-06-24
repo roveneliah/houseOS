@@ -12,19 +12,19 @@ export default function TagsList({
     [tags]
   );
   return (
-    <div className="flex flex-row space-x-2">
+    <div className="flex flex-row space-x-2 overflow-auto">
       {sortedTags?.slice(0, max)?.map(
         (tag: any, i: number) =>
           tag.taggers.length > 0 && (
             <p
-              className={`badge badge-light overflow-hidden ${
+              className={`badge badge-light overflow-hidden text-gray-700 ${
                 !disabled && "hover:bg-gray-300"
               }`}
               key={i}
               onClick={!disabled ? tag.toggle : () => {}}
             >
               {numbered && (
-                <span className="mr-2 -ml-3 bg-gray-400 p-2 text-gray-700">
+                <span className="mr-2 -ml-3 bg-gray-300 p-2 text-gray-700">
                   {tag.taggers.length || ""}
                 </span>
               )}

@@ -3,8 +3,6 @@ import { Fragment, useState } from "react";
 import { useCommand } from "../hooks/generic/useCommand";
 import { CommandFilters } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
-
-import dynamic from "next/dynamic";
 import { Dialog, Combobox, Transition } from "@headlessui/react";
 import ListIcon from "./icons/ListIcon";
 import ClockIcon from "./icons/ClockIcon";
@@ -18,6 +16,7 @@ interface Props {
   isOpen?: boolean;
   noOpacity?: boolean;
   deactivated?: boolean;
+  demo?: boolean;
 }
 
 export default function CommandPalette({
@@ -26,6 +25,7 @@ export default function CommandPalette({
   setIsOpen,
   noOpacity = false,
   deactivated = false,
+  demo = false,
 }: Props) {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -92,7 +92,7 @@ export default function CommandPalette({
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        className="fixed inset-0 mx-auto max-w-[50vw] overflow-y-auto p-4 pt-[25vh]"
+        className="fixed inset-0 z-50 mx-auto max-w-[50vw] overflow-y-auto p-4 pt-[25vh] "
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -117,7 +117,7 @@ export default function CommandPalette({
           <Combobox
             value={undefined}
             onChange={(command: Command) => {
-              if (!deactivated) {
+              if (!demo) {
                 command.link && router.push(command.link);
                 setIsOpen(false);
               }
@@ -145,7 +145,7 @@ export default function CommandPalette({
               <SearchIcon />
               <Combobox.Input
                 className="focus:ring-5 h-12 w-full border-0 border-white bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-0"
-                placeholder="Search..."
+                placeholder={demo ? "Good job!" : "Search..."}
                 autoComplete="false"
                 onChange={(event) => {
                   setQuery(event.target.value);
@@ -172,9 +172,11 @@ export default function CommandPalette({
                               {command.name}
                             </p>
                           </div>
-                          <p className="badge badge-dark badge-sm">
-                            {command.type}
-                          </p>
+                          {filter === CommandFilters.ALL && (
+                            <p className="badge badge-dark badge-sm">
+                              {command.type}
+                            </p>
+                          )}
                         </div>
                       </div>
                     )}

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { EthereumAddress } from "../../types/EthereumAddress";
-import { defaultAvatar } from "../../config";
+import { dao, defaultAvatar } from "../../config";
 import { useGetUser } from "../../hooks/database/useGetUser";
 import { useListenUserTags } from "../../hooks/database/useListenUserTags";
 import TagsList from "./TagsList";
@@ -40,7 +40,7 @@ export default function ProfilePreview({
             <p className="text-lg font-semibold text-gray-700">{name}</p>
             <p className="badge badge-dark badge-sm">{address.slice(0, 8)}</p>
           </div>
-          <TagsList tags={tags} max={3} disabled={true} />
+          <TagsList tags={tags} max={3} disabled={true} numbered={false} />
         </div>
       </div>
     </div>

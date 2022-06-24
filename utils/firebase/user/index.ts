@@ -134,7 +134,9 @@ export const listenUserComments = async (address: EthereumAddress) => {
 
 export const getPfp = async (address: EthereumAddress) =>
   getDownloadURL(ref(storage, `pfps/${address}.png`)).catch(() =>
-    console.log("Error getting PFP for user", address)
+    getDownloadURL(ref(storage, "coachrick.png")).catch(() =>
+      console.log("Could not retrieve pfp")
+    )
   );
 
 export const setProfilePic = async (address: EthereumAddress, pic: File) => {

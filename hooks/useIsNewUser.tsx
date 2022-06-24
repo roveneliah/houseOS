@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useConnect } from "wagmi";
 import { useGetUserProfile } from "./users/useGetUserProfile";
-import { useUserAddress } from "./ethereum/useUserAddress";
 
 export const useIsNewUser = (): boolean => {
   const user = useGetUserProfile();
