@@ -1,3 +1,4 @@
+import { useSignIn } from "@/hooks/useSignIn";
 import { useState } from "react";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useGetAllProposalTags } from "../hooks/proposals/useGetAllProposalTags";
@@ -17,6 +18,7 @@ export default function ProposalHeader({ proposal }: Props) {
   const allTags = useGetAllProposalTags(proposal.id);
   const address = useUserAddress();
   const [showTags, setShowTags] = useState(false);
+  const { signedIn } = useSignIn();
 
   return proposal ? (
     <div className="flex w-full flex-col items-start space-y-10 bg-gray-800 py-12 text-gray-300">
@@ -29,13 +31,13 @@ export default function ProposalHeader({ proposal }: Props) {
             <p className="badge badge-outline">{proposal.votes} Votes</p>
           )}
           {proposal.state === ProposalState.Active && (
-            <p className="badge badge-outline">Closes in {}</p>
+            <p className="badge badge-outline">Closes in {/*TODO:*/}</p>
           )}
         </div>
         <p className="text-left text-6xl font-semibold">{proposal.title}</p>
         <div className="flex w-full flex-row justify-between">
           <TagsList tags={tags} />
-          {address && (
+          {signedIn && (
             <button className="badge" onClick={() => setShowTags(!showTags)}>
               {showTags ? "Hide" : "Show"} Tags
             </button>
