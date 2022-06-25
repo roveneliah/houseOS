@@ -40,6 +40,8 @@ const ProposalsListPage: NextPage = () => {
 
   const [selectedTags, setSelectedTags] = useState([]);
   const [stateFilter, setStateFilter] = useState(All);
+
+  // TODO: #13 Refactor with prev, next, selected
   const { options } = useSingleSelect([
     {
       name: "Active",
@@ -71,7 +73,7 @@ const ProposalsListPage: NextPage = () => {
   return (
     <Layout paletteStartsOpen={true}>
       <div className="flex w-full flex-row justify-center bg-gray-800 pt-20">
-        <div className="flex w-2/3 flex-col space-y-10 ">
+        <div className="flex w-2/3 max-w-3xl flex-col space-y-10 ">
           <div className="bg-gray-7000 flex w-2/3 flex-row justify-start">
             <div className="flex flex-col items-start space-y-2 text-gray-300">
               <div className="flex flex-row space-x-2">
@@ -88,7 +90,7 @@ const ProposalsListPage: NextPage = () => {
           />
         </div>
       </div>
-      <div className="w-2/3">
+      <div className="w-2/3 max-w-3xl">
         <div className="flex flex-col space-y-4 rounded-b-lg bg-gray-200 p-6">
           <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
           <div className="flex h-[60vh] flex-col overflow-y-auto">

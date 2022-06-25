@@ -6,6 +6,8 @@ export default function TagsList({
   max = undefined,
   disabled = false,
   numbered = true,
+  size = "md",
+  theme = "light",
 }: any) {
   const sortedTags = useMemo(
     () => tags.sort((a: Tag, b: Tag) => b.taggers.length - a.taggers.length),
@@ -17,7 +19,7 @@ export default function TagsList({
         (tag: any, i: number) =>
           tag.taggers.length > 0 && (
             <p
-              className={`badge badge-light overflow-hidden text-gray-700 ${
+              className={`badge badge-${theme} badge-${size} overflow-hidden ${
                 !disabled && "hover:bg-gray-300"
               }`}
               key={i}

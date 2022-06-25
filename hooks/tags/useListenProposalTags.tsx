@@ -13,27 +13,27 @@ export const useListenProposalTags = (proposalId: string) => {
   useEffect(() => {
     listenProposalTags(proposalId, (tags: any) => {
       setTags(
-        tags
-          .filter(
-            ({ taggers }: { taggers: Array<string> }) => taggers.length > 0
-          )
-          .map(({ tag, taggers }: any) => ({
-            tag,
-            taggers,
-            toggle: () => {
-              if (account?.address) {
-                if (taggers.includes(account?.address)) {
-                  console.log("Untagging", proposalId, " with ", tag);
-                  untagProposal(proposalId, tag);
-                } else {
-                  console.log("Tagging", proposalId, " with ", tag);
-                  tagProposal(proposalId, tag);
-                }
-              } else console.log("NO USER");
-            },
-          }))
+        tags.filter(nonZeroTaggers).map(({ tag, taggers }: any) => ({
+          tag,
+          taggers,
+          toggle: () => {
+            if (account?.address) {
+              if (taggers.includes(account?.address)) {
+                console.log("Untagging", proposalId, " with ", tag);
+                untagProposal(proposalId, tag);
+              } else {
+                console.log("Tagging", proposalId, " with ", tag);
+                tagProposal(proposalId, tag);
+              }
+            } else console.log("NO USER");
+          },
+        }))
       );
     });
   }, [untagProposal, tagProposal, proposalId]);
   return tags;
+
+  function nonZeroTaggers({ taggers }: { taggers: Array<string> }) {
+    return taggers.length > 0;
+  }
 };

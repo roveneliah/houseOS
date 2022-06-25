@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@types/node": "17.0.4",
-    "@types/ramda": "^0.28.13",
+    "@types/ramda": "^0.28.14",
     "@types/react": "17.0.38",
     "autoprefixer": "^10.4.0",
     "jest": "^28.1.0",
