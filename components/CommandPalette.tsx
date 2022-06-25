@@ -163,15 +163,17 @@ export default function CommandPalette({
                     )
                   }
                 >
-                  {icon()}
-                  <p className={` cursor-pointer font-semibold text-gray-700`}>
+                  {icon({})}
+                  <p className="cursor-pointer font-normal text-gray-700">
                     {name}
                   </p>
                 </div>
               ))}
             </div>
             <div className="flex flex-row items-center space-x-2 p-4">
-              <SearchIcon />
+              <div className="text-gray-800">
+                <SearchIcon />
+              </div>
               <Combobox.Input
                 className="focus:ring-5 h-12 w-full border-0 border-white bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-0"
                 placeholder={demo ? "Good job!" : "Search..."}
@@ -204,7 +206,7 @@ export default function CommandPalette({
 
                                 <div className="flex flex-row space-x-2">
                                   {/* <p className="badge badge-mid">⌘{i}</p> */}
-                                  <p className="font-semibold text-gray-800">
+                                  <p className="font-normal text-gray-800">
                                     {command.name}
                                   </p>
                                 </div>
