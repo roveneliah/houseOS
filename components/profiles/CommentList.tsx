@@ -7,13 +7,11 @@ export default function CommentList({
   comments: Array<Comment>;
 }) {
   return (
-    <div className="overflow-hidden rounded-lg">
+    <div className="flex flex-col space-y-4">
       {comments.map((comment: Comment, i: number) => {
         return (
           <div
-            className={`flex flex-col space-y-0 ${
-              i % 2 ? "bg-gray-300" : "bg-gray-200"
-            }`}
+            className="flex flex-col space-y-0 overflow-hidden rounded-md bg-gray-200"
             key={i}
           >
             <div className="w-full bg-gray-300 px-8 py-3">

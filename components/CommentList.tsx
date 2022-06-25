@@ -57,7 +57,7 @@ export default function CommentList({
           <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
         )}
       </div>
-      <div>
+      <div className="flex flex-col space-y-4">
         {sortedFilteredComments.length > 0 ? (
           sortedFilteredComments.map((comment: Comment, i: number) => (
             <CommentListItem

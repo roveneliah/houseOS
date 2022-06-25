@@ -14,6 +14,8 @@ export const useFirebase = () => {
 
   useEffect(() => {
     onAuthStateChanged(getAuth(), (user) => {
+      console.log("Auth state changed", user);
+
       setSignedIn(user != undefined);
       setLoading(false);
     });
@@ -21,21 +23,25 @@ export const useFirebase = () => {
 
   const signIn = useCallback((token: Maybe<string>) => {
     if (token) {
-      setLoading(true);
-      signInWithCustomToken(getAuth(), token)
-        .then((userCredential) => {
-          var user = userCredential.user;
-          console.log("Signed in ", userCredential);
+      console.log("Signing into Firebase with token", token);
 
-          setSignedIn(true);
-          setLoading(false);
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log("ERROR SIGNING IN", error);
-          setSignedIn(false);
-        });
+      setLoading(true);
+      !loading &&
+        signInWithCustomToken(getAuth(), token)
+          .then((userCredential) => {
+            var user = userCredential.user;
+            console.log("Signed in ", userCredential);
+
+            setSignedIn(true);
+            setLoading(false);
+          })
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("ERROR SIGNING IN", error);
+            setSignedIn(false);
+            setLoading(false);
+          });
     }
   }, []);
 

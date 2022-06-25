@@ -97,22 +97,25 @@ export default function Profile({ address: userAddress }: any) {
                 </div>
               </div>
               <div className="flex w-full flex-row justify-between space-x-3">
-                {views.map(({ name: viewName, toggle, selected }) => (
-                  <div
-                    className={`w-full rounded-t-lg ${
-                      selected ? "bg-gray-700" : "bg-gray-500"
-                    } px-6 py-3 hover:bg-gray-700`}
-                    onClick={toggle}
-                  >
-                    <p
-                      className={`text-2xl font-semibold ${
-                        selected ? "text-gray-400" : "text-gray-800"
-                      }`}
+                {views.map(
+                  ({ name: viewName, toggle, selected }, i: number) => (
+                    <div
+                      className={`w-full rounded-t-lg ${
+                        selected ? "bg-gray-700" : "bg-gray-500"
+                      } px-6 py-3 hover:bg-gray-700`}
+                      onClick={toggle}
+                      key={i}
                     >
-                      {viewName}
-                    </p>
-                  </div>
-                ))}
+                      <p
+                        className={`text-2xl font-semibold ${
+                          selected ? "text-gray-400" : "text-gray-800"
+                        }`}
+                      >
+                        {viewName}
+                      </p>
+                    </div>
+                  )
+                )}
               </div>
             </div>
           </div>

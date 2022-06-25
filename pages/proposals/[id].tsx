@@ -45,7 +45,7 @@ const ProposalPage: NextPage = ({ id }: any) => {
           />
         </div>
       </div>
-      <div className="flex w-full  flex-row justify-center bg-gray-500 pt-20">
+      <div className="flex min-h-[60vh] w-full  flex-row justify-center bg-gray-500 py-20">
         <div className="flex w-2/3 flex-col space-y-4 pt-4">
           {view === View.CommentList && (
             <CommentList

@@ -23,7 +23,7 @@ export default function StatusFilterTabs({ options, stateFilter }: Props) {
           key={i}
         >
           <div className="flex w-full flex-row justify-start space-x-2">
-            {icon && icon()}
+            {icon && icon({})}
             <p className="font-semibold">{name}</p>
           </div>
         </div>

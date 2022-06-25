@@ -31,8 +31,13 @@ export const useSignIn = () => {
   };
 
   useEffect(() => {
-    state.token && signInFirebase(state.token);
-  }, [state.token]);
+    console.log("Signed in SIWE", signedInSIWE);
+    console.log("TOKEN", state);
+
+    signedInSIWE && state.token && signInFirebase(state.token);
+  }, [state.token, signedInSIWE]);
+
+  console.log(signedInSIWE, signedInFirebase);
 
   return {
     signOut,
