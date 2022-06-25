@@ -9,6 +9,8 @@ import ClockIcon from "./icons/ClockIcon";
 import SearchIcon from "./icons/SearchIcon";
 import UsersIcon from "./icons/UsersIcon";
 import LinkIcon from "./icons/LinkIcon";
+import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
+import { ChatIcon } from "./icons/ChatIcon";
 
 interface Props {
   commands: Array<Command>;
@@ -29,40 +31,52 @@ export default function CommandPalette({
 }: Props) {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState(CommandFilters.ALL);
+  // const [filter, setFilter] = useState(CommandFilters.ALL);
 
-  const nextFilter = (filter: CommandFilters) => {
-    switch (filter) {
-      case CommandFilters.ALL:
-        setFilter(CommandFilters.PROPOSAL);
-        break;
-      case CommandFilters.PROPOSAL:
-        setFilter(CommandFilters.LINK);
-        break;
-      case CommandFilters.LINK:
-        setFilter(CommandFilters.USER);
-        break;
-      case CommandFilters.USER:
-        setFilter(CommandFilters.ALL);
-        break;
-    }
-  };
-  const prevFilter = (filter: CommandFilters) => {
-    switch (filter) {
-      case CommandFilters.ALL:
-        setFilter(CommandFilters.USER);
-        break;
-      case CommandFilters.PROPOSAL:
-        setFilter(CommandFilters.ALL);
-        break;
-      case CommandFilters.LINK:
-        setFilter(CommandFilters.PROPOSAL);
-        break;
-      case CommandFilters.USER:
-        setFilter(CommandFilters.LINK);
-        break;
-    }
-  };
+  const {
+    options: filters,
+    selected,
+    next: nextFilter,
+    prev: prevFilter,
+  } = useSingleSelect([
+    { name: CommandFilters.ALL, icon: ListIcon },
+    { name: CommandFilters.PROPOSAL, icon: ChatIcon },
+    { name: CommandFilters.LINK, icon: LinkIcon },
+    { name: CommandFilters.USER, icon: UsersIcon },
+  ]);
+  const filter = filters[selected].name;
+  // const nextFilter = (filter: CommandFilters) => {
+  //   switch (filter) {
+  //     case CommandFilters.ALL:
+  //       setFilter(CommandFilters.PROPOSAL);
+  //       break;
+  //     case CommandFilters.PROPOSAL:
+  //       setFilter(CommandFilters.LINK);
+  //       break;
+  //     case CommandFilters.LINK:
+  //       setFilter(CommandFilters.USER);
+  //       break;
+  //     case CommandFilters.USER:
+  //       setFilter(CommandFilters.ALL);
+  //       break;
+  //   }
+  // };
+  // const prevFilter = (filter: CommandFilters) => {
+  //   switch (filter) {
+  //     case CommandFilters.ALL:
+  //       setFilter(CommandFilters.USER);
+  //       break;
+  //     case CommandFilters.PROPOSAL:
+  //       setFilter(CommandFilters.ALL);
+  //       break;
+  //     case CommandFilters.LINK:
+  //       setFilter(CommandFilters.PROPOSAL);
+  //       break;
+  //     case CommandFilters.USER:
+  //       setFilter(CommandFilters.LINK);
+  //       break;
+  //   }
+  // };
   useCommand("k", setIsOpen, !isOpen);
   useCommand("ArrowLeft", prevFilter, filter);
   useCommand("ArrowRight", nextFilter, filter);
@@ -77,10 +91,20 @@ export default function CommandPalette({
 
   const views = [
     { name: "All", view: CommandFilters.ALL, icon: ListIcon },
-    { name: "Proposals", view: CommandFilters.PROPOSAL, icon: ClockIcon },
+    { name: "Proposals", view: CommandFilters.PROPOSAL, icon: ChatIcon },
     { name: "Links", view: CommandFilters.LINK, icon: LinkIcon },
     { name: "Users", view: CommandFilters.USER, icon: UsersIcon },
   ];
+
+  const getIcon = (commandType: string) =>
+    commandType === "PROPOSAL" ? (
+      <ChatIcon />
+    ) : commandType === "LINK" ? (
+      <LinkIcon />
+    ) : commandType === "USER" ? (
+      <UsersIcon />
+    ) : undefined;
+
   return (
     <Transition.Root
       show={isOpen}
@@ -132,7 +156,12 @@ export default function CommandPalette({
                   className={`flex w-full flex-row justify-start space-x-3 p-5 ${
                     filter === view && "bg-gray-50"
                   }`}
-                  onClick={() => setFilter(view)}
+                  // set filter to
+                  onClick={() =>
+                    filters.forEach(
+                      (filter) => filter.name === view && filter.toggle()
+                    )
+                  }
                 >
                   {icon()}
                   <p className={` cursor-pointer font-semibold text-gray-700`}>
@@ -157,31 +186,34 @@ export default function CommandPalette({
                 static
                 className="max-h-96 divide-y divide-gray-100 overflow-y-auto"
               >
-                {filteredCommands.map((command, i) => (
-                  <Combobox.Option value={command} key={i}>
-                    {({ active }) => (
-                      <div
-                        className={`space-x-1 p-4 px-6 ${
-                          active && "bg-gray-200"
-                        }`}
-                      >
-                        <div className="flex flex-row justify-between">
-                          <div className="flex flex-row space-x-2">
-                            {/* <p className="badge badge-mid">⌘{i}</p> */}
-                            <p className="font-semibold text-gray-800">
-                              {command.name}
-                            </p>
+                {filter === CommandFilters.ALL && query === ""
+                  ? []
+                  : filteredCommands.map((command, i) => (
+                      <Combobox.Option value={command} key={i}>
+                        {({ active }) => (
+                          <div
+                            className={`space-x-1 p-4 px-6 ${
+                              active && "bg-gray-200"
+                            }`}
+                          >
+                            <div className="flex flex-row justify-between text-gray-800">
+                              <div className="items-centers flex flex-row space-x-4">
+                                {filter === CommandFilters.ALL && (
+                                  <div>{getIcon(command.type)}</div>
+                                )}
+
+                                <div className="flex flex-row space-x-2">
+                                  {/* <p className="badge badge-mid">⌘{i}</p> */}
+                                  <p className="font-semibold text-gray-800">
+                                    {command.name}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          {filter === CommandFilters.ALL && (
-                            <p className="badge badge-dark badge-sm">
-                              {command.type}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </Combobox.Option>
-                ))}
+                        )}
+                      </Combobox.Option>
+                    ))}
               </Combobox.Options>
             ) : (
               <div className="p-4">
