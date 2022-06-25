@@ -163,12 +163,17 @@ export default function MyProfile() {
             {selectedView.name === "Tags" && (
               <div className="flex w-full flex-col space-y-4">
                 {tags.map(({ tag, taggers, toggle }: Tag) => (
-                  <div className="flex flex-col space-y-3 rounded-lg bg-gray-200 py-5 px-8">
-                    <div className="flex flex-col space-y-2">
-                      <div className="flex flex-row justify-between space-x-2">
-                        <p className="text-2xl font-bold text-gray-900">
-                          {tag}
-                        </p>
+                  <div className="flex w-full flex-col space-y-3 overflow-hidden rounded-lg bg-gray-200">
+                    <div className="flex w-full flex-col space-y-0">
+                      <div className="flex w-full flex-row justify-between space-x-2 bg-gray-300 py-3 px-6">
+                        <div className="flex flex-row items-center justify-start space-x-2">
+                          <p className="badge badge-light badge-sm">
+                            {taggers.length}
+                          </p>
+                          <p className="text-lg font-semibold text-gray-900">
+                            {tag}
+                          </p>
+                        </div>
                         {signedIn && (
                           <button
                             onClick={toggle}
@@ -178,18 +183,23 @@ export default function MyProfile() {
                           </button>
                         )}
                       </div>
-                      <p className="text-md font-normal text-gray-800">
+                      <p className="text-md px-6 py-4 font-normal text-gray-800">
                         {taggers
-                          .slice(0, 2)
+                          .slice(0, 3)
                           .reduce(
                             (acc: string, tagger: string, i: number) =>
-                              `${tagger.slice(0, 6)}${
-                                taggers.length > i + 1 ? ", " : ""
-                              }`.concat(acc),
+                              acc.concat(
+                                `${tagger.slice(0, 6)}${
+                                  taggers.length > i + 1 ? ", " : ""
+                                }`
+                              ),
+                            ""
+                          )
+                          .concat(
                             `${
-                              taggers.length > 2
-                                ? `and ${taggers.length - 2} other${
-                                    taggers.length > 3 ? "s" : ""
+                              taggers.length > 3
+                                ? `and ${taggers.length - 3} other${
+                                    taggers.length > 4 ? "s" : ""
                                   }.`
                                 : ""
                             }`
