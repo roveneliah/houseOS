@@ -162,7 +162,7 @@ export default function MyProfile() {
 
             {selectedView.name === "Tags" && (
               <div className="flex w-full flex-col space-y-4">
-                {tags.map(({ tag, taggers, toggle }: Tag) => (
+                {tags.map(({ tag, taggers, toggle }: any) => (
                   <div className="flex w-full flex-col space-y-3 overflow-hidden rounded-lg bg-gray-200">
                     <div className="flex w-full flex-col space-y-0">
                       <div className="flex w-full flex-row justify-between space-x-2 bg-gray-300 py-3 px-6">

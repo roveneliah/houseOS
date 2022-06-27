@@ -5,6 +5,7 @@ import { userTags } from "../config";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 
 import dynamic from "next/dynamic";
+import { useSignIn } from "@/hooks/useSignIn";
 const CommentListItem = dynamic(() => import("./CommentListItem"));
 const TagSelector = dynamic(() => import("./TagSelector"));
 
@@ -23,7 +24,7 @@ export default function CommentList({
 }: Props) {
   const tags = userTags;
   const [selectedTags, setSelectedTags] = useState([]);
-  const address = useUserAddress();
+  const { signedIn } = useSignIn();
 
   const sortedFilteredComments = useMemo(
     () =>
@@ -40,20 +41,20 @@ export default function CommentList({
           <p className="text-4xl font-bold text-gray-900">
             {proposal?.choices?.[choice]}
           </p>
-          {address ? (
+          {signedIn ? (
             <p
               className="cursor-pointer text-4xl font-bold text-gray-900 hover:text-gray-600"
               onClick={toggleCommentView}
             >
-              Vote
+              Comment
             </p>
           ) : (
             <p className="cursor-pointer text-xl font-bold text-gray-900 hover:text-gray-600">
-              Sign in to Vote
+              Sign in to Comment
             </p>
           )}
         </div>
-        {address && (
+        {sortedFilteredComments.length > 0 && (
           <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
         )}
       </div>

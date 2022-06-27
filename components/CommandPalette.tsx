@@ -11,6 +11,7 @@ import UsersIcon from "./icons/UsersIcon";
 import LinkIcon from "./icons/LinkIcon";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { ChatIcon } from "./icons/ChatIcon";
+import AtIcon from "./icons/AtIcon";
 
 interface Props {
   commands: Array<Command>;
@@ -31,7 +32,6 @@ export default function CommandPalette({
 }: Props) {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  // const [filter, setFilter] = useState(CommandFilters.ALL);
 
   const {
     options: filters,
@@ -42,42 +42,12 @@ export default function CommandPalette({
     { name: CommandFilters.ALL, icon: ListIcon },
     { name: CommandFilters.PROPOSAL, icon: ChatIcon },
     { name: CommandFilters.LINK, icon: LinkIcon },
-    { name: CommandFilters.USER, icon: UsersIcon },
+    { name: CommandFilters.USER, icon: AtIcon },
   ]);
   const filter = filters[selected].name;
-  // const nextFilter = (filter: CommandFilters) => {
-  //   switch (filter) {
-  //     case CommandFilters.ALL:
-  //       setFilter(CommandFilters.PROPOSAL);
-  //       break;
-  //     case CommandFilters.PROPOSAL:
-  //       setFilter(CommandFilters.LINK);
-  //       break;
-  //     case CommandFilters.LINK:
-  //       setFilter(CommandFilters.USER);
-  //       break;
-  //     case CommandFilters.USER:
-  //       setFilter(CommandFilters.ALL);
-  //       break;
-  //   }
-  // };
-  // const prevFilter = (filter: CommandFilters) => {
-  //   switch (filter) {
-  //     case CommandFilters.ALL:
-  //       setFilter(CommandFilters.USER);
-  //       break;
-  //     case CommandFilters.PROPOSAL:
-  //       setFilter(CommandFilters.ALL);
-  //       break;
-  //     case CommandFilters.LINK:
-  //       setFilter(CommandFilters.PROPOSAL);
-  //       break;
-  //     case CommandFilters.USER:
-  //       setFilter(CommandFilters.LINK);
-  //       break;
-  //   }
-  // };
+
   useCommand("k", setIsOpen, !isOpen);
+  useCommand("/", setIsOpen, !isOpen);
   useCommand("ArrowLeft", prevFilter, filter);
   useCommand("ArrowRight", nextFilter, filter);
 
@@ -93,7 +63,7 @@ export default function CommandPalette({
     { name: "All", view: CommandFilters.ALL, icon: ListIcon },
     { name: "Proposals", view: CommandFilters.PROPOSAL, icon: ChatIcon },
     { name: "Links", view: CommandFilters.LINK, icon: LinkIcon },
-    { name: "Users", view: CommandFilters.USER, icon: UsersIcon },
+    { name: "Users", view: CommandFilters.USER, icon: AtIcon },
   ];
 
   const getIcon = (commandType: string) =>
@@ -102,7 +72,7 @@ export default function CommandPalette({
     ) : commandType === "LINK" ? (
       <LinkIcon />
     ) : commandType === "USER" ? (
-      <UsersIcon />
+      <AtIcon />
     ) : undefined;
 
   return (
@@ -116,7 +86,7 @@ export default function CommandPalette({
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        className="fixed inset-0 z-50 mx-auto max-w-[50vw] overflow-y-auto p-4 pt-[25vh] "
+        className="fixed inset-0 z-50 mx-auto w-[70vw] overflow-y-auto p-4 pt-[25vh] xl:w-[60vw] 2xl:w-[50vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -170,12 +140,12 @@ export default function CommandPalette({
                 </div>
               ))}
             </div>
-            <div className="flex flex-row items-center space-x-2 p-4">
+            <div className="flex flex-row items-center space-x-2 border-b p-4">
               <div className="text-gray-800">
                 <SearchIcon />
               </div>
               <Combobox.Input
-                className="focus:ring-5 h-12 w-full border-0 border-white bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-0"
+                className="focus:ring-5 w-full border-0 border-white bg-transparent py-2 text-sm text-gray-800 placeholder-gray-400 outline-0"
                 placeholder={demo ? "Good job!" : "Search..."}
                 autoComplete="false"
                 onChange={(event) => {
@@ -186,36 +156,32 @@ export default function CommandPalette({
             {filteredCommands.length > 0 ? (
               <Combobox.Options
                 static
-                className="max-h-96 divide-y divide-gray-100 overflow-y-auto"
+                className="max-h-96 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg px-2 py-4"
               >
-                {filter === CommandFilters.ALL && query === ""
-                  ? []
-                  : filteredCommands.map((command, i) => (
-                      <Combobox.Option value={command} key={i}>
-                        {({ active }) => (
-                          <div
-                            className={`space-x-1 p-4 px-6 ${
-                              active && "bg-gray-200"
-                            }`}
-                          >
-                            <div className="flex flex-row justify-between text-gray-800">
-                              <div className="items-centers flex flex-row space-x-4">
-                                {filter === CommandFilters.ALL && (
-                                  <div>{getIcon(command.type)}</div>
-                                )}
-
-                                <div className="flex flex-row space-x-2">
-                                  {/* <p className="badge badge-mid">⌘{i}</p> */}
-                                  <p className="font-normal text-gray-800">
-                                    {command.name}
-                                  </p>
-                                </div>
-                              </div>
+                {filteredCommands.map((command, i) => (
+                  <Combobox.Option value={command} key={i}>
+                    {({ active }) => (
+                      <div
+                        className={`space-x-1 rounded-lg p-4 px-4   ${
+                          active && "bg-gray-200 "
+                        }`}
+                      >
+                        <div
+                          className={`flex flex-row justify-between text-gray-900 ${
+                            command.className || ""
+                          }`}
+                        >
+                          <div className="items-centers flex flex-row space-x-4">
+                            <div>{getIcon(command.type)}</div>
+                            <div className="flex flex-row space-x-2">
+                              <p>{command.name}</p>
                             </div>
                           </div>
-                        )}
-                      </Combobox.Option>
-                    ))}
+                        </div>
+                      </div>
+                    )}
+                  </Combobox.Option>
+                ))}
               </Combobox.Options>
             ) : (
               <div className="p-4">

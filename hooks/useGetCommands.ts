@@ -13,7 +13,7 @@ export enum CommandFilters {
   USER = "USER",
 }
 
-const createLinkCommand = ({ name, link }: any): Command => ({
+const createLinkCommand = ({ name, link, description }: any): Command => ({
   name,
   link,
   type: CommandFilters.LINK,
@@ -23,6 +23,7 @@ const createProposalCommand = (proposal: Proposal): Command => ({
   name: proposal.title,
   link: `/proposals/${proposal.id}`,
   type: CommandFilters.PROPOSAL,
+  className: `${proposal.state === "active" ? "font-semibold" : "font-normal"}`,
 });
 
 const createUserCommand = (user: User): Command => ({
