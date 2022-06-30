@@ -37,7 +37,8 @@ export const useSignIn = () => {
     signedInSIWE && state.token && signInFirebase(state.token);
   }, [state.token, signedInSIWE]);
 
-  console.log(signedInSIWE, signedInFirebase);
+  console.log("signed in with ethereum: ", signedInSIWE);
+  console.log("signed in with firebase: ", signedInFirebase);
 
   return {
     signOut,
