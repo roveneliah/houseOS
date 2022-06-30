@@ -40,10 +40,10 @@ export default function CommandPalette({
     prev: prevFilter,
   } = useSingleSelect([
     { name: CommandFilters.ALL, icon: ListIcon },
+    { name: CommandFilters.USER, icon: AtIcon },
     { name: CommandFilters.PROPOSAL, icon: ChatIcon },
     { name: CommandFilters.LINK, icon: LinkIcon },
-    { name: CommandFilters.USER, icon: AtIcon },
-  ]);
+  ]); // TODO: should be same as {views}
   const filter = filters[selected].name;
 
   useCommand("k", setIsOpen, !isOpen);
@@ -61,9 +61,9 @@ export default function CommandPalette({
 
   const views = [
     { name: "All", view: CommandFilters.ALL, icon: ListIcon },
+    { name: "Users", view: CommandFilters.USER, icon: AtIcon },
     { name: "Proposals", view: CommandFilters.PROPOSAL, icon: ChatIcon },
     { name: "Links", view: CommandFilters.LINK, icon: LinkIcon },
-    { name: "Users", view: CommandFilters.USER, icon: AtIcon },
   ];
 
   const getIcon = (commandType: string) =>
@@ -140,13 +140,13 @@ export default function CommandPalette({
                 </div>
               ))}
             </div>
-            <div className="flex flex-row items-center space-x-2 border-b p-4">
+            <div className="flex flex-row items-center space-x-2 border-b p-4 px-6">
               <div className="text-gray-800">
                 <SearchIcon />
               </div>
               <Combobox.Input
-                className="focus:ring-5 w-full border-0 border-white bg-transparent py-2 text-sm text-gray-800 placeholder-gray-400 outline-0"
-                placeholder={demo ? "Good job!" : "Search..."}
+                className="focus:ring-5 w-full border-0 border-white bg-transparent py-2 px-2 text-sm text-gray-800 placeholder-gray-400 outline-0"
+                placeholder={demo ? "Good job!" : "Search the DAO..."}
                 autoComplete="false"
                 onChange={(event) => {
                   setQuery(event.target.value);
@@ -162,8 +162,8 @@ export default function CommandPalette({
                   <Combobox.Option value={command} key={i}>
                     {({ active }) => (
                       <div
-                        className={`space-x-1 rounded-lg p-4 px-4   ${
-                          active && "bg-gray-200 "
+                        className={`space-x-1 rounded-lg p-4 px-4 ${
+                          active && "border border-gray-800 bg-gray-200"
                         }`}
                       >
                         <div

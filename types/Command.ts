@@ -5,4 +5,5 @@ export interface Command {
   link: string; // TODO: NEED URL type
   type: CommandFilters;
   className?: string;
+  description?: string;
 }

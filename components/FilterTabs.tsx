@@ -33,7 +33,9 @@ export default function ChoiceFilters({
               {proposal.scores[i].toFixed(0)} $KRAUSE
             </p>
           </div>
-          <p className="font-bold">{choice}</p>
+          <p className="w-full overflow-hidden whitespace-nowrap font-bold">
+            {choice}
+          </p>
         </div>
       ))}
     </div>
