@@ -4,13 +4,19 @@ import { SiweMessage } from "siwe";
 import ironOptions from "./ironOptions";
 
 import admin from "firebase-admin";
-
-import { getAuth, signInWithCustomToken } from "firebase/auth";
-import { applicationDefault } from "firebase-admin/app";
+// import { applicationDefault } from "firebase-admin/app";
 
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: applicationDefault(),
+    // credential: applicationDefault(),
+    credential: admin.credential.cert({
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+      clientEmail: process.env.NEXT_PUBLIC_FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY?.replace(
+        /\\n/g,
+        "\n"
+      ),
+    }),
     // databaseURL:
   });
 }
@@ -28,6 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           .then(async (customToken: string) => {
             const siweMessage = new SiweMessage(message);
             const fields = await siweMessage.validate(signature);
+
             if (fields.nonce !== req.session.nonce)
               return res.status(422).json({ message: "Invalid nonce." });
             req.session.siwe = new SiweMessage({
@@ -36,7 +43,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             });
             await req.session.save();
 
-            // TODO: wait where does this go?? if we're creating a new user, do we need this?
             res.json({
               ok: true,
             });
@@ -44,10 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           .catch((error) => {
             console.log("Error creating custom token:", error);
           });
-        console.log("here4");
       } catch (_error) {
-        console.log("Got error creating token.", _error);
-
         res.json({ ok: false });
       }
       break;

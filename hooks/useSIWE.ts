@@ -42,8 +42,6 @@ export const useSIWE = () => {
         message: message.prepareMessage(),
       });
 
-      console.log("Got signature successfully.", signature);
-
       // Verify signature
       const verifyRes: Response = await fetch("/api/verify", {
         method: "POST",
@@ -62,7 +60,6 @@ export const useSIWE = () => {
         address,
         loading: false,
       }));
-      console.log("Should successfully have SIWE");
     } catch (error) {
       console.log("Failed to SIWE: ", error);
 
