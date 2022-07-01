@@ -6,4 +6,5 @@ export interface Command {
   type: CommandFilters;
   className?: string;
   description?: string;
+  icon: (arg0: any) => JSX.Element;
 }

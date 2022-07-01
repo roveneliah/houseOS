@@ -5,13 +5,14 @@ import { CommandFilters } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
 import { Dialog, Combobox, Transition } from "@headlessui/react";
 import ListIcon from "./icons/ListIcon";
-import ClockIcon from "./icons/ClockIcon";
+// import ClockIcon from "./icons/ClockIcon";
 import SearchIcon from "./icons/SearchIcon";
-import UsersIcon from "./icons/UsersIcon";
+// import UsersIcon from "./icons/UsersIcon";
 import LinkIcon from "./icons/LinkIcon";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { ChatIcon } from "./icons/ChatIcon";
 import AtIcon from "./icons/AtIcon";
+import UsersIcon from "./icons/UsersIcon";
 
 interface Props {
   commands: Array<Command>;
@@ -21,6 +22,42 @@ interface Props {
   deactivated?: boolean;
   demo?: boolean;
 }
+
+const views = [
+  {
+    title: "All",
+    name: CommandFilters.ALL,
+    view: CommandFilters.ALL,
+    icon: ListIcon,
+  },
+  {
+    title: "Users",
+    name: CommandFilters.USER,
+    view: CommandFilters.USER,
+    icon: UsersIcon,
+  },
+  {
+    title: "Proposals",
+    name: CommandFilters.PROPOSAL,
+    view: CommandFilters.PROPOSAL,
+    icon: ChatIcon,
+  },
+  {
+    title: "Links",
+    name: CommandFilters.LINK,
+    view: CommandFilters.LINK,
+    icon: LinkIcon,
+  },
+];
+
+// const getIcon = (commandType: string | undefined) =>
+//   commandType === "PROPOSAL"
+//     ? ChatIcon
+//     : commandType === "LINK"
+//     ? LinkIcon
+//     : commandType === "USER"
+//     ? AtIcon
+//     : () => <></>;
 
 export default function CommandPalette({
   commands,
@@ -38,12 +75,7 @@ export default function CommandPalette({
     selected,
     next: nextFilter,
     prev: prevFilter,
-  } = useSingleSelect([
-    { name: CommandFilters.ALL, icon: ListIcon },
-    { name: CommandFilters.USER, icon: AtIcon },
-    { name: CommandFilters.PROPOSAL, icon: ChatIcon },
-    { name: CommandFilters.LINK, icon: LinkIcon },
-  ]); // TODO: should be same as {views}
+  } = useSingleSelect(views); // TODO: should be same as {views}
   const filter = filters[selected].name;
 
   useCommand("k", setIsOpen, !isOpen);
@@ -53,27 +85,32 @@ export default function CommandPalette({
 
   const filteredCommands = commands
     .filter(({ type }) =>
-      filter === CommandFilters.ALL ? type : type === filter
+      filter === CommandFilters.ALL
+        ? type === CommandFilters.LINK
+        : type === filter
     )
     .filter((option) =>
       query ? option.name.toLowerCase().includes(query.toLowerCase()) : option
+    )
+    .map((command) =>
+      command.type === CommandFilters.LINK
+        ? {
+            ...command,
+            name: (
+              <p className="font-light text-gray-800/50">
+                Go to{" "}
+                <span className="font-normal text-gray-800">
+                  {command.name}
+                </span>
+              </p>
+            ),
+          }
+        : command
     );
-
-  const views = [
-    { name: "All", view: CommandFilters.ALL, icon: ListIcon },
-    { name: "Users", view: CommandFilters.USER, icon: AtIcon },
-    { name: "Proposals", view: CommandFilters.PROPOSAL, icon: ChatIcon },
-    { name: "Links", view: CommandFilters.LINK, icon: LinkIcon },
-  ];
-
-  const getIcon = (commandType: string) =>
-    commandType === "PROPOSAL" ? (
-      <ChatIcon />
-    ) : commandType === "LINK" ? (
-      <LinkIcon />
-    ) : commandType === "USER" ? (
-      <AtIcon />
-    ) : undefined;
+  // .map((command) => ({
+  //   ...command,
+  //   icon: getIcon(command.type)({ strokeWidth: 1 }),
+  // }));
 
   return (
     <Transition.Root
@@ -86,7 +123,7 @@ export default function CommandPalette({
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        className="fixed inset-0 z-50 mx-auto w-[70vw] overflow-y-auto p-4 pt-[25vh] xl:w-[60vw] 2xl:w-[50vw]"
+        className="fixed inset-0 z-50 mx-auto w-[70vw] overflow-y-auto p-4 pt-[25vh] lg:w-[50vw] xl:w-[50vw] 2xl:w-[50vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -97,7 +134,7 @@ export default function CommandPalette({
           leaveTo="opacity-0"
         >
           {noOpacity || (
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500/75" />
+            <Dialog.Overlay className="fixed inset-0 bg-gray-900/90" />
           )}
         </Transition.Child>
         <Transition.Child
@@ -120,7 +157,7 @@ export default function CommandPalette({
             className="relative overflow-hidden rounded-lg bg-gray-50 shadow-2xl ring-1 ring-black/5"
           >
             <div className="flex flex-row justify-start bg-gray-300 text-gray-700">
-              {views.map(({ name, view, icon }, i): any => (
+              {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
                   className={`flex w-full flex-row justify-start space-x-3 p-5 ${
@@ -134,8 +171,8 @@ export default function CommandPalette({
                   }
                 >
                   {icon({})}
-                  <p className="cursor-pointer font-normal text-gray-700">
-                    {name}
+                  <p className="cursor-pointer font-light text-gray-700">
+                    {title}
                   </p>
                 </div>
               ))}
@@ -163,7 +200,7 @@ export default function CommandPalette({
                     {({ active }) => (
                       <div
                         className={`space-x-1 rounded-lg p-4 px-4 ${
-                          active && "border border-gray-800 bg-gray-200"
+                          active && " bg-gray-200"
                         }`}
                       >
                         <div
@@ -171,10 +208,12 @@ export default function CommandPalette({
                             command.className || ""
                           }`}
                         >
-                          <div className="items-centers flex flex-row space-x-4">
-                            <div>{getIcon(command.type)}</div>
-                            <div className="flex flex-row space-x-2">
-                              <p>{command.name}</p>
+                          <div className="items-centers flex flex-row space-x-4 overflow-clip">
+                            <div>{command.icon({ strokeWidth: 1 })}</div>
+                            <div className="flex flex-row space-x-2 overflow-clip font-light">
+                              <p className=" whitespace-nowrap">
+                                {command.name}
+                              </p>
                             </div>
                           </div>
                         </div>

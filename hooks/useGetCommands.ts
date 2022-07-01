@@ -5,6 +5,10 @@ import { useGetUsers } from "@/hooks/database/useGetUsers";
 import { User } from "@/types/User";
 import { commands, snapshotSpace } from "@/config";
 import defaultCommands from "@/utils/defaultCommands";
+import AtIcon from "@/components/icons/AtIcon";
+import { ChatIcon } from "@/components/icons/ChatIcon";
+import LinkIcon from "@/components/icons/LinkIcon";
+import ArrowRightIcon from "@/components/icons/ArrowIcon";
 
 export enum CommandFilters {
   ALL = "ALL",
@@ -17,6 +21,7 @@ const createLinkCommand = ({ name, link, description }: any): Command => ({
   name,
   link,
   type: CommandFilters.LINK,
+  icon: LinkIcon,
 });
 
 const createProposalCommand = (proposal: Proposal): Command => ({
@@ -24,20 +29,25 @@ const createProposalCommand = (proposal: Proposal): Command => ({
   link: `/proposals/${proposal.id}`,
   type: CommandFilters.PROPOSAL,
   className: `${proposal.state === "active" ? "font-semibold" : "font-normal"}`,
+  icon: ChatIcon,
 });
 
 const createUserCommand = (user: User): Command => ({
   name: user.name,
   link: `/profiles/${user.address}`,
   type: CommandFilters.USER,
+  icon: AtIcon,
 });
 
 export const useGetCommands = (): Array<Command> => {
   const proposals = useGetProposals(snapshotSpace);
   const users = useGetUsers();
   return [
-    ...(defaultCommands.map((o) => ({ ...o, type: CommandFilters.LINK })) ||
-      []),
+    ...(defaultCommands.map((o) => ({
+      ...o,
+      type: CommandFilters.LINK,
+      icon: ArrowRightIcon,
+    })) || []),
     ...(commands?.links?.map(createLinkCommand) || []),
     ...(proposals?.map(createProposalCommand) || []),
     ...(users?.map(createUserCommand) || []),

@@ -1,4 +1,4 @@
-export default function AtIcon({
+export default function ArrowRightIcon({
   strokeWidth = 1.5,
 }: {
   strokeWidth?: number;
@@ -15,7 +15,7 @@ export default function AtIcon({
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+        d="M14 5l7 7m0 0l-7 7m7-7H3"
       />
     </svg>
   );
