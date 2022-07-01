@@ -50,14 +50,21 @@ const views = [
   },
 ];
 
-// const getIcon = (commandType: string | undefined) =>
-//   commandType === "PROPOSAL"
-//     ? ChatIcon
-//     : commandType === "LINK"
-//     ? LinkIcon
-//     : commandType === "USER"
-//     ? AtIcon
-//     : () => <></>;
+const contains = (query: string) => (str: string) =>
+  str.toLowerCase().includes(query.toLowerCase());
+
+const formatLinkCommand = (command: Command) =>
+  command.type === CommandFilters.LINK
+    ? {
+        ...command,
+        name: (
+          <p className="font-light text-gray-800/50">
+            Go to{" "}
+            <span className="font-normal text-gray-800">{command.name}</span>
+          </p>
+        ),
+      }
+    : command;
 
 export default function CommandPalette({
   commands,
@@ -75,7 +82,7 @@ export default function CommandPalette({
     selected,
     next: nextFilter,
     prev: prevFilter,
-  } = useSingleSelect(views); // TODO: should be same as {views}
+  } = useSingleSelect(views);
   const filter = filters[selected].name;
 
   useCommand("k", setIsOpen, !isOpen);
@@ -86,31 +93,13 @@ export default function CommandPalette({
   const filteredCommands = commands
     .filter(({ type }) =>
       filter === CommandFilters.ALL
-        ? type === CommandFilters.LINK
+        ? !query
+          ? type === CommandFilters.LINK
+          : type
         : type === filter
     )
-    .filter((option) =>
-      query ? option.name.toLowerCase().includes(query.toLowerCase()) : option
-    )
-    .map((command) =>
-      command.type === CommandFilters.LINK
-        ? {
-            ...command,
-            name: (
-              <p className="font-light text-gray-800/50">
-                Go to{" "}
-                <span className="font-normal text-gray-800">
-                  {command.name}
-                </span>
-              </p>
-            ),
-          }
-        : command
-    );
-  // .map((command) => ({
-  //   ...command,
-  //   icon: getIcon(command.type)({ strokeWidth: 1 }),
-  // }));
+    .filter((option) => !query || contains(query)(option.name))
+    .map(formatLinkCommand);
 
   return (
     <Transition.Root
@@ -134,16 +123,16 @@ export default function CommandPalette({
           leaveTo="opacity-0"
         >
           {noOpacity || (
-            <Dialog.Overlay className="fixed inset-0 bg-gray-900/90" />
+            <Dialog.Overlay className="fixed inset-0 bg-gray-900/60" />
           )}
         </Transition.Child>
         <Transition.Child
           enter="duration-300 ease-out"
           enterFrom="opacity-0 scale-95"
           enterTo="opacity-100 scale-100"
-          leave="duration-200 ease-in"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 sacle-95"
+          // leave="duration-200 ease-in"
+          // leaveFrom="opacity-100 scale-100"
+          // leaveTo="opacity-0 scale-95"
         >
           <Combobox
             value={undefined}
@@ -154,7 +143,7 @@ export default function CommandPalette({
               }
             }}
             as="div"
-            className="relative overflow-hidden rounded-lg bg-gray-50 shadow-2xl ring-1 ring-black/5"
+            className="relative overflow-hidden rounded-lg bg-gray-50 shadow-xl shadow-black ring-1 ring-black/5"
           >
             <div className="flex flex-row justify-start bg-gray-300 text-gray-700">
               {views.map(({ title, view, icon }, i): any => (
@@ -235,28 +224,3 @@ export default function CommandPalette({
     </Transition.Root>
   );
 }
-
-// [[ARCHIVED]]
-// useEffect(() => {
-//   function onKeydown(event: any) {
-//     event.key === "k" &&
-//       (event.metaKey || event.ctrlKey) &&
-//       setIsOpen(!isOpen);
-//   }
-//   window.addEventListener("keydown", onKeydown);
-//   return () => window.removeEventListener("keydown", onKeydown);
-// }, [isOpen]);
-// useEffect(() => {
-//   function onKeydown(event: any) {
-//     event.key === "ArrowLeft" &&
-//       (event.metaKey || event.ctrlKey) &&
-//       prevFilter(filter);
-//     event.key === "ArrowRight" &&
-//       (event.metaKey || event.ctrlKey) &&
-//       nextFilter(filter);
-//   }
-//   window.addEventListener("keydown", onKeydown);
-//   return () => {
-//     window.removeEventListener("keydown", onKeydown);
-//   };
-// }, [filter]);
