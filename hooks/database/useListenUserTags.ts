@@ -1,14 +1,17 @@
-import { getAccount } from "@wagmi/core";
 import { useEffect, useState } from "react";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount } from "wagmi";
 import { EthereumAddress } from "../../types/EthereumAddress";
 import { listenUserTags } from "../../utils/firebase/user";
 import { useTagUser, useUntagUser } from "./useTagUser";
 import { Maybe } from "../../types/Maybe";
+import { userTags } from "@/config";
+
+const getDescription = (tagName: string) =>
+  userTags.find((tag) => tag.name === tagName)?.description;
 
 export const useListenUserTags = (address: Maybe<EthereumAddress>) => {
   const [tags, setTags] = useState([]);
-  const { status, data: account } = useAccount();
+  const { data: account } = useAccount();
   const tagUser = useTagUser();
   const untagUser = useUntagUser();
 
@@ -23,6 +26,7 @@ export const useListenUserTags = (address: Maybe<EthereumAddress>) => {
             )
             .map(({ tag, taggers }: any) => ({
               tag,
+              description: getDescription(tag),
               taggers,
               toggle: () => {
                 if (account?.address) {

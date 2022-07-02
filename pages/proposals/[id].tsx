@@ -27,6 +27,7 @@ const ProposalPage: NextPage = ({ id }: any) => {
 
   // TODO: #12 create hook to abstract all this and pass in iterators
   const [selectedChoice, setSelectedChoice] = useState(0);
+  // TODO: Change 3 to be dynamic, use the prexisting hook
   const next = () => setSelectedChoice((choice) => (choice + 1) % 3);
   const prev = () => setSelectedChoice((choice) => (choice + 2) % 3);
 

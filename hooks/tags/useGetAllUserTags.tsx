@@ -7,6 +7,7 @@ import { useSignIn } from "../useSignIn";
 import { userTags } from "../../config";
 import { useTagUser, useUntagUser } from "../database/useTagUser";
 import { listenUserTags } from "../../utils/firebase/user";
+import { Tag } from "@/types/Tag";
 
 export const useGetAllUserTags = (
   address: Maybe<EthereumAddress>
@@ -24,7 +25,11 @@ export const useGetAllUserTags = (
         const allTags = tags.concat(
           userTags
             .filter((tag) => !tags.map(({ tag }: any) => tag).includes(tag))
-            .map((tag: string) => ({ tag, taggers: [] }))
+            .map((tag: { name: string; description: string }) => ({
+              tag: tag.name,
+              description: tag.description,
+              taggers: [],
+            }))
         );
 
         setTags(

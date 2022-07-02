@@ -55,7 +55,10 @@ export default function CommentList({
           )}
         </div>
         {sortedFilteredComments.length > 0 && (
-          <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
+          <TagSelector
+            tags={tags.map(({ name }) => name)}
+            setSelectedTags={setSelectedTags}
+          />
         )}
       </div>
       <div className="flex flex-col space-y-4">

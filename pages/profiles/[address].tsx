@@ -42,12 +42,14 @@ export default function Profile({ address: userAddress }: any) {
   } = useSingleSelect([
     { name: "Activity" },
     { name: "Tags" },
-    { name: "Friends" },
+    { name: "Following" },
   ]);
   const selectedView = views[selected];
 
   useOnKeydown("ArrowRight", next);
   useOnKeydown("ArrowLeft", prev);
+
+  console.log(allTags);
 
   const isFriend = profile?.friends?.includes(address);
   return (
@@ -60,28 +62,49 @@ export default function Profile({ address: userAddress }: any) {
             <div className="flex w-3/5 max-w-3xl flex-col items-start space-y-12">
               <div className="flex w-full flex-row items-center justify-between">
                 <div className="flex w-full flex-col items-start justify-start space-y-4">
-                  <div className="flex w-full flex-row  space-x-2  ">
+                  <div className="flex w-full flex-row space-x-2">
                     {signedIn && (
                       <div className="flex flex-row justify-start space-x-2">
                         {isFriend ? (
                           <p
-                            className="badge min-w-fit text-gray-900 hover:bg-opacity-50"
+                            className="badge min-w-fit text-gray-500 hover:bg-opacity-50"
                             onClick={() => profile?.removeFriend(address)}
                           >
-                            Friend
+                            Following
                           </p>
                         ) : (
-                          <p
-                            className="badge min-w-max hover:bg-opacity-50"
-                            onClick={() => profile?.addFriend(address)}
-                          >
-                            Add Friend
-                          </p>
+                          // <p
+                          //   className="badge min-w-max hover:bg-opacity-50"
+                          //   onClick={() => profile?.addFriend(address)}
+                          // >
+                          //   Follow
+                          // </p>
+                          <div onClick={() => profile?.addFriend(address)}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                              />
+                            </svg>
+                          </div>
                         )}
                         {/* <p className="badge">{Number(krauseBalance)} $KRAUSE</p> */}
                       </div>
                     )}
-                    <TagsList tags={tags} max={3} disabled={!signedIn} />
+                    <TagsList
+                      tags={tags}
+                      max={3}
+                      disabled={!signedIn}
+                      numbered={false}
+                    />
                   </div>
                   <p className="text-left text-6xl font-bold text-gray-200">
                     {name || ensName || `Anon ${dao.memberName}`}
@@ -101,14 +124,14 @@ export default function Profile({ address: userAddress }: any) {
                   ({ name: viewName, toggle, selected }, i: number) => (
                     <div
                       className={`w-full rounded-t-md ${
-                        selected ? "bg-gray-700" : "bg-gray-500"
-                      } px-6 py-3 hover:bg-gray-700`}
+                        selected ? "bg-gray-100" : "bg-gray-500"
+                      } px-6 py-3 hover:bg-gray-100`}
                       onClick={toggle}
                       key={i}
                     >
                       <p
                         className={`text-md font-semibold ${
-                          selected ? "text-gray-400" : "text-gray-800"
+                          selected ? "text-gray-700" : "text-gray-800"
                         }`}
                       >
                         {viewName}
@@ -119,7 +142,7 @@ export default function Profile({ address: userAddress }: any) {
               </div>
             </div>
           </div>
-          <div className="flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24  py-10">
+          <div className="flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24">
             {selectedView.name === "Activity" && (
               <div className="flex w-full flex-col space-y-4">
                 {/* <p className="text-left text-3xl font-semibold text-gray-300">
@@ -138,76 +161,103 @@ export default function Profile({ address: userAddress }: any) {
             )}
 
             {selectedView.name === "Tags" && (
-              <div className="flex w-full flex-col space-y-4">
-                {tags.map(({ tag, taggers, toggle }: any) => (
-                  <div className="flex w-full flex-col space-y-3 overflow-hidden rounded-lg bg-gray-200">
-                    <div className="flex w-full flex-col space-y-0">
-                      <div className="flex w-full flex-row justify-between space-x-2 bg-gray-300 py-3 px-6">
+              <div className="flex w-full flex-col space-y-0 overflow-hidden">
+                {tags.map(({ tag, description, taggers, toggle }: any) => (
+                  <div className="flex w-full flex-col space-y-3 overflow-hidden border-b bg-gray-100">
+                    <div className="flex w-full flex-col space-y-2 px-8 py-4">
+                      <div className="flex w-full flex-row justify-between space-x-2">
                         <div className="flex flex-row items-center justify-start space-x-2">
-                          <p className="badge badge-light">{taggers.length}</p>
+                          {/* <p className="badge badge-light">{taggers.length}</p> */}
+                          {/* <div className="flex flex-row items-center text-gray-900">
+                            {signedIn && (
+                              <button onClick={toggle} className="">
+                                {taggers.includes(account?.address) ? (
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={1.5}
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                  </svg>
+                                ) : (
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={1.5}
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                  </svg>
+                                )}
+                              </button>
+                            )}
+                          </div> */}
                           <p className="text-lg font-semibold text-gray-900">
                             {tag}
                           </p>
+                          {/* <p className="font-light text-gray-800">
+                            {description}
+                          </p> */}
                         </div>
-                        {signedIn && (
-                          <button
-                            onClick={toggle}
-                            className="badge badge-dark font-normal"
-                          >
-                            {taggers.includes(account?.address)
-                              ? "Untag"
-                              : "Tag"}
-                          </button>
-                        )}
                       </div>
-                      <p className="text-md px-6 py-4 font-normal text-gray-800">
-                        {taggers
-                          .slice(0, 2)
-                          .reduce(
-                            (acc: string, tagger: string, i: number) =>
-                              `${tagger.slice(0, 6)}${
-                                taggers.length > i + 1 ? ", " : ""
-                              }`.concat(acc),
-                            `${
-                              taggers.length > 2
-                                ? `and ${taggers.length - 2} other${
-                                    taggers.length > 3 ? "s" : ""
-                                  }.`
+                      <p className="text-md text-sm text-gray-800">
+                        {taggers.slice(0, 2).reduce(
+                          (tail: string, tagger: string, i: number) =>
+                            `${tagger.slice(0, 6)}${
+                              taggers.length > i + 2
+                                ? ", "
+                                : taggers.length === 2 && i !== 0
+                                ? " and " // we want this in the case that ther'es
                                 : ""
-                            }`
-                          )}
+                            }`.concat(tail),
+                          `${
+                            taggers.length > 2
+                              ? `and ${taggers.length - 2} other${
+                                  taggers.length > 3 ? "s" : ""
+                                }.`
+                              : ""
+                          }`
+                        )}
                       </p>
-                    </div>
-                    {/* <div className="group flex flex-row items-center space-x-2">
-                      <div className="flex flex-row -space-x-2">
-                        {taggers.map((tagger: string, i: number) => (
-                          <div className={"rounded-full bg-black p-1"}>
-                            .....
-                          </div>
-                        ))}
+                      <div className="group flex flex-row items-center space-x-2">
+                        <div className="flex flex-row -space-x-2">
+                          {taggers.map((tagger: string, i: number) => (
+                            <div className={"rounded-full bg-black p-1"}>
+                              .....
+                            </div>
+                          ))}
+                        </div>
+                        <p className="invisible text-gray-800 group-hover:visible">
+                          Greg
+                        </p>
                       </div>
-                      <p className="invisible text-gray-800 group-hover:visible">
-                        Greg
-                      </p>
-                    </div> */}
+                    </div>
                   </div>
                 ))}
                 {signedIn && (
-                  <div className="flex flex-col space-y-0 rounded-lg bg-gray-200 p-6">
+                  <div className="flex flex-col space-y-0 rounded-b-md bg-gray-100 p-6">
                     <p className="p-4 text-left text-3xl font-bold text-gray-900">
-                      Add Tag
+                      Edit Tags
                     </p>
-                    <TagListBox
-                      address={account?.address}
-                      tags={allTags.filter(
-                        ({ taggers }) => taggers.length === 0
-                      )}
-                    />
+                    <TagListBox address={account?.address} tags={allTags} />
                   </div>
                 )}
               </div>
             )}
-            {selectedView.name === "Friends" && (
+            {selectedView.name === "Following" && (
               <div className="flex w-full flex-col space-y-2">
                 {/* <p className="text-left text-3xl font-bold text-gray-200">
                   Friends

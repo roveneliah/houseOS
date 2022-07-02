@@ -53,56 +53,54 @@ export default function CommentView({ proposal, back, choice }: any) {
           Back to Comments
         </p>
       </div>
-      <div className="flex flex-col space-y-8 rounded-lg bg-gray-50/50 px-6 pb-4 pt-8">
-        {user?.hodler ? (
-          <>
-            <textarea
-              className="w-full rounded-lg border border-gray-500 bg-transparent p-6 text-lg font-semibold text-gray-900 outline-0"
-              rows={6}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row items-center space-x-5">
-                <div className="min-w-fit">
-                  <Image
-                    src={user.avatarSrc || defaultAvatar}
-                    width={75}
-                    height={75}
-                    className="rounded-full"
-                  />
-                </div>
-                <div className="space-between flex flex-col items-start space-y-2 text-gray-900">
-                  <div className="flex flex-row space-x-2">
-                    {authorTags.map(({ tag }) => (
-                      <p className="badge">{tag}</p>
-                    ))}
-                  </div>
-                  <p className="text-xl font-semibold">
-                    {user?.name || account?.address}
-                  </p>
-                </div>
+      {user?.hodler ? (
+        <div className="flex flex-col space-y-8 rounded-lg bg-gray-50/50 px-6 pb-4 pt-8">
+          <textarea
+            className="w-full rounded-lg border border-gray-500 bg-transparent p-6 text-lg font-semibold text-gray-900 outline-0"
+            rows={6}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center space-x-5">
+              <div className="min-w-fit">
+                <Image
+                  src={user.avatarSrc || defaultAvatar}
+                  width={75}
+                  height={75}
+                  className="rounded-full"
+                />
               </div>
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  signMessage({
-                    message: JSON.stringify(comment),
-                  });
-                  // postComment();
-                  // vote(message)
-                }}
-              >
-                Submit
-              </button>
+              <div className="space-between flex flex-col items-start space-y-2 text-gray-900">
+                <div className="flex flex-row space-x-2">
+                  {authorTags.map(({ tag }) => (
+                    <p className="badge">{tag}</p>
+                  ))}
+                </div>
+                <p className="text-xl font-semibold">
+                  {user?.name || account?.address}
+                </p>
+              </div>
             </div>
-          </>
-        ) : (
-          <p className="p-5 text-xl font-bold text-gray-900">
-            Must be a $KRAUSE hodler to post.
-          </p>
-        )}
-      </div>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                signMessage({
+                  message: JSON.stringify(comment),
+                });
+                // postComment();
+                // vote(message)
+              }}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      ) : (
+        <p className="pt-4 text-left text-3xl font-semibold text-gray-800">
+          Must be a $KRAUSE holder to comment.
+        </p>
+      )}
     </div>
   );
 }

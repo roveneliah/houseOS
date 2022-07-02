@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 
 import dynamic from "next/dynamic";
 import { useSIWE } from "@/hooks/useSIWE";
-import { useFirebase } from "@/hooks/useFirebase";
+// import { useFirebase } from "@/hooks/useFirebase";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
 
@@ -56,7 +56,7 @@ export default function Layout({
 
   const { signOut, signIn, signedIn } = useSignIn();
   const { signedIn: signedInSIWE } = useSIWE();
-  const { signedIn: signedInFirebase } = useFirebase();
+  // const { signedIn: signedInFirebase } = useFirebase();
 
   const newUserFlow = useIsNewUser();
   const router = useRouter();
@@ -82,7 +82,12 @@ export default function Layout({
         demo={demo}
       />
       <main className="flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start bg-gray-700">
-        <div className="fixed top-0 z-20 flex w-full flex-row justify-end">
+        <div className="fixed top-0 z-20 flex w-full flex-row justify-between">
+          <div className="flex flex-row items-center p-4">
+            {/* <p className="text-2xl font-semibold">
+              Krause House Command Center
+            </p> */}
+          </div>
           <div className="flex flex-row space-x-2 p-4">
             {!signedIn ? (
               !isConnected ? (

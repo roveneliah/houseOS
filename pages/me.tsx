@@ -47,7 +47,7 @@ export default function MyProfile() {
   } = useSingleSelect([
     { name: "Activity" },
     { name: "Tags" },
-    { name: "Friends" },
+    { name: "Following" },
   ]);
   const selectedView = views[selected];
 
@@ -235,7 +235,7 @@ export default function MyProfile() {
                 )}
               </div>
             )}
-            {selectedView.name === "Friends" && (
+            {selectedView.name === "Following" && (
               <div className="flex w-full flex-col space-y-2">
                 {/* <p className="text-left text-3xl font-bold text-gray-200">
                   Friends

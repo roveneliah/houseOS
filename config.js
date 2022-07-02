@@ -23,12 +23,30 @@ module.exports = {
   snapshotSpace: "krausehouse.eth",
   defaultAvatar: "/coachrick.png",
   userTags: [
-    "Steward",
-    "Contributor",
-    "Full-Time",
-    "Media Team",
-    "Dev Team",
-    "Pig Pen",
+    {
+      name: "Steward",
+      description: "Responsible for proposal process and Snapshot space.",
+    },
+    {
+      name: "Contributor",
+      description: "Active or previous full- or part-time contributor.",
+    },
+    {
+      name: "Full-Time",
+      description: "Currently full-time.",
+    },
+    {
+      name: "Media Team",
+      description: "",
+    },
+    {
+      name: "Dev Team",
+      description: "",
+    },
+    {
+      name: "Pig Pen",
+      description: "",
+    },
   ],
   proposalTags: [
     "Compensation",

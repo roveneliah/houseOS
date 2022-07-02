@@ -23,25 +23,30 @@ export default function ProposalHeader({ proposal }: Props) {
   return proposal ? (
     <div className="flex w-full flex-col items-start space-y-10 bg-gray-800 py-12 text-gray-300">
       <div className="flex w-full flex-col space-y-4">
-        <div className="flex flex-row justify-start space-x-2">
-          {proposal.state && (
-            <p className="badge badge-outline">{capitalize(proposal.state)}</p>
-          )}
-          {proposal.votes && (
-            <p className="badge badge-outline">{proposal.votes} Votes</p>
-          )}
-          {proposal.state === ProposalState.Active && (
-            <p className="badge badge-outline">Closes in {/*TODO:*/}</p>
-          )}
-        </div>
-        <p className="text-left text-6xl font-semibold">{proposal.title}</p>
-        <div className="flex w-full flex-row justify-between">
-          <TagsList tags={tags} />
+        <div className="flex flex-row justify-between space-x-2">
+          <div className="flex flex-row space-x-2">
+            {/* <p className="font-semibold">Live with 9 votes.</p> */}
+            {proposal.state && (
+              <p className="badge badge-outline">
+                {capitalize(proposal.state)}
+              </p>
+            )}
+            {proposal.votes && (
+              <p className="badge badge-outline">{proposal.votes} Votes</p>
+            )}
+            {/* {proposal.state === ProposalState.Active && (
+              <p className="badge badge-outline">Closes in</p>
+            )} */}
+          </div>
           {signedIn && (
             <button className="badge" onClick={() => setShowTags(!showTags)}>
               {showTags ? "Hide" : "Show"} Tags
             </button>
           )}
+        </div>
+        <p className="text-left text-6xl font-semibold">{proposal.title}</p>
+        <div className="flex w-full flex-row justify-between">
+          <TagsList tags={tags} />
         </div>
       </div>
       {showTags && (
