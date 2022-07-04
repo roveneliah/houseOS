@@ -29,9 +29,7 @@ export const useFirebase = () => {
       !loading &&
         signInWithCustomToken(getAuth(), token)
           .then((userCredential) => {
-            var user = userCredential.user;
             console.log("Signed in ", userCredential);
-
             setSignedIn(true);
             setLoading(false);
           })

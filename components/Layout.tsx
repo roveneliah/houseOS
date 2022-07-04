@@ -20,7 +20,9 @@ const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
 
 const usePath = (): Array<any> => {
-  const { route } = useRouter();
+  const { asPath: route } = useRouter();
+
+  console.log(route.split("/").slice(0, 2).join("/"));
 
   const path = route
     .split("/")
@@ -30,7 +32,7 @@ const usePath = (): Array<any> => {
       pathSlice,
       route: route
         .split("/")
-        .slice(0, i - 1)
+        .slice(0, i + 2)
         .join("/"),
     }));
 
@@ -112,7 +114,7 @@ export default function Layout({
               {path.map(({ pathSlice, route }) => (
                 <Link href={route}>
                   <li>
-                    <a>{pathSlice}</a>
+                    <a>{pathSlice.slice(0, 10)}</a>
                   </li>
                 </Link>
               ))}
