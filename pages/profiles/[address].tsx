@@ -58,7 +58,7 @@ export default function Profile({ address: userAddress }: any) {
         <LoadingView address={ensName || address} />
       ) : (
         <div className="flex w-full flex-col items-center">
-          <div className="flex w-full flex-row justify-center bg-gray-800 pt-36">
+          <div className="bg-neutral flex w-full flex-row justify-center pt-36">
             <div className="flex w-3/5 max-w-3xl flex-col items-start space-y-12">
               <div className="flex w-full flex-row items-center justify-between">
                 <div className="flex w-full flex-col items-start justify-start space-y-4">

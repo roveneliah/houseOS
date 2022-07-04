@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAccount } from "wagmi";
 import { EthereumAddress } from "@/types/EthereumAddress";
 import { Maybe } from "@/types/Maybe";
@@ -18,22 +18,30 @@ export const useGetAllUserTags = (
   const [tags, setTags] = useState([]);
   const { signedIn } = useSignIn();
 
+  const sortedTags = useMemo(
+    () => tags.sort((a: Tag, b: Tag) => b.taggers.length - a.taggers.length),
+    [tags]
+  );
+
   useEffect(() => {
     signedIn &&
       address &&
       listenUserTags(address, (tags: any) => {
         const allTags = tags.concat(
           userTags
-            .filter((tag) => !tags.map(({ tag }: any) => tag).includes(tag))
-            .map((tag: { name: string; description: string }) => ({
-              tag: tag.name,
-              description: tag.description,
+            .filter(
+              // filtering out before I can add description, I really want to attach descriptoin
+              ({ name }) => !tags.map(({ tag }: any) => tag).includes(name)
+            )
+            .map(({ name, description }) => ({
+              name,
+              description,
               taggers: [],
             }))
         );
 
         setTags(
-          allTags.map(({ tag, taggers }: any) => ({
+          allTags.map(({ tag, taggers, description }: any) => ({
             tag,
             taggers,
             toggle: () => {
@@ -47,9 +55,10 @@ export const useGetAllUserTags = (
                 }
               } else console.log("NO USER");
             },
+            description,
           }))
         );
       });
   }, [account?.address, untagUser, tagUser, signedIn]);
-  return tags;
+  return sortedTags;
 };

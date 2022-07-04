@@ -15,6 +15,9 @@ import dynamic from "next/dynamic";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { useOnKeydown } from "@/hooks/generic/useCommand";
 import { Tag } from "@/types/Tag";
+import TagIcon from "@/components/icons/TagIcon";
+import UsersIcon from "@/components/icons/UsersIcon";
+import { ChatIcon } from "@/components/icons/ChatIcon";
 const Layout = dynamic(() => import("../components/Layout"));
 const CommentList = dynamic(() => import("../components/profiles/CommentList"));
 const FriendsList = dynamic(() => import("../components/profiles/FriendsList"));
@@ -45,9 +48,9 @@ export default function MyProfile() {
     next,
     prev,
   } = useSingleSelect([
-    { name: "Activity" },
-    { name: "Tags" },
-    { name: "Following" },
+    { name: "Activity", icon: ChatIcon },
+    { name: "Tags", icon: TagIcon },
+    { name: "Following", icon: UsersIcon },
   ]);
   const selectedView = views[selected];
 
@@ -69,7 +72,7 @@ export default function MyProfile() {
         <LoginView />
       ) : (
         <div className="flex w-full flex-col items-center">
-          <div className="flex w-full flex-row justify-center bg-gray-800 pt-36">
+          <div className="bg-neutral flex w-full flex-row justify-center pt-36">
             <div className="flex w-3/5 max-w-3xl flex-col items-start space-y-12">
               <div className="flex w-full flex-row items-center justify-between">
                 <div className="flex w-full flex-col items-start justify-start space-y-4">
@@ -122,91 +125,143 @@ export default function MyProfile() {
                 </div>
               </div>
 
-              <div className="flex w-full flex-row justify-between space-x-3">
-                {views.map(({ name: viewName, toggle, selected }) => (
+              <div className="flex w-full flex-row justify-between space-x-0 overflow-hidden rounded-t-lg">
+                {views.map(({ name: viewName, toggle, selected, icon }) => (
                   <div
-                    className={`w-full rounded-t-lg ${
-                      selected ? "bg-gray-700" : "bg-gray-500"
-                    } px-6 py-3 hover:bg-gray-700`}
+                    className={`bg-primary-content flex w-full flex-row items-center space-x-2 ${
+                      selected
+                        ? "text-base-300 border-b-2 border-black"
+                        : "text-base-100"
+                    } px-6 py-3 hover:bg-gray-100`}
                     onClick={toggle}
                   >
-                    <p
-                      className={`text-2xl font-semibold ${
-                        selected ? "text-gray-400" : "text-gray-800"
-                      }`}
-                    >
-                      {viewName}
-                    </p>
+                    {icon({})}
+                    <p className="text-md py-2 font-semibold">{viewName}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-          <div className="flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24  py-10">
+          <div className="bg-primary-content flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24 rounded-b-lg">
             {selectedView.name === "Activity" && (
-              <div className="flex w-full flex-col space-y-4">
+              <div className="text-neutral flex min-h-[50vh] w-full flex-col space-y-4 p-6">
                 {/* <p className="text-left text-3xl font-semibold text-gray-300">
                   Comments
                 </p> */}
                 {comments?.length > 0 ? (
                   <CommentList comments={comments} />
                 ) : (
-                  <p className="font-semibold">
-                    {user?.name} has not left any comments! Go nudge them to
-                    participate. There may be something special for those who
-                    do...
-                  </p>
+                  <>
+                    <p className="font-semibold">
+                      <span className="font-normal">{user?.name}</span> has not
+                      left any comments! Go nudge them to participate.
+                    </p>
+                    <p className="font-semibold">
+                      There may be something special for those who do...
+                    </p>
+                  </>
                 )}
               </div>
             )}
 
             {selectedView.name === "Tags" && (
-              <div className="flex w-full flex-col space-y-4">
-                {tags.map(({ tag, taggers, toggle }: any) => (
-                  <div className="flex w-full flex-col space-y-3 overflow-hidden rounded-lg bg-gray-200">
-                    <div className="flex w-full flex-col space-y-0">
-                      <div className="flex w-full flex-row justify-between space-x-2 bg-gray-300 py-3 px-6">
-                        <div className="flex flex-row items-center justify-start space-x-2">
-                          <p className="badge badge-light badge-sm">
-                            {taggers.length}
-                          </p>
-                          <p className="text-lg font-semibold text-gray-900">
-                            {tag}
-                          </p>
+              <div className="flex min-h-[50vh] w-full flex-col space-y-0 overflow-hidden rounded-b-lg">
+                {allTags.map(
+                  ({ tag, taggers, toggle, description }: any, i: number) => (
+                    <div className="bg-primary-content flex w-full flex-col space-y-0">
+                      <div className="flex w-full flex-col space-y-0">
+                        <div className="group flex w-full flex-row justify-between space-x-2 border-b py-2 px-6">
+                          <div className="flex flex-row items-center justify-start space-x-2">
+                            <p className="badge badge-light badge-sm flex">
+                              {taggers.length}
+                            </p>
+                            <div
+                              className="tooltip tooltip-right"
+                              data-tip={description}
+                            >
+                              <p
+                                className={`text-md text-gray-900 ${
+                                  i < 3 ? "font-bold" : "font-normal"
+                                }`}
+                              >
+                                {tag}
+                              </p>
+                            </div>
+                            <p className="px-6 text-sm font-normal text-gray-700">
+                              {taggers
+                                .slice(0, 3)
+                                .reduce(
+                                  (acc: string, tagger: string, i: number) =>
+                                    acc.concat(
+                                      `${tagger.slice(0, 6)}${
+                                        taggers.length > i + 1 ? ", " : ""
+                                      }`
+                                    ),
+                                  ""
+                                )
+                                .concat(
+                                  `${
+                                    taggers.length > 3
+                                      ? `and ${taggers.length - 3} other${
+                                          taggers.length > 4 ? "s" : ""
+                                        }.`
+                                      : ""
+                                  }`
+                                )}
+                            </p>
+                          </div>
+                          <div>
+                            {/* {signedIn && (
+                            <button
+                              onClick={toggle}
+                              className="badge badge-dark hidden font-normal group-hover:flex"
+                            >
+                              {taggers.includes(address) ? "Untag" : "Tag"}
+                            </button>
+                          )} */}
+                            {signedIn && (
+                              <div
+                                onClick={toggle}
+                                className="hidden flex-row space-x-2 group-hover:flex"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className={`hover:text-success ${
+                                    taggers.includes(address)
+                                      ? "text-success"
+                                      : ""
+                                  } h-6 w-6`}
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  strokeWidth={2}
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                                  />
+                                </svg>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="hover:text-error h-6 w-6"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  strokeWidth={2}
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"
+                                  />
+                                </svg>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                        {signedIn && (
-                          <button
-                            onClick={toggle}
-                            className="badge badge-dark font-normal"
-                          >
-                            {taggers.includes(address) ? "Untag" : "Tag"}
-                          </button>
-                        )}
                       </div>
-                      <p className="text-md px-6 py-4 font-normal text-gray-800">
-                        {taggers
-                          .slice(0, 3)
-                          .reduce(
-                            (acc: string, tagger: string, i: number) =>
-                              acc.concat(
-                                `${tagger.slice(0, 6)}${
-                                  taggers.length > i + 1 ? ", " : ""
-                                }`
-                              ),
-                            ""
-                          )
-                          .concat(
-                            `${
-                              taggers.length > 3
-                                ? `and ${taggers.length - 3} other${
-                                    taggers.length > 4 ? "s" : ""
-                                  }.`
-                                : ""
-                            }`
-                          )}
-                      </p>
-                    </div>
-                    {/* <div className="group flex flex-row items-center space-x-2">
+                      {/* <div className="group flex flex-row items-center space-x-2">
                       <div className="flex flex-row -space-x-2">
                         {taggers.map((tagger: string, i: number) => (
                           <div className={"rounded-full bg-black p-1"}>
@@ -218,21 +273,17 @@ export default function MyProfile() {
                         Greg
                       </p>
                     </div> */}
-                  </div>
-                ))}
-                {signedIn && (
-                  <div className="flex flex-col space-y-0 rounded-lg bg-gray-200 p-6">
+                    </div>
+                  )
+                )}
+                {/* {signedIn && (
+                  <div className="bg-primary-content flex flex-col space-y-0 rounded-lg p-6">
                     <p className="p-4 text-left text-3xl font-bold text-gray-900">
                       Add Tag
                     </p>
-                    <TagListBox
-                      address={address}
-                      tags={allTags.filter(
-                        ({ taggers }) => taggers.length === 0
-                      )}
-                    />
+                    <TagListBox address={address} tags={allTags} />
                   </div>
-                )}
+                )} */}
               </div>
             )}
             {selectedView.name === "Following" && (

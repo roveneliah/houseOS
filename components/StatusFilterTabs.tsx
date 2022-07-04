@@ -11,13 +11,13 @@ interface Props {
 
 export default function StatusFilterTabs({ options, stateFilter }: Props) {
   return (
-    <div className="flex w-full flex-row justify-between space-x-4">
+    <div className="flex w-full flex-row justify-between space-x-0 overflow-hidden rounded-t-lg">
       {options.map(({ name, icon, onClick }: any, i: number) => (
         <div
-          className={`flex w-full cursor-pointer flex-row justify-start space-y-4 rounded-t-lg p-4  ${
+          className={`flex w-full cursor-pointer flex-row justify-start space-y-4 p-4 px-6 pt-5 hover:bg-gray-100  ${
             i === stateFilter
-              ? "bg-gray-200 text-gray-800"
-              : "bg-gray-700 text-gray-300"
+              ? "bg-primary-content border-base-300 text-base-100 border-b-2"
+              : " bg-primary-content  text-base-100"
           }`}
           onClick={onClick}
           key={i}

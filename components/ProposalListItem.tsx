@@ -21,7 +21,7 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
     intersection(tags.map(prop("tag")), selectedTags).length > 0;
 
   return hasMatchingTag(proposalTags) ? (
-    <div className="flex flex-row justify-between py-4">
+    <div className="flex flex-row justify-between border-b py-3 px-6 hover:bg-gray-100 hover:shadow-lg">
       <div className="flex w-2/3 flex-row items-center justify-start space-x-4 overflow-clip text-gray-800">
         <div>
           {proposal.state === "closed" ? <LockedIcon /> : <ClockIcon />}

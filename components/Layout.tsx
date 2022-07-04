@@ -13,9 +13,29 @@ import { useRouter } from "next/router";
 
 import dynamic from "next/dynamic";
 import { useSIWE } from "@/hooks/useSIWE";
+import { capitalize } from "./ProposalHeader";
+import Link from "next/link";
 // import { useFirebase } from "@/hooks/useFirebase";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
+
+const usePath = (): Array<any> => {
+  const { route } = useRouter();
+
+  const path = route
+    .split("/")
+    .slice(1)
+    .map(capitalize)
+    .map((pathSlice: string, i: number) => ({
+      pathSlice,
+      route: route
+        .split("/")
+        .slice(0, i - 1)
+        .join("/"),
+    }));
+
+  return path;
+};
 
 export default function Layout({
   children,
@@ -60,6 +80,7 @@ export default function Layout({
 
   const newUserFlow = useIsNewUser();
   const router = useRouter();
+  const path = usePath();
   useEffect(() => {
     newUserFlow && router.push("/signup"); // don't want to redirect again if i'm here...
   }, [newUserFlow]);
@@ -81,12 +102,21 @@ export default function Layout({
         deactivated={newUserFlow}
         demo={demo}
       />
-      <main className="flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start bg-gray-700">
+      <main className="bg-base-300 flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start">
         <div className="fixed top-0 z-20 flex w-full flex-row justify-between">
-          <div className="flex flex-row items-center p-4">
-            {/* <p className="text-2xl font-semibold">
-              Krause House Command Center
-            </p> */}
+          <div className="breadcrumbs self-center p-4 px-6">
+            <ul>
+              <li>
+                <a>Krause House</a>
+              </li>
+              {path.map(({ pathSlice, route }) => (
+                <Link href={route}>
+                  <li>
+                    <a>{pathSlice}</a>
+                  </li>
+                </Link>
+              ))}
+            </ul>
           </div>
           <div className="flex flex-row space-x-2 p-4">
             {!signedIn ? (
@@ -94,7 +124,7 @@ export default function Layout({
                 <button
                   // disabled={!connector.ready}
                   onClick={() => connect(connector)}
-                  className="btn btn-outline"
+                  className="btn"
                 >
                   Connect
                 </button>
@@ -102,25 +132,23 @@ export default function Layout({
                 <button
                   // disabled={!connector.ready}
                   onClick={() => signIn()}
-                  className="btn btn-outline"
+                  className="btn"
                 >
                   Sign in with Ethereum
                 </button>
               ) : (
                 <button
                   // disabled={!connector.ready}
-                  className="btn btn-outline"
+                  className="btn loading"
                 >
                   Loading
                 </button>
               )
             ) : (
               <>
-                <button className="btn btn-outline">
-                  {krauseBalance} $KRAUSE
-                </button>
+                <button className="btn">{krauseBalance} $KRAUSE</button>
                 <button
-                  className="btn btn-outline group "
+                  className="btn group "
                   onClick={() => {
                     disconnect();
                     signOut();
@@ -134,7 +162,7 @@ export default function Layout({
               </>
             )}
             <button
-              className="btn btn-outline flex flex-row space-x-2"
+              className="btn btn-active flex flex-row space-x-2"
               onClick={() => setIsOpen(!isOpen)}
             >
               <div className="">

@@ -71,14 +71,14 @@ const ProposalsListPage: NextPage = () => {
   );
 
   return (
-    <Layout paletteStartsOpen={true}>
-      <div className="flex w-full flex-row justify-center bg-gray-800 pt-20">
-        <div className="flex w-2/3 max-w-3xl flex-col space-y-10 ">
+    <Layout paletteStartsOpen={false}>
+      <div className="bg-neutral flex w-full flex-row justify-center pt-36">
+        <div className="flex w-2/3 max-w-3xl flex-col space-y-10">
           <div className="bg-gray-7000 flex w-2/3 flex-row justify-start">
-            <div className="flex flex-col items-start space-y-2 text-gray-300">
-              <div className="flex flex-row space-x-2">
+            <div className="text-primary-content flex flex-col items-start space-y-2">
+              <div className=" flex flex-row space-x-2">
                 <ClockIcon />
-                <p className="font-bold">{countActive} Active</p>
+                <p className="font-bold ">{countActive} Active</p>
               </div>
               <p className="text-6xl font-bold">Proposals</p>
             </div>
@@ -91,8 +91,10 @@ const ProposalsListPage: NextPage = () => {
         </div>
       </div>
       <div className="w-2/3 max-w-3xl">
-        <div className="flex flex-col space-y-4 rounded-b-lg bg-gray-200 p-6">
-          <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
+        <div className="bg-primary-content flex flex-col space-y-0 pb-4">
+          <div className="border-b px-4 py-4">
+            <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
+          </div>
           <div className="flex h-[60vh] flex-col overflow-y-auto">
             {filteredProposals.map((proposal: Proposal, i: number) => (
               <ProposalListItem

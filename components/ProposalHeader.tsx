@@ -6,7 +6,7 @@ import { useListenProposalTags } from "../hooks/tags/useListenProposalTags";
 import { Proposal, ProposalState } from "../types/Proposal";
 import TagsList from "./profiles/TagsList";
 
-const capitalize = (str: string) =>
+export const capitalize = (str: string) =>
   str?.charAt(0).toUpperCase() + str?.slice(1);
 
 interface Props {

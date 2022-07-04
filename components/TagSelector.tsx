@@ -21,16 +21,18 @@ export default function TagSelector({ tags, setSelectedTags }: any) {
     <div className="flex flex-row justify-start space-x-2 overflow-clip overflow-x-auto">
       {enhancedTags.map(({ x, selected, toggle }: any, i: number) => (
         <p
-          className={`badge ${selected && "badge-dark"}`}
+          className={`badge hover:badge-dark ${
+            selected ? " badge-dark" : "badge-outline"
+          }`}
           onClick={toggle}
           key={i}
         >
           {x}
         </p>
       ))}
-      <p className={`badge`} onClick={() => {}}>
+      {/* <p className={`badge`} onClick={() => {}}>
         +
-      </p>
+      </p> */}
     </div>
   );
 }
