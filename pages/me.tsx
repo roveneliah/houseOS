@@ -144,24 +144,20 @@ export default function MyProfile() {
           </div>
           <div className="bg-primary-content flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24 rounded-b-lg">
             {selectedView.name === "Activity" && (
-              <div className="text-neutral flex min-h-[50vh] w-full flex-col space-y-4 p-8">
+              <div className="text-neutral flex w-full flex-col space-y-4 p-8">
                 {/* <p className="text-left text-3xl font-semibold text-gray-300">
                   Comments
                 </p> */}
                 {comments?.length > 0 ? (
                   <CommentList comments={comments} />
-                ) : user?.name ? (
-                  <div>
-                    <p className="font-normal">
-                      {user?.name} has not left any comments! Go nudge them to
-                      participate.
-                    </p>
-                    <p className="font-semibold">
-                      There may be something special for those who do...
+                ) : (
+                  <div className="text-base-100 flex flex-col space-y-2 p-8">
+                    <p className="text-lg">No comments found.</p>
+                    <p className="text-md">
+                      Go nudge them to participate. There may be something
+                      special for those who do.
                     </p>
                   </div>
-                ) : (
-                  <></>
                 )}
               </div>
             )}
@@ -218,7 +214,7 @@ export default function MyProfile() {
                                 </p>
                               </div>
                             </div>
-                            <div className="group flex w-2/3 flex-row items-center justify-between">
+                            <div className="flex w-2/3 flex-row items-center justify-between">
                               <p className="flex px-6 text-sm font-normal text-gray-700 group-hover:hidden lg:flex">
                                 {taggers
                                   .slice(0, 3)
@@ -284,18 +280,21 @@ export default function MyProfile() {
               </div>
             )}
             {selectedView.name === "Following" && (
-              <div className="flex min-h-[50vh] w-full flex-col space-y-2">
+              <div className="flex w-full flex-col space-y-2 overflow-hidden rounded-b-lg">
                 {/* <p className="text-left text-3xl font-bold text-gray-200">
-                  Friends
-                </p> */}
+                Friends
+              </p> */}
                 {friends?.length > 0 ? (
                   <FriendsList friends={friends} />
-                ) : user?.name ? (
-                  <p className="text-neutral text-md p-8 font-normal">
-                    {user?.name} has not followed anyone.
-                  </p>
                 ) : (
-                  <></>
+                  <div className="bg-primary-content text-base-100 flex flex-col space-y-2 p-8">
+                    <p className="text-lg">
+                      {!user?.name
+                        ? "Loading..."
+                        : `${user.name} isn't following anyone.`}
+                    </p>
+                    <p className="">What a shame...</p>
+                  </div>
                 )}
               </div>
             )}

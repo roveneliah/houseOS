@@ -21,6 +21,9 @@ const TagsList = dynamic(() => import("@/components/profiles/TagsList"));
 import { Tag } from "@/types/Tag";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { useOnKeydown } from "@/hooks/generic/useCommand";
+import { ChatIcon } from "@/components/icons/ChatIcon";
+import TagIcon from "@/components/icons/TagIcon";
+import UsersIcon from "@/components/icons/UsersIcon";
 
 export default function Profile({ address: userAddress }: any) {
   const user = useGetUser(userAddress);
@@ -40,22 +43,22 @@ export default function Profile({ address: userAddress }: any) {
     next,
     prev,
   } = useSingleSelect([
-    { name: "Activity" },
-    { name: "Tags" },
-    { name: "Following" },
+    { name: "Activity", icon: ChatIcon },
+    { name: "Tags", icon: TagIcon },
+    { name: "Following", icon: UsersIcon },
   ]);
   const selectedView = views[selected];
 
   useOnKeydown("ArrowRight", next);
   useOnKeydown("ArrowLeft", prev);
 
-  console.log(allTags);
-
   const isFriend = profile?.friends?.includes(address);
   return (
     <Layout>
       {!address ? (
-        <LoadingView address={ensName || address} />
+        <div className="pt-36">
+          <LoadingView address={ensName || address} />
+        </div>
       ) : (
         <div className="flex w-full flex-col items-center">
           <div className="bg-neutral flex w-full flex-row justify-center pt-36">
@@ -119,43 +122,39 @@ export default function Profile({ address: userAddress }: any) {
                   />
                 </div>
               </div>
-              <div className="flex w-full flex-row justify-between space-x-3">
-                {views.map(
-                  ({ name: viewName, toggle, selected }, i: number) => (
-                    <div
-                      className={`w-full rounded-t-md ${
-                        selected ? "bg-gray-100" : "bg-gray-500"
-                      } px-6 py-3 hover:bg-gray-100`}
-                      onClick={toggle}
-                      key={i}
-                    >
-                      <p
-                        className={`text-md font-semibold ${
-                          selected ? "text-gray-700" : "text-gray-800"
-                        }`}
-                      >
-                        {viewName}
-                      </p>
-                    </div>
-                  )
-                )}
+              <div className="flex w-full flex-row justify-between space-x-0 overflow-hidden rounded-t-lg border-b">
+                {views.map(({ name: viewName, toggle, selected, icon }) => (
+                  <div
+                    className={`bg-primary-content flex w-full flex-row items-center space-x-2 ${
+                      selected
+                        ? "text-base-300 border-b-2 border-black"
+                        : "text-base-100"
+                    } px-6 py-3 hover:bg-gray-100`}
+                    onClick={toggle}
+                  >
+                    {icon({})}
+                    <p className="text-md py-2 font-semibold">{viewName}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-          <div className="flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24">
+          <div className="flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24 overflow-hidden rounded-b-lg">
             {selectedView.name === "Activity" && (
-              <div className="flex w-full flex-col space-y-4">
+              <div className="bg-primary-content flex w-full flex-col space-y-4">
                 {/* <p className="text-left text-3xl font-semibold text-gray-300">
                   Comments
                 </p> */}
                 {comments?.length > 0 ? (
                   <CommentList comments={comments} />
                 ) : (
-                  <p className="font-semibold">
-                    {name} has not left any comments! Go nudge them to
-                    participate. There may be something special for those who
-                    do...
-                  </p>
+                  <div className="text-base-100 flex flex-col space-y-2 p-12">
+                    <p className="text-lg">No comments found.</p>
+                    <p className="text-md">
+                      Go nudge them to participate. There may be something
+                      special for those who do.
+                    </p>
+                  </div>
                 )}
               </div>
             )}
@@ -265,9 +264,12 @@ export default function Profile({ address: userAddress }: any) {
                 {friends?.length > 0 ? (
                   <FriendsList friends={friends} />
                 ) : (
-                  <p className="font-semibold">
-                    {name} has not added any friends.
-                  </p>
+                  <div className="bg-primary-content text-base-100 flex flex-col space-y-2 p-12">
+                    <p className="text-lg">
+                      {!name ? "Loading..." : `${name} isn't following anyone.`}
+                    </p>
+                    <p className="">What a shame...</p>
+                  </div>
                 )}
               </div>
             )}

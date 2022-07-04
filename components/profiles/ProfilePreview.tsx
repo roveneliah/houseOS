@@ -19,24 +19,27 @@ export default function ProfilePreview({
 
   return (
     <div
-      className={`flex w-full flex-row items-center justify-between`}
+      className="flex w-full flex-row items-center justify-between border-b"
       key={i}
     >
-      <div className="flex w-full flex-row space-x-4 rounded-md bg-gray-100 px-6 py-4">
+      <div className="bg-primary-content flex w-full flex-row space-x-4 px-6 py-4">
         <Link href={`/profiles/${address}`}>
           <Image
             src={avatarSrc || defaultAvatar}
-            width={80}
-            height={80}
-            className="cursor-pointer rounded-full"
+            width={60}
+            height={60}
+            className="h-fit w-fit cursor-pointer rounded-full"
           />
         </Link>
-        <div className="flex w-full flex-col items-start justify-center space-y-2">
+        <div className="flex w-full flex-col items-start justify-center space-y-0">
           <div className="flex w-full flex-row items-baseline justify-between space-x-2">
-            <p className="text-lg font-semibold text-gray-700">{name}</p>
-            <p className="badge badge-dark badge-sm">{address.slice(0, 8)}</p>
+            <p className="text-neutral text-md font-semibold">{name}</p>
+            {/* <p className="badge badge-dark badge-sm">{address.slice(0, 8)}</p> */}
           </div>
-          <TagsList tags={tags} max={3} disabled={true} numbered={false} />
+          <p className="text-neutral-content text-sm">
+            {tags.map(({ tag }: any) => tag).join(", ")}
+          </p>
+          {/* <TagsList tags={tags} max={3} disabled={true} numbered={false} /> */}
         </div>
       </div>
     </div>

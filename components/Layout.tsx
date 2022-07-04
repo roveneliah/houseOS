@@ -22,8 +22,6 @@ const CommandPalette = dynamic(() => import("./CommandPalette"));
 const usePath = (): Array<any> => {
   const { asPath: route } = useRouter();
 
-  console.log(route.split("/").slice(0, 2).join("/"));
-
   const path = route
     .split("/")
     .slice(1)
