@@ -10,7 +10,7 @@ import { Comment } from "../../types/Comment";
 import { Proposal } from "../../types/Proposal";
 import createHook from "@/hooks/createHook";
 const Layout = dynamic(() => import("../../components/Layout"));
-const ChoiceFilters = dynamic(() => import("../../components/FilterTabs"));
+const ChoiceFilters = dynamic(() => import("../../components/ChoiceFilters"));
 const ProposalHeader = dynamic(() => import("../../components/ProposalHeader"));
 const CommentList = dynamic(() => import("../../components/CommentList"));
 const CommentView = dynamic(() => import("../../components/CommentView"));
@@ -37,7 +37,7 @@ const ProposalPage: NextPage = ({ id }: any) => {
   return (
     <Layout>
       <div className="bg-neutral flex w-full flex-row justify-center pt-20">
-        <div className="flex w-3/5 flex-col items-start space-y-10 border-b">
+        <div className="flex w-3/5 flex-col items-start space-y-10">
           <ProposalHeader proposal={proposal} />
           <ChoiceFilters
             proposal={proposal}
@@ -49,9 +49,9 @@ const ProposalPage: NextPage = ({ id }: any) => {
         </div>
       </div>
       <div className="flex w-full flex-row justify-center">
-        <div className="bg-primary-content flex w-3/5 flex-col space-y-4 overflow-hidden rounded-b-lg pt-4">
+        <div className="bg-primary-content flex w-3/5 flex-col space-y-0 overflow-hidden rounded-b-lg">
           {view === View.CommentList && (
-            <div className="flex flex-col space-y-8">
+            <div className="flex flex-col space-y-0">
               <CommentList
                 toggleCommentView={() => setView(View.Comment)}
                 comments={comments}

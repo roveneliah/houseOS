@@ -35,33 +35,33 @@ export default function CommentList({
   );
 
   return (
-    <div className="flex flex-col space-y-4">
-      <div className="flex flex-row justify-between border-b px-6 pb-4">
-        <div className="">
-          {sortedFilteredComments.length > 0 && (
+    <div className="flex flex-col space-y-0">
+      {sortedFilteredComments.length > 0 && (
+        <div className="flex flex-row justify-between border-b px-6 py-4">
+          <div className="">
             <TagSelector
               tags={tags.map(({ name }) => name)}
               setSelectedTags={setSelectedTags}
             />
-          )}
-        </div>
-        {/* <div className="flex w-fit flex-row items-baseline justify-end">
+          </div>
+          {/* <div className="flex w-fit flex-row items-baseline justify-end">
           
           {signedIn ? (
             <p
-              className="cursor-pointer font-bold text-gray-900 hover:text-gray-600"
-              onClick={toggleCommentView}
+            className="cursor-pointer font-bold text-gray-900 hover:text-gray-600"
+            onClick={toggleCommentView}
             >
-              Comment
+            Comment
             </p>
-          ) : (
-            <p className="cursor-pointer   text-gray-900 hover:text-gray-600">
+            ) : (
+              <p className="cursor-pointer   text-gray-900 hover:text-gray-600">
               Sign in to Comment
-            </p>
-          )}
-        </div> */}
-      </div>
-      <div className="flex flex-col space-y-4">
+              </p>
+              )}
+            </div> */}
+        </div>
+      )}
+      <div className="flex flex-col space-y-4 overflow-scroll py-4">
         {sortedFilteredComments.length > 0 ? (
           sortedFilteredComments.map((comment: Comment, i: number) => (
             <CommentListItem
@@ -72,7 +72,7 @@ export default function CommentList({
             />
           ))
         ) : (
-          <p className="text-left text-3xl font-semibold text-gray-800">
+          <p className="border-b px-8 py-6 text-left text-xl font-semibold text-gray-800">
             No comments yet.
           </p>
         )}

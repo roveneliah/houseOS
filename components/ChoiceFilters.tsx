@@ -20,7 +20,7 @@ export default function ChoiceFilters({
   const { choices } = proposal;
 
   return (
-    <div className="bg-primary-content flex w-full flex-row justify-between overflow-y-auto rounded-t-lg">
+    <div className="bg-primary-content flex w-full flex-row justify-between overflow-y-auto rounded-t-lg border-b">
       {choices?.map((choice: string, i: number) => (
         <div
           className={`text-neutral flex w-full min-w-[18vw] cursor-pointer flex-col items-start space-y-4 p-4 px-6 hover:bg-gray-100 ${
@@ -39,7 +39,7 @@ export default function ChoiceFilters({
             </p>
           </div>
           <div className="flex w-full flex-row justify-between">
-            <p className="w-full overflow-hidden whitespace-nowrap font-bold">
+            <p className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-semibold">
               {choice}
             </p>
             {/* {view === 1 && (

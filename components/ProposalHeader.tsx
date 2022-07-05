@@ -27,9 +27,6 @@ export default function ProposalHeader({ proposal }: Props) {
     <div className="text-primary-content flex w-full flex-col items-start space-y-10 py-12">
       <div className="flex w-full flex-col space-y-4">
         <div className="flex flex-row items-center justify-between space-x-2">
-          <div className="flex flex-row space-x-2 font-normal">
-            <p>{tags.map(prop("tag")).join(", ")}</p>
-          </div>
           <div className="flex flex-row items-center space-x-6">
             {/* <p className="font-semibold">Live with 9 votes.</p> */}
             {proposal.state && (
@@ -66,6 +63,14 @@ export default function ProposalHeader({ proposal }: Props) {
             {/* {proposal.state === ProposalState.Active && (
               <p className="badge badge-outline">Closes in</p>
             )} */}
+          </div>
+          <div className="flex flex-row space-x-2 font-normal">
+            {/* <p>{tags.map(prop("tag")).join(", ")}</p> */}
+            {tags.map(prop("tag")).map((tag: any) => (
+              <p className="border-primary-content whitespace-nowrap rounded-full border py-1 px-3 text-sm">
+                {tag}
+              </p>
+            ))}
           </div>
         </div>
         <p className="text-left text-6xl font-semibold">{proposal.title}</p>

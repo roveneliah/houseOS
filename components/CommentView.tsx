@@ -41,13 +41,13 @@ export default function CommentView({ proposal, back, choice }: any) {
   };
 
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-0 py-8">
       {user?.name ? (
         user?.hodler ? (
-          <div className="flex flex-col space-y-6 rounded-lg px-6 pb-4">
+          <div className="flex flex-col space-y-6 rounded-lg px-6">
             <textarea
               className="border-neutral/25 text-md w-full rounded-lg border bg-transparent p-6 font-light text-gray-900 outline-0"
-              rows={5}
+              rows={3}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
@@ -62,7 +62,7 @@ export default function CommentView({ proposal, back, choice }: any) {
               Back
             </p>
           </div> */}
-            <div className="flex flex-row items-center justify-between pb-4">
+            <div className="flex flex-row items-center justify-between">
               <div className="flex flex-row items-center space-x-2">
                 <div className="min-w-fit">
                   <Image
@@ -97,7 +97,7 @@ export default function CommentView({ proposal, back, choice }: any) {
                 <p className="min-w-[5vw] group-hover:hidden">Submit</p>
                 <div className="hidden min-w-[5vw] flex-col items-start group-hover:flex">
                   <p className="text-2xs">Voting</p>
-                  <p>{proposal.choices[choice]}</p>
+                  <p>{proposal.choices?.[choice]}</p>
                 </div>
               </button>
             </div>
@@ -108,7 +108,7 @@ export default function CommentView({ proposal, back, choice }: any) {
           </p>
         )
       ) : (
-        <p className="pt-4 text-left text-3xl font-semibold text-gray-800">
+        <p className="px-8 py-6 pt-4 text-left text-xl font-semibold text-gray-800">
           Please sign in to comment.
         </p>
       )}
