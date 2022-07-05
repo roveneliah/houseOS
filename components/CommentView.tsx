@@ -42,63 +42,74 @@ export default function CommentView({ proposal, back, choice }: any) {
 
   return (
     <div className="flex flex-col space-y-4">
-      <div className="flex flex-row items-end justify-between border-b-2 border-gray-900">
-        <p className="text-4xl font-bold text-gray-900">
-          {proposal.choices[choice]}
-        </p>
-        <p
-          className="font-semibold text-gray-900 hover:text-gray-700"
-          onClick={back}
-        >
-          Back to Comments
-        </p>
-      </div>
-      {user?.hodler ? (
-        <div className="flex flex-col space-y-8 rounded-lg bg-gray-50/50 px-6 pb-4 pt-8">
-          <textarea
-            className="w-full rounded-lg border border-gray-500 bg-transparent p-6 text-lg font-semibold text-gray-900 outline-0"
-            rows={6}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center space-x-5">
-              <div className="min-w-fit">
-                <Image
-                  src={user.avatarSrc || defaultAvatar}
-                  width={75}
-                  height={75}
-                  className="rounded-full"
-                />
-              </div>
-              <div className="space-between flex flex-col items-start space-y-2 text-gray-900">
-                <div className="flex flex-row space-x-2">
-                  {authorTags.map(({ tag }) => (
-                    <p className="badge">{tag}</p>
-                  ))}
-                </div>
-                <p className="text-xl font-semibold">
-                  {user?.name || account?.address}
-                </p>
-              </div>
-            </div>
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                signMessage({
-                  message: JSON.stringify(comment),
-                });
-                // postComment();
-                // vote(message)
-              }}
+      {user?.name ? (
+        user?.hodler ? (
+          <div className="flex flex-col space-y-6 rounded-lg px-6 pb-4">
+            <textarea
+              className="border-neutral/25 text-md w-full rounded-lg border bg-transparent p-6 font-light text-gray-900 outline-0"
+              rows={5}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            {/* <div className="flex flex-row items-end justify-between border-gray-900 px-6">
+            <p className="text-4xl font-bold text-gray-900">
+              {proposal.choices[choice]}
+            </p>
+            <p
+              className="text-neutral w-full cursor-pointer font-normal hover:text-gray-700"
+              onClick={back}
             >
-              Submit
-            </button>
+              Back
+            </p>
+          </div> */}
+            <div className="flex flex-row items-center justify-between pb-4">
+              <div className="flex flex-row items-center space-x-2">
+                <div className="min-w-fit">
+                  <Image
+                    src={user.avatarSrc || defaultAvatar}
+                    width={50}
+                    height={50}
+                    className="rounded-full"
+                  />
+                </div>
+                <div className="space-between flex flex-col items-baseline space-y-0 text-gray-900">
+                  <p className="text-xl font-semibold">You</p>
+                  <div className="flex flex-row space-x-2">
+                    <p>
+                      {authorTags
+                        .slice(0, 3)
+                        .map(({ tag }) => tag)
+                        .join(", ")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <button
+                className="btn group"
+                onClick={() => {
+                  signMessage({
+                    message: JSON.stringify(comment),
+                  });
+                  // postComment();
+                  // vote(message)
+                }}
+              >
+                <p className="min-w-[5vw] group-hover:hidden">Submit</p>
+                <div className="hidden min-w-[5vw] flex-col items-start group-hover:flex">
+                  <p className="text-2xs">Voting</p>
+                  <p>{proposal.choices[choice]}</p>
+                </div>
+              </button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <p className="pt-4 text-left text-3xl font-semibold text-gray-800">
+            Must be a $KRAUSE holder to comment.
+          </p>
+        )
       ) : (
         <p className="pt-4 text-left text-3xl font-semibold text-gray-800">
-          Must be a $KRAUSE holder to comment.
+          Please sign in to comment.
         </p>
       )}
     </div>

@@ -36,25 +36,34 @@ const ProposalPage: NextPage = ({ id }: any) => {
 
   return (
     <Layout>
-      <div className="flex w-full flex-row justify-center bg-gray-800 pt-20">
-        <div className="flex w-2/3 flex-col items-start space-y-10 ">
+      <div className="bg-neutral flex w-full flex-row justify-center pt-20">
+        <div className="flex w-3/5 flex-col items-start space-y-10 border-b">
           <ProposalHeader proposal={proposal} />
           <ChoiceFilters
             proposal={proposal}
             selectedChoice={selectedChoice}
             setSelectedChoice={setSelectedChoice}
+            toggleCommentView={() => setView(View.Comment)}
+            view={view}
           />
         </div>
       </div>
-      <div className="flex min-h-[75vh] w-full  flex-row justify-center bg-gray-500 py-20">
-        <div className="flex w-2/3 flex-col space-y-4 pt-4">
+      <div className="flex w-full flex-row justify-center">
+        <div className="bg-primary-content flex w-3/5 flex-col space-y-4 overflow-hidden rounded-b-lg pt-4">
           {view === View.CommentList && (
-            <CommentList
-              toggleCommentView={() => setView(View.Comment)}
-              comments={comments}
-              proposal={proposal}
-              choice={selectedChoice}
-            />
+            <div className="flex flex-col space-y-8">
+              <CommentList
+                toggleCommentView={() => setView(View.Comment)}
+                comments={comments}
+                proposal={proposal}
+                choice={selectedChoice}
+              />
+              <CommentView
+                proposal={proposal}
+                choice={selectedChoice}
+                back={() => setView(View.CommentList)}
+              />
+            </div>
           )}
           {view === View.Comment && (
             <CommentView

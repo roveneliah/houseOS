@@ -35,31 +35,31 @@ export default function CommentList({
   );
 
   return (
-    <div className="flex flex-col space-y-8">
-      <div className="flex flex-col space-y-4">
-        <div className="flex w-full flex-row items-baseline justify-between border-b-2 border-gray-900">
-          <p className="text-4xl font-bold text-gray-900">
-            {proposal?.choices?.[choice]}
-          </p>
+    <div className="flex flex-col space-y-4">
+      <div className="flex flex-row justify-between border-b px-6 pb-4">
+        <div className="">
+          {sortedFilteredComments.length > 0 && (
+            <TagSelector
+              tags={tags.map(({ name }) => name)}
+              setSelectedTags={setSelectedTags}
+            />
+          )}
+        </div>
+        {/* <div className="flex w-fit flex-row items-baseline justify-end">
+          
           {signedIn ? (
             <p
-              className="cursor-pointer text-4xl font-bold text-gray-900 hover:text-gray-600"
+              className="cursor-pointer font-bold text-gray-900 hover:text-gray-600"
               onClick={toggleCommentView}
             >
               Comment
             </p>
           ) : (
-            <p className="cursor-pointer text-xl font-bold text-gray-900 hover:text-gray-600">
+            <p className="cursor-pointer   text-gray-900 hover:text-gray-600">
               Sign in to Comment
             </p>
           )}
-        </div>
-        {sortedFilteredComments.length > 0 && (
-          <TagSelector
-            tags={tags.map(({ name }) => name)}
-            setSelectedTags={setSelectedTags}
-          />
-        )}
+        </div> */}
       </div>
       <div className="flex flex-col space-y-4">
         {sortedFilteredComments.length > 0 ? (
