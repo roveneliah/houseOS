@@ -21,21 +21,21 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
     intersection(tags.map(prop("tag")), selectedTags).length > 0;
 
   return hasMatchingTag(proposalTags) ? (
-    <div className="flex flex-row justify-between border-b py-3 px-6 hover:bg-gray-100 hover:shadow-lg">
-      <div className="flex w-2/3 flex-row items-center justify-start space-x-4 overflow-clip text-gray-800">
+    <div className="flex flex-row justify-between border-b py-2 px-6 hover:bg-gray-100 hover:shadow-lg">
+      <div className="flex w-full flex-row items-center justify-start space-x-4 text-gray-800 lg:w-2/3">
         <div>
           {proposal.state === "closed" ? <LockedIcon /> : <ClockIcon />}
         </div>
         {/* <p className="badge badge-sm">{timeLeft}</p> */}
         <Link href={`/proposals/${proposal.id}`}>
           <p
-            className={`cursor-pointer overflow-clip whitespace-nowrap text-sm font-semibold text-gray-800`}
+            className={`text-neutral cursor-pointer overflow-clip text-ellipsis whitespace-nowrap text-sm font-normal`}
           >
             {proposal.title}
           </p>
         </Link>
       </div>
-      <div className="flex flex-row space-x-2">
+      <div className="hidden flex-row space-x-2 lg:flex">
         <TagsList
           tags={proposalTags}
           max={2}

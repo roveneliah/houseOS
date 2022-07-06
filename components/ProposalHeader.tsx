@@ -4,10 +4,9 @@ import { useState } from "react";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useGetAllProposalTags } from "../hooks/proposals/useGetAllProposalTags";
 import { useListenProposalTags } from "../hooks/tags/useListenProposalTags";
-import { Proposal, ProposalState } from "../types/Proposal";
+import { Proposal } from "../types/Proposal";
 import ClockIcon from "./icons/ClockIcon";
 import LockedIcon from "./icons/LockedIcon";
-import TagsList from "./profiles/TagsList";
 
 export const capitalize = (str: string) =>
   str?.charAt(0).toUpperCase() + str?.slice(1);
@@ -25,9 +24,9 @@ export default function ProposalHeader({ proposal }: Props) {
 
   return proposal ? (
     <div className="text-primary-content flex w-full flex-col items-start space-y-10 py-12">
-      <div className="flex w-full flex-col space-y-4">
-        <div className="flex flex-row items-center justify-between space-x-2">
-          <div className="flex flex-row items-center space-x-6">
+      <div className="flex w-full flex-col space-y-10">
+        <div className="flex  flex-row items-center justify-between">
+          <div className="flex w-full flex-row items-center space-x-6">
             {/* <p className="font-semibold">Live with 9 votes.</p> */}
             {proposal.state && (
               <div className="text-primary-content flex flex-row space-x-1 p-1 font-light">
@@ -55,7 +54,7 @@ export default function ProposalHeader({ proposal }: Props) {
                     d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"
                   />
                 </svg>
-                <p className="text-primary-content font-light">
+                <p className="text-primary-content whitespace-nowrap font-light">
                   {proposal.votes} Votes
                 </p>
               </div>
@@ -64,13 +63,16 @@ export default function ProposalHeader({ proposal }: Props) {
               <p className="badge badge-outline">Closes in</p>
             )} */}
           </div>
-          <div className="flex flex-row space-x-2 font-normal">
+          <div className=" flex min-h-full flex-row items-center space-x-2 font-normal">
             {/* <p>{tags.map(prop("tag")).join(", ")}</p> */}
-            {tags.map(prop("tag")).map((tag: any) => (
-              <p className="border-primary-content whitespace-nowrap rounded-full border py-1 px-3 text-sm">
-                {tag}
-              </p>
-            ))}
+            {tags
+              .map(prop("tag"))
+              .slice(0, 3)
+              .map((tag: any) => (
+                <p className="border-primary-content whitespace-nowrap rounded-full border py-1 px-3 text-sm">
+                  {tag}
+                </p>
+              ))}
           </div>
         </div>
         <p className="text-left text-6xl font-semibold">{proposal.title}</p>

@@ -63,7 +63,7 @@ export default function CommentListItem({ comment, selectedTags, index }: any) {
                   )} */}
             </p>
             <div className="flex flex-row space-x-1">
-              <p className="text-sm font-light text-gray-600">
+              <p className="text-ellipsis text-sm font-light text-gray-600">
                 {tags.map(prop("tag")).join(", ")}
               </p>
               {/* {tags.length > 0 && (

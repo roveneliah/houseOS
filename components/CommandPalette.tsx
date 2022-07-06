@@ -171,7 +171,7 @@ export default function CommandPalette({
                 <SearchIcon />
               </div>
               <Combobox.Input
-                className="focus:ring-5 w-full border-0 border-white bg-transparent py-2 px-2 text-sm text-gray-800 placeholder-gray-400 outline-0"
+                className="w-full border-0 border-white bg-transparent py-2 px-2 text-sm text-gray-800 placeholder-gray-400 outline-none"
                 placeholder={demo ? "Good job!" : "Search the DAO..."}
                 autoComplete="false"
                 onChange={(event) => {
