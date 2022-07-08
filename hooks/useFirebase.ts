@@ -21,7 +21,7 @@ export const useFirebase = () => {
     });
   }, []);
 
-  const signIn = useCallback((token: Maybe<string>) => {
+  const signIn = useCallback((token: Maybe<string>, onError?: any) => {
     if (token) {
       console.log("Signing into Firebase with token", token);
 
@@ -39,6 +39,7 @@ export const useFirebase = () => {
             console.log("ERROR SIGNING IN", error);
             setSignedIn(false);
             setLoading(false);
+            onError();
           });
     }
   }, []);

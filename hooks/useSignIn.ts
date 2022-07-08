@@ -34,7 +34,8 @@ export const useSignIn = () => {
     console.log("Signed in SIWE", signedInSIWE);
     console.log("TOKEN", state);
 
-    signedInSIWE && state.token && signInFirebase(state.token);
+    signedInSIWE && state.token && signInFirebase(state.token, signOutSIWE);
+    // !signedInSIWE && signedInFirebase && signOutFirebase();
   }, [state.token, signedInSIWE]);
 
   console.log("signed in with ethereum: ", signedInSIWE);
@@ -43,7 +44,7 @@ export const useSignIn = () => {
   return {
     signOut,
     signIn,
-    signedIn: signedInFirebase && signedInSIWE,
+    signedIn: signedInFirebase && signedInSIWE === true,
     loadingFirebase,
   };
 };

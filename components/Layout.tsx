@@ -148,7 +148,7 @@ export default function Layout({
               <>
                 <button className="btn">{krauseBalance} $KRAUSE</button>
                 <button
-                  className="btn group "
+                  className="btn group"
                   onClick={() => {
                     disconnect();
                     signOut();
