@@ -31,15 +31,15 @@ export const useSignIn = () => {
   };
 
   useEffect(() => {
-    console.log("Signed in SIWE", signedInSIWE);
-    console.log("TOKEN", state);
+    // console.log("Signed in SIWE", signedInSIWE);
+    // console.log("TOKEN", state);
 
     signedInSIWE && state.token && signInFirebase(state.token, signOutSIWE);
-    // !signedInSIWE && signedInFirebase && signOutFirebase();
-  }, [state.token, signedInSIWE]);
+    // !state.token && signedInFirebase && signOutFirebase();
+  }, [state.token, signedInSIWE, signedInFirebase]);
 
-  console.log("signed in with ethereum: ", signedInSIWE);
-  console.log("signed in with firebase: ", signedInFirebase);
+  // console.log("signed in with ethereum: ", signedInSIWE);
+  // console.log("signed in with firebase: ", signedInFirebase);
 
   return {
     signOut,

@@ -14,25 +14,28 @@ import { useSignIn } from "../hooks/useSignIn";
 import dynamic from "next/dynamic";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { useOnKeydown } from "@/hooks/generic/useCommand";
-import { Tag } from "@/types/Tag";
 import TagIcon from "@/components/icons/TagIcon";
 import UsersIcon from "@/components/icons/UsersIcon";
 import { ChatIcon } from "@/components/icons/ChatIcon";
+
+import { useSelector } from "react-redux";
+import { useTrackUser } from "../hooks/useTrackUser";
+import { localhost } from "@wagmi/core/dist/declarations/src/constants/chains";
+
 const Layout = dynamic(() => import("../components/Layout"));
 const CommentList = dynamic(() => import("../components/profiles/CommentList"));
 const FriendsList = dynamic(() => import("../components/profiles/FriendsList"));
 const TagsList = dynamic(() => import("../components/profiles/TagsList"));
-const TagListBox = dynamic(() => import("../components/profiles/TagListBox"));
 const LoginView = dynamic(() => import("../components/LoginView"));
 
 export default function MyProfile() {
-  const user = useGetUserProfile();
-  const address = useUserAddress();
-  const tags = useListenUserTags(address);
-  const allTags = useGetAllUserTags(address);
-  const krauseBalance = useKrauseBalance(address);
-  const { signedIn } = useSignIn();
+  const user = useGetUserProfile(); // all this
+  const address = useUserAddress(); //    can be composed
+  const tags = useListenUserTags(address); //   into something
+  const allTags = useGetAllUserTags(address); //     better....
+  const krauseBalance = useKrauseBalance(address); //     ...this too
 
+  const { signedIn } = useSignIn();
   const [editView, setEditView] = useState<boolean>(false);
   const [nameInput, setNameInput] = useState<string>(user?.name);
 
@@ -66,6 +69,16 @@ export default function MyProfile() {
   const friends = user?.friends;
   const [pfpUrl, setPfpUrl] = usePFP(address);
 
+  const users = useSelector((state: any) => state.users);
+
+  // const composeHooks = (...fns: any[]) =>
+  //   fns.reduce((acc, fn) => acc.concat(fn()), []);
+  // const res = composeHooks(
+  //   () => useListenUserTags(address),
+  //   () => useKrauseBalance(address)
+  // );
+  // console.log("res", res);
+
   return (
     <Layout>
       {!signedIn ? (
@@ -95,7 +108,7 @@ export default function MyProfile() {
                   ) : (
                     <p
                       onDoubleClick={() => setEditView(true)}
-                      className="-ml-2 rounded-md p-2 pr-4 text-left text-6xl font-bold text-gray-200 hover:bg-black/25"
+                      className="-ml-2 w-10/12 p-2 pr-4 text-left text-6xl font-bold text-gray-200 hover:bg-black/50"
                     >
                       {user?.name}
                     </p>
@@ -126,7 +139,7 @@ export default function MyProfile() {
               </div>
 
               <div className="flex w-full flex-row justify-between space-x-0 overflow-hidden rounded-t-lg border-b">
-                {views.map(({ name: viewName, toggle, selected, icon }) => (
+                {views.map(({ name: viewName, toggle, selected, icon }, i) => (
                   <div
                     className={`bg-primary-content flex w-full flex-row items-center space-x-2 ${
                       selected
@@ -134,6 +147,7 @@ export default function MyProfile() {
                         : "text-base-100"
                     } px-6 py-3 hover:bg-gray-100`}
                     onClick={toggle}
+                    key={i}
                   >
                     {icon({})}
                     <p className="text-md py-2 font-semibold">{viewName}</p>
@@ -148,8 +162,8 @@ export default function MyProfile() {
                 {/* <p className="text-left text-3xl font-semibold text-gray-300">
                   Comments
                 </p> */}
-                {comments?.length > 0 ? (
-                  <CommentList comments={comments} />
+                {sortedComments?.length > 0 ? (
+                  <CommentList comments={sortedComments} />
                 ) : (
                   <div className="text-base-100 flex flex-col space-y-2 p-8">
                     <p className="text-lg">No comments found.</p>
@@ -166,7 +180,10 @@ export default function MyProfile() {
               <div className="flex min-h-[50vh] w-full flex-col space-y-0 overflow-hidden rounded-b-lg">
                 {allTags.map(
                   ({ tag, taggers, toggle, description }: any, i: number) => (
-                    <div className="bg-primary-content flex w-full flex-col space-y-0">
+                    <div
+                      className="bg-primary-content flex w-full flex-col space-y-0"
+                      key={i}
+                    >
                       <div className="flex w-full flex-col space-y-0">
                         <div className="group flex w-full flex-row justify-between space-x-2 border-b py-2 px-6">
                           <div className="flex w-full flex-row  items-center justify-start space-x-2">
@@ -221,9 +238,10 @@ export default function MyProfile() {
                                   .reduce(
                                     (acc: string, tagger: string, i: number) =>
                                       acc.concat(
-                                        `${tagger.slice(0, 6)}${
-                                          taggers.length > i + 1 ? ", " : ""
-                                        }`
+                                        `${
+                                          users[tagger]?.name ||
+                                          tagger.slice(0, 6)
+                                        }${taggers.length > i + 1 ? ", " : ""}`
                                       ),
                                     ""
                                   )
@@ -241,16 +259,6 @@ export default function MyProfile() {
                                 {description}...
                               </p>
                             </div>
-                          </div>
-                          <div>
-                            {/* {signedIn && (
-                            <button
-                              onClick={toggle}
-                              className="badge badge-dark hidden font-normal group-hover:flex"
-                            >
-                              {taggers.includes(address) ? "Untag" : "Tag"}
-                            </button>
-                          )} */}
                           </div>
                         </div>
                       </div>

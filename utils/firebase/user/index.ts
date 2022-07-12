@@ -58,8 +58,10 @@ export const getUsers = async () =>
     querySnapshot.docs.map((doc) => doc.data())
   );
 
-export const listenUser = (address: EthereumAddress, callback: Function) =>
-  onSnapshot(doc(db, `users/${address}`), (doc) => callback(doc.data()));
+export const listenUser = (
+  address?: EthereumAddress,
+  callback: Function = () => {}
+) => onSnapshot(doc(db, `users/${address}`), (doc) => callback(doc.data()));
 
 export const listenUserTags = (address: EthereumAddress, callback: Function) =>
   onSnapshot(

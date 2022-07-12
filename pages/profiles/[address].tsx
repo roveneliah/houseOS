@@ -70,44 +70,45 @@ export default function Profile({ address: userAddress }: any) {
                       <div className="flex flex-row justify-start space-x-2">
                         {isFriend ? (
                           <p
-                            className="badge min-w-fit text-gray-500 hover:bg-opacity-50"
+                            className="border-success text-success min-w-fit cursor-pointer rounded-full border px-3 py-1 text-sm font-semibold hover:bg-opacity-50"
                             onClick={() => profile?.removeFriend(address)}
                           >
                             Following
                           </p>
                         ) : (
-                          // <p
-                          //   className="badge min-w-max hover:bg-opacity-50"
-                          //   onClick={() => profile?.addFriend(address)}
-                          // >
-                          //   Follow
-                          // </p>
-                          <div onClick={() => profile?.addFriend(address)}>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-6 w-6"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              strokeWidth={2}
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-                              />
-                            </svg>
-                          </div>
+                          <p
+                            className="border-warning text-warning min-w-fit cursor-pointer rounded-full border px-3 py-1 text-sm font-semibold hover:bg-opacity-50"
+                            onClick={() => profile?.addFriend(address)}
+                          >
+                            Follow
+                          </p>
+                          // <div onClick={() => profile?.addFriend(address)}>
+                          //   <svg
+                          //     xmlns="http://www.w3.org/2000/svg"
+                          //     className="h-6 w-6"
+                          //     fill="none"
+                          //     viewBox="0 0 24 24"
+                          //     stroke="currentColor"
+                          //     strokeWidth={2}
+                          //   >
+                          //     <path
+                          //       strokeLinecap="round"
+                          //       strokeLinejoin="round"
+                          //       d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                          //     />
+                          //   </svg>
+                          // </div>
                         )}
                         {/* <p className="badge">{Number(krauseBalance)} $KRAUSE</p> */}
                       </div>
                     )}
-                    <TagsList
-                      tags={tags}
-                      max={3}
-                      disabled={!signedIn}
-                      numbered={false}
-                    />
+                    <div className="flex flex-row space-x-1">
+                      {tags.slice(0, 3).map((tag) => (
+                        <p className="whitespace-nowrap rounded-full border border-gray-100 px-3 py-1 text-sm font-semibold text-gray-100">
+                          {tag.tag}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                   <p className="text-left text-6xl font-bold text-gray-200">
                     {name || ensName || `Anon ${dao.memberName}`}

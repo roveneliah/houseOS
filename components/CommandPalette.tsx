@@ -71,7 +71,6 @@ export default function CommandPalette({
   isOpen = false,
   setIsOpen,
   noOpacity = false,
-  deactivated = false,
   demo = false,
 }: Props) {
   const router = useRouter();
@@ -112,7 +111,7 @@ export default function CommandPalette({
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        className="fixed inset-0 z-50 mx-auto w-[70vw] overflow-y-auto p-4 pt-[25vh] lg:w-[50vw] xl:w-[50vw] 2xl:w-[50vw]"
+        className="fixed inset-0 z-50 mx-auto w-[70vw] overflow-y-auto p-4 pt-[25vh] lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"

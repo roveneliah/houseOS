@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "../features/counter/counterSlice";
-import connectionReducer from "@/features/connection/connectionSlice";
+import usersReducer from "@/features/users/usersSlice";
 export default configureStore({
   reducer: {
     counter: counterReducer,
-    connection: connectionReducer,
+    users: usersReducer,
   },
 });

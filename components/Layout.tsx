@@ -109,8 +109,8 @@ export default function Layout({
               <li>
                 <a>Krause House</a>
               </li>
-              {path.map(({ pathSlice, route }) => (
-                <Link href={route}>
+              {path.map(({ pathSlice, route }, i) => (
+                <Link href={route} key={i}>
                   <li>
                     <a>{pathSlice.slice(0, 10)}</a>
                   </li>

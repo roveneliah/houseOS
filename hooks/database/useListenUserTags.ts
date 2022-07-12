@@ -5,6 +5,8 @@ import { listenUserTags } from "../../utils/firebase/user";
 import { useTagUser, useUntagUser } from "./useTagUser";
 import { Maybe } from "../../types/Maybe";
 import { userTags } from "@/config";
+import { update } from "@/features/users/usersSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const getDescription = (tagName: string) =>
   userTags.find((tag) => tag.name === tagName)?.description;

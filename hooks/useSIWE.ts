@@ -4,17 +4,19 @@ import { SiweMessage } from "siwe";
 import { useGetUserProfile } from "./users/useGetUserProfile";
 
 export const useSIWE = () => {
+  const user = useGetUserProfile();
+  const hodler = user?.hodler;
+
   const { data: account } = useAccount();
   const { activeChain } = useNetwork();
   const { signMessageAsync } = useSignMessage();
+
   const [state, setState] = useState<{
     address?: string;
     error?: Error;
     loading?: boolean;
     token?: string;
   }>({});
-  const user = useGetUserProfile();
-  const hodler = user?.hodler;
 
   const signIn = useCallback(async () => {
     try {
@@ -26,17 +28,21 @@ export const useSIWE = () => {
 
       if (!address || !chainId) return;
 
+      const expiration = new Date();
+      expiration.setMinutes(expiration.getMinutes() + 1);
+
       setState((x) => ({ ...x, error: undefined, loading: true }));
       // Fetch random nonce, create SIWE message, and sign with wallet
       const nonceRes = await fetch("/api/nonce");
       const message = new SiweMessage({
         domain: window.location.host,
         address,
-        statement: "Sign in with Ethereum to the app.",
+        statement: "Log in to the Clubhouse with Ethereum.",
         uri: window.location.origin,
         version: "1",
         chainId,
         nonce: await nonceRes.text(),
+        expirationTime: expiration.toISOString(),
       });
       const signature = await signMessageAsync({
         message: message.prepareMessage(),
@@ -77,8 +83,9 @@ export const useSIWE = () => {
         setState((x) => ({ ...x, address: json.address, token: json.token }));
       } catch (_error) {}
     };
+
     // 1. page loads
-    handler();
+    !state.token && handler();
 
     // 2. window is focused (in case user logs out of another window)
     window.addEventListener("focus", handler);
@@ -88,9 +95,8 @@ export const useSIWE = () => {
   }, [state.address, account?.address]);
 
   const signOut = async () => {
-    console.log("signing out");
+    console.log("Sign out SIWE");
     await fetch("/api/logout");
-
     setState({});
   };
 
