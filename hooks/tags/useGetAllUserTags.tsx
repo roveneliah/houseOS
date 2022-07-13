@@ -41,8 +41,8 @@ export const useGetAllUserTags = (
         );
 
         setTags(
-          allTags.map(({ tag, taggers, description }: any) => ({
-            tag,
+          allTags.map(({ name, taggers, description }: any) => ({
+            tag: name,
             taggers,
             toggle: () => {
               if (account?.address) {
