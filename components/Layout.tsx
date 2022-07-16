@@ -91,7 +91,7 @@ export default function Layout({
         <title>{dao.name}</title>
         {/* TODO: #11 customize in config */}
         <link rel="icon" href="/favicon.ico" />
-        <meta name="DAO Social Network" />
+        <meta name={dao.description} />
       </Head>
 
       <CommandPalette
@@ -107,7 +107,7 @@ export default function Layout({
           <div className="breadcrumbs self-center p-4 px-6">
             <ul>
               <li>
-                <a>Krause House</a>
+                <a>{dao.name}</a>
               </li>
               {path.map(({ pathSlice, route }, i) => (
                 <Link href={route} key={i}>

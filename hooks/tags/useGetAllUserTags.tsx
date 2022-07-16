@@ -47,11 +47,11 @@ export const useGetAllUserTags = (
             toggle: () => {
               if (account?.address) {
                 if (taggers.includes(address)) {
-                  console.log("Untagging", address, " with ", tag);
-                  untagUser(address, tag);
+                  console.log("Untagging", address, " with ", name);
+                  untagUser(address, name);
                 } else {
-                  console.log("Tagging", address, " with ", tag);
-                  tagUser(address, tag);
+                  console.log("Tagging", address, " with ", name);
+                  tagUser(address, name);
                 }
               } else console.log("NO USER");
             },

@@ -134,14 +134,40 @@ export default function NewUserFlow() {
         )}
         {step === 1 && (
           <div className="flex w-[60-vw] flex-col space-y-4">
-            <h1 className="text-md text-primary-content w-fit rounded-full border px-3 py-1 font-semibold">
-              Tags
-            </h1>
-            <p className="text-lg">
-              Users can tag other users and proposals. These get shared with
-              their friends.
-            </p>
-            <p className="text-xl">Choose some tags to describe yourself.</p>
+            <div className="text-primary-content flex flex-row items-center space-x-4">
+              <h1 className="text-md w-fit rounded-full border px-3 py-1 font-semibold">
+                Tags
+              </h1>
+              <p className="text-xl">Choose some tags to describe yourself.</p>
+            </div>
+            <div className="alert flex flex-row items-start justify-start shadow-lg">
+              <div className="">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="h-6 w-6 flex-shrink-0 stroke-current"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div className="flex flex-col items-start justify-start">
+                <span className="text-lg font-semibold">
+                  Tags let the DAO label data (people, proposals, etc.) in a
+                  decentralized way.
+                </span>
+                <div className="flex flex-col border-l px-4">
+                  <span>1. You can tag other users and proposals.</span>
+                  <span>2. You use the tags of anyone you follow.</span>
+                </div>
+                {/* <span>Read more here.</span> */}
+              </div>
+            </div>
 
             <div className="bg-primary-content flex flex-col space-y-4 rounded-lg p-4">
               <div className="flex w-full flex-row items-baseline justify-between overflow-hidden rounded-lg">
@@ -155,11 +181,9 @@ export default function NewUserFlow() {
                     />
                   </Link>
                   <div className="flex w-full flex-col items-start justify-center space-y-2">
-                    <div className="flex w-full flex-row items-baseline justify-between space-x-2">
-                      <p className="text-lg font-semibold text-gray-700">
-                        {dao.memberName}
-                      </p>
-                      <p className="badge badge-dark badge-sm">
+                    <div className="text-neutral flex w-full flex-row items-baseline justify-between space-x-2">
+                      <p className="text-lg font-semibold">You</p>
+                      <p className="border-neutral rounded-full border px-3 py-1 text-sm">
                         {address?.slice(0, 6)}..
                       </p>
                     </div>
@@ -171,6 +195,8 @@ export default function NewUserFlow() {
                       }))}
                       disabled={true}
                       numbered={false}
+                      size={"sm"}
+                      theme="dark"
                     />
                   </div>
                 </div>
@@ -245,6 +271,7 @@ export default function NewUserFlow() {
                 )}
               </div>
             </div>
+
             {task2 && (
               <button
                 className="btn btn-outline w-fit"
@@ -256,16 +283,11 @@ export default function NewUserFlow() {
           </div>
         )}
         {step === 2 && (
-          <>
-            <h1 className="text-4xl font-bold">
-              Let's finish setting up your profile.
-            </h1>
+          <div className="flex w-full flex-col space-y-8">
             <div
               className={`flex w-full flex-row items-baseline justify-between overflow-hidden rounded-lg`}
             >
-              <div
-                className={`flex w-full flex-row items-start space-x-4 bg-gray-200 px-6 py-4`}
-              >
+              <div className="flex w-full flex-row items-start space-x-4 bg-gray-200 px-6 py-6">
                 <Link href={`/profiles/${address}`}>
                   <Image
                     src={defaultAvatar}
@@ -275,11 +297,13 @@ export default function NewUserFlow() {
                   />
                 </Link>
                 <div className="flex w-full flex-col items-start justify-center space-y-2">
-                  <div className="flex w-full flex-row items-baseline justify-between space-x-2">
-                    <p className="text-lg font-semibold text-gray-700">
-                      {name}
+                  <div className="flex w-full flex-row items-center justify-between space-x-2">
+                    <p className="text-neutral text-lg font-semibold">
+                      {name || "You"}
                     </p>
-                    <p className="badge badge-dark badge-sm">0x1234567</p>
+                    <p className="border-neutral text-neutral rounded-full border px-3 py-1 text-sm">
+                      {address?.slice(0, 6)}..
+                    </p>
                   </div>
                   <TagsList
                     tags={selectedTags.map((tag) => ({
@@ -289,31 +313,41 @@ export default function NewUserFlow() {
                     }))}
                     disabled={true}
                     numbered={false}
+                    theme={"dark"}
+                    size="sm"
                   />
                 </div>
               </div>
             </div>
-
-            <p className="text-lg font-semibold">What's your name?</p>
-            <input
-              className="border-b-2 bg-transparent text-xl outline-none"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            {name && name.length > 2 && (
-              <button
-                className="btn btn-outline w-fit"
-                onClick={() => {
-                  signedIn &&
-                    address &&
-                    createUser(address, name, selectedTags);
-                  router.push("/me");
-                }}
-              >
-                Create Profile
-              </button>
-            )}
-          </>
+            <div className="flex w-full flex-col space-y-4 ">
+              <h1 className="text-xl font-semibold">
+                Let's finish setting up your profile.
+              </h1>
+              <div className="flex w-full flex-row space-x-2">
+                <p className="whitespace-nowrap text-lg font-semibold">
+                  What's your name?
+                </p>
+                <input
+                  className="text-md w-full border-b bg-transparent outline-none"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              {name && name.length > 2 && (
+                <button
+                  className="btn btn-outline w-fit"
+                  onClick={() => {
+                    signedIn &&
+                      address &&
+                      createUser(address, name, selectedTags);
+                    router.push("/me");
+                  }}
+                >
+                  Create Profile
+                </button>
+              )}
+            </div>{" "}
+          </div>
         )}
       </div>
     </div>

@@ -38,30 +38,13 @@ export default function CommentList({
     <div className="flex flex-col space-y-0">
       {sortedFilteredComments.length > 0 && (
         <div className="flex flex-row justify-between border-b px-6 py-4">
-          <div className="">
-            <TagSelector
-              tags={tags.map(({ name }) => name)}
-              setSelectedTags={setSelectedTags}
-            />
-          </div>
-          {/* <div className="flex w-fit flex-row items-baseline justify-end">
-          
-          {signedIn ? (
-            <p
-            className="cursor-pointer font-bold text-gray-900 hover:text-gray-600"
-            onClick={toggleCommentView}
-            >
-            Comment
-            </p>
-            ) : (
-              <p className="cursor-pointer   text-gray-900 hover:text-gray-600">
-              Sign in to Comment
-              </p>
-              )}
-            </div> */}
+          <TagSelector
+            tags={tags.map(({ name }) => name)}
+            setSelectedTags={setSelectedTags}
+          />
         </div>
       )}
-      <div className="flex flex-col space-y-4 overflow-scroll py-4">
+      <div className="flex flex-col space-y-0 overflow-scroll py-4">
         {sortedFilteredComments.length > 0 ? (
           sortedFilteredComments.map((comment: Comment, i: number) => (
             <CommentListItem
@@ -72,7 +55,7 @@ export default function CommentList({
             />
           ))
         ) : (
-          <p className="border-b px-8 py-6 text-left text-xl font-semibold text-gray-800">
+          <p className="border-b px-8 py-6 pb-8 text-left text-lg font-normal text-gray-800">
             No comments yet.
           </p>
         )}

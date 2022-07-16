@@ -4,9 +4,7 @@ import { EthereumAddress } from "../../types/EthereumAddress";
 import { dao, defaultAvatar } from "../../config";
 import { useGetUser } from "../../hooks/database/useGetUser";
 import { useListenUserTags } from "../../hooks/database/useListenUserTags";
-import TagsList from "./TagsList";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 export default function ProfilePreview({
   address,

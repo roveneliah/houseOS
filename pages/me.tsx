@@ -17,10 +17,7 @@ import { useOnKeydown } from "@/hooks/generic/useCommand";
 import TagIcon from "@/components/icons/TagIcon";
 import UsersIcon from "@/components/icons/UsersIcon";
 import { ChatIcon } from "@/components/icons/ChatIcon";
-
-import { useSelector } from "react-redux";
-import { useTrackUser } from "../hooks/useTrackUser";
-import { localhost } from "@wagmi/core/dist/declarations/src/constants/chains";
+import { useAppSelector } from "../app/hooks";
 
 const Layout = dynamic(() => import("../components/Layout"));
 const CommentList = dynamic(() => import("../components/profiles/CommentList"));
@@ -69,15 +66,7 @@ export default function MyProfile() {
   const friends = user?.friends;
   const [pfpUrl, setPfpUrl] = usePFP(address);
 
-  const users = useSelector((state: any) => state.users);
-
-  // const composeHooks = (...fns: any[]) =>
-  //   fns.reduce((acc, fn) => acc.concat(fn()), []);
-  // const res = composeHooks(
-  //   () => useListenUserTags(address),
-  //   () => useKrauseBalance(address)
-  // );
-  // console.log("res", res);
+  const users = useAppSelector((state: any) => state.users);
 
   return (
     <Layout>
@@ -159,9 +148,6 @@ export default function MyProfile() {
           <div className="bg-primary-content flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24 rounded-b-lg">
             {selectedView.name === "Activity" && (
               <div className="text-neutral flex w-full flex-col space-y-4 p-8">
-                {/* <p className="text-left text-3xl font-semibold text-gray-300">
-                  Comments
-                </p> */}
                 {sortedComments?.length > 0 ? (
                   <CommentList comments={sortedComments} />
                 ) : (
@@ -277,14 +263,6 @@ export default function MyProfile() {
                     </div>
                   )
                 )}
-                {/* {signedIn && (
-                  <div className="bg-primary-content flex flex-col space-y-0 rounded-lg p-6">
-                    <p className="p-4 text-left text-3xl font-bold text-gray-900">
-                      Add Tag
-                    </p>
-                    <TagListBox address={address} tags={allTags} />
-                  </div>
-                )} */}
               </div>
             )}
             {selectedView.name === "Following" && (

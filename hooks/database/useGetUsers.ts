@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "@/app/hooks";
 import { User } from "../../types/User";
 import { getUsers } from "../../utils/firebase/user";
 import { track } from "@/features/users/usersSlice";
@@ -8,7 +8,7 @@ import { map, tap } from "ramda";
 
 export const useGetUsers = (): Array<User> => {
   const [users, setUsers] = useState<any>([]);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const trackUsers = map(compose(dispatch, track));
 
   useEffect(() => {

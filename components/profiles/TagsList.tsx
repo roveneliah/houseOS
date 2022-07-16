@@ -14,12 +14,16 @@ export default function TagsList({
     [tags]
   );
   return (
-    <div className="flex w-full flex-row space-x-2 overflow-auto">
+    <div className="flex w-full flex-row space-x-2 overflow-auto whitespace-nowrap">
       {sortedTags?.slice(0, max)?.map(
         (tag: any, i: number) =>
           tag.taggers.length > 0 && (
             <p
-              className={`badge badge-${theme} badge-${size} overflow-hidden ${
+              className={`border ${
+                theme === "light"
+                  ? "text-primary-content border-primary-content"
+                  : "text-neutral border-neutral"
+              } rounded-full px-3 py-1 text-${size} overflow-hidden ${
                 !disabled && "hover:bg-gray-300"
               }`}
               key={i}

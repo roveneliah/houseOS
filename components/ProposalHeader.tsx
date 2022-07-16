@@ -11,11 +11,7 @@ import LockedIcon from "./icons/LockedIcon";
 export const capitalize = (str: string) =>
   str?.charAt(0).toUpperCase() + str?.slice(1);
 
-interface Props {
-  proposal: Proposal;
-}
-
-export default function ProposalHeader({ proposal }: Props) {
+export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
   const tags = useListenProposalTags(proposal.id);
   const allTags = useGetAllProposalTags(proposal.id);
   const address = useUserAddress();

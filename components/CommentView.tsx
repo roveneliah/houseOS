@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useAccount, useSignMessage } from "wagmi";
+import { useAccount, useConnect, useSignMessage } from "wagmi";
 import { defaultAvatar, snapshotSpace } from "../config";
 import { useVote } from "../hooks/snapshot/useVote";
 import { postComment } from "../utils/firebase/post";
@@ -42,16 +42,15 @@ export default function CommentView({ proposal, back, choice }: any) {
 
   return (
     <div className="flex flex-col space-y-0 py-8">
-      {user?.name ? (
-        user?.hodler ? (
-          <div className="flex flex-col space-y-6 rounded-lg px-6">
-            <textarea
-              className="border-neutral/25 text-md w-full rounded-lg border bg-transparent p-6 font-light text-gray-900 outline-0"
-              rows={3}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            {/* <div className="flex flex-row items-end justify-between border-gray-900 px-6">
+      <div className="flex flex-col space-y-6 rounded-lg px-6">
+        <textarea
+          className="border-neutral/25 text-md w-full rounded-lg border bg-transparent p-6 font-light text-gray-900 outline-0"
+          rows={3}
+          value={user?.hodler ? message : "Please sign in to comment."}
+          disabled={!user?.hodler}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        {/* <div className="flex flex-row items-end justify-between border-gray-900 px-6">
             <p className="text-4xl font-bold text-gray-900">
               {proposal.choices[choice]}
             </p>
@@ -62,56 +61,48 @@ export default function CommentView({ proposal, back, choice }: any) {
               Back
             </p>
           </div> */}
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row items-center space-x-2">
-                <div className="min-w-fit">
-                  <Image
-                    src={user.avatarSrc || defaultAvatar}
-                    width={50}
-                    height={50}
-                    className="rounded-full"
-                  />
-                </div>
-                <div className="space-between flex flex-col items-baseline space-y-0 text-gray-900">
-                  <p className="text-xl font-semibold">You</p>
-                  <div className="flex flex-row space-x-2">
-                    <p>
-                      {authorTags
-                        .slice(0, 3)
-                        .map(({ tag }) => tag)
-                        .join(", ")}
-                    </p>
-                  </div>
-                </div>
+        <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-row items-center space-x-2">
+            <div className="min-w-fit">
+              <Image
+                src={user?.avatarSrc || defaultAvatar}
+                width={50}
+                height={50}
+                className="rounded-full"
+              />
+            </div>
+            <div className="space-between flex flex-col items-baseline space-y-0 text-gray-900">
+              <p className="text-xl font-semibold">You</p>
+              <div className="flex flex-row space-x-2">
+                <p>
+                  {authorTags
+                    .slice(0, 3)
+                    .map(({ tag }) => tag)
+                    .join(", ")}
+                </p>
               </div>
-              <button
-                className="btn group"
-                onClick={() => {
-                  signMessage({
-                    message: JSON.stringify(comment),
-                  });
-                  // postComment();
-                  // vote(message)
-                }}
-              >
-                <p className="min-w-[5vw] group-hover:hidden">Submit</p>
-                <div className="hidden min-w-[5vw] flex-col items-start group-hover:flex">
-                  <p className="text-2xs">Voting</p>
-                  <p>{proposal.choices?.[choice]}</p>
-                </div>
-              </button>
             </div>
           </div>
-        ) : (
-          <p className="pt-4 text-left text-3xl font-semibold text-gray-800">
-            Must be a $KRAUSE holder to comment.
-          </p>
-        )
-      ) : (
-        <p className="px-8 py-6 pt-4 text-left text-xl font-semibold text-gray-800">
-          Please sign in to comment.
-        </p>
-      )}
+          {user?.hodler && (
+            <button
+              className="btn group"
+              onClick={() => {
+                signMessage({
+                  message: JSON.stringify(comment),
+                });
+                // postComment();
+                // vote(message)
+              }}
+            >
+              <p className="min-w-[10vw] group-hover:hidden">Submit</p>
+              <div className="hidden min-w-[10vw] flex-col items-start group-hover:flex">
+                <p className="text-2xs">Voting</p>
+                <p>{proposal.choices?.[choice]}</p>
+              </div>
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import type { NextPage } from "next";
 import { useGetComments } from "../../hooks/database/useGetComments";
 import { snapshotSpace } from "../../config";
@@ -49,7 +49,7 @@ const ProposalPage: NextPage = ({ id }: any) => {
         </div>
       </div>
       <div className="flex w-full flex-row justify-center">
-        <div className="bg-primary-content flex w-full  flex-col space-y-0 overflow-hidden rounded-b-lg md:w-3/5">
+        <div className="bg-primary-content flex w-full flex-col space-y-0 overflow-hidden rounded-b-lg md:w-3/5">
           {view === View.CommentList && (
             <div className="flex flex-col space-y-0">
               <CommentList

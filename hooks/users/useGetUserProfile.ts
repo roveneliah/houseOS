@@ -29,7 +29,7 @@ export const useGetUserProfile = () => {
   const hodler = krauseBalance > 0;
   const { data: ensName } = useEnsName({ address: account?.address });
 
-  return !user.loading
+  return !user?.loading
     ? {
         ...user,
         loading: false,
@@ -46,5 +46,5 @@ export const useGetUserProfile = () => {
         updateName: (name: string) => updateName(user.address, name),
         setProfilePic: (file: any) => setProfilePic(user.address, file),
       }
-    : undefined;
+    : { loading: true };
 };
