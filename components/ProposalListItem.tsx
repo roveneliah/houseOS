@@ -24,12 +24,18 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
     <div className="flex flex-row justify-between border-b py-2 px-6 hover:bg-gray-100 hover:shadow-lg">
       <div className="flex w-full flex-row items-center justify-start space-x-4 text-gray-800 lg:w-2/3">
         <div>
-          {proposal.state === "closed" ? <LockedIcon /> : <ClockIcon />}
+          {proposal.state === "closed" ? (
+            <LockedIcon />
+          ) : (
+            <ClockIcon strokeWidth={2} />
+          )}
         </div>
         {/* <p className="badge badge-sm">{timeLeft}</p> */}
         <Link href={`/proposals/${proposal.id}`}>
           <p
-            className={`text-neutral cursor-pointer overflow-clip text-ellipsis whitespace-nowrap text-sm font-normal`}
+            className={`text-neutral cursor-pointer overflow-clip text-ellipsis whitespace-nowrap text-sm ${
+              proposal.state === "closed" ? "font-normal" : "font-semibold"
+            }`}
           >
             {proposal.title}
           </p>

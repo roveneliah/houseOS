@@ -4,7 +4,6 @@ import { dao, themes } from "../config";
 import { useGetCommands } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
 import { useConnect, useDisconnect, useEnsName } from "wagmi";
-import { useKrauseBalance } from "../hooks/ethereum/useKrauseBalance";
 import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useSignIn } from "../hooks/useSignIn";
@@ -15,27 +14,10 @@ import dynamic from "next/dynamic";
 import { useSIWE } from "@/hooks/useSIWE";
 import { capitalize } from "./ProposalHeader";
 import Link from "next/link";
+import { usePath } from "@/hooks/usePath";
 // import { useFirebase } from "@/hooks/useFirebase";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
-
-const usePath = (): Array<any> => {
-  const { asPath: route } = useRouter();
-
-  const path = route
-    .split("/")
-    .slice(1)
-    .map(capitalize)
-    .map((pathSlice: string, i: number) => ({
-      pathSlice,
-      route: route
-        .split("/")
-        .slice(0, i + 2)
-        .join("/"),
-    }));
-
-  return path;
-};
 
 export default function Layout({
   children,
@@ -55,7 +37,6 @@ export default function Layout({
   const commands: Array<Command> = useGetCommands();
 
   const address = useUserAddress();
-  const krauseBalance = useKrauseBalance(address);
   const user = useGetUserProfile();
 
   const {
@@ -76,14 +57,12 @@ export default function Layout({
 
   const { signOut, signIn, signedIn } = useSignIn();
   const { signedIn: signedInSIWE } = useSIWE();
-  // const { signedIn: signedInFirebase } = useFirebase();
 
   const newUserFlow = useIsNewUser();
   const router = useRouter();
   const path = usePath();
-  useEffect(() => {
-    newUserFlow && router.push("/signup"); // don't want to redirect again if i'm here...
-  }, [newUserFlow]);
+
+  console.log(isConnected, isConnecting, isReconnecting, signedInSIWE);
 
   return (
     <div data-theme={themeName} className="min-h-screen">
@@ -121,40 +100,40 @@ export default function Layout({
           <div className="flex flex-row space-x-2 p-4">
             {!signedIn ? (
               !isConnected ? (
-                <button
-                  // disabled={!connector.ready}
-                  onClick={() => connect(connector)}
-                  className="btn"
-                >
-                  Connect
-                </button>
+                isReconnecting ? (
+                  <button className="btn loading">Reconnecting</button>
+                ) : (
+                  <button onClick={() => connect(connector)} className="btn">
+                    Connect
+                  </button>
+                )
               ) : !signedInSIWE ? (
-                <button
-                  // disabled={!connector.ready}
-                  onClick={() => signIn()}
-                  className="btn"
-                >
-                  Sign in with Ethereum
-                </button>
+                !newUserFlow || router.route === "/signup" ? (
+                  <button onClick={() => signIn()} className="btn">
+                    Sign in with Ethereum
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => router.push("/signup")}
+                    className="btn"
+                  >
+                    Sign up
+                  </button>
+                )
               ) : (
-                <button
-                  // disabled={!connector.ready}
-                  className="btn loading"
-                >
-                  Loading
-                </button>
+                <button className="btn loading">Loading</button>
               )
             ) : (
               <>
-                <button className="btn">{krauseBalance} $KRAUSE</button>
+                {/* <button className="btn">{user.krauseBalance} $KRAUSE</button> */}
                 <button
                   className="btn group"
                   onClick={() => {
-                    disconnect();
                     signOut();
+                    disconnect();
                   }}
                 >
-                  <p className="block group-hover:hidden">
+                  <p className="loading block group-hover:hidden">
                     {user?.name ?? "Loading"}
                   </p>
                   <p className="hidden group-hover:block">Disconnect</p>
