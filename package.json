@@ -5,7 +5,8 @@
     "build": "next build",
     "start": "next start",
     "test": "yarn jest --watchAll",
-    "deploy": "vercel"
+    "deploy": "vercel",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.4",
@@ -36,6 +37,7 @@
     "@types/node": "17.0.4",
     "@types/ramda": "^0.28.14",
     "autoprefixer": "^10.4.0",
+    "cypress": "^10.3.0",
     "jest": "^28.1.0",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",
