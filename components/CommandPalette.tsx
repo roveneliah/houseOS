@@ -132,7 +132,39 @@ export default function CommandPalette({
           // leave="duration-200 ease-in"
           // leaveFrom="opacity-100 scale-100"
           // leaveTo="opacity-0 scale-95"
+          className="flex flex-col space-y-4"
         >
+          {demo && (
+            <p className="alert">
+              <div className="flex flex-row justify-start space-x-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                  />
+                </svg>
+                <p className="text-md">
+                  Use{" "}
+                  <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-2 py-1">
+                    ⌘→
+                  </span>{" "}
+                  and{" "}
+                  <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-2 py-1">
+                    ⌘←
+                  </span>{" "}
+                  to switch between filters.
+                </p>
+              </div>
+            </p>
+          )}
           <Combobox
             value={undefined}
             onChange={(command: Command) => {
@@ -217,6 +249,33 @@ export default function CommandPalette({
                 </p>
               </div>
             )}
+            <div className="text-neutral flex flex-row items-center space-x-2 bg-gray-300 px-3 py-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+              <p className="text-xs">
+                Use{" "}
+                <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-1 py-1">
+                  ⌘→
+                </span>{" "}
+                and{" "}
+                <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-1 py-1">
+                  ⌘←
+                </span>{" "}
+                to switch between filters.
+              </p>
+            </div>
           </Combobox>
         </Transition.Child>
       </Dialog>
