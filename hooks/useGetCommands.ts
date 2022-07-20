@@ -54,6 +54,7 @@ export const useGetCommands = (): Array<Command> => {
       ...o,
       type: CommandFilters.LINK,
       icon: ArrowRightIcon,
+      favorite: true,
     })) || []),
     ...(commands?.links?.map(createLinkCommand) || []),
     ...(proposals?.map(createProposalCommand) || []),
