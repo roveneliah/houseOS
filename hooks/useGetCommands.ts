@@ -3,7 +3,7 @@ import { Command } from "../types/Command";
 import { useGetProposals } from "./snapshot/useGetProposals";
 import { useGetUsers } from "@/hooks/database/useGetUsers";
 import { User } from "@/types/User";
-import { commands, snapshotSpace } from "@/config";
+import { commands, dao, snapshotSpace } from "@/config";
 import defaultCommands from "@/utils/defaultCommands";
 import AtIcon from "@/components/icons/AtIcon";
 import { ChatIcon } from "@/components/icons/ChatIcon";
@@ -17,10 +17,17 @@ export enum CommandFilters {
   USER = "USER",
 }
 
-const createLinkCommand = ({ name, link, description }: any): Command => ({
+const createLinkCommand = ({
+  name,
+  link,
+  description,
+  favorite,
+}: any): Command => ({
   name,
   link,
   type: CommandFilters.LINK,
+  description,
+  favorite,
   icon: LinkIcon,
 });
 

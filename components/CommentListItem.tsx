@@ -18,15 +18,6 @@ export default function CommentListItem({ comment, selectedTags, index }: any) {
         tags.map(({ tag }) => tag)
       )
     ) > 0;
-  console.log(tags);
-  console.log(
-    intersection(
-      selectedTags,
-      tags.map(({ tag }) => tag)
-    )
-  );
-
-  console.log(selectedTags);
 
   return isSelected ? (
     <div className="flex flex-row justify-between space-x-2 whitespace-nowrap rounded-md px-6">

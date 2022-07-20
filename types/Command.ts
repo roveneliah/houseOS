@@ -7,4 +7,5 @@ export interface Command {
   className?: string;
   description?: string;
   icon: (arg0: any) => JSX.Element;
+  favorite?: boolean;
 }

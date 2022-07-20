@@ -14,7 +14,7 @@ export const useFirebase = () => {
 
   useEffect(() => {
     onAuthStateChanged(getAuth(), (user) => {
-      // console.log("Auth state changed", user);
+      console.log("Auth state changed", user);
       // console.log(`User signed ${user != undefined ? "in" : "out"}`);
 
       setSignedIn(user != undefined);
@@ -22,28 +22,33 @@ export const useFirebase = () => {
     });
   }, []);
 
-  const signIn = useCallback((token: Maybe<string>, onError?: any) => {
-    if (token) {
-      // console.log("Signing into Firebase with token", token);
+  const signIn = useCallback(
+    async (token: Maybe<string>, onError?: any) => {
+      if (token && !loading && !signedIn) {
+        // console.log("Signing into Firebase with token", token);
 
-      setLoading(true);
-      !loading &&
-        signInWithCustomToken(getAuth(), token)
+        console.log("loading", loading);
+
+        setLoading(true);
+        setTimeout(() => {}, 5000);
+        return signInWithCustomToken(getAuth(), token)
           .then((userCredential) => {
-            // console.log("Signed in ", userCredential);
+            console.log("Signed in ", userCredential);
             setSignedIn(true);
             setLoading(false);
           })
           .catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
-            // console.log("ERROR SIGNING IN", error);
+            console.log("ERROR SIGNING IN", error);
             setSignedIn(false);
             setLoading(false);
             onError();
           });
-    }
-  }, []);
+      }
+    },
+    [loading]
+  );
 
   const signOut = () => {
     signOutFirebase(getAuth())
@@ -54,5 +59,6 @@ export const useFirebase = () => {
       .catch((e: any) => console.log("error signing out of firebase", e));
   };
 
+  // console.log("Firebase signed in:", signedIn);
   return { signedIn, signIn, signOut, loading };
 };

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFirebase } from "./useFirebase";
 import { useSIWE } from "./useSIWE";
 
@@ -22,29 +22,20 @@ export const useSignIn = () => {
     signOutSIWE();
   };
 
-  const signIn = () => {
-    signInSIWE().then(() => {
-      console.log("Trying to sign in with firebase");
-
-      signInFirebase(state.token);
-    });
-  };
-
+  const [load, setLoad] = useState<boolean>(false);
   useEffect(() => {
     // console.log("Signed in SIWE", signedInSIWE);
     // console.log("TOKEN", state);
 
-    signedInSIWE && state.token && signInFirebase(state.token, signOutSIWE);
+    signedInSIWE && signInFirebase(state.token, signOutSIWE);
+    setLoad(true);
     // !state.token && signedInFirebase && signOutFirebase();
-  }, [state.token, signedInSIWE, signedInFirebase]);
-
-  // console.log("signed in with ethereum: ", signedInSIWE);
-  // console.log("signed in with firebase: ", signedInFirebase);
+  }, [state.token, signedInSIWE]);
 
   return {
     signOut,
-    signIn,
-    signedIn: signedInFirebase && signedInSIWE === true,
+    signIn: signInSIWE,
+    signedIn: signedInFirebase && signedInSIWE,
     loadingFirebase,
   };
 };

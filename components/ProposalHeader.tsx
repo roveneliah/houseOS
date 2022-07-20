@@ -1,4 +1,6 @@
 import { useSignIn } from "@/hooks/useSignIn";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { prop } from "ramda";
 import { useState } from "react";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
@@ -6,7 +8,9 @@ import { useGetAllProposalTags } from "../hooks/proposals/useGetAllProposalTags"
 import { useListenProposalTags } from "../hooks/tags/useListenProposalTags";
 import { Proposal } from "../types/Proposal";
 import ClockIcon from "./icons/ClockIcon";
+import LinkIcon from "./icons/LinkIcon";
 import LockedIcon from "./icons/LockedIcon";
+import TagsList from "./profiles/TagsList";
 
 export const capitalize = (str: string) =>
   str?.charAt(0).toUpperCase() + str?.slice(1);
@@ -18,12 +22,16 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
   const [showTags, setShowTags] = useState(false);
   const { signedIn } = useSignIn();
 
+  const snapshotLink =
+    proposal?.space?.id &&
+    proposal?.id &&
+    `https://snapshot.org/#/${proposal.space.id}/proposal/${proposal.id}`;
+
   return proposal ? (
     <div className="text-primary-content flex w-full flex-col items-start space-y-10 py-12">
       <div className="flex w-full flex-col space-y-10">
         <div className="flex  flex-row items-center justify-between">
           <div className="flex w-full flex-row items-center space-x-6">
-            {/* <p className="font-semibold">Live with 9 votes.</p> */}
             {proposal.state && (
               <div className="text-primary-content flex flex-row space-x-1 p-1 font-light">
                 {proposal.state === "closed" ? (
@@ -55,9 +63,12 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
                 </p>
               </div>
             )}
-            {/* {proposal.state === ProposalState.Active && (
-              <p className="badge badge-outline">Closes in</p>
-            )} */}
+            <a href={snapshotLink} target="_blank">
+              <div className="text-primary-content flex flex-row space-x-2 font-light">
+                <LinkIcon strokeWidth={1} />
+                <p className="cursor-pointer">Read</p>
+              </div>
+            </a>
           </div>
           <div className=" flex min-h-full flex-row items-center space-x-2 font-normal">
             {/* <p>{tags.map(prop("tag")).join(", ")}</p> */}
@@ -72,14 +83,14 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
           </div>
         </div>
         <p className="text-left text-6xl font-semibold">{proposal.title}</p>
-        {/* <div className="flex w-full flex-row justify-between">
+        <div className="flex w-full flex-row justify-between">
           <TagsList tags={tags} />
           {signedIn && (
             <button className="badge" onClick={() => setShowTags(!showTags)}>
               {showTags ? "Hide" : "Show"} Tags
             </button>
           )}
-        </div> */}
+        </div>
       </div>
       {showTags && (
         <div className="border-1 flex  w-full flex-row flex-wrap justify-start space-x-2 overflow-auto rounded-lg border p-3">

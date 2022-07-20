@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { listenProposalTags } from "../../utils/firebase/post";
+import { useSignIn } from "../useSignIn";
 import { useTagProposal } from "./useTagProposal";
 import { useUntagProposal } from "./useUntagProposal";
 
 export const useListenProposalTags = (proposalId: string) => {
   const [tags, setTags] = useState([]);
   const { data: account } = useAccount();
+  const { signedIn } = useSignIn();
   const tagProposal = useTagProposal();
   const untagProposal = useUntagProposal();
 
@@ -17,7 +19,7 @@ export const useListenProposalTags = (proposalId: string) => {
           tag,
           taggers,
           toggle: () => {
-            if (account?.address) {
+            if (signedIn) {
               if (taggers.includes(account?.address)) {
                 console.log("Untagging", proposalId, " with ", tag);
                 untagProposal(proposalId, tag);

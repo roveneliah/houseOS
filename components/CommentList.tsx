@@ -2,10 +2,7 @@ import { Comment } from "../types/Comment";
 import { useMemo, useState } from "react";
 import { Proposal } from "@snapshot-labs/snapshot.js/dist/sign/types";
 import { userTags } from "../config";
-import { useUserAddress } from "../hooks/ethereum/useUserAddress";
-
 import dynamic from "next/dynamic";
-import { useSignIn } from "@/hooks/useSignIn";
 const CommentListItem = dynamic(() => import("./CommentListItem"));
 const TagSelector = dynamic(() => import("./TagSelector"));
 
@@ -22,9 +19,8 @@ export default function CommentList({
   proposal,
   choice,
 }: Props) {
-  const tags = userTags;
   const [selectedTags, setSelectedTags] = useState([]);
-  const { signedIn } = useSignIn();
+  const tags = userTags;
 
   const sortedFilteredComments = useMemo(
     () =>
@@ -35,7 +31,7 @@ export default function CommentList({
   );
 
   return (
-    <div className="flex flex-col space-y-0">
+    <div className="flex w-full flex-col space-y-0">
       {sortedFilteredComments.length > 0 && (
         <div className="flex flex-row justify-between border-b px-6 py-4">
           <TagSelector
@@ -44,22 +40,22 @@ export default function CommentList({
           />
         </div>
       )}
-      <div className="flex flex-col space-y-0 overflow-scroll py-4">
-        {sortedFilteredComments.length > 0 ? (
-          sortedFilteredComments.map((comment: Comment, i: number) => (
+      {sortedFilteredComments.length > 0 ? (
+        <div className="flex w-full flex-col space-y-0 overflow-scroll py-4">
+          {sortedFilteredComments.map((comment: Comment, i: number) => (
             <CommentListItem
               key={i}
               index={i}
               comment={comment}
               selectedTags={selectedTags}
             />
-          ))
-        ) : (
-          <p className="border-b px-8 py-6 pb-8 text-left text-lg font-normal text-gray-800">
-            No comments yet.
-          </p>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p className="w-full px-8 text-left text-lg font-normal text-gray-800">
+          No comments yet.
+        </p>
+      )}
     </div>
   );
 }

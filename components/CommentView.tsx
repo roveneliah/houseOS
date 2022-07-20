@@ -46,8 +46,8 @@ export default function CommentView({ proposal, back, choice }: any) {
         <textarea
           className="border-neutral/25 text-md w-full rounded-lg border bg-transparent p-6 font-light text-gray-900 outline-0"
           rows={3}
-          value={user?.hodler ? message : "Please sign in to comment."}
-          disabled={!user?.hodler}
+          value={user?.name ? message : "Please sign in to comment."}
+          // disabled={!user?.hodler}
           onChange={(e) => setMessage(e.target.value)}
         />
         {/* <div className="flex flex-row items-end justify-between border-gray-900 px-6">

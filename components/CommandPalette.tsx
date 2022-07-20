@@ -90,10 +90,10 @@ export default function CommandPalette({
   useCommand("ArrowRight", nextFilter, filter);
 
   const filteredCommands = commands
-    .filter(({ type }) =>
+    .filter(({ type, favorite }) =>
       filter === CommandFilters.ALL
         ? !query
-          ? type === CommandFilters.LINK
+          ? type === CommandFilters.LINK && favorite
           : type
         : type === filter
     )
@@ -111,7 +111,7 @@ export default function CommandPalette({
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        className="fixed inset-0 z-50 mx-auto w-[70vw] overflow-y-auto p-4 pt-[25vh] lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
+        className="fixed inset-0 z-50 mx-auto w-[70vw] overflow-y-auto p-4 pt-[15vh] lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -215,6 +215,25 @@ export default function CommandPalette({
                 static
                 className="max-h-96 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg px-2 py-4"
               >
+                {/* {filter === CommandFilters.ALL && (
+                  <div className="flex flex-row items-center space-x-1 px-4 pb-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                      />
+                    </svg>
+                    <p className="text-xs">Favorites</p>
+                  </div>
+                )} */}
                 {filteredCommands.map((command, i) => (
                   <Combobox.Option value={command} key={i}>
                     {({ active }) => (
@@ -244,7 +263,7 @@ export default function CommandPalette({
               </Combobox.Options>
             ) : (
               <div className="p-4">
-                <p className="font-semibold  text-gray-600">
+                <p className="px-4 font-semibold text-gray-600">
                   Nothing to see here...
                 </p>
               </div>

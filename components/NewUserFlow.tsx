@@ -48,39 +48,37 @@ export default function NewUserFlow() {
     <div className="flex w-full flex-row justify-center ">
       <div className="w-[60vw] pt-36">
         {step === 0 && (
-          <div className="text-primary-content flex w-full flex-col space-y-8 rounded-lg border py-10 px-8">
-            <h1 className="text-primary-content border-primary-content w-fit rounded-full border px-3 py-1 text-lg font-semibold">
-              The Portal
-            </h1>
-            <div className="flex flex-col space-y-2 border-l py-4 pl-4">
-              <p className="text-xl font-normal">
-                The Portal is your, uh, portal around the DAO.
+          <div className="text-neutral bg-primary-content flex w-full flex-col space-y-4 rounded-lg border py-10 px-8">
+            <div className="flex flex-row items-center space-x-4">
+              <h1 className="border-neutral w-fit rounded-full border px-3 py-1 text-lg font-semibold">
+                The Portal
+              </h1>
+              <p className="text-lg">Hop across the DAO.</p>
+            </div>
+            <div className="flex flex-col space-y-2 py-4 pl-3">
+              <p className="text-lg font-normal">
+                Get anywhere in the DAO in a quick search.
               </p>
-              <div className="flex flex-col space-y-2">
-                <p className="text-md font-normal">
-                  You can search anything you need there.
-                </p>
-                <ul className="space-y-1 pl-3 pt-1 font-semibold">
-                  <li>
-                    <div className="flex flex-row items-center space-x-2">
-                      <ChatIcon />
-                      <p>Proposals</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="flex flex-row items-center space-x-2">
-                      <UsersIcon />
-                      <p>Users</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="flex flex-row items-center space-x-2">
-                      <LinkIcon />
-                      <p>Links</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+              <ul className="border-neutral space-y-2 border-l pl-4 pt-1 font-normal">
+                <li>
+                  <div className="flex flex-row items-center space-x-2">
+                    <ChatIcon />
+                    <p>Proposals</p>
+                  </div>
+                </li>
+                <li>
+                  <div className="flex flex-row items-center space-x-2">
+                    <UsersIcon />
+                    <p>Users</p>
+                  </div>
+                </li>
+                <li>
+                  <div className="flex flex-row items-center space-x-2">
+                    <LinkIcon />
+                    <p>Links</p>
+                  </div>
+                </li>
+              </ul>
             </div>
             {!(task1a && task1b) && (
               <>
@@ -91,12 +89,12 @@ export default function NewUserFlow() {
                     className="checkbox bg-gray-200"
                   />
                   <p className="text-md">
-                    Open up the Command Palette with{" "}
-                    <span className="bg-primary-content text-neutral mx-1 cursor-none rounded-lg px-2 py-1">
+                    Summon the Portal with{" "}
+                    <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-2 py-1">
                       ⌘k
                     </span>{" "}
                     or{" "}
-                    <span className="bg-primary-content text-neutral mx-1 cursor-none rounded-lg px-2 py-1">
+                    <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-2 py-1">
                       {" "}
                       ctrl k
                     </span>
@@ -110,11 +108,11 @@ export default function NewUserFlow() {
                   />
                   <p className="text-md">
                     Use{" "}
-                    <span className="bg-primary-content text-neutral mx-1 cursor-none rounded-lg px-2 py-1">
+                    <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-2 py-1">
                       ⌘→
                     </span>{" "}
                     and{" "}
-                    <span className="bg-primary-content text-neutral mx-1 cursor-none rounded-lg px-2 py-1">
+                    <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-2 py-1">
                       ⌘←
                     </span>{" "}
                     to switch between filters.
@@ -124,7 +122,7 @@ export default function NewUserFlow() {
             )}
             {task1a && task1b && (
               <button
-                className="btn btn-outline text-primary-content w-fit"
+                className="btn btn-outline text-neutral w-fit"
                 onClick={() => setStep(1)}
               >
                 Next
@@ -134,13 +132,7 @@ export default function NewUserFlow() {
         )}
         {step === 1 && (
           <div className="flex w-[60-vw] flex-col space-y-4">
-            <div className="text-primary-content flex flex-row items-center space-x-4">
-              <h1 className="text-md w-fit rounded-full border px-3 py-1 font-semibold">
-                Tags
-              </h1>
-              <p className="text-xl">Choose some tags to describe yourself.</p>
-            </div>
-            <div className="alert flex flex-row items-start justify-start shadow-lg">
+            {/* <div className="alert flex flex-row items-start justify-start shadow-lg">
               <div className="">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -165,11 +157,28 @@ export default function NewUserFlow() {
                   <span>1. You can tag other users and proposals.</span>
                   <span>2. You use the tags of anyone you follow.</span>
                 </div>
-                {/* <span>Read more here.</span> */}
               </div>
-            </div>
+            </div> */}
 
             <div className="bg-primary-content flex flex-col space-y-4 rounded-lg p-4">
+              <div className="text-neutral flex flex-row items-center justify-between py-2 px-1">
+                <div className="flex flex-row items-center space-x-4">
+                  <h1 className="text-md border-neutral w-fit rounded-full border px-3 py-1 font-semibold">
+                    Tags
+                  </h1>
+                  <p className="text-lg">
+                    Choose some tags to describe yourself.
+                  </p>
+                </div>
+                {task2 && (
+                  <button
+                    className="btn btn-outline text-neutral w-fit"
+                    onClick={() => setStep(2)}
+                  >
+                    Next
+                  </button>
+                )}
+              </div>
               <div className="flex w-full flex-row items-baseline justify-between overflow-hidden rounded-lg">
                 <div className="flex w-full flex-row items-start space-x-4 bg-gray-200 px-6 py-4">
                   <Link href={`/profiles/${address}`}>
@@ -271,19 +280,16 @@ export default function NewUserFlow() {
                 )}
               </div>
             </div>
-
-            {task2 && (
-              <button
-                className="btn btn-outline w-fit"
-                onClick={() => setStep(2)}
-              >
-                Next
-              </button>
-            )}
           </div>
         )}
         {step === 2 && (
           <div className="flex w-full flex-col space-y-8">
+            <div className="text-primary-content flex flex-row items-center space-x-4">
+              <h1 className="text-md w-fit rounded-full border px-3 py-1 font-semibold">
+                Profile
+              </h1>
+              <p className="text-xl">Enter your name.</p>
+            </div>
             <div
               className={`flex w-full flex-row items-baseline justify-between overflow-hidden rounded-lg`}
             >
@@ -320,9 +326,6 @@ export default function NewUserFlow() {
               </div>
             </div>
             <div className="flex w-full flex-col space-y-4 ">
-              <h1 className="text-xl font-semibold">
-                Let's finish setting up your profile.
-              </h1>
               <div className="flex w-full flex-row space-x-2">
                 <p className="whitespace-nowrap text-lg font-semibold">
                   What's your name?

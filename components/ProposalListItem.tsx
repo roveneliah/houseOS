@@ -46,7 +46,7 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
           tags={proposalTags}
           max={2}
           numbered={false}
-          size="sm"
+          size="xs"
           theme="dark"
           disabled={true}
         />

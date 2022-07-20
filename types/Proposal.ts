@@ -12,7 +12,7 @@ export interface Proposal {
   id: string;
   state: ProposalState;
   choices: Array<string>;
-  space: string;
+  space: any;
   votes: number;
   scores_total: number;
   scores: Array<number>;

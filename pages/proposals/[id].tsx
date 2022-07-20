@@ -51,7 +51,7 @@ const ProposalPage: NextPage = ({ id }: any) => {
       <div className="flex w-full flex-row justify-center">
         <div className="bg-primary-content flex w-full flex-col space-y-0 overflow-hidden rounded-b-lg md:w-3/5">
           {view === View.CommentList && (
-            <div className="flex flex-col space-y-0">
+            <div className="flex w-full flex-col space-y-0 px-0 pt-8">
               <CommentList
                 toggleCommentView={() => setView(View.Comment)}
                 comments={comments}
