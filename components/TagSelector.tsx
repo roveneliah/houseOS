@@ -18,11 +18,11 @@ export default function TagSelector({ tags, setSelectedTags }: any) {
   }, [selectedTags]);
 
   return (
-    <div className="flex flex-row justify-start space-x-2 overflow-clip overflow-x-auto">
+    <div className="no-scrollbar flex flex-row justify-start space-x-2 overflow-clip overflow-x-auto">
       {enhancedTags.map(({ x, selected, toggle }: any, i: number) => (
         <p
-          className={`text-neutral hover:bg-neutral hover:text-primary-content border-neutral whitespace-nowrap rounded-full border px-3 py-1 text-sm ${
-            selected ? "bg-neutral text-primary-content" : ""
+          className={`hover:bg-neutral hover:text-primary-content border-neutral whitespace-nowrap rounded-full border px-3 py-1 text-xs ${
+            selected ? "bg-neutral text-gray-100" : "text-neutral"
           }`}
           onClick={toggle}
           key={i}

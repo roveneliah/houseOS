@@ -16,6 +16,7 @@ import { capitalize } from "./ProposalHeader";
 import Link from "next/link";
 import { usePath } from "@/hooks/usePath";
 import { useFirebase } from "@/hooks/useFirebase";
+import { Maybe } from "@/types/Maybe";
 // import { useFirebase } from "@/hooks/useFirebase";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
@@ -65,7 +66,7 @@ export default function Layout({
   const path = usePath();
 
   // console.log(isConnected, isConnecting, isReconnecting);
-  console.log(signedInSIWE, signedInFB, signedIn);
+  // console.log(signedInSIWE, signedInFB, signedIn);
 
   return (
     <div data-theme={themeName} className="min-h-screen">

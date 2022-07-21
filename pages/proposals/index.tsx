@@ -76,9 +76,13 @@ const ProposalsListPage: NextPage = () => {
         <div className="flex w-full flex-col space-y-10 px-2 md:w-4/5 md:max-w-3xl md:px-0 lg:w-2/3">
           <div className="bg-gray-7000 flex w-2/3 flex-row justify-start">
             <div className="text-primary-content flex flex-col items-start space-y-2">
-              <div className=" flex flex-row space-x-2">
+              <div
+                className={`flex flex-row space-x-2 ${
+                  countActive && "text-success"
+                }`}
+              >
                 <ClockIcon />
-                <p className="font-bold ">{countActive} Active</p>
+                <p className="font-normal">{countActive} Active</p>
               </div>
               <p className="text-6xl font-bold">Proposals</p>
             </div>
@@ -90,12 +94,12 @@ const ProposalsListPage: NextPage = () => {
           />
         </div>
       </div>
-      <div className="w-full px-2 md:w-4/5 md:max-w-3xl md:px-0 lg:w-2/3 ">
-        <div className="flex flex-col space-y-0 bg-gray-100 pb-4">
+      <div className="w-full overflow-hidden rounded-b-lg px-2 md:w-4/5 md:max-w-3xl md:px-0 lg:w-2/3">
+        <div className="flex flex-col space-y-0 bg-gray-100">
           <div className="border-b px-4 py-4">
             <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
           </div>
-          <div className="flex h-[60vh] flex-col overflow-y-auto">
+          <div className="no-scrollbar flex h-[55vh] flex-col overflow-y-auto">
             {filteredProposals.map((proposal: Proposal, i: number) => (
               <ProposalListItem
                 proposal={proposal}

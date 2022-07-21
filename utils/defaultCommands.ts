@@ -11,7 +11,7 @@ export default [
   },
   {
     name: "Help",
-    link: "/help",
+    link: "/",
     favorite: false,
   },
 ];
