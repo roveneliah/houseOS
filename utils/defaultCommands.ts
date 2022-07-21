@@ -1,13 +1,17 @@
-import LinkIcon from "@/components/icons/LinkIcon";
-import UsersIcon from "@/components/icons/UsersIcon";
-
 export default [
   {
     name: "Profile",
     link: "/me",
+    favorite: true,
   },
   {
     name: "Proposals",
     link: "/proposals",
+    favorite: true,
+  },
+  {
+    name: "Help",
+    link: "/help",
+    favorite: false,
   },
 ];

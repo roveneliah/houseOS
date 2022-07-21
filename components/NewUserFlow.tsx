@@ -13,6 +13,7 @@ import TagsList from "./profiles/TagsList";
 import { ChatIcon } from "./icons/ChatIcon";
 import UsersIcon from "./icons/UsersIcon";
 import LinkIcon from "./icons/LinkIcon";
+import { concat, filter, mergeRight } from "ramda";
 
 export default function NewUserFlow() {
   const [name, setName] = useState<Maybe<string>>();
@@ -34,10 +35,8 @@ export default function NewUserFlow() {
     ...tag,
     toggle: () =>
       !selectedTags.includes(tag.tag)
-        ? setSelectedTags((selectedTags) => selectedTags.concat(tag.tag))
-        : setSelectedTags((selectedTags) =>
-            selectedTags.filter((t) => t !== tag.tag)
-          ),
+        ? setSelectedTags(concat(tag.tag))
+        : setSelectedTags(filter((t) => t !== tag.tag)),
   }));
 
   return !signedIn ? (
@@ -80,7 +79,7 @@ export default function NewUserFlow() {
                 </li>
               </ul>
             </div>
-            {!(task1a && task1b) && (
+            {!task2 && (
               <>
                 <div className="flex flex-row justify-start space-x-2">
                   <input
