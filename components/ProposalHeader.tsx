@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useGetAllProposalTags } from "../hooks/proposals/useGetAllProposalTags";
 import { useListenProposalTags } from "../hooks/tags/useListenProposalTags";
-import { Proposal } from "../types/Proposal";
+import { Proposal, ProposalState } from "../types/Proposal";
 import ClockIcon from "./icons/ClockIcon";
 import LinkIcon from "./icons/LinkIcon";
 import LockedIcon from "./icons/LockedIcon";
@@ -33,7 +33,13 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
         <div className="flex  flex-row items-center justify-between">
           <div className="flex w-full flex-row items-center space-x-6">
             {proposal.state && (
-              <div className="text-primary-content flex flex-row space-x-1 p-1 font-light">
+              <div
+                className={`${
+                  proposal.state === ProposalState.Closed
+                    ? "text-error"
+                    : "text-success"
+                } flex flex-row space-x-1 p-1 font-light`}
+              >
                 {proposal.state === "closed" ? (
                   <LockedIcon strokeWidth={1} />
                 ) : (
@@ -43,7 +49,7 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
               </div>
             )}
 
-            <div className="flex flex-row space-x-2">
+            <div className="text-primary-content flex flex-row space-x-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -58,7 +64,7 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
                   d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"
                 />
               </svg>
-              <p className="text-primary-content whitespace-nowrap font-light">
+              <p className=" whitespace-nowrap font-light">
                 {proposal.votes} Votes
               </p>
             </div>

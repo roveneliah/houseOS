@@ -144,13 +144,14 @@ export default function Layout({
               </>
             )}
             <button
-              className="btn btn-active flex flex-row space-x-2"
+              className="btn btn-active group flex flex-row space-x-2"
               onClick={() => setIsOpen(!isOpen)}
             >
               <div className="">
                 <SearchIcon />
               </div>
-              <p className="">⌘k</p>
+              {/* <p className="flex group-hover:hidden">Search</p> */}
+              <p className="flex">⌘k</p>
             </button>
           </div>
         </div>

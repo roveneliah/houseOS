@@ -91,7 +91,7 @@ const ProposalsListPage: NextPage = () => {
         </div>
       </div>
       <div className="w-full px-2 md:w-4/5 md:max-w-3xl md:px-0 lg:w-2/3 ">
-        <div className="bg-primary-content flex flex-col space-y-0 pb-4">
+        <div className="flex flex-col space-y-0 bg-gray-100 pb-4">
           <div className="border-b px-4 py-4">
             <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
           </div>

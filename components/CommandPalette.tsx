@@ -182,14 +182,14 @@ export default function CommandPalette({
               }
             }}
             as="div"
-            className="relative overflow-hidden rounded-lg bg-gray-50 shadow-xl shadow-black ring-1 ring-black/5"
+            className="relative overflow-hidden rounded-lg bg-gray-200 shadow-xl shadow-black ring-1 ring-black/5"
           >
             <div className="flex flex-row justify-start bg-gray-300 text-gray-700">
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
-                  className={`flex w-full flex-row justify-start space-x-3 p-5 ${
-                    filter === view && "bg-gray-50"
+                  className={`flex w-full flex-row items-center justify-start space-x-2 px-5 py-3 ${
+                    filter === view && "bg-gray-200"
                   }`}
                   // set filter to
                   onClick={() =>
@@ -198,8 +198,8 @@ export default function CommandPalette({
                     )
                   }
                 >
-                  {icon({})}
-                  <p className="cursor-pointer font-light text-gray-700">
+                  {icon({ strokeWidth: 1 })}
+                  <p className="cursor-pointer text-xs font-normal text-gray-700">
                     {title}
                   </p>
                 </div>
@@ -221,7 +221,7 @@ export default function CommandPalette({
             {filteredCommands.length > 0 ? (
               <Combobox.Options
                 static
-                className="max-h-96 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg px-2 py-4"
+                className="max-h-96 divide-y divide-gray-200 overflow-hidden overflow-y-auto rounded-lg px-2 py-4"
               >
                 {/* {filter === CommandFilters.ALL && (
                   <div className="flex flex-row items-center space-x-1 px-4 pb-2">
@@ -246,23 +246,19 @@ export default function CommandPalette({
                   <Combobox.Option value={command} key={i}>
                     {({ active }) => (
                       <div
-                        className={`space-x-1 rounded-lg p-4 px-4 ${
-                          active && " bg-gray-200"
+                        className={`space-x-1 rounded-lg py-2 px-4 ${
+                          active && " bg-gray-300/50"
                         }`}
                       >
                         <div
-                          className={`flex flex-row justify-between text-gray-900 ${
+                          className={`text-neutral flex flex-row items-center justify-start space-x-2 ${
                             command.className || ""
                           }`}
                         >
-                          <div className="items-centers flex flex-row space-x-4 overflow-clip">
-                            <div>{command.icon({ strokeWidth: 1 })}</div>
-                            <div className="flex flex-row space-x-2 overflow-clip font-light">
-                              <p className=" whitespace-nowrap">
-                                {command.name}
-                              </p>
-                            </div>
-                          </div>
+                          <div>{command.icon({ strokeWidth: 1 })}</div>
+                          <p className="text-ellipses whitespace-nowrap text-xs font-light">
+                            {command.name}
+                          </p>
                         </div>
                       </div>
                     )}
@@ -293,11 +289,11 @@ export default function CommandPalette({
               </svg>
               <p className="text-xs">
                 Use{" "}
-                <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-1 py-1">
+                <span className="text-neutral mx-1 cursor-none rounded-lg">
                   ⌘→
                 </span>{" "}
                 and{" "}
-                <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-1 py-1">
+                <span className="text-neutral mx-1 cursor-none rounded-lg">
                   ⌘←
                 </span>{" "}
                 to switch between filters.
