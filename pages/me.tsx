@@ -164,7 +164,7 @@ export default function MyProfile() {
 
             {selectedView.name === "Tags" && (
               <div className="flex min-h-[50vh] w-full flex-col space-y-0 overflow-hidden rounded-b-lg">
-                {allTags.map(
+                {tags.map(
                   ({ tag, taggers, toggle, description }: any, i: number) => (
                     <div
                       className="bg-primary-content flex w-full flex-col space-y-0"
