@@ -13,17 +13,18 @@ import { useGetAllUserTags } from "../../hooks/tags/useGetAllUserTags";
 
 import dynamic from "next/dynamic";
 import { useSignIn } from "@/hooks/useSignIn";
-const CommentList = dynamic(() => import("@/components/profiles/CommentList"));
-const LoadingView = dynamic(() => import("@/components/profiles/LoadingView"));
-const FriendsList = dynamic(() => import("@/components/profiles/FriendsList"));
-const TagListBox = dynamic(() => import("@/components/profiles/TagListBox"));
-const TagsList = dynamic(() => import("@/components/profiles/TagsList"));
 import { Tag } from "@/types/Tag";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { useOnKeydown } from "@/hooks/generic/useCommand";
 import { ChatIcon } from "@/components/icons/ChatIcon";
 import TagIcon from "@/components/icons/TagIcon";
 import UsersIcon from "@/components/icons/UsersIcon";
+
+const CommentList = dynamic(() => import("@/components/profiles/CommentList"));
+const LoadingView = dynamic(() => import("@/components/profiles/LoadingView"));
+const FriendsList = dynamic(() => import("@/components/profiles/FriendsList"));
+const TagListBox = dynamic(() => import("@/components/profiles/TagListBox"));
+const TagsList = dynamic(() => import("@/components/profiles/TagsList"));
 
 export default function Profile({ address: userAddress }: any) {
   const user = useGetUser(userAddress);
@@ -49,6 +50,7 @@ export default function Profile({ address: userAddress }: any) {
   ]);
   const selectedView = views[selected];
 
+  // TODO: make useOnKeydown a set that we can push and remove things from based on view and state
   useOnKeydown("ArrowRight", next);
   useOnKeydown("ArrowLeft", prev);
 
@@ -104,7 +106,7 @@ export default function Profile({ address: userAddress }: any) {
                     )}
                     <div className="flex flex-row space-x-1">
                       {tags.slice(0, 3).map((tag) => (
-                        <p className="whitespace-nowrap rounded-full border border-gray-100 px-3 py-1 text-sm font-semibold text-gray-100">
+                        <p className="text-warning border-warning whitespace-nowrap rounded-full border px-3 py-1 text-sm font-semibold">
                           {tag.tag}
                         </p>
                       ))}
@@ -114,7 +116,7 @@ export default function Profile({ address: userAddress }: any) {
                     {name || ensName || `Anon ${dao.memberName}`}
                   </p>
                 </div>
-                <div className="hidden rounded-full border-4 border-gray-400 lg:block">
+                <div className="hidden rounded-full lg:block">
                   <Image
                     src={user.avatarSrc || defaultAvatar}
                     width={150}
@@ -247,14 +249,14 @@ export default function Profile({ address: userAddress }: any) {
                     </div>
                   </div>
                 ))}
-                {signedIn && (
+                {/* {signedIn && (
                   <div className="flex flex-col space-y-0 rounded-b-md bg-gray-100 p-6">
                     <p className="p-4 text-left text-3xl font-bold text-gray-900">
                       Edit Tags
                     </p>
                     <TagListBox address={account?.address} tags={allTags} />
                   </div>
-                )}
+                )} */}
               </div>
             )}
             {selectedView.name === "Following" && (

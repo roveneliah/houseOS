@@ -5,7 +5,7 @@ export default function TagsList({
   tags,
   max = undefined,
   disabled = false,
-  numbered = true,
+  numbered = false,
   size = "md",
   theme = "light",
 }: any) {
@@ -21,7 +21,7 @@ export default function TagsList({
             <p
               className={`border ${
                 theme === "light"
-                  ? "text-primary-content border-primary-content"
+                  ? "text-warning border-warning"
                   : "text-neutral border-neutral"
               } rounded-full px-3 py-1 text-${size} overflow-hidden ${
                 !disabled && "hover:bg-gray-300"

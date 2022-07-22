@@ -153,11 +153,8 @@ export default function Help() {
                   get context on each other and proposals.
                 </p>
                 <p className="text-xl font-normal">
-                  You see tags of anyone you follow. Think of them as your{" "}
-                  <span className="text-warning font-semibold">
-                    inner circle
-                  </span>
-                  .
+                  When you tag something, anyone following you will see those
+                  tags.
                 </p>
               </div>
 

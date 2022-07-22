@@ -104,7 +104,7 @@ export default function MyProfile() {
                   )}
                 </div>
                 <div
-                  className="group relative flex flex-col items-center justify-center overflow-hidden rounded-full border-4"
+                  className="group relative flex flex-col items-center justify-center overflow-hidden rounded-full"
                   onClick={triggerUpload}
                 >
                   <Image

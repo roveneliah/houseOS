@@ -75,21 +75,22 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
               </div>
             </a>
           </div>
-          <div className=" flex min-h-full flex-row items-center space-x-2 font-normal">
-            {/* <p>{tags.map(prop("tag")).join(", ")}</p> */}
-            {tags
-              .map(prop("tag"))
-              .slice(0, 3)
-              .map((tag: any) => (
-                <p className="border-primary-content whitespace-nowrap rounded-full border py-1 px-3 text-sm">
-                  {tag}
+          <div className="flex min-h-full flex-row items-center space-x-2 font-normal">
+            {tags.slice(0, 3).map((tag: any) => (
+              <div
+              // data-tip={tag.taggers.join(", ")}
+              // className="tooltip tooltip-warning"
+              >
+                <p className="border-warning text-warning whitespace-nowrap rounded-full border py-1 px-3 text-sm">
+                  {tag.tag}
                 </p>
-              ))}
+              </div>
+            ))}
           </div>
         </div>
         <p className="text-left text-6xl font-semibold">{proposal.title}</p>
         <div className="flex w-full flex-row justify-between">
-          <TagsList tags={tags} />
+          {/* <TagsList tags={tags} /> */}
           {signedIn && (
             <button className="badge" onClick={() => setShowTags(!showTags)}>
               {showTags ? "Hide" : "Show"} Tags
