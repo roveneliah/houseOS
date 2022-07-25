@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "next dev",
     "brun": "next build; next start",
-    "build": "next build",
+    "build": "yarn jest; next build",
     "start": "next start",
     "test": "yarn jest --watchAll",
     "testt": "riteway -r @babel/register **/*.test.js | tap-nirvana",
