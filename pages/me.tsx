@@ -68,6 +68,9 @@ export default function MyProfile() {
 
   const users = useAppSelector((state: any) => state.users);
 
+  console.log(tags);
+  console.log(allTags);
+
   return (
     <Layout>
       {!signedIn ? (
