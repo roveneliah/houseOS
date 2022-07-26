@@ -166,14 +166,14 @@ export default function MyProfile() {
             )}
 
             {selectedView.name === "Tags" && (
-              <div className="flex min-h-[50vh] w-full flex-col space-y-0 overflow-hidden rounded-b-lg">
+              <div className="flex min-h-[50vh] w-full flex-col overflow-hidden rounded-b-lg">
                 {tags.map(
                   ({ tag, taggers, toggle, description }: any, i: number) => (
                     <div
-                      className="bg-primary-content flex w-full flex-col space-y-0"
+                      className="bg-primary-content flex w-full flex-col"
                       key={i}
                     >
-                      <div className="flex w-full flex-col space-y-0">
+                      <div className="flex w-full flex-col">
                         <div className="group flex w-full flex-row justify-between space-x-2 border-b py-2 px-6">
                           <div className="flex w-full flex-row  items-center justify-start space-x-2">
                             <div className="flex w-1/3 flex-row items-center space-x-4 overflow-hidden">
@@ -205,23 +205,18 @@ export default function MyProfile() {
                                 </div>
                               </div>
 
-                              <div
-                                className="tooltip tooltip-right"
-                                data-tip={description}
+                              <p
+                                className={`text-md whitespace-nowrap text-gray-900 ${
+                                  i < 3 && taggers.length > 0
+                                    ? "font-bold"
+                                    : "font-normal"
+                                }`}
                               >
-                                <p
-                                  className={`text-md whitespace-nowrap text-gray-900 ${
-                                    i < 3 && taggers.length > 0
-                                      ? "font-bold"
-                                      : "font-normal"
-                                  }`}
-                                >
-                                  {tag}
-                                </p>
-                              </div>
+                                {tag}
+                              </p>
                             </div>
                             <div className="flex w-2/3 flex-row items-center justify-between">
-                              <p className="flex px-6 text-sm font-normal text-gray-700 group-hover:hidden lg:flex">
+                              <p className="flex text-ellipsis whitespace-nowrap px-6 text-sm font-normal text-gray-700 group-hover:hidden lg:flex">
                                 {taggers
                                   .slice(0, 3)
                                   .reduce(
@@ -244,8 +239,8 @@ export default function MyProfile() {
                                     }`
                                   )}
                               </p>
-                              <p className="invisible px-6 text-sm font-normal text-gray-700 group-hover:visible lg:flex">
-                                {description}...
+                              <p className="hidden text-ellipsis px-6 text-sm font-normal text-gray-700 group-hover:flex">
+                                {description}
                               </p>
                             </div>
                           </div>
