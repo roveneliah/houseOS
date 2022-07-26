@@ -12,11 +12,10 @@ import { useRouter } from "next/router";
 
 import dynamic from "next/dynamic";
 import { useSIWE } from "@/hooks/useSIWE";
-import { capitalize } from "./ProposalHeader";
 import Link from "next/link";
 import { usePath } from "@/hooks/usePath";
 import { useFirebase } from "@/hooks/useFirebase";
-import { Maybe } from "@/types/Maybe";
+import { useCommand, useOnKeydown } from "@/hooks/generic/useCommand";
 // import { useFirebase } from "@/hooks/useFirebase";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
@@ -37,6 +36,10 @@ export default function Layout({
   const [themeIndex, setThemeIndex] = useState<number>(0);
   const themeName = themes[themeIndex]?.toString();
   const commands: Array<Command> = useGetCommands();
+  useOnKeydown("[", () =>
+    setThemeIndex((i) => (i + themes.length - 1) % themes.length)
+  );
+  useOnKeydown("]", () => setThemeIndex((i) => (i + 1) % themes.length));
 
   const address = useUserAddress();
   const user = useGetUserProfile();
