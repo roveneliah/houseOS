@@ -33,7 +33,7 @@ export default function CommentList({
   return (
     <div className="flex w-full flex-col space-y-0">
       {sortedFilteredComments.length > 0 && (
-        <div className="flex flex-row justify-between border-b px-6 py-4">
+        <div className="flex w-full flex-row justify-between border-b px-6 py-4">
           <TagSelector
             tags={tags.map(({ name }) => name)}
             setSelectedTags={setSelectedTags}
@@ -41,7 +41,7 @@ export default function CommentList({
         </div>
       )}
       {sortedFilteredComments.length > 0 ? (
-        <div className="flex w-full flex-col space-y-0 overflow-scroll py-4">
+        <div className="flex w-full flex-col space-y-0 py-4">
           {sortedFilteredComments.map((comment: Comment, i: number) => (
             <CommentListItem
               key={i}
@@ -52,7 +52,7 @@ export default function CommentList({
           ))}
         </div>
       ) : (
-        <p className="w-full px-8 text-left text-lg font-normal text-gray-800">
+        <p className="text-base-100 w-full px-8 py-8 text-left text-lg font-normal">
           No comments yet.
         </p>
       )}

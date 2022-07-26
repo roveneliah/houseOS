@@ -88,9 +88,9 @@ export default function Layout({
         deactivated={newUserFlow}
         demo={demo}
       />
-      <main className="bg-base-300 flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start overflow-x-auto">
+      <main className="bg-base-100 flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start overflow-x-auto">
         <div className="fixed top-0 z-20 flex w-full flex-row justify-between">
-          <div className="breadcrumbs self-center p-4 px-6">
+          <div className="breadcrumbs text-base-content self-center p-4 px-6">
             <ul>
               <li>
                 <a>{dao.name}</a>

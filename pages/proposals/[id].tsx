@@ -36,42 +36,36 @@ const ProposalPage: NextPage = ({ id }: any) => {
 
   return (
     <Layout>
-      <div className="bg-neutral flex w-full flex-row justify-center pt-20">
-        <div className="flex w-full flex-col items-start space-y-10 md:w-3/5">
-          <ProposalHeader proposal={proposal} />
-          <ChoiceFilters
-            proposal={proposal}
-            selectedChoice={selectedChoice}
-            setSelectedChoice={setSelectedChoice}
-            toggleCommentView={() => setView(View.Comment)}
-            view={view}
-          />
+      <div className="w-full pb-20">
+        <div className="bg-base-200 flex w-full flex-row justify-center pt-20">
+          <div className="text-primary-content flex w-full flex-col items-start space-y-10 md:w-3/5">
+            <ProposalHeader proposal={proposal} />
+            <ChoiceFilters
+              proposal={proposal}
+              selectedChoice={selectedChoice}
+              setSelectedChoice={setSelectedChoice}
+              toggleCommentView={() => setView(View.Comment)}
+              view={view}
+            />
+          </div>
         </div>
-      </div>
-      <div className="flex w-full flex-row justify-center">
-        <div className="bg-primary-content flex w-full flex-col space-y-0 overflow-hidden rounded-b-lg md:w-3/5">
-          {view === View.CommentList && (
-            <div className="flex w-full flex-col space-y-0 px-0 pt-8">
+        <div className="text-base-100 flex w-full flex-row justify-center">
+          <div className="bg-primary-content flex w-full flex-col space-y-10 overflow-hidden rounded-b-lg md:w-3/5">
+            {view === View.CommentList && (
               <CommentList
                 toggleCommentView={() => setView(View.Comment)}
                 comments={comments}
                 proposal={proposal}
                 choice={selectedChoice}
               />
-              <CommentView
-                proposal={proposal}
-                choice={selectedChoice}
-                back={() => setView(View.CommentList)}
-              />
-            </div>
-          )}
-          {view === View.Comment && (
+            )}
+
             <CommentView
               proposal={proposal}
               choice={selectedChoice}
               back={() => setView(View.CommentList)}
             />
-          )}
+          </div>
         </div>
       </div>
     </Layout>

@@ -32,7 +32,7 @@ export default function Profile({ address: userAddress }: any) {
   const { data: account } = useAccount();
   const profile = useGetUserProfile();
   const tags: Tag[] = useListenUserTags(address);
-  const allTags = useGetAllUserTags(address);
+  const allTags = useGetAllUserTags(address); // TODO: not working
   // const krauseBalance = useKrauseBalance(address);
   const { data: ensName } = useEnsName({ address });
   const comments: Array<Comment> = useComments(address);

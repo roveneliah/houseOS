@@ -1,8 +1,5 @@
 import { useSignIn } from "@/hooks/useSignIn";
 import { capitalize } from "@/utils/capitalize";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { prop } from "ramda";
 import { useState } from "react";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useGetAllProposalTags } from "../hooks/proposals/useGetAllProposalTags";
@@ -12,8 +9,6 @@ import ClockIcon from "./icons/ClockIcon";
 import LinkIcon from "./icons/LinkIcon";
 import LockedIcon from "./icons/LockedIcon";
 import TagListBox from "./profiles/TagListBox";
-import TagsList from "./profiles/TagsList";
-import TagSelector from "./TagSelector";
 
 export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
   const tags = useListenProposalTags(proposal.id);
@@ -28,7 +23,7 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
     `https://snapshot.org/#/${proposal.space.id}/proposal/${proposal.id}`;
 
   return proposal ? (
-    <div className="text-primary-content flex w-full flex-col items-start space-y-10 py-12">
+    <div className="flex w-full flex-col items-start space-y-10 py-12">
       <div className="flex w-full flex-col space-y-10">
         <div className="flex  flex-row items-center justify-between">
           <div className="flex w-full flex-row items-center space-x-6">
@@ -49,7 +44,7 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
               </div>
             )}
 
-            <div className="text-primary-content flex flex-row space-x-2">
+            <div className="flex flex-row space-x-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -69,7 +64,7 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
               </p>
             </div>
             <a href={snapshotLink} target="_blank">
-              <div className="text-primary-content flex flex-row space-x-2 font-light">
+              <div className="flex flex-row space-x-2 font-light">
                 <LinkIcon strokeWidth={1} />
                 <p className="cursor-pointer">Read</p>
               </div>
@@ -91,7 +86,7 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
                   />
                 </svg>
                 <button
-                  className="text-primary-content font-light"
+                  className="whitespace-nowrap font-light"
                   onClick={() => setShowTags(!showTags)}
                 >
                   {showTags ? "Hide" : "Edit"} Tags

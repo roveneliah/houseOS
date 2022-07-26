@@ -1,9 +1,10 @@
-import { capitalize } from "@/components/ProposalHeader";
+import { capitalize } from "@/utils/capitalize";
 import { useRouter } from "next/router";
 
 export const usePath = (): Array<any> => {
   const { asPath: route } = useRouter();
 
+  // TODO: make own function and test
   const path = route
     .split("/")
     .slice(1)

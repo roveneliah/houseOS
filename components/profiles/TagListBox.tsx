@@ -6,6 +6,7 @@ export default function TagListBox({
   tags,
   max = undefined,
   disabled = false,
+  numbered = true,
 }: any) {
   const sortedTags = useMemo(
     () => tags?.sort((a: Tag, b: Tag) => b.taggers.length - a.taggers.length),
@@ -25,7 +26,7 @@ export default function TagListBox({
             key={i}
             onClick={!disabled ? toggle : () => {}}
           >
-            {tag} {taggers.length}
+            {tag} {numbered && <span className="">• {taggers.length}</span>}
           </p>
         ))}
     </div>

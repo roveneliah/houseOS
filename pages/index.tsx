@@ -1,20 +1,15 @@
 import ClockIcon from "@/components/icons/ClockIcon";
 import LockedIcon from "@/components/icons/LockedIcon";
-import TagsList from "@/components/profiles/TagsList";
-import { capitalize } from "@/components/ProposalHeader";
+import { capitalize } from "@/utils/capitalize";
 import { dao, defaultAvatar, proposalTags } from "@/config";
-import { useGetUser } from "@/hooks/database/useGetUser";
-import { useUserAddress } from "@/hooks/ethereum/useUserAddress";
 import { useOnKeydown } from "@/hooks/generic/useCommand";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
-import { useGetAllProposalTags } from "@/hooks/proposals/useGetAllProposalTags";
-import { useGetUserProfile } from "@/hooks/users/useGetUserProfile";
 import { Proposal, ProposalState } from "@/types/Proposal";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { prop } from "ramda";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 const Layout = dynamic(() => import("../components/Layout"));
 
 const exampleTags: { tag: string }[] = [
@@ -47,7 +42,7 @@ const tags = ["This is", "the worst", "idea."].map((tag: string) => ({
 export default function Help() {
   const [view, setView] = useState("User");
 
-  const faqDirectory = ["Welcome", "Navigation", "Tags"];
+  const faqDirectory = ["Welcome", "Tags"];
   const { options, selected, next, prev } = useSingleSelect(
     faqDirectory.map((entry) => ({
       name: entry,
@@ -71,7 +66,6 @@ export default function Help() {
   useOnKeydown("d", next);
 
   const router = useRouter();
-  const [searchOpen, setSearchOpen] = useState(false);
   useOnKeydown("1", () => router.push("/proposals"));
   useOnKeydown("2", () => {}); // TODO: open search to specific pane
   useOnKeydown("3", () => {});
@@ -99,10 +93,33 @@ export default function Help() {
                   Welcome to
                 </p>
                 <p className="text-primary-content text-5xl font-semibold">
-                  Krause House Clubhouse
+                  {dao.name} Search
                 </p>
               </div>
-              <div className="flex w-fit flex-col space-y-2">
+              <div className="flex flex-col space-y-2">
+                <p className="text-xl font-normal">
+                  <span className="text-info font-semibold">
+                    Search is your map
+                  </span>{" "}
+                  around the DAO.
+                </p>
+                <p className="text-xl font-normal">
+                  You can find all{" "}
+                  <span className="text-info font-semibold">links</span>,{" "}
+                  <span className="text-info font-semibold">
+                    {dao.memberName}s
+                  </span>
+                  , and{" "}
+                  <span className="text-info font-semibold">proposals</span>{" "}
+                  from search.
+                </p>
+                <p className="text-xl font-normal">
+                  Open it anywhere using{" "}
+                  <span className="text-info font-semibold">⌘k</span> or{" "}
+                  <span className="text-info font-semibold">ctrl k</span> .
+                </p>
+              </div>
+              {/* <div className="flex w-fit flex-col space-y-2">
                 {menu.map((item: string, i: number) => (
                   <div
                     // ${ menuIndex === i && "text-gray-50"}
@@ -112,10 +129,11 @@ export default function Help() {
                     <p className="text-md font-normal">{item}</p>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           )}
 
+          {/*
           {options[selected].name === "Navigation" && (
             <div className="w-full space-y-8">
               <p className="text-primary-content text-5xl font-semibold">
@@ -128,10 +146,7 @@ export default function Help() {
                   </span>{" "}
                   around the DAO.
                 </p>
-                {/* <p className="text-xl font-normal">
-                Find a {dao.memberName}, proposals, links, and resources from
-                search.
-              </p> */}
+
                 <p className="text-xl font-normal">
                   Open it anywhere using{" "}
                   <span className="text-info font-semibold">⌘k</span> or{" "}
@@ -140,6 +155,7 @@ export default function Help() {
               </div>
             </div>
           )}
+          */}
 
           {options[selected].name === "Tags" && (
             <div className="space-y-8">

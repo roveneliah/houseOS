@@ -6,6 +6,7 @@ import { useVote } from "../hooks/snapshot/useVote";
 import { postComment } from "../utils/firebase/post";
 import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
 import { useListenUserTags } from "../hooks/database/useListenUserTags";
+import { useSignIn } from "@/hooks/useSignIn";
 
 interface Homie {
   name: String;
@@ -23,9 +24,12 @@ export default function CommentView({ proposal, back, choice }: any) {
   const authorTags = useListenUserTags(user?.address);
   const { data: signature, isSuccess, signMessage } = useSignMessage();
   const [message, setMessage] = useState("");
+  const { signedIn } = useSignIn();
+
+  const canPost = signedIn;
 
   useEffect(() => {
-    if (isSuccess && signature) {
+    if (isSuccess && signature && signedIn) {
       postComment(proposal.id, comment, signature).then((res) => {
         console.log("Posted Comment: ", res);
         setMessage("");
@@ -41,13 +45,14 @@ export default function CommentView({ proposal, back, choice }: any) {
   };
 
   return (
-    <div className="flex flex-col space-y-0 py-8">
-      <div className="flex flex-col space-y-6 rounded-lg px-6">
+    <div className="bg-primary-content flex flex-col space-y-0 rounded-lg px-8 py-5">
+      <p className="text-base-100 pb-4 text-2xl font-semibold">Vote</p>
+      <div className="flex w-full flex-col space-y-6 overflow-clip">
         <textarea
-          className="border-neutral/25 text-md w-full rounded-lg border bg-transparent p-6 font-light text-gray-900 outline-0"
-          rows={3}
-          value={user?.name ? message : "Please sign in to comment."}
-          // disabled={!user?.hodler}
+          className="border-base-100/50 text-md w-full rounded-lg border bg-transparent p-4 font-light outline-0"
+          rows={2}
+          value={canPost ? message : "Please sign in to comment."}
+          disabled={!canPost}
           onChange={(e) => setMessage(e.target.value)}
         />
         {/* <div className="flex flex-row items-end justify-between border-gray-900 px-6">
@@ -71,8 +76,8 @@ export default function CommentView({ proposal, back, choice }: any) {
                 className="rounded-full"
               />
             </div>
-            <div className="space-between flex flex-col items-baseline space-y-0 text-gray-900">
-              <p className="text-xl font-semibold">You</p>
+            <div className="space-between flex flex-col items-baseline space-y-0">
+              <p className="text-xl font-semibold">{user?.name || "You"}</p>
               <div className="flex flex-row space-x-2">
                 <p>
                   {authorTags
@@ -83,7 +88,7 @@ export default function CommentView({ proposal, back, choice }: any) {
               </div>
             </div>
           </div>
-          {user?.hodler && (
+          {canPost && (
             <button
               className="btn group"
               onClick={() => {
