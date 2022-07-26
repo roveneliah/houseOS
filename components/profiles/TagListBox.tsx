@@ -12,13 +12,15 @@ export default function TagListBox({
     [tags]
   );
   return (
-    <div className="border-1 flex flex-row flex-wrap justify-start space-x-2 overflow-auto rounded-lg border  p-3">
+    <div className="no-scrollbar flex w-full flex-row justify-start space-x-2 overflow-auto rounded-lg">
       {sortedTags
-        ?.slice(0, max)
-        .map(({ tag, toggle, taggers }: any, i: number) => (
+        .slice(0, max)
+        .map(({ tag, taggers, toggle }: any, i: number) => (
           <p
-            className={`badge badge-lg my-1 ${
-              taggers.includes(address) ? "badge-dark" : "hover:bg-gray-400"
+            className={`my-2 whitespace-nowrap rounded-full px-3 py-1 ${
+              taggers.includes(address)
+                ? "bg-warning text-neutral"
+                : "text-warning border-warning hover:bg-warning hover:text-neutral border"
             }`}
             key={i}
             onClick={!disabled ? toggle : () => {}}

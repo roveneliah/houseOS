@@ -1,4 +1,5 @@
 import { useSignIn } from "@/hooks/useSignIn";
+import { capitalize } from "@/utils/capitalize";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { prop } from "ramda";
@@ -10,10 +11,9 @@ import { Proposal, ProposalState } from "../types/Proposal";
 import ClockIcon from "./icons/ClockIcon";
 import LinkIcon from "./icons/LinkIcon";
 import LockedIcon from "./icons/LockedIcon";
+import TagListBox from "./profiles/TagListBox";
 import TagsList from "./profiles/TagsList";
-
-export const capitalize = (str: string) =>
-  str?.charAt(0).toUpperCase() + str?.slice(1);
+import TagSelector from "./TagSelector";
 
 export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
   const tags = useListenProposalTags(proposal.id);
@@ -74,6 +74,30 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
                 <p className="cursor-pointer">Read</p>
               </div>
             </a>
+            {signedIn && (
+              <div className="flex flex-row space-x-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                  />
+                </svg>
+                <button
+                  className="text-primary-content font-light"
+                  onClick={() => setShowTags(!showTags)}
+                >
+                  {showTags ? "Hide" : "Edit"} Tags
+                </button>
+              </div>
+            )}
           </div>
           <div className="flex min-h-full flex-row items-center space-x-2 font-normal">
             {tags.slice(0, 3).map((tag: any) => (
@@ -89,30 +113,8 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
           </div>
         </div>
         <p className="text-left text-6xl font-semibold">{proposal.title}</p>
-        <div className="flex w-full flex-row justify-between">
-          {/* <TagsList tags={tags} /> */}
-          {signedIn && (
-            <button className="badge" onClick={() => setShowTags(!showTags)}>
-              {showTags ? "Hide" : "Show"} Tags
-            </button>
-          )}
-        </div>
+        {showTags && <TagListBox tags={allTags} address={address} />}
       </div>
-      {showTags && (
-        <div className="border-1 flex  w-full flex-row flex-wrap justify-start space-x-2 overflow-auto rounded-lg border p-3">
-          {allTags.map(({ tag, taggers, toggle }: any, i: number) => (
-            <p
-              className={`badge my-1 ${
-                taggers.includes(address) ? "badge-dark" : "hover:bg-gray-400"
-              }`}
-              key={i}
-              onClick={toggle}
-            >
-              {tag} {taggers.length}
-            </p>
-          ))}
-        </div>
-      )}
     </div>
   ) : (
     <p>Loading...</p>
