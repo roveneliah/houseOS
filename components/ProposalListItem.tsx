@@ -21,8 +21,8 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
     intersection(tags.map(prop("tag")), selectedTags).length > 0;
 
   return hasMatchingTag(proposalTags) ? (
-    <div className="flex flex-row justify-between border-b py-2 px-6 hover:bg-gray-100 hover:shadow-lg">
-      <div className="flex w-full flex-row items-center justify-start space-x-4 text-gray-800 lg:w-2/3">
+    <div className="hover:bg-base-100 border-base-200 text-base-content flex flex-row justify-between border-b py-2 px-6 hover:shadow-lg">
+      <div className="text-base-content flex w-full flex-row items-center justify-start space-x-4 lg:w-2/3">
         <div>
           {proposal.state === "closed" ? (
             <LockedIcon />
@@ -33,7 +33,7 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
         {/* <p className="badge badge-sm">{timeLeft}</p> */}
         <Link href={`/proposals/${proposal.id}`}>
           <p
-            className={`text-neutral cursor-pointer overflow-clip text-ellipsis whitespace-nowrap text-sm ${
+            className={`cursor-pointer overflow-clip text-ellipsis whitespace-nowrap text-sm ${
               proposal.state === "closed" ? "font-normal" : "font-semibold"
             }`}
           >

@@ -21,8 +21,8 @@ export default function TagSelector({ tags, setSelectedTags }: any) {
     <div className="no-scrollbar flex flex-row justify-start space-x-2 overflow-clip overflow-x-auto">
       {enhancedTags.map(({ x, selected, toggle }: any, i: number) => (
         <p
-          className={`hover:bg-neutral hover:text-primary-content border-neutral whitespace-nowrap rounded-full border px-3 py-1 text-xs ${
-            selected ? "bg-neutral text-gray-100" : "text-neutral"
+          className={`hover:bg-base-300 hover:text-base-100 border-base-content whitespace-nowrap rounded-full border px-3 py-1 text-xs ${
+            selected ? "bg-base-300 text-base-100" : "text-base-content"
           }`}
           onClick={toggle}
           key={i}

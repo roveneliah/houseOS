@@ -29,19 +29,18 @@ export default function CommentList({
                   </p>
                 </div>
                 {/* {comment.vp && (
-                <p className="badge badge-dark">{comment.vp} $KRAUSE</p>
-              )} */}
+                  <p className="badge badge-dark">{comment.vp} $KRAUSE</p>
+                )} */}
               </div>
             </div>
-            <div className="bg-primary-content flex w-full flex-col items-baseline space-y-0 overflow-hidden py-3">
-              <Link href={`/proposals/${comment.proposalId}`} key={i}>
-                <div className="flex cursor-pointer flex-row justify-between space-x-2 overflow-hidden">
-                  <p className="text-neutral text-md font-light">
-                    {comment.proposalTitle}
-                  </p>
-                </div>
-              </Link>
-            </div>
+
+            <Link href={`/proposals/${comment.proposalId}`} key={i}>
+              <div className="flex cursor-pointer flex-row justify-between space-x-2 overflow-hidden">
+                <p className="text-neutral text-md font-light">
+                  {comment.proposalTitle}
+                </p>
+              </div>
+            </Link>
           </div>
         );
       })}
