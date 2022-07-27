@@ -29,14 +29,12 @@ export const useGetAllUserTags = (
     toggle: () => {
       // TODO: account?.address might be a bug
       if (account?.address) {
-        if (o.taggers.includes(address)) {
-          console.log("Untagging", address, " with ", o.name);
-          untagUser(address, o.name);
-        } else {
-          console.log("Tagging", address, " with ", o.name);
-          tagUser(address, o.name);
-        }
-      } else console.log("NO USER");
+        o.taggers.includes(account?.address)
+          ? untagUser(address, o.name)
+          : tagUser(address, o.name);
+      } else {
+        console.log("NO USER");
+      }
     },
   });
 
@@ -54,6 +52,7 @@ export const useGetAllUserTags = (
 
         const allTags = tags
           .concat(otherTags)
+          .map((o: any) => ({ ...o, name: o.tag }))
           .map(addDescription)
           .map(declareToggle);
 

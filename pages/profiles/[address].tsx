@@ -20,6 +20,8 @@ import { ChatIcon } from "@/components/icons/ChatIcon";
 import TagIcon from "@/components/icons/TagIcon";
 import UsersIcon from "@/components/icons/UsersIcon";
 import { useAppSelector } from "@/app/hooks";
+import { EthereumAddress } from "@/types/EthereumAddress";
+import { useUserAddress } from "@/hooks/ethereum/useUserAddress";
 
 const CommentList = dynamic(() => import("@/components/profiles/CommentList"));
 const LoadingView = dynamic(() => import("@/components/profiles/LoadingView"));
@@ -28,6 +30,7 @@ const TagListBox = dynamic(() => import("@/components/profiles/TagListBox"));
 const TagsList = dynamic(() => import("@/components/profiles/TagsList"));
 
 export default function Profile({ address: userAddress }: any) {
+  const myAddress = useUserAddress();
   const user = useGetUser(userAddress);
   const { address, friends, name } = user;
   const profile = useGetUserProfile();
@@ -108,8 +111,11 @@ export default function Profile({ address: userAddress }: any) {
                       </div>
                     )}
                     <div className="flex flex-row space-x-1">
-                      {tags.slice(0, 3).map((tag) => (
-                        <p className="text-warning border-warning whitespace-nowrap rounded-full border px-3 py-1 text-sm font-semibold">
+                      {tags.slice(0, 3).map((tag, i) => (
+                        <p
+                          key={i}
+                          className="text-warning border-warning whitespace-nowrap rounded-full border px-3 py-1 text-sm font-semibold"
+                        >
                           {tag.tag}
                         </p>
                       ))}
@@ -129,7 +135,7 @@ export default function Profile({ address: userAddress }: any) {
                 </div>
               </div>
               <div className="flex w-full flex-row justify-between space-x-0 overflow-hidden rounded-t-lg border-b">
-                {views.map(({ name: viewName, toggle, selected, icon }) => (
+                {views.map(({ name: viewName, toggle, selected, icon }, i) => (
                   <div
                     className={`bg-primary-content flex w-full flex-row items-center space-x-2 ${
                       selected
@@ -137,6 +143,7 @@ export default function Profile({ address: userAddress }: any) {
                         : "text-base-100"
                     } px-6 py-3 hover:bg-gray-100`}
                     onClick={toggle}
+                    key={i}
                   >
                     {icon({})}
                     <p className="text-md py-2 font-semibold">{viewName}</p>
@@ -184,7 +191,7 @@ export default function Profile({ address: userAddress }: any) {
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className={`h-6 w-6 ${
-                                      taggers.includes(address)
+                                      taggers.includes(myAddress)
                                         ? "text-neutral"
                                         : `${
                                             signedIn && "hover:text-neutral"
