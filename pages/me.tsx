@@ -68,9 +68,6 @@ export default function MyProfile() {
 
   const users = useAppSelector((state: any) => state.users);
 
-  console.log(tags);
-  console.log(allTags);
-
   return (
     <Layout>
       {!signedIn ? (
@@ -166,8 +163,8 @@ export default function MyProfile() {
             )}
 
             {selectedView.name === "Tags" && (
-              <div className="flex min-h-[50vh] w-full flex-col overflow-hidden rounded-b-lg">
-                {tags.map(
+              <div className="flex w-full flex-col overflow-hidden rounded-b-lg">
+                {allTags.map(
                   ({ tag, taggers, toggle, description }: any, i: number) => (
                     <div
                       className="bg-primary-content flex w-full flex-col"

@@ -19,6 +19,7 @@ import { useOnKeydown } from "@/hooks/generic/useCommand";
 import { ChatIcon } from "@/components/icons/ChatIcon";
 import TagIcon from "@/components/icons/TagIcon";
 import UsersIcon from "@/components/icons/UsersIcon";
+import { useAppSelector } from "@/app/hooks";
 
 const CommentList = dynamic(() => import("@/components/profiles/CommentList"));
 const LoadingView = dynamic(() => import("@/components/profiles/LoadingView"));
@@ -29,14 +30,13 @@ const TagsList = dynamic(() => import("@/components/profiles/TagsList"));
 export default function Profile({ address: userAddress }: any) {
   const user = useGetUser(userAddress);
   const { address, friends, name } = user;
-  const { data: account } = useAccount();
   const profile = useGetUserProfile();
   const tags: Tag[] = useListenUserTags(address);
-  const allTags = useGetAllUserTags(address); // TODO: not working
-  // const krauseBalance = useKrauseBalance(address);
   const { data: ensName } = useEnsName({ address });
   const comments: Array<Comment> = useComments(address);
   const { signedIn } = useSignIn();
+  const users = useAppSelector((state: any) => state.users);
+  const allTags = useGetAllUserTags(address);
 
   const {
     options: views,
@@ -54,7 +54,27 @@ export default function Profile({ address: userAddress }: any) {
   useOnKeydown("ArrowRight", next);
   useOnKeydown("ArrowLeft", prev);
 
-  const isFriend = profile?.friends?.includes(address);
+  const formatTaggers = (taggers: Array<string>) =>
+    taggers
+      .slice(0, 3)
+      .reduce(
+        (acc: string, tagger: string, i: number) =>
+          acc.concat(
+            `${users[tagger]?.name || tagger.slice(0, 6)}${
+              taggers.length > i + 1 ? ", " : ""
+            }`
+          ),
+        ""
+      )
+      .concat(
+        `${
+          taggers.length > 3
+            ? `and ${taggers.length - 3} other${taggers.length > 4 ? "s" : ""}.`
+            : ""
+        }`
+      );
+
+  const isFriend: boolean = profile?.friends?.includes(address);
   return (
     <Layout>
       {!address ? (
@@ -84,24 +104,7 @@ export default function Profile({ address: userAddress }: any) {
                           >
                             Follow
                           </p>
-                          // <div onClick={() => profile?.addFriend(address)}>
-                          //   <svg
-                          //     xmlns="http://www.w3.org/2000/svg"
-                          //     className="h-6 w-6"
-                          //     fill="none"
-                          //     viewBox="0 0 24 24"
-                          //     stroke="currentColor"
-                          //     strokeWidth={2}
-                          //   >
-                          //     <path
-                          //       strokeLinecap="round"
-                          //       strokeLinejoin="round"
-                          //       d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-                          //     />
-                          //   </svg>
-                          // </div>
                         )}
-                        {/* <p className="badge">{Number(krauseBalance)} $KRAUSE</p> */}
                       </div>
                     )}
                     <div className="flex flex-row space-x-1">
@@ -161,22 +164,32 @@ export default function Profile({ address: userAddress }: any) {
                 )}
               </div>
             )}
-
             {selectedView.name === "Tags" && (
-              <div className="flex w-full flex-col space-y-0 overflow-hidden">
-                {tags.map(({ tag, description, taggers, toggle }: any) => (
-                  <div className="flex w-full flex-col space-y-3 overflow-hidden border-b bg-gray-100">
-                    <div className="flex w-full flex-col space-y-2 px-8 py-4">
-                      <div className="flex w-full flex-row justify-between space-x-2">
-                        <div className="flex flex-row items-center justify-start space-x-2">
-                          {/* <p className="badge badge-light">{taggers.length}</p> */}
-                          {/* <div className="flex flex-row items-center text-gray-900">
-                            {signedIn && (
-                              <button onClick={toggle} className="">
-                                {taggers.includes(account?.address) ? (
+              <div className="bg-primary-content flex w-full flex-col overflow-hidden rounded-b-lg">
+                {allTags.map(
+                  ({ tag, taggers, toggle, description }: any, i: number) => (
+                    <div
+                      className="bg-primary-content flex w-full flex-col"
+                      key={i}
+                    >
+                      <div className="flex w-full flex-col">
+                        <div className="group flex w-full flex-row justify-between space-x-2 border-b py-2 px-6">
+                          <div className="flex w-full flex-row  items-center justify-start space-x-2">
+                            <div className="flex w-1/3 flex-row items-center space-x-4 overflow-hidden">
+                              <div className="flex flex-row space-x-2">
+                                <p className="badge badge-light badge-sm flex">
+                                  {taggers.length}
+                                </p>
+                                <div onClick={toggle}>
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6"
+                                    className={`h-6 w-6 ${
+                                      taggers.includes(address)
+                                        ? "text-neutral"
+                                        : `${
+                                            signedIn && "hover:text-neutral"
+                                          } text-gray-200`
+                                    }`}
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -185,80 +198,39 @@ export default function Profile({ address: userAddress }: any) {
                                     <path
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
-                                      d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      d="M5 13l4 4L19 7"
                                     />
                                   </svg>
-                                ) : (
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={1.5}
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                  </svg>
-                                )}
-                              </button>
-                            )}
-                          </div> */}
-                          <p className="text-lg font-semibold text-gray-900">
-                            {tag}
-                          </p>
-                          {/* <p className="font-light text-gray-800">
-                            {description}
-                          </p> */}
-                        </div>
-                      </div>
-                      <p className="text-md text-sm text-gray-800">
-                        {taggers.slice(0, 2).reduce(
-                          (tail: string, tagger: string, i: number) =>
-                            `${tagger.slice(0, 6)}${
-                              taggers.length > i + 2
-                                ? ", "
-                                : taggers.length === 2 && i !== 0
-                                ? " and " // we want this in the case that ther'es
-                                : ""
-                            }`.concat(tail),
-                          `${
-                            taggers.length > 2
-                              ? `and ${taggers.length - 2} other${
-                                  taggers.length > 3 ? "s" : ""
-                                }.`
-                              : ""
-                          }`
-                        )}
-                      </p>
-                      <div className="group flex flex-row items-center space-x-2">
-                        <div className="flex flex-row -space-x-2">
-                          {taggers.map((tagger: string, i: number) => (
-                            <div className={"rounded-full bg-black p-1"}>
-                              .....
+                                </div>
+                              </div>
+
+                              <p
+                                className={`text-md whitespace-nowrap text-gray-900 ${
+                                  i < 3 && taggers.length > 0
+                                    ? "font-bold"
+                                    : "font-normal"
+                                }`}
+                              >
+                                {tag}
+                              </p>
                             </div>
-                          ))}
+                            <div className="flex w-2/3 flex-row items-center justify-between">
+                              <p className="flex text-ellipsis whitespace-nowrap px-6 text-sm font-normal text-gray-700 group-hover:hidden lg:flex">
+                                {formatTaggers(taggers)}
+                              </p>
+                              <p className="hidden text-ellipsis whitespace-nowrap px-6 text-sm font-normal text-gray-700 group-hover:flex">
+                                {description || formatTaggers(taggers)}
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                        <p className="invisible text-gray-800 group-hover:visible">
-                          Greg
-                        </p>
                       </div>
                     </div>
-                  </div>
-                ))}
-                {/* {signedIn && (
-                  <div className="flex flex-col space-y-0 rounded-b-md bg-gray-100 p-6">
-                    <p className="p-4 text-left text-3xl font-bold text-gray-900">
-                      Edit Tags
-                    </p>
-                    <TagListBox address={account?.address} tags={allTags} />
-                  </div>
-                )} */}
+                  )
+                )}
               </div>
             )}
+
             {selectedView.name === "Following" && (
               <div className="flex w-full flex-col space-y-2">
                 {/* <p className="text-left text-3xl font-bold text-gray-200">
