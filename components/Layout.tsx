@@ -16,7 +16,6 @@ import Link from "next/link";
 import { usePath } from "@/hooks/usePath";
 import { useFirebase } from "@/hooks/useFirebase";
 import { useCommand, useOnKeydown } from "@/hooks/generic/useCommand";
-// import { useFirebase } from "@/hooks/useFirebase";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
 
@@ -121,30 +120,40 @@ export default function Layout({
                   </button>
                 ) : (
                   <button
-                    onClick={() => router.push("/signup")}
+                    onClick={() => {
+                      // router.push("/signup");
+                      // disconnect();
+                    }}
                     className="btn"
                   >
-                    Sign up
+                    <a href="/signup">
+                      <p>Create Profile</p>
+                    </a>
                   </button>
                 )
               ) : (
-                <button className="btn loading">Loading</button>
+                <button className="btn loading">
+                  Signing in with Ethereum...
+                </button>
               )
             ) : (
               <>
                 {/* <button className="btn">{user.krauseBalance} $KRAUSE</button> */}
-                <button
-                  className="btn group"
-                  onClick={() => {
-                    signOut();
-                    disconnect();
-                  }}
-                >
-                  <p className="loading block group-hover:hidden">
-                    {user?.name ?? "Loading"}
-                  </p>
-                  <p className="hidden group-hover:block">Disconnect</p>
-                </button>
+                {router.route !== "/signup" && (
+                  <button
+                    className="btn group"
+                    onClick={() => {
+                      signOut();
+                      disconnect();
+                      connect();
+                    }}
+                  >
+                    <p className="loading block group-hover:hidden">
+                      {user?.name ?? "Loading Profile"}
+                    </p>
+                    <p className="hidden group-hover:block">Disconnect</p>
+                  </button>
+                )}
               </>
             )}
             <button
