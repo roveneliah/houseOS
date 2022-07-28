@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { dao, defaultAvatar } from "../config";
+import { dao, defaultAvatar, userTags } from "../config";
 import { createUser } from "../utils/firebase/user";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
@@ -18,7 +18,6 @@ import { concat, filter, mergeRight } from "ramda";
 export default function NewUserFlow() {
   const [name, setName] = useState<Maybe<string>>();
   const address = useUserAddress();
-  const allTags = useGetAllUserTags(address);
   const router = useRouter();
   const [task1a, setTask1a] = useState<boolean>(false);
   const [task1b, setTask1b] = useState<boolean>(false);
@@ -31,12 +30,15 @@ export default function NewUserFlow() {
 
   const [selectedTags, setSelectedTags] = useState<Array<string>>([]);
   const task2 = selectedTags.length > 0;
-  const demoTags = allTags.map((tag) => ({
-    ...tag,
+
+  const demoTags = userTags.map(({ name, description }) => ({
+    tag: name,
+    description,
+    taggers: [],
     toggle: () =>
-      !selectedTags.includes(tag.tag)
-        ? setSelectedTags(concat(tag.tag))
-        : setSelectedTags(filter((t) => t !== tag.tag)),
+      !selectedTags.includes(name)
+        ? setSelectedTags((state) => concat(state)([name]))
+        : setSelectedTags(filter((t) => t !== name)),
   }));
 
   return !signedIn ? (
@@ -336,6 +338,7 @@ export default function NewUserFlow() {
                 />
               </div>
               {name && name.length > 2 && (
+                // TODO: test if this messes up connection, might need to use <a>
                 <button
                   className="btn btn-outline w-fit"
                   onClick={() => {

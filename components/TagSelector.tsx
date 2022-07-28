@@ -2,10 +2,6 @@ import { prop } from "ramda";
 import { useEffect, useMemo } from "react";
 import { useOrderedMultiselect } from "../hooks/generic/useOrderedMultiselect";
 
-export const prioritize =
-  (predicate: (a: any) => boolean) => (arr: Array<any>) =>
-    [...arr.filter(predicate), ...arr.filter((x) => !predicate(x))];
-
 export default function TagSelector({ tags, setSelectedTags }: any) {
   const enhancedTags = useOrderedMultiselect(tags); // (1) selected first, (2) tag selected, (3) expose toggle
   const selectedTags = useMemo(() => {

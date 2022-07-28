@@ -136,6 +136,7 @@ module.exports = {
     ],
   },
   themes: [
+    "dark",
     {
       mytheme: {
         primary: "green",
@@ -171,7 +172,6 @@ module.exports = {
         // "error-content": "",
       },
     },
-    "dark",
     "light",
     "cupcake",
     "bumblebee",
