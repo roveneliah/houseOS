@@ -22,7 +22,7 @@ export default function TagsList({
               className={`border ${
                 theme === "light"
                   ? "text-warning border-warning"
-                  : "text-neutral border-neutral"
+                  : "text-base-content border-base-content"
               } rounded-full px-3 py-1 text-${size} overflow-hidden ${
                 !disabled && "hover:bg-gray-300"
               }`}

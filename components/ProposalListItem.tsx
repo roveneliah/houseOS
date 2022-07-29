@@ -47,7 +47,7 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
           max={2}
           numbered={false}
           size="xs"
-          theme="dark"
+          // theme="dark"
           disabled={true}
         />
         {/* {proposalTags.map((tag, i) => (
