@@ -70,7 +70,7 @@ export default function Layout({
   return (
     <div data-theme={themeName} className="no-scrollbar min-h-screen">
       <Head>
-        <title>{dao.name}</title>
+        <title>House OS</title>
         {/* TODO: #11 customize in config */}
         <link rel="icon" href="/initials.svg" />
         <meta name={dao.description} />

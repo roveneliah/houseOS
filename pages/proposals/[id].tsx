@@ -10,8 +10,8 @@ import { Comment } from "../../types/Comment";
 import { Proposal } from "../../types/Proposal";
 import createHook from "@/hooks/createHook";
 const Layout = dynamic(() => import("../../components/Layout"));
-const ChoiceFilters = dynamic(() => import("../../components/ChoiceFilters"));
 const ProposalHeader = dynamic(() => import("../../components/ProposalHeader"));
+const ChoiceFilters = dynamic(() => import("../../components/ChoiceFilters"));
 const CommentList = dynamic(() => import("../../components/CommentList"));
 const CommentView = dynamic(() => import("../../components/CommentView"));
 
@@ -37,8 +37,8 @@ const ProposalPage: NextPage = ({ id }: any) => {
   return (
     <Layout>
       <div className="w-full pb-20">
-        <div className="bg-base-200 flex w-full flex-row justify-center pt-20">
-          <div className="text-primary-content flex w-full flex-col items-start space-y-10 md:w-3/5">
+        <div className="bg-base-300 flex w-full flex-row justify-center pt-20">
+          <div className="text-base-content flex w-full flex-col items-start space-y-10 md:w-3/5">
             <ProposalHeader proposal={proposal} />
             <ChoiceFilters
               proposal={proposal}
@@ -50,7 +50,7 @@ const ProposalPage: NextPage = ({ id }: any) => {
           </div>
         </div>
         <div className="text-base-100 flex w-full flex-row justify-center">
-          <div className="bg-primary-content flex w-full flex-col space-y-10 overflow-hidden rounded-b-lg md:w-3/5">
+          <div className="bg-base-content flex w-full flex-col space-y-10 overflow-hidden rounded-b-lg md:w-3/5">
             {view === View.CommentList && (
               <CommentList
                 toggleCommentView={() => setView(View.Comment)}

@@ -33,7 +33,7 @@ export default function CommentList({
   return (
     <div className="flex w-full flex-col space-y-0">
       {sortedFilteredComments.length > 0 && (
-        <div className="flex w-full flex-row justify-between border-b px-6 py-4">
+        <div className="border-base-100 flex w-full flex-row justify-between px-6 py-4">
           <TagSelector
             tags={tags.map(({ name }) => name)}
             setSelectedTags={setSelectedTags}

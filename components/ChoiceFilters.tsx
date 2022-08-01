@@ -30,8 +30,6 @@ export default function ChoiceFilters({
       { max_score: -Infinity, index: -1 }
     );
 
-    console.log(max_index?.index);
-
     return choices?.[max_index?.index];
   };
 
@@ -41,25 +39,25 @@ export default function ChoiceFilters({
   }, [proposal]);
 
   return (
-    <div className="bg-primary-content text-base-100 flex w-full flex-row justify-between overflow-y-auto rounded-t-lg border-b">
+    <div className="bg-base-content text-base-100 border-base-100 flex w-full flex-row justify-between overflow-y-auto rounded-t-lg">
       {choices?.map((choice: string, i: number) => (
         <div
-          className={`flex w-full min-w-[18vw] cursor-pointer flex-col items-start space-y-4 p-4 px-6 hover:bg-gray-100 ${
-            selectedChoice === i ? "border-b-2 border-black" : ""
+          className={`flex w-full min-w-[18vw] cursor-pointer flex-col items-start space-y-4 p-4 px-6 hover:bg-black/10 ${
+            selectedChoice === i ? "border-base-100 border-b-2" : ""
           }`}
           onClick={() => setSelectedChoice(i)}
           key={i}
         >
           {/* // TODO: generalize this to pass in these components */}
           <div className="flex w-full flex-row justify-between">
-            <p className="badge badge-outline">
+            <p className="badge bg-base-100 text-base-content">
               {toPercent(
                 proposal.scores_total
                   ? proposal.scores[i] / proposal.scores_total
                   : proposal.scores_total
               )}
             </p>
-            <p className="badge badge-outline invisible xl:visible">
+            <p className="badge bg-base-100 text-base-content invisible xl:visible">
               {proposal.scores[i].toFixed(0)} $KRAUSE
             </p>
           </div>
