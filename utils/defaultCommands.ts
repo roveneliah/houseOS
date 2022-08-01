@@ -11,7 +11,12 @@ export default [
   },
   {
     name: "Help",
-    link: "/",
+    link: "/help",
     favorite: true,
   },
+  // {
+  //   name: "Home",
+  //   link: "/",
+  //   favorite: true,
+  // },
 ];

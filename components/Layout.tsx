@@ -16,7 +16,6 @@ import Link from "next/link";
 import { usePath } from "@/hooks/usePath";
 import { useFirebase } from "@/hooks/useFirebase";
 import { useCommand, useOnKeydown } from "@/hooks/generic/useCommand";
-import Image from "next/image";
 import NewUserFlow from "./SignupModal";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
@@ -63,14 +62,9 @@ export default function Layout({
 
   const { signOut, signIn, signedIn } = useSignIn();
   const { signedIn: signedInSIWE } = useSIWE();
-  const { signedIn: signedInFB } = useFirebase();
 
   const newUserFlow = useIsNewUser();
-  const router = useRouter();
   const path = usePath();
-
-  // console.log(isConnected, isConnecting, isReconnecting);
-  // console.log(signedInSIWE, signedInFB, signedIn);
 
   return (
     <div data-theme={themeName} className="min-h-screen">
