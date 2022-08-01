@@ -221,7 +221,7 @@ export default function CommandPalette({
             {filteredCommands.length > 0 ? (
               <Combobox.Options
                 static
-                className="max-h-96 divide-y divide-gray-200 overflow-hidden overflow-y-auto rounded-lg px-2 py-4"
+                className="no-scrollbar max-h-96 divide-y divide-gray-200 overflow-hidden overflow-y-auto rounded-lg px-2 py-4"
               >
                 {/* {filter === CommandFilters.ALL && (
                   <div className="flex flex-row items-center space-x-1 px-4 pb-2">

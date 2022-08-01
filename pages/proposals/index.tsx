@@ -75,7 +75,7 @@ const ProposalsListPage: NextPage = () => {
       <div className="bg-base-300 flex w-full flex-row justify-center pt-36">
         <div className="flex w-full flex-col space-y-10 px-2 md:w-4/5 md:max-w-3xl md:px-0 lg:w-2/3">
           <div className="flex w-2/3 flex-row justify-start">
-            <div className="text-primary-content flex flex-col items-start space-y-2">
+            <div className="flex flex-col items-start space-y-2 text-white">
               <div
                 className={`flex flex-row space-x-2 ${
                   countActive && "text-success"
@@ -96,7 +96,7 @@ const ProposalsListPage: NextPage = () => {
       </div>
       <div className="w-full overflow-hidden rounded-b-lg px-2 md:w-4/5 md:max-w-3xl md:px-0 lg:w-2/3">
         <div className="bg-base-100 flex flex-col space-y-0">
-          <div className="border-base-200 border-b px-4 py-4">
+          <div className="border-base-200/10 border-b px-4 py-4">
             <TagSelector tags={tags} setSelectedTags={setSelectedTags} />
           </div>
           <div className="no-scrollbar flex h-[55vh] flex-col overflow-y-auto">

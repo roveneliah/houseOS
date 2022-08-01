@@ -37,6 +37,7 @@ export default function CommentList({
           <TagSelector
             tags={tags.map(({ name }) => name)}
             setSelectedTags={setSelectedTags}
+            theme={1}
           />
         </div>
       )}

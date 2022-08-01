@@ -17,6 +17,7 @@ import { usePath } from "@/hooks/usePath";
 import { useFirebase } from "@/hooks/useFirebase";
 import { useCommand, useOnKeydown } from "@/hooks/generic/useCommand";
 import NewUserFlow from "./SignupModal";
+import Image from "next/image";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
 
@@ -67,11 +68,11 @@ export default function Layout({
   const path = usePath();
 
   return (
-    <div data-theme={themeName} className="min-h-screen">
+    <div data-theme={themeName} className="no-scrollbar min-h-screen">
       <Head>
         <title>{dao.name}</title>
         {/* TODO: #11 customize in config */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/initials.svg" />
         <meta name={dao.description} />
       </Head>
 
@@ -83,14 +84,14 @@ export default function Layout({
         deactivated={newUserFlow}
         demo={demo}
       />
-      <main className="bg-base-200 flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start overflow-x-auto">
+      <main className="bg-base-200 no-scrollbar flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start overflow-x-auto">
         <div className="fixed top-0 z-20 flex h-[8vh] w-full flex-row justify-between overflow-hidden">
           <div className="breadcrumbs text-base-content self-center p-4 px-6">
             <ul>
-              <li>{dao.name}</li>
-              {/* <li className="relative h-[10vh] w-[5vw] bg-red-200">
-                <Image src="/logo_sm.svg" layout="fill" />
-              </li> */}
+              {/* <li>{dao.name}</li> */}
+              <li className="relative h-[5vh] w-[2vw]">
+                <Image src="/initials.svg" layout="fill" />
+              </li>
               {path.map(({ pathSlice, route }, i) => (
                 <Link href={route} key={i}>
                   <li>
