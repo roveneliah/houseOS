@@ -13,7 +13,7 @@ import TagsList from "./profiles/TagsList";
 import { ChatIcon } from "./icons/ChatIcon";
 import UsersIcon from "./icons/UsersIcon";
 import LinkIcon from "./icons/LinkIcon";
-import { concat, filter, mergeRight } from "ramda";
+import { concat, filter } from "ramda";
 
 export default function NewUserFlow() {
   const [name, setName] = useState<Maybe<string>>();
@@ -344,7 +344,7 @@ export default function NewUserFlow() {
                   onClick={() => {
                     signedIn &&
                       address &&
-                      createUser(address, name, selectedTags);
+                      createUser({ address, name, tags: selectedTags });
                     router.push("/me");
                   }}
                 >

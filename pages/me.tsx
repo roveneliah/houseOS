@@ -42,6 +42,8 @@ export default function MyProfile() {
     [comments]
   );
 
+  console.log(allTags);
+
   const {
     options: views,
     selected,
@@ -56,6 +58,26 @@ export default function MyProfile() {
 
   useOnKeydown("ArrowRight", next);
   useOnKeydown("ArrowLeft", prev);
+
+  const formatTaggers = (taggers: Array<string>) =>
+    taggers
+      .slice(0, 3)
+      .reduce(
+        (acc: string, tagger: string, i: number) =>
+          acc.concat(
+            `${users[tagger]?.name || tagger.slice(0, 6)}${
+              taggers.length > i + 1 ? ", " : ""
+            }`
+          ),
+        ""
+      )
+      .concat(
+        `${
+          taggers.length > 3
+            ? `and ${taggers.length - 3} other${taggers.length > 4 ? "s" : ""}.`
+            : ""
+        }`
+      );
 
   const uploadRef = useRef<any>(null);
   const triggerUpload = () => {
@@ -214,30 +236,10 @@ export default function MyProfile() {
                             </div>
                             <div className="flex w-2/3 flex-row items-center justify-between">
                               <p className="flex text-ellipsis whitespace-nowrap px-6 text-sm font-normal text-gray-700 group-hover:hidden lg:flex">
-                                {taggers
-                                  .slice(0, 3)
-                                  .reduce(
-                                    (acc: string, tagger: string, i: number) =>
-                                      acc.concat(
-                                        `${
-                                          users[tagger]?.name ||
-                                          tagger.slice(0, 6)
-                                        }${taggers.length > i + 1 ? ", " : ""}`
-                                      ),
-                                    ""
-                                  )
-                                  .concat(
-                                    `${
-                                      taggers.length > 3
-                                        ? `and ${taggers.length - 3} other${
-                                            taggers.length > 4 ? "s" : ""
-                                          }.`
-                                        : ""
-                                    }`
-                                  )}
+                                {formatTaggers(taggers)}
                               </p>
-                              <p className="hidden text-ellipsis px-6 text-sm font-normal text-gray-700 group-hover:flex">
-                                {description}
+                              <p className="hidden text-ellipsis whitespace-nowrap px-6 text-sm font-normal text-gray-700 group-hover:flex">
+                                {description || formatTaggers(taggers)}
                               </p>
                             </div>
                           </div>

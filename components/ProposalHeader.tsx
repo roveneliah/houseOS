@@ -15,7 +15,7 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
   const allTags = useGetAllProposalTags(proposal.id);
   const address = useUserAddress();
   const [showTags, setShowTags] = useState(false);
-  const { signedIn } = useSignIn();
+  const { hasProfile: signedIn } = useSignIn();
 
   const snapshotLink =
     proposal?.space?.id &&
@@ -108,7 +108,9 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
           </div>
         </div>
         <p className="text-left text-6xl font-semibold">{proposal.title}</p>
-        {showTags && <TagListBox tags={allTags} address={address} />}
+        {signedIn && showTags && (
+          <TagListBox tags={allTags} address={address} />
+        )}
       </div>
     </div>
   ) : (

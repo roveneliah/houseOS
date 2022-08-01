@@ -8,7 +8,6 @@ import { userTags as allUserTags } from "../../config";
 import { useTagUser, useUntagUser } from "../database/useTagUser";
 import { listenUserTags } from "../../utils/firebase/user";
 import { Tag } from "@/types/Tag";
-import { map } from "ramda";
 
 export const useGetAllUserTags = (
   address: Maybe<EthereumAddress>
@@ -52,13 +51,19 @@ export const useGetAllUserTags = (
 
         const allTags = tags
           .concat(otherTags)
-          .map((o: any) => ({ ...o, name: o.tag }))
+          .map((o: any) => ({
+            ...o,
+            name: o.name || o.tag,
+            tag: o.name || o.tag,
+          }))
           .map(addDescription)
           .map(declareToggle);
 
         setTags(allTags);
       });
-  }, [account?.address, untagUser, tagUser, signedIn]);
+  }, [account?.address, untagUser, tagUser, signedIn, address]);
+
+  console.log(sortedTags);
 
   return sortedTags;
 };

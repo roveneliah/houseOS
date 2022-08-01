@@ -16,6 +16,8 @@ import Link from "next/link";
 import { usePath } from "@/hooks/usePath";
 import { useFirebase } from "@/hooks/useFirebase";
 import { useCommand, useOnKeydown } from "@/hooks/generic/useCommand";
+import Image from "next/image";
+import NewUserFlow from "./SignupModal";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
 
@@ -88,12 +90,13 @@ export default function Layout({
         demo={demo}
       />
       <main className="bg-base-200 flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start overflow-x-auto">
-        <div className="fixed top-0 z-20 flex w-full flex-row justify-between">
+        <div className="fixed top-0 z-20 flex h-[8vh] w-full flex-row justify-between overflow-hidden">
           <div className="breadcrumbs text-base-content self-center p-4 px-6">
             <ul>
-              <li>
-                <a>{dao.name}</a>
-              </li>
+              <li>{dao.name}</li>
+              {/* <li className="relative h-[10vh] w-[5vw] bg-red-200">
+                <Image src="/logo_sm.svg" layout="fill" />
+              </li> */}
               {path.map(({ pathSlice, route }, i) => (
                 <Link href={route} key={i}>
                   <li>
@@ -114,46 +117,46 @@ export default function Layout({
                   </button>
                 )
               ) : !signedInSIWE ? (
-                !newUserFlow || router.route === "/signup" ? (
-                  <button onClick={() => signIn()} className="btn">
-                    Sign in with Ethereum
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      // router.push("/signup");
-                      // disconnect();
-                    }}
-                    className="btn"
-                  >
-                    <a href="/signup">
-                      <p>Create Profile</p>
-                    </a>
-                  </button>
-                )
+                <button onClick={() => signIn()} className="btn">
+                  Sign in with Ethereum
+                </button>
               ) : (
                 <button className="btn loading">
                   Signing in with Ethereum...
                 </button>
               )
+            ) : !newUserFlow ? (
+              <button
+                className="btn group"
+                onClick={() => {
+                  signOut();
+                  disconnect();
+                  connect();
+                }}
+              >
+                <p className="loading block group-hover:hidden">
+                  {user?.name ?? "Loading Profile"}
+                </p>
+                <p className="hidden group-hover:block">Disconnect</p>
+              </button>
             ) : (
               <>
-                {/* <button className="btn">{user.krauseBalance} $KRAUSE</button> */}
-                {router.route !== "/signup" && (
-                  <button
-                    className="btn group"
-                    onClick={() => {
-                      signOut();
-                      disconnect();
-                      connect();
-                    }}
-                  >
-                    <p className="loading block group-hover:hidden">
-                      {user?.name ?? "Loading Profile"}
-                    </p>
-                    <p className="hidden group-hover:block">Disconnect</p>
-                  </button>
-                )}
+                <label className="btn modal-btn" htmlFor="signup-modal">
+                  <p>Create Profile</p>
+                </label>
+                <input
+                  type="checkbox"
+                  id="signup-modal"
+                  className="modal-toggle"
+                />
+
+                <label htmlFor="signup-modal" className="modal cursor-pointer">
+                  <div className="w-[70vw]">
+                    <label className="relative" htmlFor="">
+                      <NewUserFlow />
+                    </label>
+                  </div>
+                </label>
               </>
             )}
             <button

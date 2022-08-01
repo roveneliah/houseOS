@@ -37,7 +37,7 @@ export default function Profile({ address: userAddress }: any) {
   const tags: Tag[] = useListenUserTags(address);
   const { data: ensName } = useEnsName({ address });
   const comments: Array<Comment> = useComments(address);
-  const { signedIn } = useSignIn();
+  const { hasProfile: signedIn } = useSignIn();
   const users = useAppSelector((state: any) => state.users);
   const allTags = useGetAllUserTags(address);
 
@@ -172,7 +172,12 @@ export default function Profile({ address: userAddress }: any) {
               </div>
             )}
             {selectedView.name === "Tags" && (
-              <div className="bg-primary-content flex w-full flex-col overflow-hidden rounded-b-lg">
+              <div className="bg-primary-content flex min-h-[50vh] w-full flex-col overflow-hidden rounded-b-lg">
+                {allTags.length == 0 && (
+                  <div>
+                    <p className="text-neutral p-8">Loading Tags...</p>
+                  </div>
+                )}
                 {allTags.map(
                   ({ tag, taggers, toggle, description }: any, i: number) => (
                     <div

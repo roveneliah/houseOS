@@ -98,7 +98,7 @@ export default function CommandPalette({
           : type
         : type === filter
     )
-    .filter((option) => !query || contains(query)(option.name))
+    .filter((option) => !query || contains(query)(option.name || ""))
     .map(formatLinkCommand);
 
   return (

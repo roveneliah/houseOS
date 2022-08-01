@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFirebase } from "./useFirebase";
+import { useIsNewUser } from "./useIsNewUser";
 import { useSIWE } from "./useSIWE";
 
 export const useSignIn = () => {
@@ -22,6 +23,8 @@ export const useSignIn = () => {
     signOutSIWE();
   };
 
+  const noAccount = useIsNewUser();
+
   const [load, setLoad] = useState<boolean>(false);
   useEffect(() => {
     // console.log("Signed in SIWE", signedInSIWE);
@@ -37,5 +40,6 @@ export const useSignIn = () => {
     signIn: signInSIWE,
     signedIn: signedInFirebase && signedInSIWE,
     loadingFirebase,
+    hasProfile: signedInFirebase && signedInSIWE && !noAccount,
   };
 };

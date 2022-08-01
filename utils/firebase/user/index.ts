@@ -21,17 +21,27 @@ import { db, storage } from "..";
 import { dao } from "../../../config";
 import { EthereumAddress } from "../../../types/EthereumAddress";
 
-export const createUser = async (
-  address: EthereumAddress,
-  name: string = dao.memberName,
-  tags: Array<string> = []
-) => {
+export async function createUser({
+  address,
+  name = dao.memberName,
+  tags = [],
+  twitter,
+  email,
+}: {
+  address: EthereumAddress;
+  name: string;
+  tags: Array<string>;
+  twitter?: string;
+  email?: string;
+}) {
   const batch = writeBatch(db);
   batch.set(
     doc(db, "users", address),
     {
       name,
       address,
+      twitter: twitter || "",
+      email: email || "",
     },
     {
       merge: true,
@@ -44,7 +54,7 @@ export const createUser = async (
     })
   );
   await batch.commit();
-};
+}
 
 export const updateName = async (address: EthereumAddress, name: string) =>
   updateDoc(doc(db, "users", address), { name });
