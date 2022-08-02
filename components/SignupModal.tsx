@@ -32,7 +32,7 @@ export default function SignupModal() {
       <p className="text-3xl font-semibold">Please sign in.</p>
     </div>
   ) : (
-    <div className="flex w-full flex-row justify-center">
+    <div className="z-30 flex w-full flex-row justify-center">
       <div className="flex w-full flex-row space-x-4">
         <div className="bg-primary-content flex w-full flex-col space-y-8 rounded-lg p-8">
           <div className="flex h-fit flex-row items-center justify-between">
@@ -65,7 +65,7 @@ export default function SignupModal() {
             {/* <h1 className="text-md text-neutral border-neutral w-fit rounded-full border px-3 py-1 font-semibold">
               Profile
             </h1> */}
-            <div className="flex w-full flex-col space-y-4 ">
+            <div className="text-base-100/50 flex w-full flex-col space-y-4 ">
               <div className="flex flex-col space-y-1">
                 <p className="text-sm">Username</p>
                 <input

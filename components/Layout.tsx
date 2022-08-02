@@ -16,7 +16,7 @@ import Link from "next/link";
 import { usePath } from "@/hooks/usePath";
 import { useFirebase } from "@/hooks/useFirebase";
 import { useCommand, useOnKeydown } from "@/hooks/generic/useCommand";
-import NewUserFlow from "./SignupModal";
+import SignupModal from "./SignupModal";
 import Image from "next/image";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
@@ -146,9 +146,9 @@ export default function Layout({
                 />
 
                 <label htmlFor="signup-modal" className="modal cursor-pointer">
-                  <div className="w-[70vw]">
+                  <div className="w-[60vw]">
                     <label className="relative" htmlFor="">
-                      <NewUserFlow />
+                      <SignupModal />
                     </label>
                   </div>
                 </label>
