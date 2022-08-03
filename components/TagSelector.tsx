@@ -1,33 +1,34 @@
-import { prop, T } from "ramda";
+import { prop } from "ramda";
 import { useEffect, useMemo } from "react";
 import { useOrderedMultiselect } from "../hooks/generic/useOrderedMultiselect";
 
+const themes = [
+  {
+    active: "border-warning text-warning border",
+    inactive: "text-base-content hover:bg-base-100 border-base-content border",
+  },
+  {
+    active: "bg-base-100 text-primary-content",
+    inactive:
+      "text-base-100 hover:bg-base-100 hover:text-base-100 border-base-100 border",
+  },
+];
+
 export default function TagSelector({ tags, setSelectedTags, theme = 0 }: any) {
-  const enhancedTags = useOrderedMultiselect(tags); // (1) selected first, (2) tag selected, (3) expose toggle
+  const enhancedTags = useOrderedMultiselect(tags);
+
   const selectedTags = useMemo(() => {
     const selected = enhancedTags.filter(prop("selected")).map(prop("x"));
     return selected.length > 0 ? selected : [];
   }, [...enhancedTags.map((tag) => tag.selected)]);
 
   useEffect(() => {
-    setSelectedTags(selectedTags);
+    setSelectedTags && setSelectedTags(selectedTags);
   }, [selectedTags]);
 
-  const themes = [
-    {
-      active: "border-warning text-warning border",
-      inactive:
-        "text-base-content hover:bg-base-100 border-base-content border",
-    },
-    {
-      active: "bg-base-100 text-primary-content",
-      inactive:
-        "text-base-100 hover:bg-base-100 hover:text-base-100 border-base-100 border",
-    },
-  ];
   const { active, inactive } = themes[theme];
 
-  return (
+  return enhancedTags.length > 0 ? (
     <div className="no-scrollbar flex flex-row justify-start space-x-2 overflow-clip overflow-x-auto">
       {enhancedTags.map(({ x, selected, toggle }: any, i: number) => (
         <p
@@ -40,9 +41,8 @@ export default function TagSelector({ tags, setSelectedTags, theme = 0 }: any) {
           {x}
         </p>
       ))}
-      {/* <p className={`badge`} onClick={() => {}}>
-        +
-      </p> */}
     </div>
+  ) : (
+    <></>
   );
 }

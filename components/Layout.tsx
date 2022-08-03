@@ -8,13 +8,10 @@ import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useSignIn } from "../hooks/useSignIn";
 import { useIsNewUser } from "../hooks/useIsNewUser";
-import { useRouter } from "next/router";
-
 import dynamic from "next/dynamic";
 import { useSIWE } from "@/hooks/useSIWE";
 import Link from "next/link";
 import { usePath } from "@/hooks/usePath";
-import { useFirebase } from "@/hooks/useFirebase";
 import { useCommand, useOnKeydown } from "@/hooks/generic/useCommand";
 import SignupModal from "./SignupModal";
 import Image from "next/image";

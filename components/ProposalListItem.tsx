@@ -30,7 +30,6 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
             <ClockIcon strokeWidth={2} />
           )}
         </div>
-        {/* <p className="badge badge-sm">{timeLeft}</p> */}
         <Link href={`/proposals/${proposal.id}`}>
           <p
             className={`cursor-pointer overflow-clip text-ellipsis whitespace-nowrap text-sm ${
@@ -50,11 +49,6 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
           // theme="dark"
           disabled={true}
         />
-        {/* {proposalTags.map((tag, i) => (
-          <p key={i} className="badge badge-sm badge-dark">
-            {tag}
-          </p>
-        ))} */}
       </div>
     </div>
   ) : (

@@ -5,24 +5,11 @@ import { CommandFilters } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
 import { Dialog, Combobox, Transition } from "@headlessui/react";
 import ListIcon from "./icons/ListIcon";
-// import ClockIcon from "./icons/ClockIcon";
 import SearchIcon from "./icons/SearchIcon";
-// import UsersIcon from "./icons/UsersIcon";
 import LinkIcon from "./icons/LinkIcon";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { ChatIcon } from "./icons/ChatIcon";
-import AtIcon from "./icons/AtIcon";
 import UsersIcon from "./icons/UsersIcon";
-import ArrowRightIcon from "./icons/ArrowIcon";
-
-interface Props {
-  commands: Array<Command>;
-  setIsOpen: Function;
-  isOpen?: boolean;
-  noOpacity?: boolean;
-  deactivated?: boolean;
-  demo?: boolean;
-}
 
 const views = [
   {
@@ -66,6 +53,15 @@ const formatLinkCommand = (command: Command) =>
         ),
       }
     : command;
+
+interface Props {
+  commands: Array<Command>;
+  setIsOpen: Function;
+  isOpen?: boolean;
+  noOpacity?: boolean;
+  deactivated?: boolean;
+  demo?: boolean;
+}
 
 export default function CommandPalette({
   commands,

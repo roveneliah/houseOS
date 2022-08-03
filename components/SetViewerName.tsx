@@ -5,14 +5,6 @@ import { useAccount } from "wagmi";
 export default function SetViewerName() {
   const record = useViewerRecord("basicProfile");
   const [name, setName] = useState("");
-  const { data: address } = useAccount();
-
-  console.log(
-    record.isMutable,
-    record.isMutating,
-    record.isError,
-    record.isLoading
-  );
 
   return (
     <div>

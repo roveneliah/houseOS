@@ -144,44 +144,46 @@ module.exports = {
         "base-content": "white",
       },
     },
+    {
+      mytheme: {
+        primary: "green",
+        "primary-focus": "#24143D",
+        "primary-content": "#F4F0FA",
+
+        secondary: "#F72585",
+        "secondary-focus": "#760438",
+        // "secondary-content": "",
+
+        accent: "teal",
+        // "accent-focus": "#760438",
+        // "accent-content": "",
+
+        neutral: "#F4F0FA",
+        "neutral-focus": "#760438",
+        // "neutral-content": "",
+
+        "base-100": "#FFFFFF",
+        "base-200": "#F3F1EA",
+        "base-300": "#B9B5A6",
+        "base-content": "#170B2B",
+
+        info: "#2463EB",
+        // "info-content": "",
+
+        success: "#16A249",
+        // "success-content": "",
+
+        warning: "orange",
+        // "warning-content": "",
+
+        error: "red",
+        // "error-content": "",
+
+        "--app-bg": "#F3F1EA",
+      },
+    },
     "light",
-    // "dark",
-    // {
-    //   mytheme: {
-    //     primary: "green",
-    //     // "primary-focus": "#24143D",
-    //     // "primary-content": "#F4F0FA",
-
-    //     secondary: "#F72585",
-    //     // "secondary-focus": "#760438",
-    //     // "secondary-content": "",
-
-    //     accent: "teal",
-    //     // "accent-focus": "#760438",
-    //     // "accent-content": "",
-
-    //     neutral: "#F4F0FA",
-    //     // "neutral-focus": "#760438",
-    //     // "neutral-content": "",
-
-    //     "base-100": "#DFFFD6",
-    //     "base-200": "#1F8F00",
-    //     "base-300": "#104A00",
-
-    //     // info: "#2463EB",
-    //     // "info-content": "",
-
-    //     // success: "#16A249",
-    //     // "success-content": "",
-
-    //     // warning: "orange",
-    //     // "warning-content": "",
-
-    //     // error: "red",
-    //     // "error-content": "",
-    //   },
-    // },
-    "light",
+    "dark",
     "cupcake",
     "bumblebee",
     "emerald",

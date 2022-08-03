@@ -50,14 +50,14 @@ export default function ChoiceFilters({
         >
           {/* // TODO: generalize this to pass in these components */}
           <div className="flex w-full flex-row justify-between">
-            <p className="badge bg-base-100 text-base-content">
+            <p className="badge">
               {toPercent(
                 proposal.scores_total
                   ? proposal.scores[i] / proposal.scores_total
                   : proposal.scores_total
               )}
             </p>
-            <p className="badge bg-base-100 text-base-content invisible xl:visible">
+            <p className="badge invisible xl:visible">
               {proposal.scores[i].toFixed(0)} $KRAUSE
             </p>
           </div>

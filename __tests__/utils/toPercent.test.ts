@@ -1,12 +1,7 @@
 import { expect } from "chai";
 import { toPercent } from "../../utils/toPercent";
 
-interface Test {
-  expected: any;
-  given: any;
-}
-
-describe("toPercent()", () => {
+describe("toPercent", () => {
   it("should return 50%", () => {
     expect(toPercent(0.5)).to.equal("50%");
   });

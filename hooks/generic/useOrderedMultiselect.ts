@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { prioritize } from "../../utils/prioritize";
 
+/**
+ * List selected elements before unselected ones.
+ */
 export const useOrderedMultiselect = (arr: Array<any>): Array<any> => {
   const [selected, setSelected] = useState(arr.map(() => false));
   const toggle = (index: number) => () => {
