@@ -113,7 +113,7 @@ export default function CommandPalette({
       <Dialog
         open={isOpen}
         onClose={close}
-        className="fixed inset-0 z-50 mx-auto w-[70vw] overflow-y-auto p-4 pt-[15vh] lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
+        className="fixed inset-[15vh] z-50 mx-auto h-fit w-[70vw] overflow-y-auto  lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
