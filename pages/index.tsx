@@ -1,36 +1,11 @@
 import { useAppDispatch } from "@/app/hooks";
-import AppFrame, { NotificationFrame } from "@/components/AppFrame";
-import { useBoolean } from "@/hooks/useBoolean";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useAudioPlayer } from "../hooks/useAudioPlayer";
 const Layout = dynamic(() => import("../components/Layout"));
 
-const tracks = [
-  {
-    title: "BJTMJHYF",
-    author: "grimelabinc",
-    credits: "https://soundcloud.com/grimelabinc/bjtmjhyf",
-    file: "track0.mp3",
-  },
-];
-
 export default function Home() {
-  const audioPlayer = useRef<any>();
-  const [playing, togglePlay] = useBoolean(false);
-
-  const [track, setTrack] = useState(0);
-  const nextTrack = () => setTrack((track + 1) % tracks.length);
-
-  const play = () => {
-    audioPlayer?.current?.play();
-    togglePlay();
-  };
-  const pause = () => {
-    audioPlayer?.current?.pause();
-    togglePlay();
-  };
-  const toggle = () => (playing ? pause() : play());
+  const { audioPlayer, playing, toggle, track } = useAudioPlayer();
 
   const dispatch = useAppDispatch();
   const toggleHelp = () =>
@@ -78,7 +53,7 @@ export default function Home() {
           <p className="font-mono text-sm">Press ctrl-k to search...</p>
         </div>
         <div className="flex cursor-pointer flex-row items-center space-x-2">
-          <audio ref={audioPlayer} src={tracks[0].file} preload="metadata" />
+          <audio ref={audioPlayer} src={track.file} preload="metadata" />
           {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
@@ -87,7 +62,7 @@ export default function Home() {
           >
             <path d="M8.445 14.832A1 1 0 0010 14v-2.798l5.445 3.63A1 1 0 0017 14V6a1 1 0 00-1.555-.832L10 8.798V6a1 1 0 00-1.555-.832l-6 4a1 1 0 000 1.664l6 4z" />
           </svg> */}
-          <div onClick={toggle} className="">
+          <div onClick={toggle} className="cursor-pointer">
             {playing ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -135,9 +110,9 @@ export default function Home() {
               <path d="M4.555 5.168A1 1 0 003 6v8a1 1 0 001.555.832L10 11.202V14a1 1 0 001.555.832l6-4a1 1 0 000-1.664l-6-4A1 1 0 0010 6v2.798l-5.445-3.63z" />
             </svg>
           </div> */}
-          <a href={tracks[0].credits} target="_blank">
+          <a href={track.credits} target="_blank">
             <p className="font-mono text-sm">
-              {tracks[0].title} - {tracks[0].author}
+              {track.title} - {track.author}
             </p>
           </a>
 
