@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import usersReducer from "@/features/users/usersSlice";
+import windowsReducer from "@/features/windows/windowsSlice";
 export const store = configureStore({
   reducer: {
     users: usersReducer,
+    windows: windowsReducer,
   },
 });
 

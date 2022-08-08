@@ -15,6 +15,7 @@ import { recordToUser } from "../../utils/recordToUser";
 // import { updateName } from "../ceramic/ceramic";
 import { useGetUser } from "../database/useGetUser";
 import { useKrauseBalance } from "../ethereum/useKrauseBalance";
+import { useSignIn } from "../useSignIn";
 
 // CERAMIC
 // export const useGetUserProfile = (): User => {

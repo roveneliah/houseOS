@@ -7,7 +7,7 @@ export const useCommand = (key: string, fn: Function, param?: any) => {
     }
     window.addEventListener("keydown", onKeydown);
     return () => window.removeEventListener("keydown", onKeydown);
-  }, [param]);
+  }, [param, fn]);
 };
 
 export const useOnKeydown = (key: string, fn: Function, param?: any) => {

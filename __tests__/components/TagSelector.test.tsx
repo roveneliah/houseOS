@@ -1,10 +1,10 @@
 import React from "react";
-import { fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { expect as expectChai } from "chai";
+import { click } from "../../utils/test/click";
 
 import TagSelector from "../../components/TagSelector";
-import { renderWithId } from "./renderWithId";
+import { renderWithId } from "../../utils/test/renderWithId";
 
 describe("TagSelector", () => {
   it("should render an element with each tag provided", () => {
@@ -19,26 +19,40 @@ describe("TagSelector", () => {
     expect(component).toBeEmptyDOMElement();
   });
 
-  it("should list the selected tags first", () => {
-    const tags0 = ["0", "1", "2", "3", "4"];
+  describe("toggle", () => {
+    it("select should move tag to head", () => {
+      const tags0 = ["0", "1", "2", "3", "4"];
 
-    const component = renderWithId(<TagSelector tags={tags0} />);
+      const component = renderWithId(<TagSelector tags={tags0} />);
 
-    fireEvent.click(component.children[0].children[2]);
-    expectChai(component.children[0].children[0].innerHTML).to.contain(2);
+      const tags1 = ["2", "0", "1", "3", "4"];
+      click(component.children[0].children[2]);
+      tags1.map((val, i) => {
+        expectChai(component.children[0].children[i].innerHTML).to.equal(val);
+      });
 
-    fireEvent.click(component.children[0].children[2]);
-    expectChai(component.children[0].children[0].innerHTML).to.contain(1);
-    expectChai(component.children[0].children[1].innerHTML).to.contain(2);
-    expectChai(component.children[0].children[2].innerHTML).to.contain(0);
-    expectChai(component.children[0].children[3].innerHTML).to.contain(3);
-    expectChai(component.children[0].children[4].innerHTML).to.contain(4);
+      const tags2 = ["1", "2", "0", "3", "4"];
+      click(component.children[0].children[2]);
+      tags2.map((val, i) => {
+        expectChai(component.children[0].children[i].innerHTML).to.equal(val);
+      });
+    });
 
-    fireEvent.click(component.children[0].children[0]);
-    expectChai(component.children[0].children[0].innerHTML).to.contain(2);
-    expectChai(component.children[0].children[1].innerHTML).to.contain(0);
-    expectChai(component.children[0].children[2].innerHTML).to.contain(1);
-    expectChai(component.children[0].children[3].innerHTML).to.contain(3);
-    expectChai(component.children[0].children[4].innerHTML).to.contain(4);
+    it("unselect should keep selected first", () => {
+      const tags0 = ["0", "1", "2", "3", "4"];
+
+      const component = renderWithId(<TagSelector tags={tags0} />);
+      click(component.children[0].children[3]);
+
+      ["3", "0", "1", "2", "4"].map((val, i) => {
+        expectChai(component.children[0].children[i].innerHTML).to.equal(val);
+      });
+
+      click(component.children[0].children[0]);
+
+      tags0.map((val, i) => {
+        expectChai(component.children[0].children[i].innerHTML).to.equal(val);
+      });
+    });
   });
 });

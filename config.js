@@ -136,14 +136,14 @@ module.exports = {
     ],
   },
   themes: [
-    {
-      dark: {
-        ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
-        primary: "blue",
-        "primary-focus": "mediumblue",
-        "base-content": "white",
-      },
-    },
+    // {
+    //   dark: {
+    //     ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
+    //     primary: "blue",
+    //     "primary-focus": "mediumblue",
+    //     "base-content": "white",
+    //   },
+    // },
     {
       mytheme: {
         primary: "green",
@@ -163,7 +163,7 @@ module.exports = {
         // "neutral-content": "",
 
         "base-100": "#FFFFFF",
-        "base-200": "#F3F1EA",
+        "base-200": "#F4EFE9",
         "base-300": "#B9B5A6",
         "base-content": "#170B2B",
 
@@ -182,8 +182,8 @@ module.exports = {
         "--app-bg": "#F3F1EA",
       },
     },
-    "light",
-    "dark",
+    // "light",
+    // "dark",
     "cupcake",
     "bumblebee",
     "emerald",

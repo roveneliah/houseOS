@@ -10,6 +10,8 @@ import LinkIcon from "./icons/LinkIcon";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { ChatIcon } from "./icons/ChatIcon";
 import UsersIcon from "./icons/UsersIcon";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import windowsSlice from "@/features/windows/windowsSlice";
 
 const views = [
   {
@@ -56,8 +58,6 @@ const formatLinkCommand = (command: Command) =>
 
 interface Props {
   commands: Array<Command>;
-  setIsOpen: Function;
-  isOpen?: boolean;
   noOpacity?: boolean;
   deactivated?: boolean;
   demo?: boolean;
@@ -65,8 +65,6 @@ interface Props {
 
 export default function CommandPalette({
   commands,
-  isOpen = false,
-  setIsOpen,
   noOpacity = false,
   demo = false,
 }: Props) {
@@ -81,8 +79,15 @@ export default function CommandPalette({
   } = useSingleSelect(views);
   const filter = filters[selected].name;
 
-  useCommand("k", setIsOpen, !isOpen);
-  useCommand("/", setIsOpen, !isOpen);
+  const { search: isOpen } = useAppSelector((state) => state.windows.open);
+  const dispatch = useAppDispatch();
+  const close = () =>
+    dispatch({ type: "windows/close", payload: { windowName: "search" } });
+  const toggle = () =>
+    dispatch({ type: "windows/toggle", payload: { windowName: "search" } });
+
+  useCommand("k", toggle);
+  useCommand("/", toggle);
   useCommand("ArrowLeft", prevFilter, filter);
   useCommand("ArrowRight", nextFilter, filter);
 
@@ -107,8 +112,8 @@ export default function CommandPalette({
     >
       <Dialog
         open={isOpen}
-        onClose={() => setIsOpen(false)}
-        className="fixed inset-0 mx-auto w-[70vw] overflow-y-auto p-4 pt-[15vh] lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
+        onClose={close}
+        className="fixed inset-0 z-50 mx-auto w-[70vw] overflow-y-auto p-4 pt-[15vh] lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -174,18 +179,25 @@ export default function CommandPalette({
             onChange={(command: Command) => {
               if (!demo) {
                 command.link && router.push(command.link);
-                setIsOpen(false);
+                close();
               }
             }}
             as="div"
-            className="relative overflow-hidden rounded-lg bg-gray-200 shadow-xl shadow-black ring-1 ring-black/5"
+            className="bg-base-100 relative overflow-hidden rounded-lg border-4 border-black font-mono shadow-lg shadow-black ring-1 ring-black/5"
           >
-            <div className="flex flex-row justify-start bg-gray-300 text-gray-700">
+            <div className="bg-base-200 flex flex-row justify-start space-x-2 p-4 py-2 outline-none">
+              <button
+                onClick={close}
+                className="btn-circle btn-xs border-4 border-black outline-none"
+              ></button>
+              <div className="btn-circle btn-xs border-4 border-black"></div>
+            </div>
+            {/* <div className="bg-base-200 flex flex-row justify-start text-gray-700">
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
                   className={`flex w-full flex-row items-center justify-start space-x-2 px-5 py-3 ${
-                    filter === view && "bg-gray-200"
+                    filter === view && "bg-base-100"
                   }`}
                   // set filter to
                   onClick={() =>
@@ -200,8 +212,8 @@ export default function CommandPalette({
                   </p>
                 </div>
               ))}
-            </div>
-            <div className="flex flex-row items-center space-x-2 border-b p-4 px-6">
+            </div> */}
+            <div className="flex flex-row items-center space-x-2 border-b p-2 px-6 font-mono">
               <div className="text-gray-800">
                 <SearchIcon />
               </div>
@@ -212,12 +224,13 @@ export default function CommandPalette({
                 onChange={(event) => {
                   setQuery(event.target.value);
                 }}
+                autoFocus={true}
               />
             </div>
             {filteredCommands.length > 0 ? (
               <Combobox.Options
                 static
-                className="no-scrollbar max-h-96 divide-y divide-gray-200 overflow-hidden overflow-y-auto rounded-lg px-2 py-4"
+                className="no-scrollbar divide-base-200 max-h-96 divide-y overflow-hidden overflow-y-auto rounded-lg px-2 py-4"
               >
                 {/* {filter === CommandFilters.ALL && (
                   <div className="flex flex-row items-center space-x-1 px-4 pb-2">
@@ -247,12 +260,12 @@ export default function CommandPalette({
                         }`}
                       >
                         <div
-                          className={`text-neutral flex flex-row items-center justify-start space-x-2 ${
+                          className={`text-neutral-content flex flex-row items-center justify-start space-x-2 ${
                             command.className || ""
                           }`}
                         >
                           <div>{command.icon({ strokeWidth: 1 })}</div>
-                          <p className="text-ellipses whitespace-nowrap text-xs font-light">
+                          <p className="text-ellipses whitespace-nowrap text-xs">
                             {command.name}
                           </p>
                         </div>
@@ -268,7 +281,7 @@ export default function CommandPalette({
                 </p>
               </div>
             )}
-            <div className="text-neutral flex flex-row items-center space-x-2 bg-gray-300 px-3 py-2">
+            <div className="text-neutral-content bg-base-200 flex flex-row items-center space-x-2 px-3 py-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -285,11 +298,11 @@ export default function CommandPalette({
               </svg>
               <p className="text-xs">
                 Use{" "}
-                <span className="text-neutral mx-1 cursor-none rounded-lg">
+                <span className="text-neutral-content mx-1 cursor-none rounded-lg">
                   ⌘→
                 </span>{" "}
                 and{" "}
-                <span className="text-neutral mx-1 cursor-none rounded-lg">
+                <span className="text-neutral-content mx-1 cursor-none rounded-lg">
                   ⌘←
                 </span>{" "}
                 to switch between filters.

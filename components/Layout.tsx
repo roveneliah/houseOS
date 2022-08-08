@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { dao, themes } from "../config";
 import { useGetCommands } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
@@ -15,6 +15,9 @@ import { usePath } from "@/hooks/usePath";
 import { useCommand, useOnKeydown } from "@/hooks/generic/useCommand";
 import SignupModal from "./SignupModal";
 import Image from "next/image";
+import AppFrame, { NotificationFrame } from "./AppFrame";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { useDispatch } from "react-redux";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
 
@@ -50,13 +53,16 @@ export default function Layout({
     isConnecting,
     isReconnecting,
   } = useConnect();
+  const dispatch = useAppDispatch();
 
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
   const connector = connectors[1];
 
-  const [isOpen, setIsOpen] = useState<boolean>(paletteStartsOpen);
-  const open = isOpen || fixedOpen;
+  // TODO: handle FIXED OPEN behavior
+
+  const toggleSearch = () =>
+    dispatch({ type: "windows/toggle", payload: { windowName: "search" } });
 
   const { signOut, signIn, signedIn } = useSignIn();
   const { signedIn: signedInSIWE } = useSIWE();
@@ -64,8 +70,15 @@ export default function Layout({
   const newUserFlow = useIsNewUser();
   const path = usePath();
 
+  const date = new Date();
+
+  const welcomeMessage = useAppSelector((state) => state.windows.open.welcome);
+  const help = useAppSelector((state) => state.windows.open.help);
+  const closeWelcome = () =>
+    dispatch({ type: "windows/close", payload: { windowName: "welcome" } });
+
   return (
-    <div data-theme={themeName} className="no-scrollbar min-h-screen">
+    <div data-theme={themeName} className="no-scrollbar min-h-screen font-mono">
       <Head>
         <title>House OS</title>
         {/* TODO: #11 customize in config */}
@@ -75,19 +88,19 @@ export default function Layout({
 
       <CommandPalette
         commands={commands}
-        isOpen={open}
-        setIsOpen={setIsOpen}
         noOpacity={noOpacity}
         deactivated={newUserFlow}
         demo={demo}
       />
       <main className="bg-base-200 no-scrollbar flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start overflow-x-auto">
-        <div className="fixed top-0 z-20 flex h-[8vh] w-full flex-row justify-between overflow-hidden">
-          <div className="breadcrumbs text-base-content self-center p-4 px-6">
+        <div className="fixed top-0 flex h-[8vh] w-full flex-row justify-between overflow-hidden">
+          <div className="breadcrumbs text-base-content self-center p-4 px-6 font-mono">
             <ul>
               {/* <li>{dao.name}</li> */}
               <li className="relative h-[5vh] w-[2vw]">
-                <Image src="/initials.svg" layout="fill" />
+                <a href="/">
+                  <Image src="/initials.svg" layout="fill" />
+                </a>
               </li>
               {path.map(({ pathSlice, route }, i) => (
                 <Link href={route} key={i}>
@@ -98,7 +111,7 @@ export default function Layout({
               ))}
             </ul>
           </div>
-          <div className="flex flex-row space-x-2 p-4">
+          <div className="flex flex-row space-x-4 p-4">
             {!signedIn ? (
               !isConnected ? (
                 isReconnecting ? (
@@ -109,7 +122,10 @@ export default function Layout({
                   </button>
                 )
               ) : !signedInSIWE ? (
-                <button onClick={() => signIn()} className="btn">
+                <button
+                  onClick={() => signIn()}
+                  className="btn border-black bg-transparent font-normal hover:bg-transparent"
+                >
                   Sign in with Ethereum
                 </button>
               ) : (
@@ -152,17 +168,66 @@ export default function Layout({
               </>
             )}
             <button
-              className="btn btn-active group flex flex-row space-x-2"
-              onClick={() => setIsOpen(!isOpen)}
+              className="btn group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent"
+              onClick={toggleSearch}
             >
               <div className="">
                 <SearchIcon />
               </div>
-              {/* <p className="flex group-hover:hidden">Search</p> */}
-              <p className="flex">⌘k</p>
+              <p className="flex font-normal group-hover:hidden">Search</p>
+              {/* <p className="flex font-normal">⌘k</p> */}
             </button>
+            <button className="font-mono text-sm">{date.toDateString()}</button>
           </div>
         </div>
+        {newUserFlow && <NotificationFrame message="Hi there" />}
+        {welcomeMessage && (
+          <div className="absolute">
+            <AppFrame>
+              <div className="flex flex-col space-y-4 p-4">
+                <p className="font-mono font-bold">Welcome to House OS</p>
+                <p className="font-mono">This is your map around the DAO</p>
+                <div>
+                  <p className="font-mono text-sm">
+                    - Open <span className="font-bold">Search</span> with ctrl-k
+                    or cmd-k.
+                  </p>
+                  <p className="font-mono text-sm">
+                    - Find <span className="font-bold">quick links</span> on
+                    your desktop.
+                  </p>
+                </div>
+                {/* <p className="font-mono text-sm">By signing in, you can...</p>
+              <div>
+              <p className="font-mono text-sm">- Follow other Jerry's</p>
+              <p className="font-mono text-sm">
+              - Help the DAO by labeling proposals and users.
+              </p>
+            </div> */}
+              </div>
+            </AppFrame>
+          </div>
+        )}
+        {/* {help && (
+          <div className="absolute">
+            <AppFrame width={60}>
+              <div className="flex flex-col space-y-4 p-4">
+                <p className="font-mono font-bold">Help!</p>
+                <p className="font-mono">This is your map around the DAO</p>
+                <div>
+                  <p className="font-mono text-sm">
+                    - Open <span className="font-bold">Search</span> with ctrl-k
+                    or cmd-k.
+                  </p>
+                  <p className="font-mono text-sm">
+                    - Find <span className="font-bold">quick links</span> on
+                    your desktop.
+                  </p>
+                </div>
+              </div>
+            </AppFrame>
+          </div>
+        )} */}
         {children}
       </main>
     </div>
