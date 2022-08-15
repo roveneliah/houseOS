@@ -5,6 +5,7 @@ import { listenUserTags } from "../../utils/firebase/user";
 import { useTagUser, useUntagUser } from "./useTagUser";
 import { Maybe } from "../../types/Maybe";
 import { userTags } from "@/config";
+import { gt, pipe, prop } from "ramda";
 
 const getDescription = (tagName: string) =>
   userTags.find((tag) => tag.name === tagName)?.description;
@@ -20,10 +21,7 @@ export const useListenUserTags = (address: Maybe<EthereumAddress>) => {
       listenUserTags(address, (tags: any) => {
         setTags(
           tags
-            .filter(
-              ({ taggers }: { taggers: Array<EthereumAddress> }) =>
-                taggers.length > 0
-            )
+            .filter(({ taggers }: any) => taggers.length > 0)
             .map(({ tag, taggers }: any) => ({
               tag,
               description: getDescription(tag),

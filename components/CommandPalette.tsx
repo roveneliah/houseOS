@@ -192,7 +192,7 @@ export default function CommandPalette({
               ></button>
               <div className="btn-circle btn-xs border-4 border-black"></div>
             </div>
-            {/* <div className="bg-base-200 flex flex-row justify-start text-gray-700">
+            <div className="bg-base-200 flex flex-row justify-start border-t border-black text-gray-700">
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
@@ -212,7 +212,7 @@ export default function CommandPalette({
                   </p>
                 </div>
               ))}
-            </div> */}
+            </div>
             <div className="flex flex-row items-center space-x-2 border-b p-2 px-6 font-mono">
               <div className="text-gray-800">
                 <SearchIcon />

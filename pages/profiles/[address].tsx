@@ -22,12 +22,96 @@ import UsersIcon from "@/components/icons/UsersIcon";
 import { useAppSelector } from "@/app/hooks";
 import { EthereumAddress } from "@/types/EthereumAddress";
 import { useUserAddress } from "@/hooks/ethereum/useUserAddress";
+import { TagsView } from "@/components/TagsView";
+import { ActivityView } from "@/components/ActivityView";
+import { FollowingView } from "@/components/FollowingView";
 
-const CommentList = dynamic(() => import("@/components/profiles/CommentList"));
 const LoadingView = dynamic(() => import("@/components/profiles/LoadingView"));
-const FriendsList = dynamic(() => import("@/components/profiles/FriendsList"));
-const TagListBox = dynamic(() => import("@/components/profiles/TagListBox"));
 const TagsList = dynamic(() => import("@/components/profiles/TagsList"));
+
+export const formatTaggers = (taggers: Array<string>, users: any) =>
+  taggers
+    .slice(0, 3)
+    .reduce(
+      (acc: string, tagger: string, i: number) =>
+        acc.concat(
+          `${users[tagger]?.name || tagger.slice(0, 6)}${
+            taggers.length > i + 1 ? ", " : ""
+          }`
+        ),
+      ""
+    )
+    .concat(
+      `${
+        taggers.length > 3
+          ? `and ${taggers.length - 3} other${taggers.length > 4 ? "s" : ""}.`
+          : ""
+      }`
+    );
+
+function ProfileHeader(props: any) {
+  return (
+    <div className="bg-base-300 flex w-full flex-row justify-center pt-36">
+      <div className="flex w-3/5 max-w-3xl flex-col items-start space-y-12">
+        <div className="flex w-full flex-row items-center justify-between">
+          <div className="flex w-full flex-col items-start justify-start space-y-4">
+            <div className="flex w-full flex-row space-x-2">
+              {props.signedIn && (
+                <div className="flex flex-row justify-start space-x-2">
+                  {props.isFriend ? (
+                    <p
+                      className="border-success text-success min-w-fit cursor-pointer rounded-full border px-3 py-1 text-sm font-semibold hover:bg-opacity-50"
+                      onClick={() => props.profile?.removeFriend(props.address)}
+                    >
+                      Following
+                    </p>
+                  ) : (
+                    <p
+                      className="border-warning text-warning min-w-fit cursor-pointer rounded-full border px-3 py-1 text-sm font-semibold hover:bg-opacity-50"
+                      onClick={() => props.profile?.addFriend(props.address)}
+                    >
+                      Follow
+                    </p>
+                  )}
+                </div>
+              )}
+              <TagsList tags={props.tags} disabled={true} size="sm" />
+            </div>
+            <p className="text-base-content text-left text-6xl font-bold">
+              {props.name || props.ensName || `Anon ${dao.memberName}`}
+            </p>
+          </div>
+          <div className="hidden rounded-full lg:block">
+            <Image
+              src={props.avatarSrc || defaultAvatar}
+              width={150}
+              height={150}
+              className="rounded-full"
+            />
+          </div>
+        </div>
+        <div className=" bg-base-100 flex w-full flex-row justify-between space-x-0 overflow-hidden rounded-t-lg border-b">
+          {props.views.map(
+            ({ name: viewName, toggle, selected, icon }: any, i: number) => (
+              <div
+                className={`flex w-full flex-row items-center space-x-2 ${
+                  selected
+                    ? "text-base-content border-base-content border-b-2"
+                    : "text-base-content"
+                } px-6 py-3 hover:bg-gray-100`}
+                onClick={toggle}
+                key={i}
+              >
+                {icon({})}
+                <p className="text-md py-2 font-semibold">{viewName}</p>
+              </div>
+            )
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Profile({ address: userAddress }: any) {
   const myAddress = useUserAddress();
@@ -57,26 +141,6 @@ export default function Profile({ address: userAddress }: any) {
   useOnKeydown("ArrowRight", next);
   useOnKeydown("ArrowLeft", prev);
 
-  const formatTaggers = (taggers: Array<string>) =>
-    taggers
-      .slice(0, 3)
-      .reduce(
-        (acc: string, tagger: string, i: number) =>
-          acc.concat(
-            `${users[tagger]?.name || tagger.slice(0, 6)}${
-              taggers.length > i + 1 ? ", " : ""
-            }`
-          ),
-        ""
-      )
-      .concat(
-        `${
-          taggers.length > 3
-            ? `and ${taggers.length - 3} other${taggers.length > 4 ? "s" : ""}.`
-            : ""
-        }`
-      );
-
   const isFriend: boolean = profile?.friends?.includes(address);
   return (
     <Layout>
@@ -86,179 +150,31 @@ export default function Profile({ address: userAddress }: any) {
         </div>
       ) : (
         <div className="flex w-full flex-col items-center">
-          <div className="bg-neutral flex w-full flex-row justify-center pt-36">
-            <div className="flex w-3/5 max-w-3xl flex-col items-start space-y-12">
-              <div className="flex w-full flex-row items-center justify-between">
-                <div className="flex w-full flex-col items-start justify-start space-y-4">
-                  <div className="flex w-full flex-row space-x-2">
-                    {signedIn && (
-                      <div className="flex flex-row justify-start space-x-2">
-                        {isFriend ? (
-                          <p
-                            className="border-success text-success min-w-fit cursor-pointer rounded-full border px-3 py-1 text-sm font-semibold hover:bg-opacity-50"
-                            onClick={() => profile?.removeFriend(address)}
-                          >
-                            Following
-                          </p>
-                        ) : (
-                          <p
-                            className="border-warning text-warning min-w-fit cursor-pointer rounded-full border px-3 py-1 text-sm font-semibold hover:bg-opacity-50"
-                            onClick={() => profile?.addFriend(address)}
-                          >
-                            Follow
-                          </p>
-                        )}
-                      </div>
-                    )}
-                    <div className="flex flex-row space-x-1">
-                      {tags.slice(0, 3).map((tag, i) => (
-                        <p
-                          key={i}
-                          className="text-warning border-warning whitespace-nowrap rounded-full border px-3 py-1 text-sm font-semibold"
-                        >
-                          {tag.tag}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-left text-6xl font-bold text-gray-200">
-                    {name || ensName || `Anon ${dao.memberName}`}
-                  </p>
-                </div>
-                <div className="hidden rounded-full lg:block">
-                  <Image
-                    src={user.avatarSrc || defaultAvatar}
-                    width={150}
-                    height={150}
-                    className="rounded-full"
-                  />
-                </div>
-              </div>
-              <div className="flex w-full flex-row justify-between space-x-0 overflow-hidden rounded-t-lg border-b">
-                {views.map(({ name: viewName, toggle, selected, icon }, i) => (
-                  <div
-                    className={`bg-primary-content flex w-full flex-row items-center space-x-2 ${
-                      selected
-                        ? "text-base-300 border-b-2 border-black"
-                        : "text-base-100"
-                    } px-6 py-3 hover:bg-gray-100`}
-                    onClick={toggle}
-                    key={i}
-                  >
-                    {icon({})}
-                    <p className="text-md py-2 font-semibold">{viewName}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24 overflow-hidden rounded-b-lg">
+          <ProfileHeader
+            avatarSrc={user.avatarSrc}
+            address={address}
+            name={name}
+            profile={profile}
+            tags={tags}
+            ensName={ensName}
+            signedIn={signedIn}
+            views={views}
+            isFriend={isFriend}
+          />
+          <div className="bg-base-100 mb-12 flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24 overflow-hidden rounded-b-lg">
             {selectedView.name === "Activity" && (
-              <div className="bg-primary-content flex w-full flex-col space-y-4">
-                {/* <p className="text-left text-3xl font-semibold text-gray-300">
-                  Comments
-                </p> */}
-                {comments?.length > 0 ? (
-                  <CommentList comments={comments} />
-                ) : (
-                  <div className="text-base-100 flex flex-col space-y-2 p-12">
-                    <p className="text-lg">No comments found.</p>
-                    <p className="text-md">
-                      Go nudge them to participate. There may be something
-                      special for those who do.
-                    </p>
-                  </div>
-                )}
-              </div>
+              <ActivityView comments={comments} />
             )}
             {selectedView.name === "Tags" && (
-              <div className="bg-primary-content flex min-h-[50vh] w-full flex-col overflow-hidden rounded-b-lg">
-                {allTags.length == 0 && (
-                  <div>
-                    <p className="text-neutral p-8">Loading Tags...</p>
-                  </div>
-                )}
-                {allTags.map(
-                  ({ tag, taggers, toggle, description }: any, i: number) => (
-                    <div
-                      className="bg-primary-content flex w-full flex-col"
-                      key={i}
-                    >
-                      <div className="flex w-full flex-col">
-                        <div className="group flex w-full flex-row justify-between space-x-2 border-b py-2 px-6">
-                          <div className="flex w-full flex-row  items-center justify-start space-x-2">
-                            <div className="flex w-1/3 flex-row items-center space-x-4 overflow-hidden">
-                              <div className="flex flex-row space-x-2">
-                                <p className="badge badge-light badge-sm flex">
-                                  {taggers.length}
-                                </p>
-                                <div onClick={toggle}>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className={`h-6 w-6 ${
-                                      taggers.includes(myAddress)
-                                        ? "text-neutral"
-                                        : `${
-                                            signedIn && "hover:text-neutral"
-                                          } text-gray-200`
-                                    }`}
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={1.5}
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M5 13l4 4L19 7"
-                                    />
-                                  </svg>
-                                </div>
-                              </div>
-
-                              <p
-                                className={`text-md whitespace-nowrap text-gray-900 ${
-                                  i < 3 && taggers.length > 0
-                                    ? "font-bold"
-                                    : "font-normal"
-                                }`}
-                              >
-                                {tag}
-                              </p>
-                            </div>
-                            <div className="flex w-2/3 flex-row items-center justify-between">
-                              <p className="flex text-ellipsis whitespace-nowrap px-6 text-sm font-normal text-gray-700 group-hover:hidden lg:flex">
-                                {formatTaggers(taggers)}
-                              </p>
-                              <p className="hidden text-ellipsis whitespace-nowrap px-6 text-sm font-normal text-gray-700 group-hover:flex">
-                                {description || formatTaggers(taggers)}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                )}
-              </div>
+              <TagsView
+                allTags={allTags}
+                address={address}
+                signedIn={signedIn}
+                users={users}
+              />
             )}
-
             {selectedView.name === "Following" && (
-              <div className="flex w-full flex-col space-y-2">
-                {/* <p className="text-left text-3xl font-bold text-gray-200">
-                  Friends
-                </p> */}
-                {friends?.length > 0 ? (
-                  <FriendsList friends={friends} />
-                ) : (
-                  <div className="bg-primary-content text-base-100 flex flex-col space-y-2 p-12">
-                    <p className="text-lg">
-                      {!name ? "Loading..." : `${name} isn't following anyone.`}
-                    </p>
-                    <p className="">What a shame...</p>
-                  </div>
-                )}
-              </div>
+              <FollowingView friends={friends} user={user} />
             )}
           </div>
         </div>

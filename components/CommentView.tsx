@@ -45,11 +45,11 @@ export default function CommentView({ proposal, back, choice }: any) {
   };
 
   return (
-    <div className="bg-base-content flex flex-col space-y-0 rounded-lg px-8 py-5">
+    <div className="flex flex-col space-y-0 rounded-lg px-8 py-5">
       <p className="text-base-100 pb-4 text-2xl font-semibold">Vote</p>
       <div className="flex w-full flex-col space-y-6 overflow-clip">
         <textarea
-          className="border-base-100/50 text-md w-full rounded-lg border bg-transparent p-4 font-light outline-0"
+          className="border-base-content/50 text-md w-full rounded-lg border bg-transparent p-4 font-light outline-0"
           rows={2}
           value={canPost ? message : "Please sign in to comment."}
           disabled={!canPost}

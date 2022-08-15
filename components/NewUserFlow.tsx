@@ -200,7 +200,7 @@ export default function NewUserFlow() {
                     <TagsList
                       tags={selectedTags.map((tag) => ({
                         tag,
-                        taggers: [address],
+                        taggers: address ? [address] : [],
                         toggle: () => {},
                       }))}
                       disabled={true}
@@ -315,7 +315,7 @@ export default function NewUserFlow() {
                   <TagsList
                     tags={selectedTags.map((tag) => ({
                       tag,
-                      taggers: [address],
+                      taggers: address ? [address] : [],
                       toggle: () => {},
                     }))}
                     disabled={true}

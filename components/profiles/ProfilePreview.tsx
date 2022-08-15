@@ -26,7 +26,7 @@ export default function ProfilePreview({
       className="flex w-full flex-row items-center justify-between border-b"
       key={i}
     >
-      <div className="bg-primary-content flex w-full flex-row space-x-4 px-6 py-4">
+      <div className="bg-base-100 flex w-full flex-row space-x-4 px-6 py-4">
         <Link href={`/profiles/${address}`}>
           <Image
             src={profileUrl || defaultAvatar}
@@ -38,10 +38,10 @@ export default function ProfilePreview({
         </Link>
         <div className="flex w-full flex-col items-start justify-center space-y-0">
           <div className="flex w-full flex-row items-baseline justify-between space-x-2">
-            <p className="text-neutral text-md font-semibold">{name}</p>
+            <p className="text-base-content text-md font-semibold">{name}</p>
             {/* <p className="badge badge-dark badge-sm">{address.slice(0, 8)}</p> */}
           </div>
-          <p className="text-sm text-gray-500">
+          <p className="text-base-content/50 text-sm">
             {tags.map(({ tag }: any) => tag).join(", ")}
           </p>
           {/* <TagsList tags={tags} max={3} disabled={true} numbered={false} /> */}

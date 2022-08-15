@@ -39,11 +39,11 @@ export default function ChoiceFilters({
   }, [proposal]);
 
   return (
-    <div className="bg-base-content text-base-100 border-base-100 flex w-full flex-row justify-between overflow-y-auto rounded-t-lg">
+    <div className="bg-base-100 border-base-100 flex w-full flex-row justify-between overflow-y-auto rounded-t-lg">
       {choices?.map((choice: string, i: number) => (
         <div
-          className={`flex w-full min-w-[18vw] cursor-pointer flex-col items-start space-y-4 p-4 px-6 hover:bg-black/10 ${
-            selectedChoice === i ? "border-base-100 border-b-2" : ""
+          className={`hover:bg-black/15 flex w-full min-w-[18vw] cursor-pointer flex-col items-start space-y-4 p-4 px-6 ${
+            selectedChoice === i ? "border-base-content border-b-2" : ""
           }`}
           onClick={() => setSelectedChoice(i)}
           key={i}

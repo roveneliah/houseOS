@@ -11,13 +11,13 @@ export default function CommentList({
       {comments.map((comment: Comment, i: number) => {
         return (
           <div
-            className="bg-primary-content group flex w-full flex-col space-y-4 overflow-hidden border-b px-8 py-6"
+            className="bg-base-100 group flex w-full flex-col space-y-4 overflow-hidden border-b px-8 py-6"
             key={i}
           >
             <div className="flex w-full flex-col space-y-2">
               {comment.choice && (
                 <div className="border-neutral border-b">
-                  <p className="text-neutral-focus text-md text-md rounded-md font-semibold">
+                  <p className="text-base-content text-md text-md rounded-md font-semibold">
                     {comment.choice}
                   </p>
                 </div>
@@ -36,7 +36,7 @@ export default function CommentList({
 
             <Link href={`/proposals/${comment.proposalId}`} key={i}>
               <div className="flex cursor-pointer flex-row justify-between space-x-2 overflow-hidden">
-                <p className="text-neutral text-md font-light">
+                <p className="text-base-content text-md font-light">
                   {comment.proposalTitle}
                 </p>
               </div>

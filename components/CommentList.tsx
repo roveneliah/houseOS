@@ -33,11 +33,11 @@ export default function CommentList({
   return (
     <div className="flex w-full flex-col space-y-0">
       {sortedFilteredComments.length > 0 && (
-        <div className="border-base-100 flex w-full flex-row justify-between px-6 py-4">
+        <div className="border-base-content flex w-full flex-row justify-between px-6 py-4">
           <TagSelector
             tags={tags.map(({ name }) => name)}
             setSelectedTags={setSelectedTags}
-            theme={1}
+            theme={0}
           />
         </div>
       )}
@@ -53,7 +53,7 @@ export default function CommentList({
           ))}
         </div>
       ) : (
-        <p className="text-base-100 w-full px-8 py-8 text-left text-lg font-normal">
+        <p className="text-base-content w-full px-8 py-8 text-left text-lg font-normal">
           No comments yet.
         </p>
       )}

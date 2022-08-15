@@ -17,7 +17,7 @@ import SignupModal from "./SignupModal";
 import Image from "next/image";
 import AppFrame, { NotificationFrame } from "./AppFrame";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { useDispatch } from "react-redux";
+import { Footer } from "./Footer";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
 
@@ -77,6 +77,8 @@ export default function Layout({
   const closeWelcome = () =>
     dispatch({ type: "windows/close", payload: { windowName: "welcome" } });
 
+  console.log(path);
+
   return (
     <div data-theme={themeName} className="no-scrollbar min-h-screen font-mono">
       <Head>
@@ -86,14 +88,14 @@ export default function Layout({
         <meta name={dao.description} />
       </Head>
 
-      <CommandPalette
-        commands={commands}
-        noOpacity={noOpacity}
-        deactivated={newUserFlow}
-        demo={demo}
-      />
       <main className="bg-base-200 no-scrollbar flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start overflow-x-auto">
-        <div className="fixed top-0 flex h-[8vh] w-full flex-row justify-between overflow-hidden">
+        <CommandPalette
+          commands={commands}
+          noOpacity={noOpacity}
+          deactivated={newUserFlow}
+          demo={demo}
+        />
+        <div className="fixed top-0 z-10 flex h-[8vh] w-full flex-row justify-between overflow-hidden">
           <div className="breadcrumbs text-base-content self-center p-4 px-6 font-mono">
             <ul>
               {/* <li>{dao.name}</li> */}
@@ -105,7 +107,9 @@ export default function Layout({
               {path.map(({ pathSlice, route }, i) => (
                 <Link href={route} key={i}>
                   <li>
-                    <a>{pathSlice.slice(0, 10)}</a>
+                    <a>
+                      {pathSlice == "" ? "Desktop" : pathSlice.slice(0, 10)}
+                    </a>
                   </li>
                 </Link>
               ))}
@@ -174,7 +178,7 @@ export default function Layout({
               <div className="">
                 <SearchIcon />
               </div>
-              <p className="flex font-normal group-hover:hidden">Search</p>
+              <p className="flex font-normal">Search</p>
               {/* <p className="flex font-normal">⌘k</p> */}
             </button>
             <button className="font-mono text-sm">{date.toDateString()}</button>
@@ -208,7 +212,7 @@ export default function Layout({
             </AppFrame>
           </div>
         )}
-        {/* {help && (
+        {help && (
           <div className="absolute">
             <AppFrame width={60}>
               <div className="flex flex-col space-y-4 p-4">
@@ -227,7 +231,7 @@ export default function Layout({
               </div>
             </AppFrame>
           </div>
-        )} */}
+        )}
         {children}
       </main>
     </div>

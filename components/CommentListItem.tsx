@@ -20,8 +20,8 @@ export default function CommentListItem({ comment, selectedTags, index }: any) {
     ) > 0;
 
   return isSelected ? (
-    <div className="flex flex-row justify-between space-x-2 whitespace-nowrap rounded-md px-6">
-      <div className="text-base-100 bg-base-content border-base-100 flex w-full flex-col space-y-0 rounded-lg border">
+    <div className="flex flex-row justify-between space-x-2 whitespace-nowrap px-6">
+      <div className="text-base-content bg-base-200 border-base-100 flex w-full flex-col space-y-0 border">
         <div className="flex w-full flex-row justify-start space-x-2 p-4">
           <div className="flex w-full flex-col justify-start space-y-4 px-0">
             <div className="rounded-lg p-4">

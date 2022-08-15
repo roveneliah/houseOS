@@ -7,8 +7,8 @@ interface WindowsState {
 
 const initialState: WindowsState = {
   open: {
-    welcome: true,
-    search: true,
+    welcome: false,
+    search: false,
   },
 };
 
