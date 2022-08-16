@@ -118,9 +118,14 @@ export default function Layout({
             {!signedIn ? (
               !isConnected ? (
                 isReconnecting ? (
-                  <button className="btn loading">Reconnecting</button>
+                  <button className="btn btn-sm loading border-black bg-transparent font-normal hover:bg-transparent">
+                    Reconnecting
+                  </button>
                 ) : (
-                  <button onClick={() => connect(connector)} className="btn">
+                  <button
+                    onClick={() => connect(connector)}
+                    className="btn btn-sm border-black bg-transparent font-normal hover:bg-transparent"
+                  >
                     Connect
                   </button>
                 )
@@ -132,13 +137,13 @@ export default function Layout({
                   Sign in with Ethereum
                 </button>
               ) : (
-                <button className="btn btn-sm loading">
+                <button className="btn btn-sm loading border-black bg-transparent font-normal hover:bg-transparent">
                   Signing in with Ethereum...
                 </button>
               )
             ) : !newUserFlow ? (
               <button
-                className="btn btn-sm group"
+                className="btn btn-sm group border-black bg-transparent font-normal hover:bg-transparent"
                 onClick={() => {
                   signOut();
                   disconnect();
@@ -152,7 +157,10 @@ export default function Layout({
               </button>
             ) : (
               <>
-                <label className="btn btn-sm modal-btn" htmlFor="signup-modal">
+                <label
+                  className="btn btn-sm modal-btn border-black bg-transparent font-normal hover:bg-transparent"
+                  htmlFor="signup-modal"
+                >
                   <p>Create Profile</p>
                 </label>
                 <input
