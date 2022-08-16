@@ -55,7 +55,7 @@ function ProfileHeader(props: any) {
                   )}
                 </div>
               )}
-              <TagsList tags={props.tags} disabled={true} size="sm" />
+              <TagsList tags={props.tags} disabled={true} size="sm" max={3} />
             </div>
             <p className="text-base-content text-left text-6xl font-bold">
               {props.name || props.ensName || `Anon ${dao.memberName}`}
