@@ -26,7 +26,7 @@ export default function ProfilePreview({
       className="flex w-full flex-row items-center justify-between border-b"
       key={i}
     >
-      <div className="bg-base-100 flex w-full flex-row space-x-4 px-6 py-4">
+      <div className="flex w-full flex-row space-x-4 px-6 py-4">
         <Link href={`/profiles/${address}`}>
           <Image
             src={profileUrl || defaultAvatar}

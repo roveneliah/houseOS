@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Fragment, useState } from "react";
+import { Fragment, ReactNode, useState } from "react";
 import { useCommand } from "../hooks/generic/useCommand";
 import { CommandFilters } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
@@ -11,7 +11,7 @@ import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { ChatIcon } from "./icons/ChatIcon";
 import UsersIcon from "./icons/UsersIcon";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import windowsSlice from "@/features/windows/windowsSlice";
+import windowsSlice, { launch } from "@/features/windows/windowsSlice";
 
 const views = [
   {
@@ -85,6 +85,8 @@ export default function CommandPalette({
     dispatch({ type: "windows/close", payload: { windowName: "search" } });
   const toggle = () =>
     dispatch({ type: "windows/toggle", payload: { windowName: "search" } });
+
+  const launchApp = (app: ReactNode) => dispatch(launch(app));
 
   useCommand("k", toggle);
   useCommand("/", toggle);
@@ -178,6 +180,7 @@ export default function CommandPalette({
             value={undefined}
             onChange={(command: Command) => {
               if (!demo) {
+                command.app && launchApp(command.app);
                 command.link && router.push(command.link); // TODO: this messes up login state, use <a>
                 close();
               }

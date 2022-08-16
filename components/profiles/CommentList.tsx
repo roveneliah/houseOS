@@ -11,7 +11,7 @@ export default function CommentList({
       {comments.map((comment: Comment, i: number) => {
         return (
           <div
-            className="bg-base-100 group flex w-full flex-col space-y-4 overflow-hidden border-b px-8 py-6"
+            className=" group flex w-full flex-col space-y-4 overflow-hidden border-b px-8 py-6"
             key={i}
           >
             <div className="flex w-full flex-col space-y-2">

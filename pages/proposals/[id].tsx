@@ -20,7 +20,7 @@ enum View {
   CommentList,
 }
 
-const ProposalPage: NextPage = ({ id }: any) => {
+const ProposalPage = ({ id }: { id: string }) => {
   const proposal = createHook(fetchProposal)(id);
   const [view, setView] = useState(View.CommentList);
   const comments: Array<Comment> = useGetComments(proposal.id);
@@ -36,9 +36,9 @@ const ProposalPage: NextPage = ({ id }: any) => {
 
   return (
     <Layout>
-      <div className="w-full pb-20">
-        <div className="bg-base-200 flex w-full flex-row justify-center pt-20">
-          <div className="text-base-content flex w-full flex-col items-start space-y-10 md:w-3/5">
+      <div className="w-full">
+        <div className="flex w-full flex-row justify-center">
+          <div className="text-base-content flex w-full flex-col items-start space-y-10 px-12">
             <ProposalHeader proposal={proposal} />
             <ChoiceFilters
               proposal={proposal}
@@ -49,8 +49,8 @@ const ProposalPage: NextPage = ({ id }: any) => {
             />
           </div>
         </div>
-        <div className="text-base-content flex w-full flex-row justify-center">
-          <div className="bg-base-100 flex w-full flex-col space-y-10 overflow-hidden rounded-b-lg md:w-3/5">
+        <div className="text-base-content flex w-full flex-row justify-center px-12">
+          <div className="bg-base-100 flex w-full flex-col space-y-10 overflow-hidden rounded-b-lg">
             {view === View.CommentList && (
               <CommentList
                 toggleCommentView={() => setView(View.Comment)}
@@ -72,18 +72,18 @@ const ProposalPage: NextPage = ({ id }: any) => {
   );
 };
 
-export async function getStaticProps({ params }: { params: { id: string } }) {
-  return {
-    props: { id: params.id },
-  };
-}
+// export async function getStaticProps({ params }: { params: { id: string } }) {
+//   return {
+//     props: { id: params.id },
+//   };
+// }
 
-export async function getStaticPaths() {
-  const proposals = await fetchProposals(snapshotSpace);
-  const paths = proposals.map((proposal: Proposal) => ({
-    params: { id: proposal.id },
-  }));
-  return { paths, fallback: false };
-}
+// export async function getStaticPaths() {
+//   const proposals = await fetchProposals(snapshotSpace);
+//   const paths = proposals.map((proposal: Proposal) => ({
+//     params: { id: proposal.id },
+//   }));
+//   return { paths, fallback: false };
+// }
 
 export default ProposalPage;

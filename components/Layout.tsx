@@ -161,7 +161,10 @@ export default function Layout({
                   className="modal-toggle"
                 />
 
-                <label htmlFor="signup-modal" className="modal cursor-pointer">
+                <label
+                  htmlFor="signup-modal"
+                  className="modal w-full cursor-pointer bg-black/20"
+                >
                   <div className="w-[60vw]">
                     <label className="relative" htmlFor="">
                       <SignupModal />
@@ -188,7 +191,7 @@ export default function Layout({
             {/* <button className="font-mono text-sm">{date.toDateString()}</button> */}
           </div>
         </div>
-        {newUserFlow && <NotificationFrame message="Hi there" />}
+        {/* {newUserFlow && <NotificationFrame message="Hi there" />} */}
         {welcomeMessage && (
           <div className="absolute">
             <AppFrame>
