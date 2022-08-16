@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <Layout fixedOpen={false} noOpacity={true}>
       <div className="absolute z-auto -mt-12 flex h-full flex-col justify-center font-mono">
-        <Image src="/logoglobeblue.svg" width={4000} height={4000} priority />
+        <Image src="/LogoGlobe.svg" width={5000} height={5000} />
       </div>
       <div className="absolute top-24 left-10 flex flex-col space-y-8">
         <div
