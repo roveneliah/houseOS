@@ -1,4 +1,4 @@
-import { formatTaggers } from "@/pages/profiles/[address]";
+import { formatTaggers } from "@/utils/formatTaggers";
 
 export function TagsView(props: any) {
   return (

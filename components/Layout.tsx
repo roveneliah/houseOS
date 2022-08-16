@@ -18,6 +18,7 @@ import Image from "next/image";
 import AppFrame, { NotificationFrame } from "./AppFrame";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { Footer } from "./Footer";
+import { close } from "@/features/windows/windowsSlice";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
 
@@ -74,10 +75,8 @@ export default function Layout({
 
   const welcomeMessage = useAppSelector((state) => state.windows.open.welcome);
   const help = useAppSelector((state) => state.windows.open.help);
-  const closeWelcome = () =>
-    dispatch({ type: "windows/close", payload: { windowName: "welcome" } });
-
-  console.log(path);
+  const searchOpen = useAppSelector((state) => state.windows.open.search);
+  const closeWelcome = () => dispatch(close({ windowName: "welcome" }));
 
   return (
     <div data-theme={themeName} className="no-scrollbar min-h-screen font-mono">
@@ -95,11 +94,11 @@ export default function Layout({
           deactivated={newUserFlow}
           demo={demo}
         />
-        <div className="fixed top-0 z-10 flex h-[8vh] w-full flex-row justify-between overflow-hidden">
-          <div className="breadcrumbs text-base-content self-center p-4 px-6 font-mono">
+        <div className="border-base-content bg-base-200 fixed top-0 z-10 flex w-full flex-row items-center justify-between overflow-hidden border-b">
+          <div className="breadcrumbs text-base-content self-center px-4 font-mono">
             <ul>
               {/* <li>{dao.name}</li> */}
-              <li className="relative h-[5vh] w-[2vw]">
+              <li className="relative h-[3vh] w-[2vw]">
                 <a href="/">
                   <Image src="/initials.svg" layout="fill" />
                 </a>
@@ -115,7 +114,7 @@ export default function Layout({
               ))}
             </ul>
           </div>
-          <div className="flex flex-row space-x-4 p-4">
+          <div className="flex flex-row items-center space-x-4 px-4">
             {!signedIn ? (
               !isConnected ? (
                 isReconnecting ? (
@@ -128,18 +127,18 @@ export default function Layout({
               ) : !signedInSIWE ? (
                 <button
                   onClick={() => signIn()}
-                  className="btn border-black bg-transparent font-normal hover:bg-transparent"
+                  className="btn btn-sm border-black bg-transparent font-normal hover:bg-transparent"
                 >
                   Sign in with Ethereum
                 </button>
               ) : (
-                <button className="btn loading">
+                <button className="btn btn-sm loading">
                   Signing in with Ethereum...
                 </button>
               )
             ) : !newUserFlow ? (
               <button
-                className="btn group"
+                className="btn btn-sm group"
                 onClick={() => {
                   signOut();
                   disconnect();
@@ -153,7 +152,7 @@ export default function Layout({
               </button>
             ) : (
               <>
-                <label className="btn modal-btn" htmlFor="signup-modal">
+                <label className="btn btn-sm modal-btn" htmlFor="signup-modal">
                   <p>Create Profile</p>
                 </label>
                 <input
@@ -172,16 +171,21 @@ export default function Layout({
               </>
             )}
             <button
-              className="btn group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent"
+              className="group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent"
               onClick={toggleSearch}
             >
-              <div className="">
+              <div
+                className={`${
+                  searchOpen == true && "bg-base-300"
+                } rounded-md pr-2  pl-3 pb-1 pt-2
+                `}
+              >
                 <SearchIcon />
               </div>
-              <p className="flex font-normal">Search</p>
+              {/* <p className="flex font-normal">Search</p> */}
               {/* <p className="flex font-normal">⌘k</p> */}
             </button>
-            <button className="font-mono text-sm">{date.toDateString()}</button>
+            {/* <button className="font-mono text-sm">{date.toDateString()}</button> */}
           </div>
         </div>
         {newUserFlow && <NotificationFrame message="Hi there" />}

@@ -29,26 +29,6 @@ import { FollowingView } from "@/components/FollowingView";
 const LoadingView = dynamic(() => import("@/components/profiles/LoadingView"));
 const TagsList = dynamic(() => import("@/components/profiles/TagsList"));
 
-export const formatTaggers = (taggers: Array<string>, users: any) =>
-  taggers
-    .slice(0, 3)
-    .reduce(
-      (acc: string, tagger: string, i: number) =>
-        acc.concat(
-          `${users[tagger]?.name || tagger.slice(0, 6)}${
-            taggers.length > i + 1 ? ", " : ""
-          }`
-        ),
-      ""
-    )
-    .concat(
-      `${
-        taggers.length > 3
-          ? `and ${taggers.length - 3} other${taggers.length > 4 ? "s" : ""}.`
-          : ""
-      }`
-    );
-
 function ProfileHeader(props: any) {
   return (
     <div className="bg-base-300 flex w-full flex-row justify-center pt-36">

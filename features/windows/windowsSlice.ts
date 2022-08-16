@@ -31,6 +31,6 @@ export const windowsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { open, close } = windowsSlice.actions;
+export const { open, close, toggle } = windowsSlice.actions;
 
 export default windowsSlice.reducer;

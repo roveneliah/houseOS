@@ -37,7 +37,7 @@ const ProposalPage: NextPage = ({ id }: any) => {
   return (
     <Layout>
       <div className="w-full pb-20">
-        <div className="bg-base-300 flex w-full flex-row justify-center pt-20">
+        <div className="bg-base-200 flex w-full flex-row justify-center pt-20">
           <div className="text-base-content flex w-full flex-col items-start space-y-10 md:w-3/5">
             <ProposalHeader proposal={proposal} />
             <ChoiceFilters

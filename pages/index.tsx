@@ -1,4 +1,5 @@
 import { useAppDispatch } from "@/app/hooks";
+import { open, toggle } from "@/features/windows/windowsSlice";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Footer } from "../components/Footer";
@@ -6,10 +7,8 @@ const Layout = dynamic(() => import("../components/Layout"));
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const toggleHelp = () =>
-    dispatch({ type: "windows/toggle", payload: { windowName: "help" } });
-  const openSearch = () =>
-    dispatch({ type: "windows/open", payload: { windowName: "search" } });
+  const toggleHelp = () => dispatch(toggle({ windowName: "help" }));
+  const openSearch = () => dispatch(open({ windowName: "search" }));
 
   return (
     <Layout fixedOpen={false} noOpacity={true}>
@@ -33,10 +32,12 @@ export default function Home() {
             <p className="font-mono">Workspace</p>
           </div>
         </a>
-        <div className="flex flex-col items-center space-y-1">
-          <Image src="/Doc.png" width={50} height={50} />
-          <p className="font-mono">Proposals</p>
-        </div>
+        <a href="/proposals">
+          <div className="flex flex-col items-center space-y-1">
+            <Image src="/Doc.png" width={50} height={50} />
+            <p className="font-mono">Proposals</p>
+          </div>
+        </a>
         <a target={"_blank"} href="https://snapshot.org/#/krausehouse.eth">
           <div className="flex flex-col items-center space-y-1">
             <Image src="/Suit.png" width={50} height={50} />
@@ -51,6 +52,7 @@ export default function Home() {
           <p className="font-mono">Help</p>
         </div>
       </div>
+      <Footer />
     </Layout>
   );
 }

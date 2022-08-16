@@ -1,4 +1,5 @@
 import { useSignIn } from "@/hooks/useSignIn";
+import { TagsList } from "@/pages/me";
 import { capitalize } from "@/utils/capitalize";
 import { useState } from "react";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
@@ -95,21 +96,12 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
             )}
           </div>
           <div className="flex min-h-full flex-row items-center space-x-2 font-normal">
-            {tags.slice(0, 3).map((tag: any) => (
-              <div
-              // data-tip={tag.taggers.join(", ")}
-              // className="tooltip tooltip-warning"
-              >
-                <p className="border-warning text-warning whitespace-nowrap rounded-full border py-1 px-3 text-sm">
-                  {tag.tag}
-                </p>
-              </div>
-            ))}
+            <TagsList tags={tags} disabled={true} max={3} />
           </div>
         </div>
         <p className="text-left text-6xl font-semibold">{proposal.title}</p>
         {signedIn && showTags && (
-          <TagListBox tags={allTags} address={address} />
+          <TagListBox tags={allTags} address={address} size={"sm"} />
         )}
       </div>
     </div>

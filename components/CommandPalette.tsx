@@ -178,21 +178,21 @@ export default function CommandPalette({
             value={undefined}
             onChange={(command: Command) => {
               if (!demo) {
-                command.link && router.push(command.link);
+                command.link && router.push(command.link); // TODO: this messes up login state, use <a>
                 close();
               }
             }}
             as="div"
-            className="bg-base-100 relative overflow-hidden rounded-lg border-4 border-black font-mono shadow-lg shadow-black ring-1 ring-black/5"
+            className="bg-base-100 border-base-content relative overflow-hidden rounded-lg border-4 font-mono shadow-lg shadow-black ring-1 ring-black/5"
           >
             <div className="bg-base-200 flex flex-row justify-start space-x-2 p-4 py-2 outline-none">
               <button
                 onClick={close}
-                className="btn-circle btn-xs border-4 border-black outline-none"
+                className="btn-circle btn-xs border-base-content border-4 outline-none"
               ></button>
-              <div className="btn-circle btn-xs border-4 border-black"></div>
+              <div className="btn-circle btn-xs border-base-content border-4"></div>
             </div>
-            <div className="bg-base-200 flex flex-row justify-start border-t border-black text-gray-700">
+            <div className="bg-base-200 border-base-content flex flex-row justify-start border-t text-gray-700">
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
