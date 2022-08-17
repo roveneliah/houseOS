@@ -11,7 +11,7 @@ import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { ChatIcon } from "./icons/ChatIcon";
 import UsersIcon from "./icons/UsersIcon";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import windowsSlice, { launch } from "@/features/windows/windowsSlice";
+import { close, launch, toggle } from "@/features/windows/windowsSlice";
 
 const views = [
   {
@@ -81,15 +81,12 @@ export default function CommandPalette({
 
   const { search: isOpen } = useAppSelector((state) => state.windows.open);
   const dispatch = useAppDispatch();
-  const close = () =>
-    dispatch({ type: "windows/close", payload: { windowName: "search" } });
-  const toggle = () =>
-    dispatch({ type: "windows/toggle", payload: { windowName: "search" } });
-
+  const closeSearch = () => dispatch(close({ windowName: "search" }));
+  const toggleSearch = () => dispatch(toggle({ windowName: "search" }));
   const launchApp = (app: ReactNode) => dispatch(launch(app));
 
-  useCommand("k", toggle);
-  useCommand("/", toggle);
+  useCommand("k", toggleSearch);
+  useCommand("/", toggleSearch);
   useCommand("ArrowLeft", prevFilter, filter);
   useCommand("ArrowRight", nextFilter, filter);
 
@@ -114,7 +111,7 @@ export default function CommandPalette({
     >
       <Dialog
         open={isOpen}
-        onClose={close}
+        onClose={closeSearch}
         className="fixed inset-[15vh] z-50 mx-auto h-fit w-[70vw] overflow-y-auto  lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
         <Transition.Child
@@ -182,7 +179,7 @@ export default function CommandPalette({
               if (!demo) {
                 command.app && launchApp(command.app);
                 command.link && router.push(command.link); // TODO: this messes up login state, use <a>
-                close();
+                closeSearch();
               }
             }}
             as="div"
@@ -190,7 +187,7 @@ export default function CommandPalette({
           >
             <div className="bg-base-200 flex flex-row justify-start space-x-2 p-4 py-2 outline-none">
               <button
-                onClick={close}
+                onClick={closeSearch}
                 className="btn-circle btn-xs border-base-content border-4 outline-none"
               ></button>
               <div className="btn-circle btn-xs border-base-content border-4"></div>
@@ -224,10 +221,10 @@ export default function CommandPalette({
                 className="w-full border-0 border-white bg-transparent py-2 px-2 text-sm text-gray-800 placeholder-gray-400 outline-none"
                 placeholder={demo ? "Good job!" : "Search the DAO..."}
                 autoComplete="false"
+                autoFocus={true}
                 onChange={(event) => {
                   setQuery(event.target.value);
                 }}
-                autoFocus={true}
               />
             </div>
             {filteredCommands.length > 0 ? (
@@ -235,25 +232,6 @@ export default function CommandPalette({
                 static
                 className="no-scrollbar divide-base-200 max-h-96 divide-y overflow-hidden overflow-y-auto rounded-lg px-2 py-4"
               >
-                {/* {filter === CommandFilters.ALL && (
-                  <div className="flex flex-row items-center space-x-1 px-4 pb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                      />
-                    </svg>
-                    <p className="text-xs">Favorites</p>
-                  </div>
-                )} */}
                 {filteredCommands.map((command, i) => (
                   <Combobox.Option value={command} key={i}>
                     {({ active }) => (

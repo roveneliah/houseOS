@@ -1,5 +1,4 @@
 import { RootState } from "@/app/store";
-import AppFrame from "@/components/AppFrame";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ReactNode } from "react";
 
@@ -21,7 +20,6 @@ export const windowsSlice = createSlice({
   initialState,
   reducers: {
     open: (state, { payload }) => {
-      const { windowName } = payload;
       state.open[payload.windowName] = true;
     },
     close: (state, { payload }) => {
