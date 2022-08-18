@@ -7,13 +7,16 @@ import ProposalsListPage from "./proposals";
 export function DesktopIcons() {
   const dispatch = useAppDispatch();
   const toggleHelp = () => dispatch(launch(<Help />));
-  const openSearch = () => dispatch(open({ windowName: "search" }));
+  const openSearch =
+    (view: number = 0) =>
+    () =>
+      dispatch(open({ windowName: "search", searchView: 3 }));
   const launchProposalView = () => dispatch(launch(<ProposalsListPage />));
 
   return (
     <div className="absolute top-24 left-10 flex flex-col space-y-8">
       <div
-        onClick={openSearch}
+        onClick={openSearch()}
         className="flex cursor-pointer flex-col items-center space-y-1"
       >
         <Image src="/desktop-icons/Computer.png" width={50} height={50} />
@@ -30,16 +33,16 @@ export function DesktopIcons() {
       </a>
       <button onClick={launchProposalView}>
         <div className="flex flex-col items-center space-y-1">
-          <Image src="/desktop-icons/Doc.png" width={40} height={50} />
+          <Image src="/desktop-icons/suit.png" width={40} height={50} />
           <p className="font-mono">Proposals</p>
         </div>
       </button>
-      <a target={"_blank"} href="https://snapshot.org/#/krausehouse.eth">
+      {/* <button onClick={openSearch(3)}>
         <div className="flex flex-col items-center space-y-1">
-          <Image src="/desktop-icons/Suit.png" width={40} height={50} />
-          <p className="font-mono">Vote</p>
+          <Image src="/desktop-icons/doc.png" width={40} height={50} />
+          <p className="font-mono">Links</p>
         </div>
-      </a>
+      </button> */}
       <div
         onClick={toggleHelp}
         className="flex cursor-pointer flex-col items-center space-y-1"

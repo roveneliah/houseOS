@@ -67,8 +67,9 @@ const ProposalsListPage: NextPage = () => {
   );
 
   return (
-    <Layout paletteStartsOpen={false}>
-      <div className=" flex w-full flex-row justify-center pt-24">
+    // <Layout paletteStartsOpen={false}>
+    <div className="bg-base-200 flex flex-col items-center">
+      <div className="flex w-full flex-row justify-center pt-24">
         <div className="flex w-full flex-col space-y-10 px-2 md:w-4/5 md:max-w-3xl md:px-0">
           <div className="flex w-2/3 flex-row justify-start">
             <div className="text-base-content flex flex-col items-start space-y-2">
@@ -106,7 +107,8 @@ const ProposalsListPage: NextPage = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </div>
+    // </Layout>
   );
 };
 

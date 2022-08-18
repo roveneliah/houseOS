@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 
 interface WindowsState {
   open: { [windowName: string]: boolean };
+  searchView: number | undefined;
   primaryApp: ReactNode;
 }
 
@@ -12,6 +13,7 @@ const initialState: WindowsState = {
     welcome: false,
     search: true,
   },
+  searchView: undefined,
   primaryApp: undefined,
 };
 
@@ -21,10 +23,12 @@ export const windowsSlice = createSlice({
   reducers: {
     open: (state, { payload }) => {
       state.open[payload.windowName] = true;
+      state.searchView = payload.searchView;
     },
     close: (state, { payload }) => {
       const { windowName } = payload;
       state.open[windowName] = false;
+      state.searchView = undefined;
     },
     toggle: (state, { payload }) => {
       state.open[payload.windowName] = !state.open[payload.windowName];

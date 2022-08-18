@@ -71,7 +71,7 @@ export default function Help() {
   useOnKeydown("3", () => {});
 
   return (
-    <Layout>
+    <div className="bg-base-200 h-full">
       <div className="flex w-full flex-col space-y-12 px-16 pt-24">
         <div className="flex w-full flex-col space-y-4">
           <p className="text-6xl font-bold">Help</p>
@@ -88,21 +88,15 @@ export default function Help() {
             ))}
           </div>
         </div>
-        <div className="no-scrollbar max-w-4/5 flex h-[80vh] flex-col space-y-36 overflow-y-auto overflow-x-clip">
+        <div className="no-scrollbar max-w-4/5 space-y-36overflow-y-auto flex flex-col overflow-x-clip">
           {options[selected].name === "Search" && (
             <div className="w-full space-y-8">
               <div className="flex flex-col space-y-1">
-                <p className="text-base-content text-3xl font-semibold">
-                  Search
+                <p className="text-base-content text-2xl font-semibold">
+                  Search is your map around the DAO
                 </p>
               </div>
               <div className="flex flex-col space-y-2">
-                <p className="text-xl font-normal">
-                  <span className="text-info font-semibold">
-                    Search is your map
-                  </span>{" "}
-                  around the DAO.
-                </p>
                 <p className="text-xl font-normal">
                   You can find all{" "}
                   <span className="text-info font-semibold">links</span>,{" "}
@@ -159,12 +153,18 @@ export default function Help() {
 
           {options[selected].name === "Tags" && (
             <div className="space-y-8">
-              <p className="text-base-content text-3xl font-semibold">Tags</p>
+              <div className="flex flex-col space-y-4">
+                {/* <p className="text-base-content text-3xl font-semibold">Tags</p> */}
+                <p className="text-2xl font-semibold">
+                  When you see{" "}
+                  <span className="text-warning font-semibold">orange</span>,
+                  think tags.
+                </p>
+              </div>
               <div className="flex flex-col space-y-2">
                 <p className="text-xl font-normal">
-                  Tags help us{" "}
-                  <span className="text-warning font-semibold">gossip</span> to
-                  get context on each other and proposals.
+                  Tags help us gossip to get context on each other and
+                  proposals.
                 </p>
                 <p className="text-xl font-normal">
                   When you tag something, anyone following you will see those
@@ -236,7 +236,7 @@ export default function Help() {
                   </div>
                 )}
                 {view === "Proposal" && (
-                  <div className="text-primary-content flex w-full flex-col items-start space-y-10 rounded-tr border-x border-t p-8">
+                  <div className="text-base-content border-base-content flex w-full flex-col items-start space-y-10 rounded-tr border-x border-t p-8">
                     <div className="flex w-full flex-col space-y-6">
                       <div className="flex flex-row items-center justify-between">
                         <div className="flex w-full flex-row items-center space-x-6">
@@ -268,7 +268,7 @@ export default function Help() {
                                 d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"
                               />
                             </svg>
-                            <p className="text-primary-content whitespace-nowrap font-light">
+                            <p className="text-base-content whitespace-nowrap font-light">
                               {proposal.votes} Votes
                             </p>
                           </div>
@@ -319,6 +319,6 @@ export default function Help() {
           <kbd className="kbd">d</kbd>
         </div>
       </div> */}
-    </Layout>
+    </div>
   );
 }

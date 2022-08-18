@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { Fragment, ReactNode, useState } from "react";
 import { useCommand } from "../../hooks/generic/useCommand";
 import { CommandFilters } from "../../hooks/useGetCommands";
@@ -68,7 +67,13 @@ export default function CommandPalette({
   noOpacity = false,
   demo = false,
 }: Props) {
-  const router = useRouter();
+  const searchView = useAppSelector((state) => state.windows.searchView);
+  const { search: isOpen } = useAppSelector((state) => state.windows.open);
+  const dispatch = useAppDispatch();
+  const closeSearch = () => dispatch(close({ windowName: "search" }));
+  const toggleSearch = () => dispatch(toggle({ windowName: "search" }));
+  const launchApp = (app: ReactNode) => dispatch(launch(app));
+
   const [query, setQuery] = useState("");
 
   const {
@@ -77,13 +82,9 @@ export default function CommandPalette({
     next: nextFilter,
     prev: prevFilter,
   } = useSingleSelect(views);
-  const filter = filters[selected].name;
 
-  const { search: isOpen } = useAppSelector((state) => state.windows.open);
-  const dispatch = useAppDispatch();
-  const closeSearch = () => dispatch(close({ windowName: "search" }));
-  const toggleSearch = () => dispatch(toggle({ windowName: "search" }));
-  const launchApp = (app: ReactNode) => dispatch(launch(app));
+  console.log(searchView, selected);
+  const filter = filters[selected].name;
 
   useCommand("k", toggleSearch);
   useCommand("/", toggleSearch);
