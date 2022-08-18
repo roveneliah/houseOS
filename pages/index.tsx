@@ -13,7 +13,7 @@ export default function Home() {
   const quit = () => dispatch(quitApp());
 
   return (
-    <Layout fixedOpen={false} noOpacity={true} paletteStartsOpen={true}>
+    <Layout fixedOpen={false} noOpacity={true}>
       <div className="absolute z-auto -mt-12 flex h-full flex-col justify-center font-mono">
         <Image src="/LogoGlobe.svg" width={6000} height={6000} />
       </div>

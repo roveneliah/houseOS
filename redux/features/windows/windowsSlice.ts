@@ -10,7 +10,7 @@ interface WindowsState {
 const initialState: WindowsState = {
   open: {
     welcome: false,
-    search: false,
+    search: true,
   },
   primaryApp: undefined,
 };
