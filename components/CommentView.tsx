@@ -90,20 +90,15 @@ export default function CommentView({ proposal, back, choice }: any) {
           </div>
           {canPost && (
             <button
-              className="btn group"
+              className="border-base-content group rounded-md border px-3 py-1"
               onClick={() => {
                 signMessage({
                   message: JSON.stringify(comment),
                 });
-                // postComment();
                 // vote(message)
               }}
             >
-              <p className="min-w-[10vw] group-hover:hidden">Submit</p>
-              <div className="hidden min-w-[10vw] flex-col items-start group-hover:flex">
-                <p className="text-2xs">Voting</p>
-                <p>{proposal.choices?.[choice]}</p>
-              </div>
+              <p className="">Submit</p>
             </button>
           )}
         </div>

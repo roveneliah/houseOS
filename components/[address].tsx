@@ -62,14 +62,14 @@ export default function Profile({
 
   const isFriend: boolean = profile?.friends?.includes(address);
   return (
-    <div className="w-full">
+    <div className="h-full w-full">
       {!address ? (
         <div className="pt-36">
           <LoadingView address={userAddress} />
         </div>
       ) : (
         <div
-          className={`bg-${background} flex w-full flex-col items-center p-12 px-16`}
+          className={`bg-${background} flex h-full w-full flex-col items-center p-12 px-16`}
         >
           <ProfileHeader
             avatarSrc={user.avatarSrc}

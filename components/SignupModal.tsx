@@ -32,16 +32,15 @@ export default function SignupModal() {
       <p className="text-3xl font-semibold">Please sign in.</p>
     </div>
   ) : (
-    <div className="text-base-content z-30 flex w-full flex-row justify-center">
+    <div className="text-base-content z-50 flex w-full flex-row justify-center">
       <div className="flex w-full flex-row space-x-4">
         <div className="bg-base-200 flex w-full flex-col space-y-8 rounded-lg p-8">
           <div className="flex h-fit flex-row items-center justify-between">
             <p className="text-3xl font-semibold">Create Profile</p>
-            {/* // TODO: test if this messes up connection, might need to use <a> */}
             <button
               className={`${
                 name && name.length > 2 ? "visible" : "invisible"
-              } btn w-fit`}
+              } border-base-content w-fit rounded-md border px-3 py-1`}
               onClick={() => {
                 signedIn &&
                   address &&

@@ -10,7 +10,7 @@ interface Props {
 
 export default function AppFrame({
   children = <></>,
-  width = 80,
+  width = 65,
   height = undefined,
   onClose = () => {},
 }: Props) {
@@ -18,8 +18,8 @@ export default function AppFrame({
   const [open, close] = useBoolean(true);
   return open ? (
     <div
-      className={`bg-base-200 relative top-32 z-30 w-[${width}vw] }
-      no-scrollbar border-base-content flex h-[80vh] flex-col overflow-x-hidden overflow-y-scroll rounded-lg border-4`}
+      className={`bg-base-200 no-scrollbar border-base-content relative top-24
+      z-30 flex h-[80vh] w-[65vw] flex-col overflow-x-hidden overflow-y-scroll rounded-lg border-4`}
     >
       <div className="border-base-content flex w-full flex-row justify-start space-x-2 overflow-x-clip border-b px-4 py-2">
         <button

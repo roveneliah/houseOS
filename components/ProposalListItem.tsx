@@ -6,6 +6,9 @@ import LockedIcon from "./icons/LockedIcon";
 import ClockIcon from "./icons/ClockIcon";
 import { Tag } from "@/types/Tag";
 import dynamic from "next/dynamic";
+import { useAppDispatch } from "@/app/hooks";
+import { launch } from "@/features/windows/windowsSlice";
+import ProposalPage from "@/pages/proposals/[id]";
 const Link = dynamic(() => import("next/link"));
 
 export interface Props {
@@ -20,6 +23,10 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
     selectedTags.length === 0 ||
     intersection(tags.map(prop("tag")), selectedTags).length > 0;
 
+  const dispatch = useAppDispatch();
+  const launchProposal = () =>
+    dispatch(launch(<ProposalPage id={proposal.id} />));
+
   return hasMatchingTag(proposalTags) ? (
     <div className="hover:bg-base-100 border-base-200/10 text-base-content flex flex-row justify-between border-b py-2 px-6 hover:shadow-lg">
       <div className="text-base-content flex w-full flex-row items-center justify-start space-x-4 lg:w-2/3">
@@ -30,7 +37,7 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
             <ClockIcon strokeWidth={2} />
           )}
         </div>
-        <Link href={`/proposals/${proposal.id}`}>
+        <button onClick={launchProposal}>
           <p
             className={`cursor-pointer overflow-clip text-ellipsis whitespace-nowrap text-sm ${
               proposal.state === "closed" ? "font-normal" : "font-semibold"
@@ -38,7 +45,7 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
           >
             {proposal.title}
           </p>
-        </Link>
+        </button>
       </div>
       <div className="hidden flex-row space-x-2 lg:flex">
         <TagsList

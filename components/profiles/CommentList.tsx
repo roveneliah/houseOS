@@ -1,11 +1,17 @@
 import { Comment } from "../../types/Comment";
-import Link from "next/link";
+import { useAppDispatch } from "@/app/hooks";
+import ProposalPage from "@/pages/proposals/[id]";
+import { launch } from "@/features/windows/windowsSlice";
 
 export default function CommentList({
   comments,
 }: {
   comments: Array<Comment>;
 }) {
+  const dispatch = useAppDispatch();
+  const launchProposal = (id: string) =>
+    dispatch(launch(<ProposalPage id={id} />));
+
   return (
     <div className="flex flex-col space-y-0">
       {comments.map((comment: Comment, i: number) => {
@@ -34,13 +40,13 @@ export default function CommentList({
               </div>
             </div>
 
-            <Link href={`/proposals/${comment.proposalId}`} key={i}>
+            <button onClick={() => launchProposal(comment.proposalId)} key={i}>
               <div className="flex cursor-pointer flex-row justify-between space-x-2 overflow-hidden">
                 <p className="text-base-content text-md font-light">
                   {comment.proposalTitle}
                 </p>
               </div>
-            </Link>
+            </button>
           </div>
         );
       })}

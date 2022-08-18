@@ -42,7 +42,7 @@ const tags = ["This is", "the worst", "idea."].map((tag: string) => ({
 export default function Help() {
   const [view, setView] = useState("User");
 
-  const faqDirectory = ["Welcome", "Tags"];
+  const faqDirectory = ["Search", "Tags"];
   const { options, selected, next, prev } = useSingleSelect(
     faqDirectory.map((entry) => ({
       name: entry,
@@ -72,28 +72,28 @@ export default function Help() {
 
   return (
     <Layout>
-      <div className="flex w-full flex-row space-x-8 pt-36 lg:px-8">
-        <div className="flex basis-1/5 flex-col items-end px-8">
-          {faqDirectory.map((view, i) => (
-            <p
-              className={`${
-                selected === i && "text-primary-content"
-              } hover:text-primary-content cursor-pointer`}
-              onClick={() => options[i].toggle()}
-            >
-              {view}
-            </p>
-          ))}
+      <div className="flex w-full flex-col space-y-12 px-16 pt-24">
+        <div className="flex w-full flex-col space-y-4">
+          <p className="text-6xl font-bold">Help</p>
+          <div className="flex basis-1/5 flex-row space-x-4">
+            {faqDirectory.map((view, i) => (
+              <p
+                className={`${
+                  selected === i && "text-info"
+                } hover:text-info cursor-pointer text-xl`}
+                onClick={() => options[i].toggle()}
+              >
+                {view}
+              </p>
+            ))}
+          </div>
         </div>
         <div className="no-scrollbar max-w-4/5 flex h-[80vh] flex-col space-y-36 overflow-y-auto overflow-x-clip">
-          {options[selected].name === "Welcome" && (
+          {options[selected].name === "Search" && (
             <div className="w-full space-y-8">
               <div className="flex flex-col space-y-1">
-                <p className="text-primary-content text-xl font-light">
-                  Welcome to
-                </p>
-                <p className="text-primary-content text-5xl font-semibold">
-                  {dao.name} Search
+                <p className="text-base-content text-3xl font-semibold">
+                  Search
                 </p>
               </div>
               <div className="flex flex-col space-y-2">
@@ -159,9 +159,7 @@ export default function Help() {
 
           {options[selected].name === "Tags" && (
             <div className="space-y-8">
-              <p className="text-primary-content text-5xl font-semibold">
-                Tags
-              </p>
+              <p className="text-base-content text-3xl font-semibold">Tags</p>
               <div className="flex flex-col space-y-2">
                 <p className="text-xl font-normal">
                   Tags help us{" "}
@@ -180,8 +178,8 @@ export default function Help() {
                     <div onClick={() => setView(viewName)}>
                       <p
                         className={`${
-                          view === viewName && "bg-primary-content text-neutral"
-                        } text-primary-content rounded-t-lg border-x border-t px-3 py-1`}
+                          view === viewName && "bg-base-content text-base-100"
+                        } text-base-content border-base-content rounded-t-lg border-x border-t px-3 py-1`}
                       >
                         {viewName}
                       </p>
@@ -190,7 +188,7 @@ export default function Help() {
                 </div>
 
                 {view === "User" && (
-                  <div className="w-full rounded-tr border-x border-t p-8 text-3xl font-semibold">
+                  <div className="border-base-content w-full rounded-tr border-x border-t p-8 text-3xl font-semibold">
                     <div className="flex w-full flex-row justify-between">
                       <div className="flex w-full flex-col items-start space-y-12">
                         <div className="flex w-full flex-row items-center justify-between">
@@ -220,11 +218,11 @@ export default function Help() {
                                 ))}
                               </div>
                             </div>
-                            <p className="text-left text-4xl font-bold text-gray-200">
+                            <p className="text-base-content text-left text-4xl font-bold">
                               {dao.memberName}
                             </p>
                           </div>
-                          <div className="hidden rounded-full border-4 border-gray-400 lg:block">
+                          <div className="hidden rounded-full border-gray-400 lg:block">
                             <Image
                               src={defaultAvatar}
                               width={150}
@@ -311,7 +309,7 @@ export default function Help() {
           )}
         </div>
       </div>
-      <div className="absolute left-8 bottom-8">
+      {/* <div className="absolute left-8 bottom-8">
         <div className="flex w-full justify-center">
           <kbd className="kbd">w</kbd>
         </div>
@@ -320,7 +318,7 @@ export default function Help() {
           <kbd className="kbd">s</kbd>
           <kbd className="kbd">d</kbd>
         </div>
-      </div>
+      </div> */}
     </Layout>
   );
 }

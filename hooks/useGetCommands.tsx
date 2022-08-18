@@ -36,8 +36,8 @@ const createLinkCommand = ({
 
 const createProposalCommand = (proposal: Proposal): Command => ({
   name: proposal.title,
-  // link: `/proposals/${proposal.id}`,
   app: <ProposalPage id={proposal.id} />,
+  // link: `/proposals/${proposal.id}`,
   type: CommandFilters.PROPOSAL,
   className: `${proposal.state === "active" ? "font-semibold" : "font-normal"}`,
   icon: ChatIcon,
@@ -45,10 +45,10 @@ const createProposalCommand = (proposal: Proposal): Command => ({
 
 const createUserCommand = (user: User): Command => ({
   name: user.name,
+  app: <Profile address={user.address} />,
   // link: `/profiles/${user.address}`,
   type: CommandFilters.USER,
   icon: AtIcon,
-  app: <Profile address={user.address} />,
 });
 
 export const useGetCommands = (): Array<Command> => {

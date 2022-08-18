@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { EthereumAddress } from "../../types/EthereumAddress";
 import { dao, defaultAvatar } from "../../config";
 import { useGetUser } from "../../hooks/database/useGetUser";
@@ -27,7 +26,7 @@ export default function ProfilePreview({
       key={i}
     >
       <div className="flex w-full flex-row space-x-4 px-6 py-4">
-        <Link href={`/profiles/${address}`}>
+        <a href={`/profiles/${address}`}>
           <Image
             src={profileUrl || defaultAvatar}
             width={60}
@@ -35,7 +34,7 @@ export default function ProfilePreview({
             className="h-fit w-fit cursor-pointer rounded-full"
             onError={() => setProfileUrl(defaultAvatar)}
           />
-        </Link>
+        </a>
         <div className="flex w-full flex-col items-start justify-center space-y-0">
           <div className="flex w-full flex-row items-baseline justify-between space-x-2">
             <p className="text-base-content text-md font-semibold">{name}</p>

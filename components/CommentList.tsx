@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { Proposal } from "@snapshot-labs/snapshot.js/dist/sign/types";
 import { userTags } from "../config";
 import dynamic from "next/dynamic";
+import { map } from "ramda";
 const CommentListItem = dynamic(() => import("./CommentListItem"));
 const TagSelector = dynamic(() => import("./TagSelector"));
 
@@ -48,6 +49,7 @@ export default function CommentList({
               key={i}
               index={i}
               comment={comment}
+              choiceTitle={proposal.choices[Number(comment.choice) - 1]}
               selectedTags={selectedTags}
             />
           ))}

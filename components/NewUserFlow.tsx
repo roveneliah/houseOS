@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { useCommand } from "../hooks/generic/useCommand";
 import { useSignIn } from "../hooks/useSignIn";
 import { Maybe } from "../types/Maybe";
-import Link from "next/link";
 import Image from "next/image";
 import TagsList from "./profiles/TagsList";
 import { ChatIcon } from "./icons/ChatIcon";
@@ -182,14 +181,14 @@ export default function NewUserFlow() {
               </div>
               <div className="flex w-full flex-row items-baseline justify-between overflow-hidden rounded-lg">
                 <div className="flex w-full flex-row items-start space-x-4 bg-gray-200 px-6 py-4">
-                  <Link href={`/profiles/${address}`}>
+                  <a href={`/profiles/${address}`}>
                     <Image
                       src={defaultAvatar}
                       width={80}
                       height={80}
                       className="cursor-pointer rounded-full"
                     />
-                  </Link>
+                  </a>
                   <div className="flex w-full flex-col items-start justify-center space-y-2">
                     <div className="text-neutral flex w-full flex-row items-baseline justify-between space-x-2">
                       <p className="text-lg font-semibold">You</p>
@@ -295,14 +294,14 @@ export default function NewUserFlow() {
               className={`flex w-full flex-row items-baseline justify-between overflow-hidden rounded-lg`}
             >
               <div className="flex w-full flex-row items-start space-x-4 bg-gray-200 px-6 py-6">
-                <Link href={`/profiles/${address}`}>
+                <a href={`/profiles/${address}`}>
                   <Image
                     src={defaultAvatar}
                     width={80}
                     height={80}
                     className="cursor-pointer rounded-full"
                   />
-                </Link>
+                </a>
                 <div className="flex w-full flex-col items-start justify-center space-y-2">
                   <div className="flex w-full flex-row items-center justify-between space-x-2">
                     <p className="text-neutral text-lg font-semibold">

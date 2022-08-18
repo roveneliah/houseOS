@@ -10,15 +10,13 @@ import { useSignIn } from "../hooks/useSignIn";
 import { useIsNewUser } from "../hooks/useIsNewUser";
 import dynamic from "next/dynamic";
 import { useSIWE } from "@/hooks/useSIWE";
-import Link from "next/link";
 import { usePath } from "@/hooks/usePath";
-import { useCommand, useOnKeydown } from "@/hooks/generic/useCommand";
+import { useOnKeydown } from "@/hooks/generic/useCommand";
 import SignupModal from "./SignupModal";
 import Image from "next/image";
-import AppFrame, { NotificationFrame } from "./AppFrame";
+import AppFrame from "./AppFrame";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { Footer } from "./Footer";
-import { close } from "@/features/windows/windowsSlice";
+import { close, launch } from "@/features/windows/windowsSlice";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./CommandPalette"));
 
@@ -60,8 +58,6 @@ export default function Layout({
   const { data: ensName } = useEnsName({ address });
   const connector = connectors[1];
 
-  // TODO: handle FIXED OPEN behavior
-
   const toggleSearch = () =>
     dispatch({ type: "windows/toggle", payload: { windowName: "search" } });
 
@@ -77,6 +73,8 @@ export default function Layout({
   const help = useAppSelector((state) => state.windows.open.help);
   const searchOpen = useAppSelector((state) => state.windows.open.search);
   const closeWelcome = () => dispatch(close({ windowName: "welcome" }));
+
+  const launchCreateProfile = () => dispatch(launch(<SignupModal />));
 
   return (
     <div data-theme={themeName} className="no-scrollbar min-h-screen font-mono">
@@ -104,13 +102,11 @@ export default function Layout({
                 </a>
               </li>
               {path.map(({ pathSlice, route }, i) => (
-                <Link href={route} key={i}>
-                  <li>
-                    <a>
-                      {pathSlice == "" ? "Desktop" : pathSlice.slice(0, 10)}
-                    </a>
-                  </li>
-                </Link>
+                <li>
+                  <a href={route} key={i}>
+                    {pathSlice == "" ? "Desktop" : pathSlice.slice(0, 10)}
+                  </a>
+                </li>
               ))}
             </ul>
           </div>
@@ -118,13 +114,13 @@ export default function Layout({
             {!signedIn ? (
               !isConnected ? (
                 isReconnecting ? (
-                  <button className="btn btn-sm loading border-black bg-transparent font-normal hover:bg-transparent">
+                  <button className="btn btn-sm loading rounded-md border-black bg-transparent font-normal hover:bg-transparent">
                     Reconnecting
                   </button>
                 ) : (
                   <button
                     onClick={() => connect(connector)}
-                    className="btn btn-sm border-black bg-transparent font-normal hover:bg-transparent"
+                    className="btn btn-sm rounded-md border-black bg-transparent font-normal hover:bg-transparent"
                   >
                     Connect
                   </button>
@@ -132,54 +128,38 @@ export default function Layout({
               ) : !signedInSIWE ? (
                 <button
                   onClick={() => signIn()}
-                  className="btn btn-sm border-black bg-transparent font-normal hover:bg-transparent"
+                  className="btn btn-sm rounded-md border-black bg-transparent font-normal hover:bg-transparent"
                 >
                   Sign in with Ethereum
                 </button>
               ) : (
-                <button className="btn btn-sm loading border-black bg-transparent font-normal hover:bg-transparent">
+                <button className="btn btn-sm loading rounded-md border-black bg-transparent font-normal hover:bg-transparent">
                   Signing in with Ethereum...
                 </button>
               )
             ) : !newUserFlow ? (
               <button
-                className="btn btn-sm group border-black bg-transparent font-normal hover:bg-transparent"
+                className="btn btn-sm group rounded-md border-black bg-transparent font-normal hover:bg-transparent"
                 onClick={() => {
                   signOut();
                   disconnect();
                   connect();
                 }}
               >
-                <p className="loading block group-hover:hidden">
+                <p className="loading block rounded-md group-hover:hidden">
                   {user?.name ?? "Loading Profile"}
                 </p>
-                <p className="hidden group-hover:block">Disconnect</p>
+                <p className="hidden rounded-md group-hover:block">
+                  Disconnect
+                </p>
               </button>
             ) : (
-              <>
-                <label
-                  className="btn btn-sm modal-btn border-black bg-transparent font-normal hover:bg-transparent"
-                  htmlFor="signup-modal"
-                >
-                  <p>Create Profile</p>
-                </label>
-                <input
-                  type="checkbox"
-                  id="signup-modal"
-                  className="modal-toggle"
-                />
-
-                <label
-                  htmlFor="signup-modal"
-                  className="modal w-full cursor-pointer bg-black/20"
-                >
-                  <div className="w-[60vw]">
-                    <label className="relative" htmlFor="">
-                      <SignupModal />
-                    </label>
-                  </div>
-                </label>
-              </>
+              <button
+                onClick={launchCreateProfile}
+                className="border-base-content rounded-md border px-3 py-1"
+              >
+                Create Profile
+              </button>
             )}
             <button
               className="group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent"
@@ -193,13 +173,10 @@ export default function Layout({
               >
                 <SearchIcon />
               </div>
-              {/* <p className="flex font-normal">Search</p> */}
-              {/* <p className="flex font-normal">⌘k</p> */}
             </button>
             {/* <button className="font-mono text-sm">{date.toDateString()}</button> */}
           </div>
         </div>
-        {/* {newUserFlow && <NotificationFrame message="Hi there" />} */}
         {welcomeMessage && (
           <div className="absolute">
             <AppFrame>
