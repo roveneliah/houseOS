@@ -1,4 +1,4 @@
-import CeramicConnectButton from "../CeramicConnectButton";
+import CeramicConnectButton from "../archive/ceramic/CeramicConnectButton";
 
 export default function SignupView({ address }: { address: string }) {
   return (

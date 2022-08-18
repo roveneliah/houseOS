@@ -14,11 +14,11 @@ import { usePath } from "@/hooks/usePath";
 import { useOnKeydown } from "@/hooks/generic/useCommand";
 import SignupModal from "./SignupModal";
 import Image from "next/image";
-import AppFrame from "./AppFrame";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { close, launch } from "@/features/windows/windowsSlice";
+import AppFrame from "./views/AppFrame";
+import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
+import { close, launch } from "@/redux/features/windows/windowsSlice";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
-const CommandPalette = dynamic(() => import("./CommandPalette"));
+const CommandPalette = dynamic(() => import("./search/CommandPalette"));
 
 export default function Layout({
   children,
@@ -102,7 +102,7 @@ export default function Layout({
                 </a>
               </li>
               {path.map(({ pathSlice, route }, i) => (
-                <li>
+                <li key={i}>
                   <a href={route} key={i}>
                     {pathSlice == "" ? "Desktop" : pathSlice.slice(0, 10)}
                   </a>

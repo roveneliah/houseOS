@@ -1,7 +1,7 @@
 import { Comment } from "../../types/Comment";
-import { useAppDispatch } from "@/app/hooks";
-import ProposalPage from "@/pages/proposals/[id]";
-import { launch } from "@/features/windows/windowsSlice";
+import { useAppDispatch } from "@/redux/app/hooks";
+import ProposalPage from "@/components/proposals/[id]";
+import { launch } from "@/redux/features/windows/windowsSlice";
 
 export default function CommentList({
   comments,

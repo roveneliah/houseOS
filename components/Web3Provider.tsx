@@ -1,6 +1,6 @@
 import { WagmiConfig } from "wagmi";
 import { ReactNode } from "react";
-import { useWagmiClient } from "./useWagmiClient";
+import { useWagmiClient } from "../hooks/useWagmiClient";
 interface Props {
   children: ReactNode;
 }

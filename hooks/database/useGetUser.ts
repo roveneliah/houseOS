@@ -1,7 +1,7 @@
-import { RootState } from "@/app/store";
-import { update } from "@/features/users/usersSlice";
+import { RootState } from "@/redux/app/store";
+import { update } from "@/redux/features/users/usersSlice";
 import { useEffect, useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { useAppSelector, useAppDispatch } from "../../redux/app/hooks";
 import { EthereumAddress } from "../../types/EthereumAddress";
 import { User } from "../../types/User";
 import { listenUser } from "../../utils/firebase/user";

@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import AppFrame from "@/components/AppFrame";
-import { quitApp, toggle } from "@/features/windows/windowsSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
+import AppFrame from "@/components/views/AppFrame";
+import { quitApp, toggle } from "@/redux/features/windows/windowsSlice";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Footer } from "../components/Footer";

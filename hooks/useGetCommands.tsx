@@ -9,9 +9,9 @@ import AtIcon from "@/components/icons/AtIcon";
 import { ChatIcon } from "@/components/icons/ChatIcon";
 import LinkIcon from "@/components/icons/LinkIcon";
 import ArrowRightIcon from "@/components/icons/ArrowIcon";
-import Profile from "@/components/[address]";
+import Profile from "@/components/profiles/[address]";
 import { EthereumAddress } from "@/types/EthereumAddress";
-import ProposalPage from "@/pages/proposals/[id]";
+import ProposalPage from "@/components/proposals/[id]";
 
 export enum CommandFilters {
   ALL = "ALL",
@@ -36,8 +36,9 @@ const createLinkCommand = ({
 
 const createProposalCommand = (proposal: Proposal): Command => ({
   name: proposal.title,
-  app: <ProposalPage id={proposal.id} />,
+  // app: <ProposalPage id={proposal.id} />,
   // link: `/proposals/${proposal.id}`,
+  link: `https://snapshot.org/#/krausehouse.eth/proposal/${proposal.id}`,
   type: CommandFilters.PROPOSAL,
   className: `${proposal.state === "active" ? "font-semibold" : "font-normal"}`,
   icon: ChatIcon,

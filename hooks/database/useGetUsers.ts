@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/app/hooks";
+import { useAppDispatch } from "@/redux/app/hooks";
 import { User } from "../../types/User";
 import { getUsers } from "../../utils/firebase/user";
-import { track } from "@/features/users/usersSlice";
+import { track } from "@/redux/features/users/usersSlice";
 import { compose } from "redux";
 import { map, tap } from "ramda";
 

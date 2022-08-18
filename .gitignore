@@ -38,10 +38,11 @@ yarn-error.log*
 *.tsbuildinfo
 
 # cypres demos
-cypress/e2e/1-getting-started
-cypress/e2e/2-advanced-examples
-cypress/videos
-cypress/screenshots
+test/cypress/e2e/1-getting-started
+test/cypress/e2e/2-advanced-examples
+test/cypress/videos
+test/cypress/screenshots
+test/cypress/fixtures
 
 
 # other

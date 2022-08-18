@@ -1,6 +1,6 @@
-import Help from "@/pages/help";
-import MyProfile from "@/pages/me";
-import ProposalsListPage from "@/pages/proposals";
+import Help from "@/components/help";
+import MyProfile from "@/components/me";
+import ProposalsListPage from "@/components/proposals";
 
 export default [
   {

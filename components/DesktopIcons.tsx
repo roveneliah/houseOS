@@ -1,8 +1,8 @@
-import { useAppDispatch } from "@/app/hooks";
-import { launch, open } from "@/features/windows/windowsSlice";
+import { useAppDispatch } from "@/redux/app/hooks";
+import { launch, open } from "@/redux/features/windows/windowsSlice";
 import Image from "next/image";
-import Help from "../pages/help";
-import ProposalsListPage from "../pages/proposals";
+import Help from "./help";
+import ProposalsListPage from "./proposals";
 
 export function DesktopIcons() {
   const dispatch = useAppDispatch();
