@@ -113,7 +113,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
       <Dialog
         open={isOpen}
         onClose={closeSearch}
-        className="fixed bottom-[0vh] z-50 mx-auto h-fit w-full overflow-y-auto sm:inset-[15vh] sm:w-[70vw] lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
+        className="fixed bottom-[0vh] z-50 mx-auto flex h-full w-full flex-col justify-end overflow-y-auto sm:inset-[15vh] sm:h-fit sm:w-[70vw] sm:flex-none lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -134,7 +134,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
           leave="duration-200 ease-in"
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
-          className="flex flex-col space-y-4"
+          className="flex h-full flex-col justify-end space-y-4"
         >
           <Combobox
             value={undefined}
@@ -146,7 +146,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               closeSearch();
             }}
             as="div"
-            className="bg-base-100 border-base-content group relative flex h-full flex-col overflow-hidden font-mono shadow-md ring-1 ring-black/5 sm:rounded-lg sm:border-4 sm:shadow-black"
+            className="border-base-content bg-base-100 group relative flex h-full flex-col justify-end overflow-hidden font-mono shadow-md ring-1 ring-black/5 sm:rounded-lg sm:border-4 sm:shadow-black"
           >
             <div className="bg-base-200 hidden flex-row justify-start space-x-2 p-4 py-2 outline-none sm:flex">
               <button
@@ -193,7 +193,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
             {filteredCommands.length > 0 ? (
               <Combobox.Options
                 static
-                className="no-scrollbar divide-base-200 order-1 max-h-96 divide-y overflow-hidden overflow-y-auto rounded-lg border-t border-black px-2 py-4 sm:order-3 sm:border-t-0"
+                className="no-scrollbar divide-base-200 order-1 flex h-full flex-col justify-end divide-y overflow-hidden  overflow-y-auto rounded-lg border-t border-black px-2 py-4 sm:order-3 sm:max-h-96 sm:justify-start sm:border-t-0"
               >
                 {filteredCommands.map((command, i) => (
                   <Combobox.Option value={command} key={i}>
