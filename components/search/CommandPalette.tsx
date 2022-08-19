@@ -113,7 +113,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
       <Dialog
         open={isOpen}
         onClose={closeSearch}
-        className="fixed inset-[15vh] z-50 mx-auto h-fit w-[70vw] overflow-y-auto  lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
+        className="fixed bottom-[0vh] z-50 mx-auto h-fit w-full overflow-y-auto sm:inset-[15vh] sm:w-[70vw] lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -146,16 +146,16 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               closeSearch();
             }}
             as="div"
-            className="bg-base-100 border-base-content relative overflow-hidden rounded-lg border-4 font-mono shadow-lg shadow-black ring-1 ring-black/5"
+            className="bg-base-100 border-base-content relative flex h-full flex-col overflow-hidden font-mono shadow-md ring-1 ring-black/5 sm:rounded-lg sm:border-4 sm:shadow-black"
           >
-            <div className="bg-base-200 flex flex-row justify-start space-x-2 p-4 py-2 outline-none">
+            <div className="bg-base-200 hidden flex-row justify-start space-x-2 p-4 py-2 outline-none sm:flex">
               <button
                 onClick={closeSearch}
                 className="btn-circle btn-xs border-base-content border-4 outline-none"
               ></button>
               <div className="btn-circle btn-xs border-base-content border-4"></div>
             </div>
-            <div className="bg-base-200 border-base-content flex flex-row justify-start border-t text-gray-700">
+            <div className="bg-base-200 border-base-content order-3 flex flex-row justify-start border-t-0 text-gray-700 sm:order-2 sm:border-t">
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
@@ -176,7 +176,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                 </div>
               ))}
             </div>
-            <div className="flex flex-row items-center space-x-2 border-b p-2 px-6 font-mono">
+            <div className="order-2 flex flex-row items-center space-x-2 border-b border-t-2 p-2 px-6 font-mono sm:order-2 sm:border-t-0">
               <div className="text-gray-800">
                 <SearchIcon />
               </div>
@@ -193,7 +193,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
             {filteredCommands.length > 0 ? (
               <Combobox.Options
                 static
-                className="no-scrollbar divide-base-200 max-h-96 divide-y overflow-hidden overflow-y-auto rounded-lg px-2 py-4"
+                className="no-scrollbar divide-base-200 order-1 max-h-96 divide-y overflow-hidden overflow-y-auto rounded-lg border-t border-black px-2 py-4 sm:order-3 sm:border-t-0"
               >
                 {filteredCommands.map((command, i) => (
                   <Combobox.Option value={command} key={i}>
@@ -227,7 +227,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                 </p>
               </div>
             )}
-            <div className="text-neutral-content bg-base-200 flex flex-row items-center space-x-2 px-3 py-2">
+            <div className="text-neutral-content bg-base-200 hidden flex-row items-center space-x-2 px-3 py-2 sm:order-4 sm:flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"

@@ -1,7 +1,6 @@
-import { Comment } from "../../types/Comment";
 import createHook from "../createHook";
-import { fetchVotes } from "../../utils/fetchVotes";
 import { useEffect, useState } from "react";
+import { fetchVotes } from "@/utils/snapshot/fetchVotes";
 
 /**
  * Get votes for a proposal from Snapshot.
