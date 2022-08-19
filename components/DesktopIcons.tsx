@@ -14,7 +14,7 @@ export function DesktopIcons() {
   const launchProposalView = () => dispatch(launch(<ProposalsListPage />));
 
   return (
-    <div className="absolute top-24 left-10 flex flex-col space-y-8">
+    <div className="absolute bottom-10 flex w-full flex-row justify-between px-12 sm:top-24 sm:left-10 sm:w-fit sm:flex-col sm:justify-start sm:space-y-8 sm:px-0">
       <div
         onClick={openSearch()}
         className="flex cursor-pointer flex-col items-center space-y-1"
@@ -45,7 +45,7 @@ export function DesktopIcons() {
       </button> */}
       <div
         onClick={toggleHelp}
-        className="flex cursor-pointer flex-col items-center space-y-1"
+        className="hidden cursor-pointer flex-col items-center space-y-1 sm:flex"
       >
         <Image src="/desktop-icons/Doc.png" width={40} height={50} />
         <p className="font-mono">Help</p>
