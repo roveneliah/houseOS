@@ -5,8 +5,6 @@
 - Reach out to `spicecube` on Discord.
 - We need beta testers!
 
----
-
 ## Current Milestone
 
 A **milestone** solves a set of **core problems** by passing a set of predefined **milestone tests**. Here is the current milestone we're focused on:
@@ -41,8 +39,6 @@ You can find the full set of **core problems** on the [Product Testing Dashboard
 - [Product Testing Dashboard]()
 - [User Interviews]()
 
----
-
 ## Principles
 
 1. Any proposed feature must solve a **core problem** (see teriminology).
@@ -54,8 +50,6 @@ You can find the full set of **core problems** on the [Product Testing Dashboard
 
 - Sprint planning on Tuesdays at 11am EST.
 - Milestone planning happens on-demand.
-
----
 
 ## Terminology
 
