@@ -22,16 +22,14 @@ const CommandPalette = dynamic(() => import("./search/CommandPalette"));
 
 export default function Layout({
   children,
+  noOpacity = false,
   paletteStartsOpen = false,
   fixedOpen = false,
-  noOpacity = false,
-  demo = false,
 }: {
   children?: ReactNode;
   paletteStartsOpen?: boolean;
   fixedOpen?: boolean;
   noOpacity?: boolean;
-  demo?: boolean;
 }) {
   const [themeIndex, setThemeIndex] = useState<number>(0);
   const themeName = themes[themeIndex]?.toString();
@@ -90,7 +88,6 @@ export default function Layout({
           commands={commands}
           noOpacity={noOpacity}
           deactivated={newUserFlow}
-          demo={demo}
         />
         <div className="border-base-content bg-base-200 fixed top-0 z-10 flex w-full flex-row items-center justify-between overflow-hidden border-b">
           <div className="breadcrumbs text-base-content self-center px-4 font-mono">

@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
 import { close, launch, toggle } from "@/redux/features/windows/windowsSlice";
 import { useRouter } from "next/router";
 import { any, anyPass } from "ramda";
+import { contains } from "../../utils/contains";
 
 const views = [
   {
@@ -41,9 +42,6 @@ const views = [
   },
 ];
 
-const contains = (query: string) => (str: string) =>
-  str.toLowerCase().includes(query.toLowerCase());
-
 const formatLinkCommand = (command: Command) =>
   command.type === CommandFilters.LINK
     ? {
@@ -61,14 +59,9 @@ interface Props {
   commands: Array<Command>;
   noOpacity?: boolean;
   deactivated?: boolean;
-  demo?: boolean;
 }
 
-export default function CommandPalette({
-  commands,
-  noOpacity = false,
-  demo = false,
-}: Props) {
+export default function CommandPalette({ commands, noOpacity = false }: Props) {
   const router = useRouter();
   const searchView = useAppSelector((state) => state.windows.searchView);
   const { search: isOpen } = useAppSelector((state) => state.windows.open);
@@ -143,54 +136,14 @@ export default function CommandPalette({
           leaveTo="opacity-0 scale-95"
           className="flex flex-col space-y-4"
         >
-          {demo && (
-            <>
-              <p className="alert bg-primary-content text-neutral">
-                <div className="flex flex-col items-start">
-                  <div className="flex flex-row justify-start space-x-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                      />
-                    </svg>
-                    <p className="text-md">
-                      Use{" "}
-                      <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-2 py-1 text-sm">
-                        ⌘→
-                      </span>{" "}
-                      and{" "}
-                      <span className="text-neutral mx-1 cursor-none rounded-lg bg-gray-300 px-2 py-1 text-sm">
-                        ⌘←
-                      </span>{" "}
-                      to switch between filters.
-                    </p>
-                  </div>
-                  <p className="px-7 text-xs">
-                    Note: actions are disabled for the demo.
-                  </p>
-                </div>
-              </p>
-            </>
-          )}
           <Combobox
             value={undefined}
             onChange={(command: Command) => {
-              if (!demo) {
-                command.app
-                  ? launchApp(command.app)
-                  : command.link && router.push(command.link);
+              command.app
+                ? launchApp(command.app)
+                : command.link && router.push(command.link);
 
-                closeSearch();
-              }
+              closeSearch();
             }}
             as="div"
             className="bg-base-100 border-base-content relative overflow-hidden rounded-lg border-4 font-mono shadow-lg shadow-black ring-1 ring-black/5"
@@ -229,7 +182,7 @@ export default function CommandPalette({
               </div>
               <Combobox.Input
                 className="w-full border-0 border-white bg-transparent py-2 px-2 text-sm text-gray-800 placeholder-gray-400 outline-none"
-                placeholder={demo ? "Good job!" : "Search the DAO..."}
+                placeholder={"Search the DAO..."}
                 autoComplete="false"
                 autoFocus={true}
                 onChange={(event) => {
