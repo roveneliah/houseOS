@@ -1,7 +1,7 @@
 import { BasicProfile, ViewerRecord } from "@self.id/framework";
-import { addTags, removeTag, updateName } from "../hooks/ceramic/ceramic";
-import { User } from "../types/User";
-import { Maybe } from "../types/Maybe";
+import { addTags, removeTag, updateName } from "../../../hooks/ceramic/ceramic";
+import { User } from "../../../types/User";
+import { Maybe } from "../../../types/Maybe";
 
 export const recordToUser = (record: any): User => ({
   name: record?.content?.name,

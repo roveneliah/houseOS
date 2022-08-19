@@ -1,3 +1,4 @@
+// TODO: refactor idiomatic, add types for context
 export const formatTaggers = (taggers: Array<string>, users: any) =>
   taggers
     .slice(0, 3)

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { EthereumAddress } from "../../types/EthereumAddress";
-import { fetchVote } from "../../utils/fetchVote";
+import { fetchVote } from "../../utils/snapshot/fetchVote";
 
 export const useGetVote = (proposalId: string, address: EthereumAddress) => {
   const [vote, setVote] = useState();

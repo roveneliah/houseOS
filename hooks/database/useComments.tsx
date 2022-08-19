@@ -5,7 +5,7 @@ import { listenUserComments } from "../../utils/firebase/user";
 import { useGetProposals } from "../snapshot/useGetProposals";
 import { snapshotSpace } from "../../config";
 import { Proposal } from "../../types/Proposal";
-import { fetchVote } from "../../utils/fetchVote";
+import { fetchVote } from "../../utils/snapshot/fetchVote";
 import { Maybe } from "../../types/Maybe";
 
 /**

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { EthereumAddress } from "../types/EthereumAddress";
+import { EthereumAddress } from "../../types/EthereumAddress";
 const uri = "https://hub.snapshot.org/graphql";
 const query = async (query: string) => {
   const x = await axios

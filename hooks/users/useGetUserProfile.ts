@@ -11,7 +11,7 @@ import {
   updateName,
   setProfilePic,
 } from "../../utils/firebase/user";
-import { recordToUser } from "../../utils/recordToUser";
+import { recordToUser } from "../../utils/archive/ceramic/recordToUser";
 // import { updateName } from "../ceramic/ceramic";
 import { useGetUser } from "../database/useGetUser";
 import { useKrauseBalance } from "../ethereum/useKrauseBalance";
