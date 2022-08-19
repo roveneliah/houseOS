@@ -81,6 +81,10 @@ export default function Layout({
         {/* TODO: #11 customize in config */}
         <link rel="icon" href="/initials.svg" />
         <meta name={dao.description} />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+        />
       </Head>
 
       <main className="bg-base-200 no-scrollbar flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start overflow-x-auto">

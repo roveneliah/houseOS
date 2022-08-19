@@ -23,10 +23,10 @@ const views = [
     icon: ListIcon,
   },
   {
-    title: "Users",
-    name: CommandFilters.USER,
-    view: CommandFilters.USER,
-    icon: UsersIcon,
+    title: "Links",
+    name: CommandFilters.LINK,
+    view: CommandFilters.LINK,
+    icon: LinkIcon,
   },
   {
     title: "Proposals",
@@ -35,10 +35,10 @@ const views = [
     icon: ChatIcon,
   },
   {
-    title: "Links",
-    name: CommandFilters.LINK,
-    view: CommandFilters.LINK,
-    icon: LinkIcon,
+    title: "Users",
+    name: CommandFilters.USER,
+    view: CommandFilters.USER,
+    icon: UsersIcon,
   },
 ];
 
@@ -155,13 +155,13 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               ></button>
               <div className="btn-circle btn-xs border-base-content border-4"></div>
             </div>
-            <div className="bg-base-200 border-base-content order-3 flex flex-row justify-start border-t-0 text-gray-700 sm:order-2 sm:border-t">
+            <div className="bg-base-200 border-base-content order-3 flex flex-row justify-start overflow-x-scroll border-t-0 text-gray-700 sm:order-2 sm:border-t">
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
                   className={`flex w-full flex-row items-center justify-start space-x-2 px-5 py-3 ${
                     filter === view && "bg-base-100"
-                  }`}
+                  } ${i === 0 && "hidden sm:flex"}`}
                   // set filter to
                   onClick={() =>
                     filters.forEach(
