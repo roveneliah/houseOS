@@ -146,7 +146,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               closeSearch();
             }}
             as="div"
-            className="bg-base-100 border-base-content relative flex h-full flex-col overflow-hidden font-mono shadow-md ring-1 ring-black/5 sm:rounded-lg sm:border-4 sm:shadow-black"
+            className="bg-base-100 border-base-content group relative flex h-full flex-col overflow-hidden font-mono shadow-md ring-1 ring-black/5 sm:rounded-lg sm:border-4 sm:shadow-black"
           >
             <div className="bg-base-200 hidden flex-row justify-start space-x-2 p-4 py-2 outline-none sm:flex">
               <button
@@ -155,7 +155,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               ></button>
               <div className="btn-circle btn-xs border-base-content border-4"></div>
             </div>
-            <div className="bg-base-200 border-base-content order-3 flex flex-row justify-start overflow-x-scroll border-t-0 text-gray-700 sm:order-2 sm:border-t">
+            <div className="bg-base-200 border-base-content order-3 flex flex-row justify-start overflow-x-scroll border-t-0 text-gray-700 group-active:hidden sm:order-2 sm:border-t">
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
