@@ -11,6 +11,8 @@ import { ChatIcon } from "../icons/ChatIcon";
 import UsersIcon from "../icons/UsersIcon";
 import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
 import { close, launch, toggle } from "@/redux/features/windows/windowsSlice";
+import { useRouter } from "next/router";
+import { any, anyPass } from "ramda";
 
 const views = [
   {
@@ -67,6 +69,7 @@ export default function CommandPalette({
   noOpacity = false,
   demo = false,
 }: Props) {
+  const router = useRouter();
   const searchView = useAppSelector((state) => state.windows.searchView);
   const { search: isOpen } = useAppSelector((state) => state.windows.open);
   const dispatch = useAppDispatch();
@@ -83,7 +86,6 @@ export default function CommandPalette({
     prev: prevFilter,
   } = useSingleSelect(views);
 
-  console.log(searchView, selected);
   const filter = filters[selected].name;
 
   useCommand("k", toggleSearch);
@@ -99,7 +101,12 @@ export default function CommandPalette({
           : type
         : type === filter
     )
-    .filter((option) => !query || contains(query)(option.name || ""))
+    .filter(
+      (option) =>
+        !query ||
+        contains(query)(option.name || "") ||
+        any(contains(query))(option.keywords || [])
+    )
     .map(formatLinkCommand);
 
   return (
@@ -178,7 +185,10 @@ export default function CommandPalette({
             value={undefined}
             onChange={(command: Command) => {
               if (!demo) {
-                command.app && launchApp(command.app);
+                command.app
+                  ? launchApp(command.app)
+                  : command.link && router.push(command.link);
+
                 closeSearch();
               }
             }}

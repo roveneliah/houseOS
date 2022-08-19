@@ -22,11 +22,13 @@ export enum CommandFilters {
 
 const createLinkCommand = ({
   name,
+  keywords = [],
   link,
   description,
   favorite,
 }: any): Command => ({
   name,
+  keywords,
   link,
   type: CommandFilters.LINK,
   description,

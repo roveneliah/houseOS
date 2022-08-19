@@ -3,6 +3,7 @@ import { CommandFilters } from "../hooks/useGetCommands";
 
 export interface Command {
   name: string;
+  keywords?: Array<string>;
   link?: string; // TODO: NEED URL type
   app?: ReactNode;
   type: CommandFilters;

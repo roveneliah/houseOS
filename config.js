@@ -64,38 +64,45 @@ module.exports = {
   commands: {
     links: [
       {
-        name: "Dashboard",
+        name: "Forefront Dashboard",
+        keywords: ["Info", "Metrics"],
         link: "https://www.terminal.co/community/social/krausehouse.eth",
         favorite: true,
       },
       {
         name: "Contributor Dashboard",
+        keywords: ["Work"],
         link: "https://krausehousework.notion.site/Krause-House-Contributor-Dashboard-a00860761dd4486792aed12cc8187ce2",
         favorite: true,
       },
       {
-        name: "Main Treasury",
-        link: "https://etherscan.io/address/0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
-      },
-      {
         name: "Submit a Proposal",
+        keywords: ["Proposals", "Governance"],
         link: "https://krausehousework.notion.site/Submit-a-Proposal-fcf858c80a0c40b6a2a83aec5ed588dc",
         favorite: true,
       },
       {
+        name: "Main Treasury",
+        keywords: ["Multisig", "Gnosis", "Funding"],
+        link: "https://etherscan.io/address/0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
+      },
+      {
         name: "Gnosis Chain Treasury",
+        keywords: ["Multisig", "Gnosis", "Funding"],
         network: 1,
         address: "gno:0x5844c36D6f803213Ca3f7fDac39A0d78f918ee3c",
         link: "https://blockscout.com/xdai/mainnet/address/0x5844c36D6f803213Ca3f7fDac39A0d78f918ee3c/transactions",
       },
       {
         name: "Polygon Treasury",
+        keywords: ["Multisig", "Gnosis", "Funding"],
         network: 1,
         address: "matic:0x40eDBC75C543954CDD9c5ae7398342788F46A85B",
         link: "https://polygonscan.com/address/0x40eDBC75C543954CDD9c5ae7398342788F46A85B",
       },
       {
         name: "Optimism Treasury",
+        keywords: ["Multisig", "Gnosis", "Funding"],
         network: 1,
         address: "matic:0x40eDBC75C543954CDD9c5ae7398342788F46A85B",
         link: "https://optimistic.etherscan.io/address/0xe245d82DDeDfB95ccaf68B9B609F1717B1A14A54",
@@ -106,6 +113,7 @@ module.exports = {
       // },
       {
         name: "Twitter",
+        keywords: ["Social", "Community"],
         link: "https://twitter.com/krausehousedao",
       },
       {
@@ -114,6 +122,7 @@ module.exports = {
       },
       {
         name: "Draft Proposals",
+        keywords: ["Proposals", "Governance"],
         link: "https://www.notion.so/a5d990ad04624d9daa70366b88e88ce4?v=62daad62e62a4395a7be0edaa26e630c",
       },
       {
@@ -127,11 +136,43 @@ module.exports = {
       },
       {
         name: "Brand Guidelines",
+        keywords: ["Design"],
         link: "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c46e9a4e-d30f-4842-9909-7c7c9c0571ab/KrauseHouse_BrandGuidelines-V1_lo.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220720%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220720T180456Z&X-Amz-Expires=86400&X-Amz-Signature=1a5db7f68a876e86709e6c66a094374f0847921e605917c6cc251d7cea91260d&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Krause%2520House%2520Brand%2520Guidelines%252004.2022.pdf%22&x-id=GetObject",
       },
       {
         name: "Youtube",
+        keywords: ["Social", "Media"],
         link: "https://www.youtube.com/channel/UCtiCOIi2V5U8EixchY01VVQ/videos",
+      },
+      {
+        name: "Permissions",
+        keywords: ["Delegation", "Governance", "Powers"],
+        link: "https://krausehousework.notion.site/4589c7e790134019bc4e29753a225d09?v=168036c795544f3fb0e56bbabae42433",
+      },
+      {
+        name: "Mainnet Transactions",
+        keywords: ["Treasury", "Multisig", "Spending", "Budget"],
+        link: "https://krausehousework.notion.site/e44eec07c098494ea9a8468395af50f9?v=8d44b9d251d241a6b7d3d204082f08a6",
+      },
+      {
+        name: "Governance Docs",
+        keywords: ["Governance", "Docs", "Delegation"],
+        link: "https://krausehousework.notion.site/Governance-Philosophy-3aa7d188a9974559a591ec5e2cf98aa3",
+      },
+
+      {
+        name: "$KRAUSE Contract",
+        keywords: ["Contract", "$KRAUSE", "Docs"],
+        link: "https://etherscan.io/address/0x9f6f91078a5072a8b54695dafa2374ab3ccd603b",
+      },
+      {
+        name: "MyJerry",
+        link: "https://myjerry-app.vercel.app/earn",
+      },
+      {
+        name: "Github",
+        keywords: ["Code", "Dev"],
+        link: "https://github.com/krause-house",
       },
     ],
   },
