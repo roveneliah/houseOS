@@ -56,7 +56,7 @@ const createUserCommand = (user: User): Command => ({
 
 export const useGetCommands = (): Array<Command> => {
   const proposals = useGetProposals(snapshotSpace);
-  const users = useGetUsers();
+  // const users = useGetUsers();
   return [
     ...(defaultCommands.map((o) => ({
       ...o,
@@ -65,6 +65,6 @@ export const useGetCommands = (): Array<Command> => {
     })) || []),
     ...(commands?.links?.map(createLinkCommand) || []),
     ...(proposals?.map(createProposalCommand) || []),
-    ...(users?.map(createUserCommand) || []),
+    // ...(users?.map(createUserCommand) || []),
   ];
 };

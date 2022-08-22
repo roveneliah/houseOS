@@ -112,56 +112,59 @@ export default function Layout({
             </ul>
           </div>
           <div className="flex flex-row items-center space-x-4 px-4">
-            {!signedIn ? (
-              !isConnected ? (
-                isReconnecting ? (
-                  <button className="btn btn-sm loading rounded-md border-black bg-transparent font-normal hover:bg-transparent">
-                    Reconnecting
-                  </button>
-                ) : (
+            {/* <>
+              {!signedIn ? (
+                !isConnected ? (
+                  isReconnecting ? (
+                    <button className="btn btn-sm loading rounded-md border-black bg-transparent font-normal hover:bg-transparent">
+                      Reconnecting
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => connect(connector)}
+                      className="btn btn-sm rounded-md border-black bg-transparent font-normal hover:bg-transparent"
+                    >
+                      Connect
+                    </button>
+                  )
+                ) : !signedInSIWE ? (
                   <button
-                    onClick={() => connect(connector)}
+                    onClick={() => signIn()}
                     className="btn btn-sm rounded-md border-black bg-transparent font-normal hover:bg-transparent"
                   >
-                    Connect
+                    Sign in with Ethereum
+                  </button>
+                ) : (
+                  <button className="btn btn-sm loading rounded-md border-black bg-transparent font-normal hover:bg-transparent">
+                    Signing in with Ethereum...
                   </button>
                 )
-              ) : !signedInSIWE ? (
+              ) : !newUserFlow ? (
                 <button
-                  onClick={() => signIn()}
-                  className="btn btn-sm rounded-md border-black bg-transparent font-normal hover:bg-transparent"
+                  className="btn btn-sm group rounded-md border-black bg-transparent font-normal hover:bg-transparent"
+                  onClick={() => {
+                    signOut();
+                    disconnect();
+                    connect();
+                  }}
                 >
-                  Sign in with Ethereum
+                  <p className="loading block rounded-md group-hover:hidden">
+                    {user?.name ?? "Loading Profile"}
+                  </p>
+                  <p className="hidden rounded-md group-hover:block">
+                    Disconnect
+                  </p>
                 </button>
               ) : (
-                <button className="btn btn-sm loading rounded-md border-black bg-transparent font-normal hover:bg-transparent">
-                  Signing in with Ethereum...
+                <button
+                  onClick={launchCreateProfile}
+                  className="border-base-content rounded-md border px-3 py-1"
+                >
+                  Create Profile
                 </button>
-              )
-            ) : !newUserFlow ? (
-              <button
-                className="btn btn-sm group rounded-md border-black bg-transparent font-normal hover:bg-transparent"
-                onClick={() => {
-                  signOut();
-                  disconnect();
-                  connect();
-                }}
-              >
-                <p className="loading block rounded-md group-hover:hidden">
-                  {user?.name ?? "Loading Profile"}
-                </p>
-                <p className="hidden rounded-md group-hover:block">
-                  Disconnect
-                </p>
-              </button>
-            ) : (
-              <button
-                onClick={launchCreateProfile}
-                className="border-base-content rounded-md border px-3 py-1"
-              >
-                Create Profile
-              </button>
-            )}
+              )}
+            </> */}
+            <button className="font-mono text-sm">{date.toDateString()}</button>
             <button
               className="group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent"
               onClick={toggleSearch}
@@ -175,7 +178,6 @@ export default function Layout({
                 <SearchIcon />
               </div>
             </button>
-            {/* <button className="font-mono text-sm">{date.toDateString()}</button> */}
           </div>
         </div>
         {welcomeMessage && (

@@ -190,43 +190,51 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                 }}
               />
             </div>
-            {filteredCommands.length > 0 ? (
-              <Combobox.Options
-                static
-                className="no-scrollbar divide-base-200 order-1 flex h-full flex-col justify-end divide-y overflow-hidden  overflow-y-auto rounded-lg border-t border-black px-2 py-4 sm:order-3 sm:max-h-96 sm:justify-start sm:border-t-0"
-              >
-                {filteredCommands.map((command, i) => (
-                  <Combobox.Option value={command} key={i}>
-                    {({ active }) => (
-                      <div
-                        className={`space-x-1 rounded-lg py-2 px-4 ${
-                          active && " bg-gray-300/50"
-                        }`}
-                      >
-                        <a href={command.link} target="_blank">
-                          <div
-                            className={`text-neutral-content flex flex-row items-center justify-start space-x-2 ${
-                              command.className || ""
-                            }`}
-                          >
-                            <div>{command.icon({ strokeWidth: 1 })}</div>
-                            <p className="text-ellipses whitespace-nowrap text-xs">
-                              {command.name}
-                            </p>
-                          </div>
-                        </a>
-                      </div>
-                    )}
-                  </Combobox.Option>
-                ))}
-              </Combobox.Options>
-            ) : (
-              <div className="p-4">
-                <p className="px-4 font-semibold text-gray-600">
-                  Nothing to see here...
-                </p>
-              </div>
-            )}
+            <div className="order-1 sm:order-3">
+              {filter === CommandFilters.USER ? (
+                <div className="p-4">
+                  <p className="px-4 font-semibold text-gray-600">
+                    Coming soon...
+                  </p>
+                </div>
+              ) : filteredCommands.length > 0 ? (
+                <Combobox.Options
+                  static
+                  className="no-scrollbar divide-base-200 flex h-full flex-col justify-end divide-y overflow-hidden  overflow-y-auto rounded-lg border-t border-black px-2 py-4  sm:max-h-96 sm:justify-start sm:border-t-0"
+                >
+                  {filteredCommands.map((command, i) => (
+                    <Combobox.Option value={command} key={i}>
+                      {({ active }) => (
+                        <div
+                          className={`space-x-1 rounded-lg py-2 px-4 ${
+                            active && " bg-gray-300/50"
+                          }`}
+                        >
+                          <a href={command.link} target="_blank">
+                            <div
+                              className={`text-neutral-content flex flex-row items-center justify-start space-x-2 ${
+                                command.className || ""
+                              }`}
+                            >
+                              <div>{command.icon({ strokeWidth: 1 })}</div>
+                              <p className="text-ellipses whitespace-nowrap text-xs">
+                                {command.name}
+                              </p>
+                            </div>
+                          </a>
+                        </div>
+                      )}
+                    </Combobox.Option>
+                  ))}
+                </Combobox.Options>
+              ) : (
+                <div className="p-4">
+                  <p className="px-4 font-semibold text-gray-600">
+                    Nothing to see here...
+                  </p>
+                </div>
+              )}
+            </div>
             <div className="text-neutral-content bg-base-200 hidden flex-row items-center space-x-2 px-3 py-2 sm:order-4 sm:flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
