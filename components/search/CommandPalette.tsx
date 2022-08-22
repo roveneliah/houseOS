@@ -3,57 +3,15 @@ import { useCommand } from "../../hooks/generic/useCommand";
 import { CommandFilters } from "../../hooks/useGetCommands";
 import { Command } from "../../types/Command";
 import { Dialog, Combobox, Transition } from "@headlessui/react";
-import ListIcon from "../icons/ListIcon";
 import SearchIcon from "../icons/SearchIcon";
-import LinkIcon from "../icons/LinkIcon";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
-import { ChatIcon } from "../icons/ChatIcon";
-import UsersIcon from "../icons/UsersIcon";
 import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
 import { close, launch, toggle } from "@/redux/features/windows/windowsSlice";
 import { useRouter } from "next/router";
-import { any, anyPass } from "ramda";
+import { any } from "ramda";
 import { contains } from "../../utils/contains";
-
-const views = [
-  {
-    title: "All",
-    name: CommandFilters.ALL,
-    view: CommandFilters.ALL,
-    icon: ListIcon,
-  },
-  {
-    title: "Links",
-    name: CommandFilters.LINK,
-    view: CommandFilters.LINK,
-    icon: LinkIcon,
-  },
-  {
-    title: "Proposals",
-    name: CommandFilters.PROPOSAL,
-    view: CommandFilters.PROPOSAL,
-    icon: ChatIcon,
-  },
-  {
-    title: "Users",
-    name: CommandFilters.USER,
-    view: CommandFilters.USER,
-    icon: UsersIcon,
-  },
-];
-
-const formatLinkCommand = (command: Command) =>
-  command.type === CommandFilters.LINK
-    ? {
-        ...command,
-        name: (
-          <p className="font-light text-gray-800/50">
-            Go to{" "}
-            <span className="font-normal text-gray-800">{command.name}</span>
-          </p>
-        ),
-      }
-    : command;
+import { views } from "./views";
+import { formatLinkCommand } from "./formatLinkCommand";
 
 interface Props {
   commands: Array<Command>;
@@ -146,7 +104,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               closeSearch();
             }}
             as="div"
-            className="border-base-content bg-base-100 group relative flex h-full flex-col justify-end overflow-hidden font-mono shadow-md ring-1 ring-black/5 sm:rounded-lg sm:border-4 sm:shadow-black"
+            className="border-base-content bg-base-100 group relative flex max-h-fit flex-col justify-end overflow-hidden overflow-y-auto font-mono shadow-md ring-1 ring-black/5 sm:rounded-lg sm:border-4 sm:shadow-black"
           >
             <div className="bg-base-200 hidden flex-row justify-start space-x-2 p-4 py-2 outline-none sm:flex">
               <button
@@ -155,7 +113,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               ></button>
               <div className="btn-circle btn-xs border-base-content border-4"></div>
             </div>
-            <div className="bg-base-200 border-base-content order-3 flex flex-row justify-start overflow-x-scroll border-t-0 text-gray-700 group-target:hidden group-open:hidden group-focus-visible:hidden sm:order-2 sm:border-t">
+            <div className="bg-base-200 border-base-content order-2 flex flex-row justify-start overflow-x-scroll border-t-0 text-gray-700 group-target:hidden group-open:hidden group-focus-visible:hidden sm:order-2 sm:border-t">
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
@@ -176,7 +134,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                 </div>
               ))}
             </div>
-            <div className="order-2 flex flex-row items-center space-x-2 border-b border-t-2 p-2 px-6 font-mono sm:order-2 sm:border-t-0">
+            <div className="order-2 flex flex-row items-center space-x-2 border-b border-t-0 p-2 px-6 font-mono sm:order-2">
               <div className="text-gray-800">
                 <SearchIcon />
               </div>
@@ -200,7 +158,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               ) : filteredCommands.length > 0 ? (
                 <Combobox.Options
                   static
-                  className="no-scrollbar divide-base-200 flex h-full flex-col justify-end divide-y overflow-hidden  overflow-y-auto rounded-lg border-t border-black px-2 py-4  sm:max-h-96 sm:justify-start sm:border-t-0"
+                  className="no-scrollbar divide-base-200 border-blac h-screen flex-col justify-end divide-y overflow-hidden  overflow-y-scroll rounded-lg border-t px-2 py-4 sm:max-h-96 sm:justify-start sm:border-t-0"
                 >
                   {filteredCommands.map((command, i) => (
                     <Combobox.Option value={command} key={i}>

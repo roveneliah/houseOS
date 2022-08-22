@@ -15,7 +15,7 @@ export function DesktopIcons() {
   const toggleHelp = () => dispatch(launch(<Help />));
 
   return (
-    <div className="absolute bottom-12 flex w-full flex-row justify-center space-x-8 sm:top-24 sm:left-10 sm:w-fit sm:flex-col  sm:justify-start sm:space-x-0 sm:space-y-8 sm:px-0">
+    <div className="absolute bottom-12 flex w-full flex-row justify-between px-16 sm:top-24 sm:left-10 sm:w-fit sm:flex-col  sm:justify-start sm:space-x-0 sm:space-y-8 sm:px-0">
       <div
         onClick={openSearch()}
         className="flex cursor-pointer flex-col items-center space-y-1"
