@@ -158,32 +158,34 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               ) : filteredCommands.length > 0 ? (
                 <Combobox.Options
                   static
-                  className="no-scrollbar divide-base-200 border-blac h-screen flex-col justify-end divide-y overflow-hidden  overflow-y-scroll rounded-lg border-t px-2 py-4 sm:max-h-96 sm:justify-start sm:border-t-0"
+                  className="no-scrollbar divide-base-200 h-fit max-h-[60vh] justify-end divide-y overflow-hidden overflow-y-scroll rounded-lg border-t border-black px-2 py-4 sm:max-h-96 sm:justify-start sm:border-t-0"
                 >
-                  {filteredCommands.map((command, i) => (
-                    <Combobox.Option value={command} key={i}>
-                      {({ active }) => (
-                        <div
-                          className={`space-x-1 rounded-lg py-2 px-4 ${
-                            active && " bg-gray-300/50"
-                          }`}
-                        >
-                          <a href={command.link} target="_blank">
-                            <div
-                              className={`text-neutral-content flex flex-row items-center justify-start space-x-2 ${
-                                command.className || ""
-                              }`}
-                            >
-                              <div>{command.icon({ strokeWidth: 1 })}</div>
-                              <p className="text-ellipses whitespace-nowrap text-xs">
-                                {command.name}
-                              </p>
-                            </div>
-                          </a>
-                        </div>
-                      )}
-                    </Combobox.Option>
-                  ))}
+                  <div className="flex min-h-0 flex-col-reverse sm:flex-col">
+                    {filteredCommands.map((command, i) => (
+                      <Combobox.Option value={command} key={i}>
+                        {({ active }) => (
+                          <div
+                            className={`space-x-1 rounded-lg py-2 px-4 ${
+                              active && " bg-gray-300/50"
+                            }`}
+                          >
+                            <a href={command.link} target="_blank">
+                              <div
+                                className={`text-neutral-content flex flex-row items-center justify-start space-x-2 ${
+                                  command.className || ""
+                                }`}
+                              >
+                                <div>{command.icon({ strokeWidth: 1 })}</div>
+                                <p className="text-ellipses whitespace-nowrap text-xs">
+                                  {command.name}
+                                </p>
+                              </div>
+                            </a>
+                          </div>
+                        )}
+                      </Combobox.Option>
+                    ))}
+                  </div>
                 </Combobox.Options>
               ) : (
                 <div className="p-4">
