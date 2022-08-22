@@ -71,7 +71,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
       <Dialog
         open={isOpen}
         onClose={closeSearch}
-        className="fixed bottom-[0vh] z-50 mx-auto flex h-full w-full flex-col justify-end overflow-y-auto sm:inset-[15vh] sm:h-fit sm:w-[70vw] sm:flex-none lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
+        className="fixed bottom-[0vh] z-50 mx-auto flex w-full flex-col justify-end overflow-y-auto sm:inset-[15vh] sm:h-fit sm:w-[70vw] sm:flex-none lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -169,7 +169,11 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                               active && " bg-gray-300/50"
                             }`}
                           >
-                            <a href={command.link} target="_blank">
+                            <a
+                              href={command.link}
+                              target="_blank"
+                              className="outline-none"
+                            >
                               <div
                                 className={`text-neutral-content flex flex-row items-center justify-start space-x-2 ${
                                   command.className || ""
