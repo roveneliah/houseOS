@@ -80,6 +80,7 @@ export default function Layout({
         <title>House OS</title>
         {/* TODO: #11 customize in config */}
         <link rel="icon" href="/initials.svg" />
+        <link rel="apple-touch-icon" href="/initials.svg" />
         <meta name={dao.description} />
         <meta
           name="viewport"
