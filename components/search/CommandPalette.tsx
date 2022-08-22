@@ -134,7 +134,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                 </div>
               ))}
             </div>
-            <div className="order-2 flex flex-row items-center space-x-2 border-b border-t-0 p-2 px-6 font-mono sm:order-2">
+            <div className="order-2 hidden flex-row items-center space-x-2 border-b border-t-0 p-2 px-6 font-mono sm:order-2 sm:flex">
               <div className="text-gray-800">
                 <SearchIcon />
               </div>
@@ -158,7 +158,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               ) : filteredCommands.length > 0 ? (
                 <Combobox.Options
                   static
-                  className="no-scrollbar divide-base-200 h-fit max-h-[60vh] justify-end divide-y overflow-hidden overflow-y-scroll rounded-lg border-t border-black px-2 py-4 sm:max-h-96 sm:justify-start sm:border-t-0"
+                  className="no-scrollbar divide-base-200 h-fit max-h-[60vh] justify-end divide-y overflow-hidden overflow-y-scroll border-t border-black px-2 py-4 sm:max-h-96 sm:justify-start sm:rounded-lg sm:border-t-0"
                 >
                   <div className="flex min-h-0 flex-col-reverse sm:flex-col">
                     {filteredCommands.map((command, i) => (
