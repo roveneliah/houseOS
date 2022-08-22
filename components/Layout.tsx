@@ -80,7 +80,7 @@ export default function Layout({
         <title>House OS</title>
         {/* TODO: #11 customize in config */}
         <link rel="icon" href="/initials.svg" />
-        <link rel="apple-touch-icon" href="/initials.svg" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name={dao.description} />
         <meta
           name="viewport"
@@ -88,7 +88,7 @@ export default function Layout({
         />
       </Head>
 
-      <main className="bg-base-200 no-scrollbar flex min-h-[100vh] w-full flex-1 flex-col items-center justify-start overflow-x-auto">
+      <main className="bg-base-200 no-scrollbar flex max-h-screen min-h-screen w-full flex-1 flex-col items-center justify-start overflow-x-auto sm:max-h-0">
         <CommandPalette
           commands={commands}
           noOpacity={noOpacity}
