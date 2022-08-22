@@ -11,7 +11,7 @@ import { useIsNewUser } from "../hooks/useIsNewUser";
 import dynamic from "next/dynamic";
 import { useSIWE } from "@/hooks/useSIWE";
 import { usePath } from "@/hooks/usePath";
-import { useOnKeydown } from "@/hooks/generic/useCommand";
+import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
 import SignupModal from "./SignupModal";
 import Image from "next/image";
 import AppFrame from "./views/AppFrame";

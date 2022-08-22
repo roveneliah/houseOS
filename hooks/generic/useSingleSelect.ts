@@ -6,9 +6,13 @@ type Option = {
   icon?: any;
 };
 
-export const useSingleSelect = (arr: Array<Option>) => {
-  const [selected, setSelected] = useState<number>(0);
+export const useSingleSelect = (
+  arr: Array<Option>,
+  initialIndex: number = 0
+) => {
+  const [selected, setSelected] = useState<number>(initialIndex);
 
+  // Add selected (boolean), and a toggle function to option.
   const options = arr.map((x, i) => ({
     ...x,
     selected: i === selected,

@@ -2,7 +2,7 @@ import ClockIcon from "@/components/icons/ClockIcon";
 import LockedIcon from "@/components/icons/LockedIcon";
 import { capitalize } from "@/utils/capitalize";
 import { dao, defaultAvatar, proposalTags } from "@/config";
-import { useOnKeydown } from "@/hooks/generic/useCommand";
+import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { Proposal, ProposalState } from "@/types/Proposal";
 import dynamic from "next/dynamic";

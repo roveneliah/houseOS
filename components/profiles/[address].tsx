@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 import { useSignIn } from "@/hooks/useSignIn";
 import { Tag } from "@/types/Tag";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
-import { useOnKeydown } from "@/hooks/generic/useCommand";
+import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
 import { ChatIcon } from "@/components/icons/ChatIcon";
 import TagIcon from "@/components/icons/TagIcon";
 import UsersIcon from "@/components/icons/UsersIcon";

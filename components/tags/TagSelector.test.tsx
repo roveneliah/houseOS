@@ -2,9 +2,9 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { expect as expectChai } from "chai";
 
-import TagSelector from "../../../components/tags/TagSelector";
-import { renderWithId } from "../../../utils/test/renderWithId";
-import { click } from "../../../utils/test/click";
+import TagSelector from "./TagSelector";
+import { renderWithId } from "../../utils/test/renderWithId";
+import { click } from "../../utils/test/click";
 
 describe("TagSelector", () => {
   it("should render an element with each tag provided", () => {

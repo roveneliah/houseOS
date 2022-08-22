@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { contains } from "../../../utils/contains";
+import { contains } from "./contains";
 
 describe("contains", () => {
   it("should crash on invalid input", () => {

@@ -16,7 +16,7 @@ const TagSelector = dynamic(() => import("../tags/TagSelector"));
 
 import { useSingleSelect } from "../../hooks/generic/useSingleSelect";
 import { proposalTags, snapshotSpace } from "../../config";
-import { useOnKeydown } from "../../hooks/generic/useCommand";
+import { useOnKeydown } from "../../hooks/generic/useOnKeydown";
 
 export enum StateFilters {
   Active,

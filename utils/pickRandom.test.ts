@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { pickRandom } from "../../../utils/pickRandom";
+import { pickRandom } from "./pickRandom";
 
 /**
  * Note: `eql` is equivalent to == (abstract equality)

@@ -11,7 +11,7 @@ import { useSignIn } from "../hooks/useSignIn";
 
 import dynamic from "next/dynamic";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
-import { useOnKeydown } from "@/hooks/generic/useCommand";
+import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
 import TagIcon from "@/components/icons/TagIcon";
 import UsersIcon from "@/components/icons/UsersIcon";
 import { ChatIcon } from "@/components/icons/ChatIcon";

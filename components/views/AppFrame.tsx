@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useBoolean } from "../../hooks/useBoolean";
+import { useBoolean } from "../../hooks/generic/useBoolean";
 
 interface Props {
   children: ReactNode;

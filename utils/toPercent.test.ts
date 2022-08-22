@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { toPercent } from "../../../utils/toPercent";
+import { toPercent } from "./toPercent";
 
 describe("toPercent", () => {
   it("should return 50%", () => {
