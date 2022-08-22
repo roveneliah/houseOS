@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { dao, themes } from "../config";
+import { dao, snapshotSpace, snapshotUrl, themes } from "../config";
 import { useGetCommands } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
 import { useConnect, useDisconnect, useEnsName } from "wagmi";
@@ -17,6 +17,9 @@ import Image from "next/image";
 import AppFrame from "./views/AppFrame";
 import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
 import { close, launch } from "@/redux/features/windows/windowsSlice";
+import { useGetProposals } from "@/hooks/snapshot/useGetProposals";
+import { length } from "ramda";
+import { ProposalState } from "@/types/Proposal";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./search/CommandPalette"));
 
@@ -74,6 +77,13 @@ export default function Layout({
 
   const launchCreateProfile = () => dispatch(launch(<SignupModal />));
 
+  const proposals = useGetProposals(snapshotSpace);
+  const countActive = length(
+    proposals.filter(
+      ({ state }: { state: ProposalState }) => state === ProposalState.Active
+    )
+  );
+
   return (
     <div data-theme={themeName} className="no-scrollbar min-h-screen font-mono">
       <Head>
@@ -112,6 +122,11 @@ export default function Layout({
               ))}
             </ul>
           </div>
+          {countActive > 0 && (
+            <a href={snapshotUrl} target={"_blank"}>
+              <div className="text-sm">{countActive} Active Proposals</div>
+            </a>
+          )}
           <div className="flex flex-row items-center space-x-4 px-4">
             {/* <>
               {!signedIn ? (

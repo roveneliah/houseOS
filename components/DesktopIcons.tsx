@@ -1,3 +1,4 @@
+import { snapshotSpace, snapshotUrl } from "@/config";
 import { useAppDispatch } from "@/redux/app/hooks";
 import { launch, open } from "@/redux/features/windows/windowsSlice";
 import Image from "next/image";
@@ -32,7 +33,7 @@ export function DesktopIcons() {
           <p className="font-mono">Workspace</p>
         </div>
       </a>
-      <a target="_blank" href="https://snapshot.org/#/krausehouse.eth">
+      <a target="_blank" href={snapshotUrl}>
         <div className="flex flex-col items-center space-y-1">
           <Image src="/desktop-icons/Suit.png" width={40} height={50} />
           <p className="font-mono">Vote</p>

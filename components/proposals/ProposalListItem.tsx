@@ -13,6 +13,7 @@ import { Tag } from "@/types/Tag";
 
 import { useAppDispatch } from "@/redux/app/hooks";
 import { launch } from "@/redux/features/windows/windowsSlice";
+import { snapshotSpace } from "@/config";
 
 export interface Props {
   proposal: Proposal;
@@ -41,7 +42,7 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
           )}
         </div>
         <a
-          href={`https://snapshot.org/#/krausehouse.eth/proposal/${proposal.id}`}
+          href={`https://snapshot.org/#/${snapshotSpace}/proposal/${proposal.id}`}
           target="_blank"
         >
           {/* <button onClick={launchProposal}> */}

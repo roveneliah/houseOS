@@ -22,6 +22,7 @@ module.exports = {
     ],
   },
   snapshotSpace: "krausehouse.eth",
+  snapshotUrl: "https://snapshot.org/#/krausehouse.eth",
   defaultAvatar: "/coachrick.png",
   userTags: [
     {

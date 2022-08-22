@@ -40,7 +40,7 @@ const createProposalCommand = (proposal: Proposal): Command => ({
   name: proposal.title,
   // app: <ProposalPage id={proposal.id} />,
   // link: `/proposals/${proposal.id}`,
-  link: `https://snapshot.org/#/krausehouse.eth/proposal/${proposal.id}`,
+  link: `https://snapshot.org/#/${snapshotSpace}/proposal/${proposal.id}`,
   type: CommandFilters.PROPOSAL,
   className: `${proposal.state === "active" ? "font-semibold" : "font-normal"}`,
   icon: ChatIcon,

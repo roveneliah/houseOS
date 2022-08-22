@@ -1,7 +1,7 @@
 import Help from "@/components/help";
 import MyProfile from "@/components/me";
 import ProposalsListPage from "@/components/proposals";
-import { snapshotSpace } from "@/config";
+import { snapshotSpace, snapshotUrl } from "@/config";
 
 export default [
   // {
@@ -12,7 +12,8 @@ export default [
   // },
   {
     name: "Proposals",
-    link: "https://snapshot.org/#/krausehouse.eth",
+    keywords: ["Snapshot"],
+    link: snapshotUrl,
     // app: <ProposalsListPage />,
     favorite: true,
   },
