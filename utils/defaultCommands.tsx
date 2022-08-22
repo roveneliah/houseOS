@@ -15,12 +15,12 @@ export default [
     app: <ProposalsListPage />,
     favorite: true,
   },
-  {
-    name: "Help",
-    // link: "/help",
-    app: <Help />,
-    favorite: true,
-  },
+  // {
+  //   name: "Help",
+  //   // link: "/help",
+  //   app: <Help />,
+  //   favorite: true,
+  // },
   // {
   //   name: "Home",
   //   link: "/",
