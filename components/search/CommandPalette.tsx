@@ -23,12 +23,19 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
   const router = useRouter();
   const searchView = useAppSelector((state) => state.windows.searchView);
   const { search: isOpen } = useAppSelector((state) => state.windows.open);
-  const dispatch = useAppDispatch();
-  const closeSearch = () => dispatch(close({ windowName: "search" }));
-  const toggleSearch = () => dispatch(toggle({ windowName: "search" }));
-  const launchApp = (app: ReactNode) => dispatch(launch(app));
-
   const [query, setQuery] = useState("");
+  console.log(query);
+
+  const dispatch = useAppDispatch();
+  const closeSearch = () => {
+    dispatch(close({ windowName: "search" }));
+    // setQuery("");
+  };
+  const toggleSearch = () => {
+    dispatch(toggle({ windowName: "search" }));
+    // setQuery("");
+  };
+  const launchApp = (app: ReactNode) => dispatch(launch(app));
 
   const {
     options: filters,
@@ -48,7 +55,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
     .filter(({ type, favorite }) =>
       filter === CommandFilters.ALL
         ? !query
-          ? type === CommandFilters.LINK && favorite
+          ? type === CommandFilters.LINK
           : type
         : type === filter
     )
@@ -99,7 +106,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
             onChange={(command: Command) => {
               command.app
                 ? launchApp(command.app)
-                : command.link && router.push(command.link);
+                : command.link && window.open(command.link);
 
               closeSearch();
             }}
@@ -141,6 +148,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               <Combobox.Input
                 className="w-full border-0 border-white bg-transparent py-2 px-2 text-sm text-gray-800 placeholder-gray-400 outline-none"
                 placeholder={"Search the DAO..."}
+                displayValue={() => query}
                 autoComplete="false"
                 autoFocus={true}
                 onChange={(event) => {

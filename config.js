@@ -68,7 +68,7 @@ module.exports = {
         name: "Forefront Dashboard",
         keywords: ["Info", "Metrics"],
         link: "https://www.terminal.co/community/social/krausehouse.eth",
-        favorite: true,
+        favorite: false,
       },
       {
         name: "Contributor Dashboard",
@@ -92,8 +92,10 @@ module.exports = {
           "Account",
           "Balances",
           "Accounting",
+          "Assets",
         ],
         link: "https://etherscan.io/address/0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
+        favorite: true,
       },
       {
         name: "Gnosis Chain Treasury",
@@ -105,6 +107,7 @@ module.exports = {
           "Account",
           "Balances",
           "Accounting",
+          "Assets",
         ],
         network: 1,
         address: "gno:0x5844c36D6f803213Ca3f7fDac39A0d78f918ee3c",
@@ -120,6 +123,7 @@ module.exports = {
           "Account",
           "Balances",
           "Accounting",
+          "Assets",
         ],
         network: 1,
         address: "matic:0x40eDBC75C543954CDD9c5ae7398342788F46A85B",
@@ -135,6 +139,7 @@ module.exports = {
           "Account",
           "Balances",
           "Accounting",
+          "Assets",
         ],
         network: 1,
         address: "matic:0x40eDBC75C543954CDD9c5ae7398342788F46A85B",
@@ -148,14 +153,15 @@ module.exports = {
         name: "Twitter",
         keywords: ["Social", "Community"],
         link: "https://twitter.com/krausehousedao",
+        favorite: true,
       },
       {
         name: "Website",
         link: "https://krausehouse.club",
       },
       {
-        name: "Draft Proposals",
-        keywords: ["Proposals", "Governance"],
+        name: "Proposals Database",
+        keywords: ["Proposals", "Governance", "Stewards"],
         link: "https://www.notion.so/a5d990ad04624d9daa70366b88e88ce4?v=62daad62e62a4395a7be0edaa26e630c",
       },
       {
@@ -164,13 +170,14 @@ module.exports = {
         favorite: true,
       },
       {
-        name: "Bounty Board",
+        name: "Bounty Board (Dework)",
+        keywords: ["Dework"],
         link: "https://app.dework.xyz/krause-house",
       },
       {
         name: "Brand Guidelines",
         keywords: ["Design"],
-        link: "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c46e9a4e-d30f-4842-9909-7c7c9c0571ab/KrauseHouse_BrandGuidelines-V1_lo.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220720%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220720T180456Z&X-Amz-Expires=86400&X-Amz-Signature=1a5db7f68a876e86709e6c66a094374f0847921e605917c6cc251d7cea91260d&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Krause%2520House%2520Brand%2520Guidelines%252004.2022.pdf%22&x-id=GetObject",
+        link: "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c46e9a4e-d30f-4842-9909-7c7c9c0571ab/KrauseHouse_BrandGuidelines-V1_lo.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220823%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220823T072540Z&X-Amz-Expires=86400&X-Amz-Signature=80eef746bfc7d43dcd890ab0fefbb875d8bcfd71b636fe47162bffea5b31bb77&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Krause%2520House%2520Brand%2520Guidelines%252004.2022.pdf%22&x-id=GetObject",
       },
       {
         name: "Youtube",
@@ -184,8 +191,17 @@ module.exports = {
       },
       {
         name: "Mainnet Transactions",
-        keywords: ["Treasury", "Multisig", "Spending", "Budget"],
+        keywords: [
+          "Treasury",
+          "Multisig",
+          "Spending",
+          "Budget",
+          "Assets",
+          "Spending",
+          "0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
+        ],
         link: "https://krausehousework.notion.site/e44eec07c098494ea9a8468395af50f9?v=8d44b9d251d241a6b7d3d204082f08a6",
+        favorite: true,
       },
       {
         name: "Governance Docs",
@@ -194,7 +210,7 @@ module.exports = {
       },
 
       {
-        name: "$KRAUSE Contract",
+        name: "$KRAUSE Token Contract",
         keywords: ["Contract", "$KRAUSE", "Docs"],
         link: "https://etherscan.io/address/0x9f6f91078a5072a8b54695dafa2374ab3ccd603b",
       },
