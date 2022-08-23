@@ -12,6 +12,7 @@ import { any } from "ramda";
 import { contains } from "../../utils/contains";
 import { views } from "./views";
 import { formatLinkCommand } from "./formatLinkCommand";
+import { pageview, event } from "@/utils/google-analytics";
 
 interface Props {
   commands: Array<Command>;
@@ -107,6 +108,8 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               command.app
                 ? launchApp(command.app)
                 : command.link && window.open(command.link);
+
+              command.link && event(command.link, { name: command.name });
 
               closeSearch();
             }}

@@ -11,7 +11,7 @@ export default [
   //   favorite: true,
   // },
   {
-    name: "Proposals",
+    name: "Proposals (Snapshot)",
     keywords: ["Snapshot"],
     link: snapshotUrl,
     // app: <ProposalsListPage />,
