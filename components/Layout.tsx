@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { dao, snapshotSpace, snapshotUrl, themes } from "../config";
 import { useGetCommands } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
@@ -20,6 +20,7 @@ import { close, launch } from "@/redux/features/windows/windowsSlice";
 import { useGetProposals } from "@/hooks/snapshot/useGetProposals";
 import { length } from "ramda";
 import { ProposalState } from "@/types/Proposal";
+import { useAnalyics } from "../hooks/useAnalyics";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./search/CommandPalette"));
 
@@ -73,9 +74,9 @@ export default function Layout({
   const welcomeMessage = useAppSelector((state) => state.windows.open.welcome);
   const help = useAppSelector((state) => state.windows.open.help);
   const searchOpen = useAppSelector((state) => state.windows.open.search);
-  const closeWelcome = () => dispatch(close({ windowName: "welcome" }));
 
-  const launchCreateProfile = () => dispatch(launch(<SignupModal />));
+  // const closeWelcome = () => dispatch(close({ windowName: "welcome" }));
+  // const launchCreateProfile = () => dispatch(launch(<SignupModal />));
 
   const proposals = useGetProposals(snapshotSpace);
   const countActive = length(
