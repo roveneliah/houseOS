@@ -20,7 +20,6 @@ import { close, launch } from "@/redux/features/windows/windowsSlice";
 import { useGetProposals } from "@/hooks/snapshot/useGetProposals";
 import { length } from "ramda";
 import { ProposalState } from "@/types/Proposal";
-import { useAnalyics } from "../hooks/useAnalyics";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./search/CommandPalette"));
 
