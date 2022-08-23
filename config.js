@@ -65,6 +65,11 @@ module.exports = {
   commands: {
     links: [
       {
+        name: "Add a resource to HouseOS",
+        link: "https://docs.google.com/forms/d/e/1FAIpQLSe5UxKw3qC7wOuTVi454TbWjNPmhAPdLRyJ8VWn77Gu7ojaAg/viewform?usp=sf_link",
+        keywords: ["Search"],
+      },
+      {
         name: "Forefront Dashboard",
         keywords: ["Info", "Metrics"],
         link: "https://www.terminal.co/community/social/krausehouse.eth",
