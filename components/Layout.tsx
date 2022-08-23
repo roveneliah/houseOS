@@ -104,7 +104,7 @@ export default function Layout({
           noOpacity={noOpacity}
           deactivated={newUserFlow}
         />
-        <div className="border-base-content bg-base-200 fixed z-10 flex w-full flex-row items-center justify-between overflow-hidden border-b sm:bottom-auto sm:top-0 sm:px-0">
+        <div className="border-base-content bg-base-200 fixed z-50 flex w-full flex-row items-center justify-between overflow-hidden border-b sm:bottom-auto sm:top-0 sm:z-10 sm:px-0">
           <div className="breadcrumbs text-base-content self-center px-4 font-mono">
             <ul>
               {/* <li>{dao.name}</li> */}

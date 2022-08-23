@@ -79,7 +79,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
       <Dialog
         open={isOpen}
         onClose={closeSearch}
-        className="fixed bottom-[0vh] z-50 mx-auto flex w-full flex-col justify-end overflow-y-auto sm:inset-[15vh] sm:h-fit sm:w-[70vw] sm:flex-none lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
+        className="fixed bottom-[0vh] z-40 mx-auto flex w-full flex-col justify-end overflow-y-auto sm:inset-[15vh] sm:h-fit sm:w-[70vw] sm:flex-none lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -114,7 +114,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               closeSearch();
             }}
             as="div"
-            className="border-base-content bg-base-100 group relative flex max-h-fit flex-col justify-end overflow-hidden overflow-y-auto font-mono shadow-md ring-1 ring-black/5 sm:rounded-lg sm:border-4 sm:shadow-black"
+            className="border-base-content bg-base-100 group relative flex h-screen flex-col justify-end overflow-hidden overflow-y-auto font-mono shadow-md ring-1 ring-black/5 sm:h-auto sm:max-h-fit sm:rounded-lg sm:border-4 sm:shadow-black"
           >
             <div className="bg-base-200 hidden flex-row justify-start space-x-2 p-4 py-2 outline-none sm:flex">
               <button
@@ -169,7 +169,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               ) : filteredCommands.length > 0 ? (
                 <Combobox.Options
                   static
-                  className="no-scrollbar divide-base-200 h-fit max-h-[60vh] justify-end divide-y overflow-hidden overflow-y-scroll border-t border-black px-2 py-4 sm:max-h-96 sm:justify-start sm:rounded-lg sm:border-t-0"
+                  className="no-scrollbar divide-base-200 h-fit max-h-[90vh] justify-end divide-y overflow-hidden overflow-y-scroll border-black px-2 py-4 sm:max-h-96 sm:justify-start sm:rounded-lg sm:border-t sm:border-t-0"
                 >
                   <div className="flex min-h-0 flex-col-reverse sm:flex-col">
                     {filteredCommands.map((command, i) => (
