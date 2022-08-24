@@ -25,5 +25,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+      - run: git config --global url."https://github.com/".insteadOf           ssh://git@github.com/;
       - run: yarn install
       - run: yarn run test:ci
