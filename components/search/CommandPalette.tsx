@@ -25,7 +25,6 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
   const searchView = useAppSelector((state) => state.windows.searchView);
   const { search: isOpen } = useAppSelector((state) => state.windows.open);
   const [query, setQuery] = useState("");
-  console.log(query);
 
   const dispatch = useAppDispatch();
   const closeSearch = () => {
@@ -114,7 +113,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               closeSearch();
             }}
             as="div"
-            className="border-base-content bg-base-100 group relative flex h-screen flex-col justify-end overflow-hidden overflow-y-auto font-mono shadow-md ring-1 ring-black/5 sm:h-auto sm:max-h-fit sm:rounded-lg sm:border-4 sm:shadow-black"
+            className="border-base-content  bg-base-100 d group relative flex h-screen flex-col justify-end overflow-hidden overflow-y-auto font-mono ring-1 ring-black/5 sm:h-auto sm:max-h-fit sm:rounded-lg sm:border-4 sm:shadow-black"
           >
             <div className="bg-base-200 hidden flex-row justify-start space-x-2 p-4 py-2 outline-none sm:flex">
               <button
@@ -130,7 +129,6 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                   className={`flex w-full flex-row items-center justify-start space-x-2 px-5 py-3 ${
                     filter === view && "bg-base-100"
                   } ${i === 0 && "hidden sm:flex"}`}
-                  // set filter to
                   onClick={() =>
                     filters.forEach(
                       (filter) => filter.name === view && filter.toggle()
@@ -138,7 +136,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                   }
                 >
                   {icon({ strokeWidth: 1 })}
-                  <p className="cursor-pointer text-xs font-normal text-gray-700">
+                  <p className="cursor-pointer py-1 text-sm font-normal text-gray-700">
                     {title}
                   </p>
                 </div>
@@ -176,7 +174,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                       <Combobox.Option value={command} key={i}>
                         {({ active }) => (
                           <div
-                            className={`space-x-1 rounded-lg py-2 px-4 ${
+                            className={`space-x-1 rounded-lg py-3 px-4 ${
                               active && " bg-gray-300/50"
                             }`}
                           >
@@ -191,7 +189,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                                 }`}
                               >
                                 <div>{command.icon({ strokeWidth: 1 })}</div>
-                                <p className="text-ellipses whitespace-nowrap text-xs">
+                                <p className="text-ellipses whitespace-nowrap text-sm">
                                   {command.name}
                                 </p>
                               </div>
