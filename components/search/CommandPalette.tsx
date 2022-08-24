@@ -110,7 +110,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
 
               command.link && event(command.link, { name: command.name });
 
-              closeSearch();
+              !command.link && closeSearch();
             }}
             as="div"
             className="border-base-content  bg-base-100 d group relative flex h-screen flex-col justify-end overflow-hidden overflow-y-auto font-mono ring-1 ring-black/5 sm:h-auto sm:max-h-fit sm:rounded-lg sm:border-4 sm:shadow-black"
