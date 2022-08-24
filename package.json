@@ -7,6 +7,7 @@
     "build": "yarn jest; next build",
     "start": "next start",
     "test": "yarn jest --watchAll",
+    "jest": "yarn jest",
     "testt": "riteway -r @babel/register **/*.test.js | tap-nirvana",
     "deploy": "vercel",
     "cypress": "cypress run",
