@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prep": "bash ./prep.sh",
     "brun": "next build; next start",
     "build": "yarn jest; next build",
     "start": "next start",
