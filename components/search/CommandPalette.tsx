@@ -18,9 +18,14 @@ interface Props {
   commands: Array<Command>;
   noOpacity?: boolean;
   deactivated?: boolean;
+  fixedOpen?: boolean;
 }
 
-export default function CommandPalette({ commands, noOpacity = false }: Props) {
+export default function CommandPalette({
+  commands,
+  noOpacity = false,
+  fixedOpen = false,
+}: Props) {
   const router = useRouter();
   const searchView = useAppSelector((state) => state.windows.searchView);
   const { search: isOpen } = useAppSelector((state) => state.windows.open);
@@ -69,14 +74,14 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
 
   return (
     <Transition.Root
-      show={isOpen}
+      show={fixedOpen || isOpen}
       as={Fragment}
       afterLeave={() => {
         setQuery("");
       }}
     >
       <Dialog
-        open={isOpen}
+        open={fixedOpen || isOpen}
         onClose={closeSearch}
         className="fixed bottom-[0vh] z-40 mx-auto flex w-full flex-col justify-end overflow-y-auto sm:inset-[15vh] sm:h-fit sm:w-[70vw] sm:flex-none lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >

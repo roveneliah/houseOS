@@ -104,6 +104,7 @@ export default function Layout({
           commands={commands}
           noOpacity={noOpacity}
           deactivated={newUserFlow}
+          fixedOpen={fixedOpen}
         />
         <div className="border-base-content bg-base-200 fixed z-50 flex w-full flex-row items-center justify-between overflow-hidden border-b px-4 py-2 sm:bottom-auto sm:top-0 sm:z-10 sm:p-0">
           <div className="flex px-4 sm:hidden">
@@ -129,10 +130,10 @@ export default function Layout({
           </div>
           {countActive > 0 && (
             <a href={snapshotUrl} target={"_blank"}>
-              <div className="text-sm">{countActive} Live Proposals</div>
+              <div className="px-4 text-sm">{countActive} Live Proposals</div>
             </a>
           )}
-          <div className="flex flex-row items-center space-x-4 px-4">
+          <div className="hidden flex-row items-center space-x-4 px-4 sm:flex">
             {/* <>
               {!signedIn ? (
                 !isConnected ? (
@@ -188,24 +189,15 @@ export default function Layout({
             <button className="hidden font-mono text-sm sm:flex">
               {date.toDateString()}
             </button>
-            {searchOpen ? (
-              <button
-                className={`group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent sm:flex`}
-              >
-                <div className={`rounded-md pr-2  pl-3 pb-1 pt-2`}>
-                  <XIcon />
-                </div>
-              </button>
-            ) : (
-              <button
-                className={`group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent sm:flex`}
-                onClick={toggleSearch}
-              >
-                <div className={`rounded-md pr-2  pl-3 pb-1 pt-2`}>
-                  <SearchIcon />
-                </div>
-              </button>
-            )}
+
+            <button
+              className={`group hidden flex-row space-x-2 border-black bg-transparent hover:bg-transparent sm:flex`}
+              onClick={!searchOpen ? toggleSearch : () => {}}
+            >
+              <div className={`rounded-md pr-2  pl-3 pb-1 pt-2`}>
+                <SearchIcon />
+              </div>
+            </button>
           </div>
         </div>
         {children}
