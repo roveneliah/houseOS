@@ -190,10 +190,14 @@ module.exports = {
         link: "https://www.terminal.co/community/social/krausehouse.eth",
         favorite: false,
       },
-      // {
-      //   name: "Discord",
-      //   link: "",
-      // },
+      {
+        name: "Discord",
+        link: "https://discord.com/channels/847908414981275648/899496354416574524",
+      },
+      {
+        name: "Gather",
+        link: "https://app.gather.town/app/ZM9PmXOsVoIxvzgO/KrauseHouse",
+      },
       {
         name: "Twitter",
         keywords: ["Social", "Community"],
