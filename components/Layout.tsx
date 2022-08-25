@@ -196,53 +196,6 @@ export default function Layout({
             </button>
           </div>
         </div>
-        {welcomeMessage && (
-          <div className="absolute">
-            <AppFrame>
-              <div className="flex flex-col space-y-4 p-4">
-                <p className="font-mono font-bold">Welcome to House OS</p>
-                <p className="font-mono">This is your map around the DAO</p>
-                <div>
-                  <p className="font-mono text-sm">
-                    - Open <span className="font-bold">Search</span> with ctrl-k
-                    or cmd-k.
-                  </p>
-                  <p className="font-mono text-sm">
-                    - Find <span className="font-bold">quick links</span> on
-                    your desktop.
-                  </p>
-                </div>
-                {/* <p className="font-mono text-sm">By signing in, you can...</p>
-              <div>
-              <p className="font-mono text-sm">- Follow other Jerry's</p>
-              <p className="font-mono text-sm">
-              - Help the DAO by labeling proposals and users.
-              </p>
-            </div> */}
-              </div>
-            </AppFrame>
-          </div>
-        )}
-        {help && (
-          <div className="absolute">
-            <AppFrame width={60}>
-              <div className="flex flex-col space-y-4 p-4">
-                <p className="font-mono font-bold">Help!</p>
-                <p className="font-mono">This is your map around the DAO</p>
-                <div>
-                  <p className="font-mono text-sm">
-                    - Open <span className="font-bold">Search</span> with ctrl-k
-                    or cmd-k.
-                  </p>
-                  <p className="font-mono text-sm">
-                    - Find <span className="font-bold">quick links</span> on
-                    your desktop.
-                  </p>
-                </div>
-              </div>
-            </AppFrame>
-          </div>
-        )}
         {children}
       </main>
     </div>
