@@ -20,6 +20,7 @@ import { close, launch } from "@/redux/features/windows/windowsSlice";
 import { useGetProposals } from "@/hooks/snapshot/useGetProposals";
 import { length } from "ramda";
 import { ProposalState } from "@/types/Proposal";
+import XIcon from "./icons/XIcon";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./search/CommandPalette"));
 
@@ -104,10 +105,14 @@ export default function Layout({
           noOpacity={noOpacity}
           deactivated={newUserFlow}
         />
-        <div className="border-base-content bg-base-200 fixed z-50 flex w-full flex-row items-center justify-between overflow-hidden border-b sm:bottom-auto sm:top-0 sm:z-10 sm:px-0">
-          <div className="breadcrumbs text-base-content self-center px-4 font-mono">
+        <div className="border-base-content bg-base-200 fixed z-50 flex w-full flex-row items-center justify-between overflow-hidden border-b px-4 py-2 sm:bottom-auto sm:top-0 sm:z-10 sm:p-0">
+          <div className="flex px-4 sm:hidden">
+            <a href="/">
+              <Image src="/initials.svg" height={40} width={30} />
+            </a>
+          </div>
+          <div className="breadcrumbs text-base-content hidden self-center px-4 font-mono sm:flex">
             <ul>
-              {/* <li>{dao.name}</li> */}
               <li className="relative h-[3vh] w-[2vw]">
                 <a href="/">
                   <Image src="/initials.svg" layout="fill" />
@@ -180,18 +185,15 @@ export default function Layout({
                 </button>
               )}
             </> */}
-            <button className="font-mono text-sm">{date.toDateString()}</button>
+            <button className="hidden font-mono text-sm sm:flex">
+              {date.toDateString()}
+            </button>
             <button
-              className="group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent"
-              onClick={toggleSearch}
+              className={`group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent sm:flex`}
+              onClick={!searchOpen ? toggleSearch : () => {}}
             >
-              <div
-                className={`${
-                  searchOpen == true && "bg-base-300"
-                } rounded-md pr-2  pl-3 pb-1 pt-2
-                `}
-              >
-                <SearchIcon />
+              <div className={`rounded-md pr-2  pl-3 pb-1 pt-2`}>
+                {searchOpen ? <XIcon /> : <SearchIcon />}
               </div>
             </button>
           </div>

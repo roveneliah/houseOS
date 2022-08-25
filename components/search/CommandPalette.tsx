@@ -126,7 +126,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
-                  className={`flex w-full flex-row items-center justify-start space-x-2 px-5 py-3 ${
+                  className={`flex w-full flex-row items-center justify-start space-x-2 px-5 py-4 ${
                     filter === view && "bg-base-100"
                   } ${i === 0 && "hidden sm:flex"}`}
                   onClick={() =>
