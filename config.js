@@ -70,10 +70,20 @@ module.exports = {
         keywords: ["Search"],
       },
       {
-        name: "Forefront Dashboard",
-        keywords: ["Info", "Metrics"],
-        link: "https://www.terminal.co/community/social/krausehouse.eth",
-        favorite: false,
+        name: "Calendar",
+        link: "https://calendar.google.com/calendar/u/0?cid=dTRobTU2NDQ4NWZoN201MHR0Z2N2NTNlNmdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ",
+        favorite: true,
+      },
+      {
+        name: "Submit a Proposal",
+        keywords: ["Proposals", "Governance"],
+        link: "https://krausehousework.notion.site/Submit-a-Proposal-fcf858c80a0c40b6a2a83aec5ed588dc",
+        favorite: true,
+      },
+      {
+        name: "Proposals Database",
+        keywords: ["Proposals", "Governance", "Stewards"],
+        link: "https://www.notion.so/a5d990ad04624d9daa70366b88e88ce4?v=62daad62e62a4395a7be0edaa26e630c",
       },
       {
         name: "Contributor Dashboard",
@@ -82,10 +92,34 @@ module.exports = {
         favorite: true,
       },
       {
-        name: "Submit a Proposal",
-        keywords: ["Proposals", "Governance"],
-        link: "https://krausehousework.notion.site/Submit-a-Proposal-fcf858c80a0c40b6a2a83aec5ed588dc",
+        name: "Bounty Board (Dework)",
+        keywords: ["Dework"],
+        link: "https://app.dework.xyz/krause-house",
+      },
+      {
+        name: "Mainnet Transactions",
+        keywords: [
+          "Treasury",
+          "Multisig",
+          "Spending",
+          "Budget",
+          "Assets",
+          "Spending",
+          "0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
+        ],
+        link: "https://krausehousework.notion.site/e44eec07c098494ea9a8468395af50f9?v=8d44b9d251d241a6b7d3d204082f08a6",
         favorite: true,
+      },
+      {
+        name: "Governance Docs",
+        keywords: ["Governance", "Docs", "Delegation"],
+        link: "https://krausehousework.notion.site/Governance-Philosophy-3aa7d188a9974559a591ec5e2cf98aa3",
+      },
+
+      {
+        name: "$KRAUSE Token Contract",
+        keywords: ["Contract", "$KRAUSE", "Docs"],
+        link: "https://etherscan.io/address/0x9f6f91078a5072a8b54695dafa2374ab3ccd603b",
       },
       {
         name: "Main Treasury",
@@ -150,6 +184,12 @@ module.exports = {
         address: "matic:0x40eDBC75C543954CDD9c5ae7398342788F46A85B",
         link: "https://optimistic.etherscan.io/address/0xe245d82DDeDfB95ccaf68B9B609F1717B1A14A54",
       },
+      {
+        name: "Forefront Dashboard",
+        keywords: ["Info", "Metrics"],
+        link: "https://www.terminal.co/community/social/krausehouse.eth",
+        favorite: false,
+      },
       // {
       //   name: "Discord",
       //   link: "",
@@ -164,21 +204,7 @@ module.exports = {
         name: "Website",
         link: "https://krausehouse.club",
       },
-      {
-        name: "Proposals Database",
-        keywords: ["Proposals", "Governance", "Stewards"],
-        link: "https://www.notion.so/a5d990ad04624d9daa70366b88e88ce4?v=62daad62e62a4395a7be0edaa26e630c",
-      },
-      {
-        name: "Calendar",
-        link: "https://calendar.google.com/calendar/u/0?cid=dTRobTU2NDQ4NWZoN201MHR0Z2N2NTNlNmdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ",
-        favorite: true,
-      },
-      {
-        name: "Bounty Board (Dework)",
-        keywords: ["Dework"],
-        link: "https://app.dework.xyz/krause-house",
-      },
+
       {
         name: "Brand Guidelines",
         keywords: ["Design"],
@@ -194,31 +220,7 @@ module.exports = {
         keywords: ["Delegation", "Governance", "Powers"],
         link: "https://krausehousework.notion.site/4589c7e790134019bc4e29753a225d09?v=168036c795544f3fb0e56bbabae42433",
       },
-      {
-        name: "Mainnet Transactions",
-        keywords: [
-          "Treasury",
-          "Multisig",
-          "Spending",
-          "Budget",
-          "Assets",
-          "Spending",
-          "0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
-        ],
-        link: "https://krausehousework.notion.site/e44eec07c098494ea9a8468395af50f9?v=8d44b9d251d241a6b7d3d204082f08a6",
-        favorite: true,
-      },
-      {
-        name: "Governance Docs",
-        keywords: ["Governance", "Docs", "Delegation"],
-        link: "https://krausehousework.notion.site/Governance-Philosophy-3aa7d188a9974559a591ec5e2cf98aa3",
-      },
 
-      {
-        name: "$KRAUSE Token Contract",
-        keywords: ["Contract", "$KRAUSE", "Docs"],
-        link: "https://etherscan.io/address/0x9f6f91078a5072a8b54695dafa2374ab3ccd603b",
-      },
       {
         name: "MyJerry",
         link: "https://myjerry-app.vercel.app/earn",
