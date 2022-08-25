@@ -129,7 +129,7 @@ export default function Layout({
           </div>
           {countActive > 0 && (
             <a href={snapshotUrl} target={"_blank"}>
-              <div className="text-sm">{countActive} Active Proposals</div>
+              <div className="text-sm">{countActive} Live Proposals</div>
             </a>
           )}
           <div className="flex flex-row items-center space-x-4 px-4">

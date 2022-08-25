@@ -136,7 +136,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                   }
                 >
                   {icon({ strokeWidth: 1 })}
-                  <p className="cursor-pointer py-1 text-sm font-normal text-gray-700">
+                  <p className="cursor-pointer py-1 text-xs font-normal text-gray-700 sm:text-sm">
                     {title}
                   </p>
                 </div>
@@ -189,7 +189,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
                                 }`}
                               >
                                 <div>{command.icon({ strokeWidth: 1 })}</div>
-                                <p className="text-ellipses whitespace-nowrap text-sm">
+                                <p className="text-ellipses whitespace-nowrap text-xs sm:text-sm">
                                   {command.name}
                                 </p>
                               </div>
