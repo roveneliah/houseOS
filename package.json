@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "next dev",
     "prep": "bash ./prep.sh",
-    "brun": "next build; next start",
+    "brun": "yarn build; next start",
     "build": "yarn run test:ci; next build",
     "start": "next start",
     "test": "yarn jest --watchAll",

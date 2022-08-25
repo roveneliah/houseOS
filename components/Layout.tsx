@@ -188,18 +188,24 @@ export default function Layout({
             <button className="hidden font-mono text-sm sm:flex">
               {date.toDateString()}
             </button>
-            <button
-              className={`group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent sm:flex`}
-              onClick={
-                !searchOpen
-                  ? () => setTimeout(() => toggleSearch(), 1000)
-                  : () => {}
-              }
-            >
-              <div className={`rounded-md pr-2  pl-3 pb-1 pt-2`}>
-                {searchOpen ? <XIcon /> : <SearchIcon />}
-              </div>
-            </button>
+            {searchOpen ? (
+              <button
+                className={`group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent sm:flex`}
+              >
+                <div className={`rounded-md pr-2  pl-3 pb-1 pt-2`}>
+                  <XIcon />
+                </div>
+              </button>
+            ) : (
+              <button
+                className={`group flex flex-row space-x-2 border-black bg-transparent hover:bg-transparent sm:flex`}
+                onClick={toggleSearch}
+              >
+                <div className={`rounded-md pr-2  pl-3 pb-1 pt-2`}>
+                  <SearchIcon />
+                </div>
+              </button>
+            )}
           </div>
         </div>
         {children}

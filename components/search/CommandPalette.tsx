@@ -119,7 +119,7 @@ export default function CommandPalette({ commands, noOpacity = false }: Props) {
               <button
                 onClick={closeSearch}
                 className="btn-circle btn-xs border-base-content border-4 outline-none"
-              ></button>
+              />
               <div className="btn-circle btn-xs border-base-content border-4"></div>
             </div>
             <div className="bg-base-200 border-base-content order-2 flex flex-row justify-start overflow-x-scroll border-t-0 text-gray-700 group-target:hidden group-open:hidden group-focus-visible:hidden sm:order-2 sm:border-t">
