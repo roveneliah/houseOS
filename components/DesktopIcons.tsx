@@ -41,7 +41,7 @@ export function DesktopIcons() {
       </button>
       <button onClick={launchProposalView}>
         <div className="flex flex-col items-center space-y-1">
-          <Image src="/desktop-icons/doc.png" width={40} height={50} />
+          <Image src="/desktop-icons/Doc.png" width={40} height={50} />
           <p className="font-mono">Proposals</p>
         </div>
       </button>
