@@ -29,7 +29,7 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
 
   const dispatch = useAppDispatch();
   const launchProposal = () =>
-    dispatch(launch(<ProposalPage id={proposal.id} />));
+    dispatch(launch({ app: <ProposalPage id={proposal.id} /> }));
 
   return hasMatchingTag(proposalTags) ? (
     <div className="hover:bg-base-100 border-base-200/10 text-base-content flex flex-row justify-between border-b py-2 px-6 hover:shadow-lg">
@@ -41,11 +41,11 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
             <ClockIcon strokeWidth={2} />
           )}
         </div>
-        <a
+        {/* <a
           href={`https://snapshot.org/#/${snapshotSpace}/proposal/${proposal.id}`}
           target="_blank"
-        >
-          {/* <button onClick={launchProposal}> */}
+        > */}
+        <button onClick={launchProposal}>
           <p
             className={`cursor-pointer overflow-clip text-ellipsis whitespace-nowrap text-sm ${
               proposal.state === "closed" ? "font-normal" : "font-semibold"
@@ -53,8 +53,8 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
           >
             {proposal.title}
           </p>
-          {/* </button> */}
-        </a>
+        </button>
+        {/* </a> */}
       </div>
       <div className="hidden flex-row space-x-2 lg:flex">
         <TagsList
