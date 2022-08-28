@@ -1,5 +1,5 @@
-import { CommandFilters } from "../../hooks/useGetCommands";
 import { Command } from "../../types/Command";
+import { CommandFilters } from "./views";
 
 export const formatLinkCommand = (command: Command) =>
   command.type === CommandFilters.LINK

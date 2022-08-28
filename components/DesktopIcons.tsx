@@ -12,8 +12,8 @@ export function DesktopIcons() {
     () =>
       dispatch(open({ windowName: "search", searchView: 3 }));
 
-  const launchProposalView = () => dispatch(launch(<ProposalsListPage />));
-  const toggleHelp = () => dispatch(launch(<Help />));
+  const launchProposalView = () =>
+    dispatch(launch({ app: <ProposalsListPage />, width: 80, height: 80 }));
 
   return (
     <div className="absolute bottom-12 flex w-full flex-row justify-between px-16 sm:top-24 sm:left-10 sm:w-fit sm:flex-col  sm:justify-start sm:space-x-0 sm:space-y-8 sm:px-0">
@@ -24,7 +24,7 @@ export function DesktopIcons() {
         <Image src="/desktop-icons/Computer.png" width={50} height={50} />
         <p className="font-mono">Search</p>
       </div>
-      <a
+      {/* <a
         target="_blank"
         href="https://krausehousework.notion.site/Krause-House-Contributor-Dashboard-a00860761dd4486792aed12cc8187ce2"
       >
@@ -32,19 +32,19 @@ export function DesktopIcons() {
           <Image src="/desktop-icons/Files.png" width={50} height={50} />
           <p className="font-mono">Workspace</p>
         </div>
-      </a>
-      <a target="_blank" href={snapshotUrl}>
+      </a> */}
+      <button onClick={() => {}}>
         <div className="flex flex-col items-center space-y-1">
           <Image src="/desktop-icons/Suit.png" width={40} height={50} />
-          <p className="font-mono">Vote</p>
+          <p className="font-mono">Users</p>
         </div>
-      </a>
-      {/* <button onClick={openSearch(3)}>
+      </button>
+      <button onClick={launchProposalView}>
         <div className="flex flex-col items-center space-y-1">
           <Image src="/desktop-icons/doc.png" width={40} height={50} />
-          <p className="font-mono">Links</p>
+          <p className="font-mono">Proposals</p>
         </div>
-      </button> */}
+      </button>
       {/* <div
         onClick={toggleHelp}
         className="hidden cursor-pointer flex-col items-center space-y-1 sm:flex"

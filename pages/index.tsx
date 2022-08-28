@@ -10,10 +10,12 @@ const Layout = dynamic(() => import("../components/Layout"));
 export default function Home() {
   const dispatch = useAppDispatch();
   const openApp = useAppSelector((state) => state.windows.primaryApp);
+  const width = useAppSelector((state) => state.windows.primaryAppWidth);
+  const height = useAppSelector((state) => state.windows.primaryAppHeight);
   const quit = () => dispatch(quitApp());
 
   return (
-    <Layout fixedOpen={true} noOpacity={true}>
+    <Layout fixedOpen={false} noOpacity={true}>
       <div className="absolute z-auto -mt-12 flex h-full flex-col justify-center font-mono">
         <Image src="/LogoGlobe.svg" width={6000} height={6000} />
       </div>
@@ -21,7 +23,11 @@ export default function Home() {
       <Footer />
 
       {/* // TODO: this should be part of layout */}
-      {openApp && <AppFrame onClose={quit}>{openApp}</AppFrame>}
+      {openApp && (
+        <AppFrame width={width} height={height} onClose={quit}>
+          {openApp}
+        </AppFrame>
+      )}
     </Layout>
   );
 }

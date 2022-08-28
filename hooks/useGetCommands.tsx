@@ -12,13 +12,8 @@ import ArrowRightIcon from "@/components/icons/ArrowIcon";
 import Profile from "@/components/profiles/[address]";
 import { EthereumAddress } from "@/types/EthereumAddress";
 import ProposalPage from "@/components/proposals/[id]";
-
-export enum CommandFilters {
-  ALL = "ALL",
-  PROPOSAL = "PROPOSAL",
-  LINK = "LINK",
-  USER = "USER",
-}
+import { CommandFilters } from "@/components/search/views";
+import QuestionIcon from "@/components/icons/QuestionIcon";
 
 const createLinkCommand = ({
   name,
@@ -26,6 +21,8 @@ const createLinkCommand = ({
   link,
   description,
   favorite,
+  categories,
+  type,
 }: any): Command => ({
   name,
   keywords,
@@ -33,7 +30,46 @@ const createLinkCommand = ({
   type: CommandFilters.LINK,
   description,
   favorite,
-  icon: LinkIcon,
+  categories,
+  icon: type === "QUESTION" ? QuestionIcon : LinkIcon,
+});
+
+const createDAOLink = ({
+  name,
+  keywords = [],
+  link,
+  description,
+  favorite,
+  categories,
+  type,
+}: any): Command => ({
+  name,
+  keywords,
+  link,
+  type: CommandFilters.DAO,
+  description,
+  favorite,
+  categories,
+  icon: type === "QUESTION" ? QuestionIcon : LinkIcon,
+});
+
+const createQuestionLink = ({
+  name,
+  keywords = [],
+  link,
+  description,
+  favorite,
+  categories,
+  type,
+}: any): Command => ({
+  name,
+  keywords,
+  link,
+  type: CommandFilters.QUESTIONS,
+  description,
+  favorite,
+  categories,
+  icon: QuestionIcon,
 });
 
 const createProposalCommand = (proposal: Proposal): Command => ({
@@ -55,8 +91,8 @@ const createUserCommand = (user: User): Command => ({
 });
 
 export const useGetCommands = (): Array<Command> => {
-  const proposals = useGetProposals(snapshotSpace);
-  // const users = useGetUsers();
+  // const proposals = useGetProposals(snapshotSpace);
+  const users = useGetUsers();
   return [
     ...(defaultCommands.map((o) => ({
       ...o,
@@ -64,7 +100,13 @@ export const useGetCommands = (): Array<Command> => {
       icon: ArrowRightIcon,
     })) || []),
     ...(commands?.links?.map(createLinkCommand) || []),
-    ...(proposals?.map(createProposalCommand) || []),
+    ...(commands?.links
+      ?.filter((command) => command.categories?.includes("DAO"))
+      .map(createDAOLink) || []),
+    ...(commands?.links
+      ?.filter((command) => command.type === "QUESTION")
+      .map(createQuestionLink) || []),
+    // ...(proposals?.map(createProposalCommand) || []),
     // ...(users?.map(createUserCommand) || []),
   ];
 };

@@ -73,28 +73,63 @@ module.exports = {
         name: "Calendar",
         link: "https://calendar.google.com/calendar/u/0?cid=dTRobTU2NDQ4NWZoN201MHR0Z2N2NTNlNmdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ",
         favorite: true,
+        categories: ["CONTRIBUTE"],
       },
       {
-        name: "Submit a Proposal",
-        keywords: ["Proposals", "Governance"],
-        link: "https://krausehousework.notion.site/Submit-a-Proposal-fcf858c80a0c40b6a2a83aec5ed588dc",
+        name: "How do I get involved?",
+        keywords: ["contribute", "help", "get started", "new"],
+        link: "",
         favorite: true,
+        categories: [],
+        type: "QUESTION",
       },
+
       {
         name: "Proposals Database",
         keywords: ["Proposals", "Governance", "Stewards"],
         link: "https://www.notion.so/a5d990ad04624d9daa70366b88e88ce4?v=62daad62e62a4395a7be0edaa26e630c",
+        categories: ["GOVERANCE"],
       },
       {
         name: "Contributor Dashboard",
         keywords: ["Work"],
         link: "https://krausehousework.notion.site/Krause-House-Contributor-Dashboard-a00860761dd4486792aed12cc8187ce2",
         favorite: true,
+        categories: ["CONTRIBUTE"],
       },
       {
         name: "Bounty Board (Dework)",
         keywords: ["Dework"],
         link: "https://app.dework.xyz/krause-house",
+      },
+      {
+        name: "How does governance work? (Governance Docs)",
+        keywords: ["Governance", "Docs", "Delegation"],
+        link: "https://krausehousework.notion.site/Governance-Philosophy-3aa7d188a9974559a591ec5e2cf98aa3",
+        categories: ["DAO", "GOVERNANCE"],
+        type: "QUESTION",
+      },
+      {
+        name: "How do I submit a proposal?",
+        keywords: ["Proposals", "Governance"],
+        link: "https://krausehousework.notion.site/Submit-a-Proposal-fcf858c80a0c40b6a2a83aec5ed588dc",
+        favorite: true,
+        categories: ["GOVERANCE", "DAO"],
+        type: "QUESTION",
+      },
+      {
+        name: "Who is being funded and what are they up to?",
+        keywords: ["Delegation", "Governance", "Powers"],
+        link: "",
+        categories: ["GOVERNANCE", "DAO"],
+        type: "QUESTION",
+      },
+      {
+        name: "Who holds what powers? (Permissions)",
+        keywords: ["Delegation", "Governance", "Powers"],
+        link: "https://krausehousework.notion.site/4589c7e790134019bc4e29753a225d09?v=168036c795544f3fb0e56bbabae42433",
+        categories: ["GOVERNANCE", "DAO"],
+        type: "QUESTION",
       },
       {
         name: "Mainnet Transactions",
@@ -109,18 +144,9 @@ module.exports = {
         ],
         link: "https://krausehousework.notion.site/e44eec07c098494ea9a8468395af50f9?v=8d44b9d251d241a6b7d3d204082f08a6",
         favorite: true,
-      },
-      {
-        name: "Governance Docs",
-        keywords: ["Governance", "Docs", "Delegation"],
-        link: "https://krausehousework.notion.site/Governance-Philosophy-3aa7d188a9974559a591ec5e2cf98aa3",
+        categories: ["DAO"],
       },
 
-      {
-        name: "$KRAUSE Token Contract",
-        keywords: ["Contract", "$KRAUSE", "Docs"],
-        link: "https://etherscan.io/address/0x9f6f91078a5072a8b54695dafa2374ab3ccd603b",
-      },
       {
         name: "Main Treasury",
         keywords: [
@@ -135,6 +161,7 @@ module.exports = {
         ],
         link: "https://etherscan.io/address/0xe4762eacebdb7585d32079fdcba5bb94eb5d76f2",
         favorite: true,
+        categories: ["DAO"],
       },
       {
         name: "Gnosis Chain Treasury",
@@ -151,6 +178,7 @@ module.exports = {
         network: 1,
         address: "gno:0x5844c36D6f803213Ca3f7fDac39A0d78f918ee3c",
         link: "https://blockscout.com/xdai/mainnet/address/0x5844c36D6f803213Ca3f7fDac39A0d78f918ee3c/transactions",
+        categories: ["DAO"],
       },
       {
         name: "Polygon Treasury",
@@ -167,6 +195,7 @@ module.exports = {
         network: 1,
         address: "matic:0x40eDBC75C543954CDD9c5ae7398342788F46A85B",
         link: "https://polygonscan.com/address/0x40eDBC75C543954CDD9c5ae7398342788F46A85B",
+        categories: ["DAO"],
       },
       {
         name: "Optimism Treasury",
@@ -183,12 +212,7 @@ module.exports = {
         network: 1,
         address: "matic:0x40eDBC75C543954CDD9c5ae7398342788F46A85B",
         link: "https://optimistic.etherscan.io/address/0xe245d82DDeDfB95ccaf68B9B609F1717B1A14A54",
-      },
-      {
-        name: "Forefront Dashboard",
-        keywords: ["Info", "Metrics"],
-        link: "https://www.terminal.co/community/social/krausehouse.eth",
-        favorite: false,
+        categories: ["DAO"],
       },
       {
         name: "Discord",
@@ -219,10 +243,12 @@ module.exports = {
         keywords: ["Social", "Media"],
         link: "https://www.youtube.com/channel/UCtiCOIi2V5U8EixchY01VVQ/videos",
       },
+
       {
-        name: "Permissions",
-        keywords: ["Delegation", "Governance", "Powers"],
-        link: "https://krausehousework.notion.site/4589c7e790134019bc4e29753a225d09?v=168036c795544f3fb0e56bbabae42433",
+        name: "$KRAUSE Token Contract",
+        keywords: ["Contract", "$KRAUSE", "Docs"],
+        link: "https://etherscan.io/address/0x9f6f91078a5072a8b54695dafa2374ab3ccd603b",
+        categories: ["DAO"],
       },
 
       {

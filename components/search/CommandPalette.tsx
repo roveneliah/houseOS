@@ -1,6 +1,5 @@
 import { Fragment, ReactNode, useState } from "react";
 import { useCommand } from "../../hooks/generic/useCommand";
-import { CommandFilters } from "../../hooks/useGetCommands";
 import { Command } from "../../types/Command";
 import { Dialog, Combobox, Transition } from "@headlessui/react";
 import SearchIcon from "../icons/SearchIcon";
@@ -10,7 +9,7 @@ import { close, launch, toggle } from "@/redux/features/windows/windowsSlice";
 import { useRouter } from "next/router";
 import { any } from "ramda";
 import { contains } from "../../utils/contains";
-import { views } from "./views";
+import { CommandFilters, views } from "./views";
 import { formatLinkCommand } from "./formatLinkCommand";
 import { pageview, event } from "@/utils/google-analytics";
 

@@ -6,6 +6,8 @@ interface WindowsState {
   open: { [windowName: string]: boolean };
   searchView: number | undefined;
   primaryApp: ReactNode;
+  primaryAppWidth?: number;
+  primaryAppHeight?: number;
 }
 
 const initialState: WindowsState = {
@@ -15,6 +17,8 @@ const initialState: WindowsState = {
   },
   searchView: undefined,
   primaryApp: undefined,
+  primaryAppWidth: undefined,
+  primaryAppHeight: undefined,
 };
 
 export const windowsSlice = createSlice({
@@ -34,7 +38,9 @@ export const windowsSlice = createSlice({
       state.open[payload.windowName] = !state.open[payload.windowName];
     },
     launch: (state, { payload }) => {
-      state.primaryApp = payload;
+      state.primaryApp = payload.app;
+      state.primaryAppWidth = payload.width;
+      state.primaryAppHeight = payload.height;
     },
     quitApp: (state) => {
       state.primaryApp = null;

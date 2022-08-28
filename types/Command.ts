@@ -1,5 +1,5 @@
+import { CommandFilters } from "@/components/search/views";
 import { ReactNode } from "react";
-import { CommandFilters } from "../hooks/useGetCommands";
 
 export interface Command {
   name: string;
@@ -11,4 +11,5 @@ export interface Command {
   description?: string;
   icon: (arg0: any) => JSX.Element;
   favorite?: boolean;
+  categories?: Array<string>;
 }
