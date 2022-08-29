@@ -35,40 +35,38 @@ const ProposalPage = ({ id }: { id: string }) => {
   useCommand("ArrowLeft", prev);
 
   return (
-    <Layout>
-      <div className="w-full">
-        <div className="flex w-full flex-row justify-center">
-          <div className="text-base-content flex w-full flex-col items-start space-y-10 px-12">
-            <ProposalHeader proposal={proposal} />
-            <ChoiceFilters
-              proposal={proposal}
-              selectedChoice={selectedChoice}
-              setSelectedChoice={setSelectedChoice}
-              toggleCommentView={() => setView(View.Comment)}
-              view={view}
-            />
-          </div>
-        </div>
-        <div className="text-base-content flex w-full flex-row justify-center px-12">
-          <div className="bg-base-100 flex w-full flex-col space-y-10 overflow-hidden rounded-b-lg">
-            {view === View.CommentList && (
-              <CommentList
-                toggleCommentView={() => setView(View.Comment)}
-                comments={comments}
-                proposal={proposal}
-                choice={selectedChoice}
-              />
-            )}
-
-            <CommentView
-              proposal={proposal}
-              choice={selectedChoice}
-              back={() => setView(View.CommentList)}
-            />
-          </div>
+    <div className="bg-base-200 w-full p-12">
+      <div className="flex w-full flex-row justify-center">
+        <div className="text-base-content flex w-full flex-col items-start space-y-10 px-12">
+          <ProposalHeader proposal={proposal} />
+          <ChoiceFilters
+            proposal={proposal}
+            selectedChoice={selectedChoice}
+            setSelectedChoice={setSelectedChoice}
+            toggleCommentView={() => setView(View.Comment)}
+            view={view}
+          />
         </div>
       </div>
-    </Layout>
+      <div className="text-base-content flex w-full flex-row justify-center px-12">
+        <div className="bg-base-100 flex w-full flex-col space-y-10 overflow-hidden rounded-b-lg">
+          {view === View.CommentList && (
+            <CommentList
+              toggleCommentView={() => setView(View.Comment)}
+              comments={comments}
+              proposal={proposal}
+              choice={selectedChoice}
+            />
+          )}
+
+          <CommentView
+            proposal={proposal}
+            choice={selectedChoice}
+            back={() => setView(View.CommentList)}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
