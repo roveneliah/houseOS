@@ -61,7 +61,7 @@ export const views = [
   //   icon: UsersIcon,
   // },
   {
-    title: "FAQ",
+    title: "Help",
     name: CommandFilters.QUESTIONS,
     view: CommandFilters.QUESTIONS,
     icon: QuestionIcon,
