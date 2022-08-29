@@ -126,7 +126,7 @@ export default function CommandPalette({
               />
               <div className="btn-circle btn-xs border-base-content border-4"></div>
             </div>
-            <div className="bg-base-200 border-base-content order-2 flex flex-row justify-start overflow-x-scroll border-t-0 text-gray-700 group-target:hidden group-open:hidden group-focus-visible:hidden sm:order-2 sm:border-t">
+            <div className="bg-base-200 border-base-content order-2 flex flex-row justify-start overflow-hidden border-t-0 text-gray-700 group-target:hidden group-open:hidden group-focus-visible:hidden sm:order-2 sm:border-t">
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
@@ -150,6 +150,7 @@ export default function CommandPalette({
               <div className="text-gray-800">
                 <SearchIcon />
               </div>
+              
               <Combobox.Input
                 className="w-full border-0 border-white bg-transparent py-2 px-2 text-sm text-gray-800 placeholder-gray-400 outline-none"
                 placeholder={"Search the DAO..."}
