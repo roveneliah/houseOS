@@ -83,6 +83,14 @@ module.exports = {
         categories: ["CONTRIBUTE"],
       },
       {
+        name: "How do I stay up to date?",
+        keywords: ["news", "help", "updates", "roadmap", "progress", "status"],
+        link: "https://discord.gg/wAjEq3CM",
+        favorite: true,
+        categories: [],
+        type: "QUESTION",
+      },
+      {
         name: "How do I get involved?",
         keywords: ["contribute", "help", "get started", "new"],
         link: "https://krausehousework.notion.site/How-to-Get-Involved-77bcb760c8de433abf0d35cb8603b8b2",
