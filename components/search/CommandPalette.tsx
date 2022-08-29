@@ -117,7 +117,7 @@ export default function CommandPalette({
               !command.link && closeSearch();
             }}
             as="div"
-            className="border-base-content  bg-base-100 d group relative flex h-screen flex-col justify-end overflow-hidden overflow-y-auto font-mono ring-1 ring-black/5 sm:h-auto sm:max-h-fit sm:rounded-lg sm:border-4 sm:shadow-black"
+            className="border-base-content  bg-base-100 group relative flex h-screen flex-col justify-end overflow-hidden overflow-y-auto font-mono ring-1 ring-black/5 sm:h-auto sm:max-h-fit sm:rounded-lg sm:border-4 sm:shadow-black"
           >
             <div className="bg-base-200 hidden flex-row justify-start space-x-2 p-4 py-2 outline-none sm:flex">
               <button

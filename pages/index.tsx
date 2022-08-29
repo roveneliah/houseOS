@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Footer } from "../components/Footer";
 import { DesktopIcons } from "../components/DesktopIcons";
+import ListFrame from "@/components/views/ListFrame";
 const Layout = dynamic(() => import("../components/Layout"));
 
 export default function Home() {
@@ -28,6 +29,14 @@ export default function Home() {
           {openApp}
         </AppFrame>
       )}
+      {/* <ListFrame
+        title="test list"
+        list={[
+          { name: "a", onClick: () => console.log("a") },
+          { name: "b", description: "yolo" },
+          { name: "c" },
+        ]}
+      /> */}
     </Layout>
   );
 }
