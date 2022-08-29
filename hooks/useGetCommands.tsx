@@ -14,6 +14,7 @@ import { EthereumAddress } from "@/types/EthereumAddress";
 import ProposalPage from "@/components/proposals/[id]";
 import { CommandFilters } from "@/components/search/views";
 import QuestionIcon from "@/components/icons/QuestionIcon";
+import { prioritize } from "@/utils/prioritize";
 
 const createLinkCommand = ({
   name,
@@ -90,11 +91,12 @@ const createUserCommand = (user: User): Command => ({
   icon: AtIcon,
 });
 
+// TODO: #31 refactor, not readable
 export const useGetCommands = (): Array<Command> => {
   // const proposals = useGetProposals(snapshotSpace);
-  const users = useGetUsers();
-  return [
-    ...(defaultCommands.map((o) => ({
+  // const users = useGetUsers();
+  const allCommands = [
+    ...(defaultCommands.map((o: object) => ({
       ...o,
       type: CommandFilters.LINK,
       icon: ArrowRightIcon,
@@ -109,4 +111,6 @@ export const useGetCommands = (): Array<Command> => {
     // ...(proposals?.map(createProposalCommand) || []),
     // ...(users?.map(createUserCommand) || []),
   ];
+
+  return prioritize(({ icon }) => icon === QuestionIcon)(allCommands);
 };

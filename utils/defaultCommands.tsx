@@ -10,13 +10,6 @@ export default [
   //   app: <MyProfile />,
   //   favorite: true,
   // },
-  {
-    name: "Proposals (Snapshot)",
-    keywords: ["Snapshot"],
-    link: snapshotUrl,
-    // app: <ProposalsListPage />,
-    favorite: true,
-  },
   // {
   //   name: "Help",
   //   // link: "/help",
