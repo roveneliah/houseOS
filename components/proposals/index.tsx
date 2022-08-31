@@ -1,6 +1,11 @@
 import type { NextPage } from "next";
 import { length } from "ramda";
-import { Proposal, ProposalState } from "../../types/Proposal";
+import {
+  filterActive,
+  isActive,
+  Proposal,
+  ProposalState,
+} from "../../types/Proposal";
 import { useGetProposals } from "../../hooks/snapshot/useGetProposals";
 import { useMemo, useState } from "react";
 
@@ -17,6 +22,7 @@ const TagSelector = dynamic(() => import("../tags/TagSelector"));
 import { useSingleSelect } from "../../hooks/generic/useSingleSelect";
 import { proposalTags, snapshotSpace } from "../../config";
 import { useOnKeydown } from "../../hooks/generic/useOnKeydown";
+import { next, prev } from "@/hooks/generic/useCycler";
 
 export enum StateFilters {
   Active,
@@ -26,18 +32,14 @@ export enum StateFilters {
 const { All, Active, Closed } = StateFilters;
 
 const ProposalsListPage: NextPage = () => {
-  const proposals = useGetProposals(snapshotSpace);
+  const proposals = useGetProposals(snapshotSpace); // TODO: redux should load this
   const tags = proposalTags;
-  const countActive = length(
-    proposals.filter(
-      ({ state }: { state: ProposalState }) => state === ProposalState.Active
-    )
-  );
+  const countActive = length(filterActive(proposals));
 
   const [selectedTags, setSelectedTags] = useState([]);
-  const [stateFilter, setStateFilter] = useState(All);
 
   // TODO: #13 Refactor with prev, next, selected
+  const [stateFilter, setStateFilter] = useState(All);
   const { options } = useSingleSelect([
     {
       name: "Active",
@@ -48,13 +50,8 @@ const ProposalsListPage: NextPage = () => {
     { name: "All", icon: ListIcon, onClick: () => setStateFilter(All) },
   ]);
 
-  useOnKeydown("ArrowRight", () =>
-    setStateFilter((current) => (current + 1) % 3)
-  );
-
-  useOnKeydown("ArrowLeft", () =>
-    setStateFilter((current) => (3 + current - 1) % 3)
-  );
+  useOnKeydown("ArrowRight", () => setStateFilter(next(options)));
+  useOnKeydown("ArrowLeft", () => setStateFilter(prev(options)));
 
   const stateToId = (state: string) => (state === "active" ? 0 : 1);
   const filteredProposals = useMemo(

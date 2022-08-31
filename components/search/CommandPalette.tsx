@@ -1,17 +1,22 @@
-import { Fragment, ReactNode, useState } from "react";
-import { useCommand } from "../../hooks/generic/useCommand";
+import { Fragment, ReactNode } from "react";
+import {
+  useCommand,
+  useCommands,
+  useSearchToggle,
+} from "../../hooks/generic/useCommand";
 import { Command } from "../../types/Command";
 import { Dialog, Combobox, Transition } from "@headlessui/react";
 import SearchIcon from "../icons/SearchIcon";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
-import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
+import { useAppDispatch } from "@/redux/app/hooks";
 import { close, launch, toggle } from "@/redux/features/windows/windowsSlice";
-import { useRouter } from "next/router";
-import { any } from "ramda";
+import { any, anyPass } from "ramda";
 import { contains } from "../../utils/contains";
 import { CommandFilters, views } from "./views";
 import { formatLinkCommand } from "./formatLinkCommand";
 import { pageview, event } from "@/utils/google-analytics";
+import { useFormText } from "../../hooks/generic/useFormText";
+import { useWindowManager } from "../../hooks/useWindowManager";
 
 interface Props {
   commands: Array<Command>;
@@ -25,62 +30,49 @@ export default function CommandPalette({
   noOpacity = false,
   fixedOpen = false,
 }: Props) {
-  const router = useRouter();
-  const searchView = useAppSelector((state) => state.windows.searchView);
-  const { search: isOpen } = useAppSelector((state) => state.windows.open);
-  const [query, setQuery] = useState("");
+  const { search: isOpen } = useWindowManager();
+  const { text: query, updateText: updateQuery, clear } = useFormText();
 
   const dispatch = useAppDispatch();
-  const closeSearch = () => {
-    dispatch(close({ windowName: "search" }));
-    // setQuery("");
-  };
-  const toggleSearch = () => {
-    dispatch(toggle({ windowName: "search" }));
-    // setQuery("");
-  };
+  const closeSearch = () => dispatch(close({ windowName: "search" }));
   const launchApp = (app: ReactNode) => dispatch(launch(app));
 
   const {
     options: filters,
-    selected,
+    selectedName: filter,
     next: nextFilter,
     prev: prevFilter,
   } = useSingleSelect(views);
 
-  const filter = filters[selected].name;
-
-  useCommand("k", toggleSearch);
-  useCommand("/", toggleSearch);
+  // TODO: command options should be one object in redux, add and detach commands when needed
   useCommand("ArrowLeft", prevFilter, filter);
   useCommand("ArrowRight", nextFilter, filter);
+  useSearchToggle();
 
-  const filteredCommands = commands
-    .filter(({ type, favorite }) =>
-      filter === CommandFilters.ALL
-        ? !query
-          ? type === CommandFilters.LINK
-          : type
-        : type === filter
-    )
-    .filter(
-      (option) =>
-        !query ||
-        contains(query)(option.name || "") ||
-        any(contains(query))(option.keywords || [])
-    )
-    .map(formatLinkCommand);
+  // TODO: refactor, super unclear
+  const noInput = !query;
+  const queryMatch = contains(query);
+  const keywordMatch = any(contains(query));
+  const queryHit = (option: any) =>
+    noInput || queryMatch(option.name) || keywordMatch(option.keywords || []);
+
+  // TODO: find ramda fn for this kind of "fallback" login
+  const commandTypeMatches = ({ type }: { type: CommandFilters }) =>
+    filter === CommandFilters.ALL
+      ? noInput
+        ? type === CommandFilters.LINK // if on "all", and no input, show links
+        : true
+      : type === filter; // if not on "all", only show matching filter
+
+  const filteredCommands = commands.filter(commandTypeMatches).filter(queryHit);
+  const formattedCommands = filteredCommands.map(formatLinkCommand);
+
+  const show = fixedOpen || isOpen;
 
   return (
-    <Transition.Root
-      show={fixedOpen || isOpen}
-      as={Fragment}
-      afterLeave={() => {
-        setQuery("");
-      }}
-    >
+    <Transition.Root show={show} as={Fragment} afterLeave={clear}>
       <Dialog
-        open={fixedOpen || isOpen}
+        open={show}
         onClose={closeSearch}
         className="fixed bottom-[0vh] z-40 mx-auto flex w-full flex-col justify-end overflow-y-auto sm:inset-[15vh] sm:h-fit sm:w-[70vw] sm:flex-none lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
@@ -157,9 +149,7 @@ export default function CommandPalette({
                 displayValue={() => query}
                 autoComplete="false"
                 autoFocus={true}
-                onChange={(event) => {
-                  setQuery(event.target.value);
-                }}
+                onChange={updateQuery}
               />
             </div>
             <div className="order-1 sm:order-3">
@@ -169,13 +159,13 @@ export default function CommandPalette({
                     Coming soon...
                   </p>
                 </div>
-              ) : filteredCommands.length > 0 ? (
+              ) : formattedCommands.length > 0 ? (
                 <Combobox.Options
                   static
                   className="no-scrollbar divide-base-200 h-fit max-h-[90vh] justify-end divide-y overflow-hidden overflow-y-scroll border-black px-2 py-4 sm:max-h-96 sm:justify-start sm:rounded-lg sm:border-t sm:border-t-0"
                 >
                   <div className="flex min-h-0 flex-col-reverse sm:flex-col">
-                    {filteredCommands.map((command, i) => (
+                    {formattedCommands.map((command, i) => (
                       <Combobox.Option value={command} key={i}>
                         {({ active }) => (
                           <div

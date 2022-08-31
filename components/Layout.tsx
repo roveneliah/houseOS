@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ReactNode, useRef, useState } from "react";
+import { ReactNode, useRef } from "react";
 import { dao, snapshotSpace, snapshotUrl, themes } from "../config";
 import { useGetCommands } from "../hooks/useGetCommands";
 import { Command } from "../types/Command";
@@ -16,36 +16,34 @@ import SignupModal from "./SignupModal";
 import Image from "next/image";
 import AppFrame from "./views/AppFrame";
 import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
-import { close, launch } from "@/redux/features/windows/windowsSlice";
+import { close, launch, toggle } from "@/redux/features/windows/windowsSlice";
 import { useGetProposals } from "@/hooks/snapshot/useGetProposals";
-import { length } from "ramda";
-import { ProposalState } from "@/types/Proposal";
+import { compose, filter, length, prop, propEq } from "ramda";
+import { Proposal, ProposalState } from "@/types/Proposal";
 import XIcon from "./icons/XIcon";
+import { useCycler } from "../hooks/generic/useCycler";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./search/CommandPalette"));
+import { filterActive } from "@/types/Proposal";
+
+interface Props {
+  children?: ReactNode;
+  fixedOpen?: boolean;
+  noOpacity?: boolean;
+}
 
 export default function Layout({
   children,
   noOpacity = false,
-  paletteStartsOpen = false,
   fixedOpen = false,
-}: {
-  children?: ReactNode;
-  paletteStartsOpen?: boolean;
-  fixedOpen?: boolean;
-  noOpacity?: boolean;
-}) {
-  const [themeIndex, setThemeIndex] = useState<number>(0);
-  const themeName = themes[themeIndex]?.toString();
-  const commands: Array<Command> = useGetCommands();
-  useOnKeydown("[", () =>
-    setThemeIndex((i) => (i + themes.length - 1) % themes.length)
-  );
-  useOnKeydown("]", () => setThemeIndex((i) => (i + 1) % themes.length));
+}: Props) {
+  // theme iteration, can cycle through themes by pressing "[" or "]"
+  const { index: theme, nxt: nextTheme, prv: prevTheme } = useCycler(themes);
+  const themeName = themes[theme]?.toString();
+  useOnKeydown("[", prevTheme);
+  useOnKeydown("]", nextTheme);
 
-  const address = useUserAddress();
-  const user = useGetUserProfile();
-
+  // Connection hooks
   const {
     connect,
     connectors,
@@ -54,36 +52,25 @@ export default function Layout({
     isConnecting,
     isReconnecting,
   } = useConnect();
-  const dispatch = useAppDispatch();
-
+  const address = useUserAddress();
+  const { signOut, signIn, signedIn } = useSignIn();
+  const { signedIn: signedInSIWE } = useSIWE();
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
   const connector = connectors[1];
 
-  const toggleSearch = () =>
-    dispatch({ type: "windows/toggle", payload: { windowName: "search" } });
-
-  const { signOut, signIn, signedIn } = useSignIn();
-  const { signedIn: signedInSIWE } = useSIWE();
-
-  const newUserFlow = useIsNewUser();
-  const path = usePath();
-
-  const date = new Date();
-
-  const welcomeMessage = useAppSelector((state) => state.windows.open.welcome);
-  const help = useAppSelector((state) => state.windows.open.help);
+  // Redux hooks, window management
+  const dispatch = useAppDispatch();
+  const toggleSearch = () => dispatch(toggle({ windowName: "search" }));
   const searchOpen = useAppSelector((state) => state.windows.open.search);
 
-  // const closeWelcome = () => dispatch(close({ windowName: "welcome" }));
-  // const launchCreateProfile = () => dispatch(launch(<SignupModal />));
-
+  // TODO: should load a lot of this in via redux, and then get from app state
+  const commands: Array<Command> = useGetCommands();
+  const user = useGetUserProfile();
+  const path = usePath();
   const proposals = useGetProposals(snapshotSpace);
-  const countActive = length(
-    proposals.filter(
-      ({ state }: { state: ProposalState }) => state === ProposalState.Active
-    )
-  );
+  const countActive = length(filterActive(proposals));
+  const date = new Date();
 
   return (
     <div data-theme={themeName} className="no-scrollbar min-h-screen font-mono">
@@ -103,7 +90,6 @@ export default function Layout({
         <CommandPalette
           commands={commands}
           noOpacity={noOpacity}
-          deactivated={newUserFlow}
           fixedOpen={fixedOpen}
         />
         <div className="border-base-content bg-base-200 fixed z-50 flex w-full flex-row items-center justify-between overflow-hidden border-b px-4 py-2 sm:bottom-auto sm:top-0 sm:z-10 sm:p-0">

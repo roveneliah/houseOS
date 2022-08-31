@@ -1,9 +1,17 @@
+import { filter, propEq } from "ramda";
 import { EthereumAddress } from "./EthereumAddress";
 
 export enum ProposalState {
   Active = "active",
   Closed = "closed",
 }
+
+export const isActive: (p: Proposal) => boolean = propEq(
+  "state",
+  ProposalState.Active
+);
+export const filterActive: (ps: Array<Proposal>) => Array<Proposal> =
+  filter(isActive);
 
 export interface Proposal {
   author: EthereumAddress;

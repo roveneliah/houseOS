@@ -15,6 +15,7 @@ import ProposalPage from "@/components/proposals/[id]";
 import { CommandFilters } from "@/components/search/views";
 import QuestionIcon from "@/components/icons/QuestionIcon";
 import { prioritize } from "@/utils/prioritize";
+import { includes, prop } from "ramda";
 
 const createLinkCommand = ({
   name,
@@ -103,7 +104,7 @@ export const useGetCommands = (): Array<Command> => {
     })) || []),
     ...(commands?.links?.map(createLinkCommand) || []),
     ...(commands?.links
-      ?.filter((command) => command.categories?.includes("DAO"))
+      ?.filter((command) => includes("DAO")(command.categories || []))
       .map(createDAOLink) || []),
     ...(commands?.links
       ?.filter((command) => command.type === "QUESTION")

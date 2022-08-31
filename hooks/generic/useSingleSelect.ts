@@ -29,6 +29,7 @@ export const useSingleSelect = (
   return {
     options,
     selected,
+    selectedName: arr[selected].name,
     next,
     prev,
   };
