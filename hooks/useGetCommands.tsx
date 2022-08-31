@@ -16,14 +16,20 @@ import { CommandFilters } from "@/components/search/views";
 import QuestionIcon from "@/components/icons/QuestionIcon";
 import { prioritize } from "@/utils/prioritize";
 import {
+  allPass,
+  defaultTo,
+  equals,
   includes,
+  is,
   map,
   mergeLeft,
   pipe,
   prop,
   propEq,
   propOr,
+  propSatisfies,
   reduce,
+  where,
 } from "ramda";
 import { concatAll } from "../utils/concatAll";
 
@@ -102,25 +108,28 @@ const createUserCommand = (user: User): Command => ({
   icon: AtIcon,
 });
 
-const prioritizeQuestions = prioritize(propEq("icon", QuestionIcon));
+// TODO: #31 refactor, not readable, parser combinator?
+const parseDefaults = (defaultCommands: any) =>
+  defaultTo([])(
+    defaultCommands.map(
+      mergeLeft({ type: CommandFilters.LINK, icon: ArrowRightIcon })
+    )
+  );
 
-// TODO: #31 refactor, not readable
-const defaults =
-  defaultCommands.map((o: object) => ({
-    ...o,
-    type: CommandFilters.LINK,
-    icon: ArrowRightIcon,
-  })) || [];
+const parseLinks = (commands: any) =>
+  defaultTo([])(commands?.links?.map(createLinkCommand));
 
-const linkCommands = commands?.links?.map(createLinkCommand) || [];
-const daoCommands =
-  commands?.links
-    ?.filter(pipe(propOr([], "categories"), includes("DAO")))
-    .map(createDAOLink) || [];
-const questions =
-  commands?.links
-    ?.filter((command) => command.type === "QUESTION")
-    .map(createQuestionLink) || [];
+const categoryDAO = where({
+  categories: allPass([is(Array), includes("DAO")]),
+});
+const parseDAOCommands = (commands: any) =>
+  defaultTo([])(commands?.links?.filter(categoryDAO).map(createDAOLink));
+
+const categoryQuestion = where({ type: equals("QUESTION") });
+const parseQuestions = (commands: any) =>
+  defaultTo([])(
+    commands?.links?.filter(categoryQuestion).map(createQuestionLink)
+  );
 
 export const useGetCommands = (): Array<Command> => {
   // const proposals = useGetProposals(snapshotSpace);
@@ -128,7 +137,13 @@ export const useGetCommands = (): Array<Command> => {
   // const proposalCommands = proposals?.map(createProposalCommand) || [];
   // const userCommands = users?.map(createUserCommand) || [];
 
+  const prioritizeQuestions = prioritize(propEq("icon", QuestionIcon));
   return prioritizeQuestions(
-    concatAll(defaults, linkCommands, daoCommands, questions)
+    concatAll(
+      parseDefaults(defaultCommands),
+      parseLinks(commands),
+      parseDAOCommands(commands),
+      parseQuestions(commands)
+    )
   );
 };
