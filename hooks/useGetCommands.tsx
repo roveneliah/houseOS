@@ -15,7 +15,17 @@ import ProposalPage from "@/components/proposals/[id]";
 import { CommandFilters } from "@/components/search/views";
 import QuestionIcon from "@/components/icons/QuestionIcon";
 import { prioritize } from "@/utils/prioritize";
-import { includes, prop } from "ramda";
+import {
+  includes,
+  map,
+  mergeLeft,
+  pipe,
+  prop,
+  propEq,
+  propOr,
+  reduce,
+} from "ramda";
+import { concatAll } from "../utils/concatAll";
 
 const createLinkCommand = ({
   name,
@@ -92,26 +102,33 @@ const createUserCommand = (user: User): Command => ({
   icon: AtIcon,
 });
 
+const prioritizeQuestions = prioritize(propEq("icon", QuestionIcon));
+
 // TODO: #31 refactor, not readable
+const defaults =
+  defaultCommands.map((o: object) => ({
+    ...o,
+    type: CommandFilters.LINK,
+    icon: ArrowRightIcon,
+  })) || [];
+
+const linkCommands = commands?.links?.map(createLinkCommand) || [];
+const daoCommands =
+  commands?.links
+    ?.filter(pipe(propOr([], "categories"), includes("DAO")))
+    .map(createDAOLink) || [];
+const questions =
+  commands?.links
+    ?.filter((command) => command.type === "QUESTION")
+    .map(createQuestionLink) || [];
+
 export const useGetCommands = (): Array<Command> => {
   // const proposals = useGetProposals(snapshotSpace);
   // const users = useGetUsers();
-  const allCommands = [
-    ...(defaultCommands.map((o: object) => ({
-      ...o,
-      type: CommandFilters.LINK,
-      icon: ArrowRightIcon,
-    })) || []),
-    ...(commands?.links?.map(createLinkCommand) || []),
-    ...(commands?.links
-      ?.filter((command) => includes("DAO")(command.categories || []))
-      .map(createDAOLink) || []),
-    ...(commands?.links
-      ?.filter((command) => command.type === "QUESTION")
-      .map(createQuestionLink) || []),
-    // ...(proposals?.map(createProposalCommand) || []),
-    // ...(users?.map(createUserCommand) || []),
-  ];
+  // const proposalCommands = proposals?.map(createProposalCommand) || [];
+  // const userCommands = users?.map(createUserCommand) || [];
 
-  return prioritize(({ icon }) => icon === QuestionIcon)(allCommands);
+  return prioritizeQuestions(
+    concatAll(defaults, linkCommands, daoCommands, questions)
+  );
 };
