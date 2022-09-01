@@ -80,14 +80,14 @@ module.exports = {
         name: "Calendar",
         link: "https://calendar.google.com/calendar/u/0?cid=dTRobTU2NDQ4NWZoN201MHR0Z2N2NTNlNmdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ",
         favorite: true,
-        categories: ["CONTRIBUTE"],
+        categories: ["CONTRIBUTE", "SOCIAL"],
       },
       {
         name: "How do I stay up to date?",
         keywords: ["news", "help", "updates", "roadmap", "progress", "status"],
         link: "https://discord.gg/wAjEq3CM",
         favorite: true,
-        categories: [],
+        categories: ["SOCIAL"],
         type: "QUESTION",
       },
       {
@@ -95,7 +95,7 @@ module.exports = {
         keywords: ["contribute", "help", "get started", "new"],
         link: "https://krausehousework.notion.site/How-to-Get-Involved-77bcb760c8de433abf0d35cb8603b8b2",
         favorite: true,
-        categories: [],
+        categories: ["SOCIAL"],
         type: "QUESTION",
       },
 
@@ -252,15 +252,18 @@ module.exports = {
       {
         name: "Discord",
         link: "https://discord.com/channels/847908414981275648/899496354416574524",
+        categories: ["SOCIAL"],
       },
       {
         name: "Gather",
         link: "https://app.gather.town/app/ZM9PmXOsVoIxvzgO/KrauseHouse",
+        categories: ["SOCIAL"],
       },
       {
         name: "Twitter",
         keywords: ["Social", "Community"],
         link: "https://twitter.com/krausehousedao",
+        categories: ["SOCIAL"],
         favorite: true,
       },
       {
@@ -277,6 +280,7 @@ module.exports = {
         name: "Youtube",
         keywords: ["Social", "Media"],
         link: "https://www.youtube.com/channel/UCtiCOIi2V5U8EixchY01VVQ/videos",
+        categories: ["SOCIAL"],
       },
 
       {

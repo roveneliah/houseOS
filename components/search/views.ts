@@ -15,6 +15,7 @@ export enum CommandFilters {
   GOVERNANCE = "GOVERNANCE",
   DAO = "DAO",
   CONTRIBUTE = "CONTRIBUTE",
+  SOCIAL = "SOCIAL",
 }
 
 export const views = [
@@ -24,24 +25,24 @@ export const views = [
     view: CommandFilters.ALL,
     icon: ListIcon,
   },
-  {
-    title: "Links",
-    name: CommandFilters.LINK,
-    view: CommandFilters.LINK,
-    icon: LinkIcon,
-  },
+  // {
+  //   title: "Links",
+  //   name: CommandFilters.LINK,
+  //   view: CommandFilters.LINK,
+  //   icon: LinkIcon,
+  // },
   // {
   //   title: "Proposals",
   //   name: CommandFilters.PROPOSAL,
   //   view: CommandFilters.PROPOSAL,
   //   icon: ChatIcon,
   // },
-  // {
-  //   title: "Contribute",
-  //   name: CommandFilters.CONTRIBUTE,
-  //   view: CommandFilters.CONTRIBUTE,
-  //   icon: UsersIcon,
-  // },
+  {
+    title: "Social",
+    name: CommandFilters.SOCIAL,
+    view: CommandFilters.SOCIAL,
+    icon: UsersIcon,
+  },
   // {
   //   title: "Governance",
   //   name: CommandFilters.GOVERNANCE,
