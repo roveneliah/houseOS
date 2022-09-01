@@ -26,6 +26,7 @@ const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./search/CommandPalette"));
 import { filterActive } from "@/types/Proposal";
 import NewUserFlow from "./NewUserFlow";
+import { useAppLauncher } from "@/hooks/useAppLauncher";
 
 interface Props {
   children?: ReactNode;
@@ -63,7 +64,7 @@ export default function Layout({
   // Redux hooks, window management
   const dispatch = useAppDispatch();
   const toggleSearch = () => dispatch(toggle({ windowName: "search" }));
-  const launchCreateProfile = () => dispatch(launch({ app: <SignupModal /> }));
+  const { launchCreateProfile } = useAppLauncher();
   const searchOpen = useAppSelector((state) => state.windows.open.search);
 
   // TODO: should load a lot of this in via redux, and then get from app state

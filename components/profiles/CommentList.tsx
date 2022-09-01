@@ -2,15 +2,14 @@ import { Comment } from "../../types/Comment";
 import { useAppDispatch } from "@/redux/app/hooks";
 import ProposalPage from "@/components/proposals/[id]";
 import { launch } from "@/redux/features/windows/windowsSlice";
+import { useAppLauncher } from "@/hooks/useAppLauncher";
 
 export default function CommentList({
   comments,
 }: {
   comments: Array<Comment>;
 }) {
-  const dispatch = useAppDispatch();
-  const launchProposal = (id: string) =>
-    dispatch(launch(<ProposalPage id={id} />));
+  const { launchProposal } = useAppLauncher();
 
   return (
     <div className="flex flex-col space-y-0">

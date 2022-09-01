@@ -14,6 +14,7 @@ import { Tag } from "@/types/Tag";
 import { useAppDispatch } from "@/redux/app/hooks";
 import { launch } from "@/redux/features/windows/windowsSlice";
 import { snapshotSpace } from "@/config";
+import { useAppLauncher } from "@/hooks/useAppLauncher";
 
 export interface Props {
   proposal: Proposal;
@@ -27,9 +28,7 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
     selectedTags.length === 0 ||
     intersection(tags.map(prop("tag")), selectedTags).length > 0;
 
-  const dispatch = useAppDispatch();
-  const launchProposal = () =>
-    dispatch(launch({ app: <ProposalPage id={proposal.id} /> }));
+  const { launchProposal } = useAppLauncher();
 
   return hasMatchingTag(proposalTags) ? (
     <div className="hover:bg-base-100 border-base-200/10 text-base-content flex flex-row justify-between border-b py-2 px-6 hover:shadow-lg">
@@ -45,7 +44,7 @@ export default function ProposalListItem({ proposal, selectedTags }: Props) {
           href={`https://snapshot.org/#/${snapshotSpace}/proposal/${proposal.id}`}
           target="_blank"
         > */}
-        <button onClick={launchProposal}>
+        <button onClick={launchProposal(proposal.id)}>
           <p
             className={`cursor-pointer overflow-clip text-ellipsis whitespace-nowrap text-sm ${
               proposal.state === "closed" ? "font-normal" : "font-semibold"
