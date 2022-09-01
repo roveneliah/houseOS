@@ -1,24 +1,22 @@
 import { snapshotSpace, snapshotUrl } from "@/config";
-import { useAppDispatch } from "@/redux/app/hooks";
-import { launch, open } from "@/redux/features/windows/windowsSlice";
+import { useIsNewUser } from "@/hooks/useIsNewUser";
 import Image from "next/image";
 import Help from "./help";
-import ProposalsListPage from "./proposals";
+import { useAppLauncher } from "../hooks/useAppLauncher";
 
 export function DesktopIcons() {
-  const dispatch = useAppDispatch();
-  const openSearch =
-    (view: number = 0) =>
-    () =>
-      dispatch(open({ windowName: "search", searchView: 3 }));
-
-  const launchProposalView = () =>
-    dispatch(launch({ app: <ProposalsListPage />, width: 80, height: 80 }));
+  const isNewUser = useIsNewUser();
+  const {
+    launchCreateProfile,
+    launchProfile,
+    launchSearch,
+    launchProposalView,
+  } = useAppLauncher();
 
   return (
     <div className="absolute bottom-12 flex w-full flex-row justify-between px-16 sm:top-24 sm:left-10 sm:w-fit sm:flex-col  sm:justify-start sm:space-x-0 sm:space-y-8 sm:px-0">
       <div
-        onClick={openSearch()}
+        onClick={launchSearch}
         className="flex cursor-pointer flex-col items-center space-y-1"
       >
         <Image src="/desktop-icons/Computer.png" width={50} height={50} />
@@ -33,10 +31,10 @@ export function DesktopIcons() {
           <p className="font-mono">Workspace</p>
         </div>
       </a> */}
-      <button onClick={() => {}}>
+      <button onClick={isNewUser ? launchCreateProfile : launchProfile}>
         <div className="flex flex-col items-center space-y-1">
           <Image src="/desktop-icons/Suit.png" width={40} height={50} />
-          <p className="font-mono">Users</p>
+          <p className="font-mono">Profile</p>
         </div>
       </button>
       <button onClick={launchProposalView}>

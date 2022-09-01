@@ -52,7 +52,7 @@ export default function SignupModal() {
                     twitter,
                     email,
                   });
-                router.push("/me");
+                // router.push("/me");
               }}
             >
               Create Profile

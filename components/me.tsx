@@ -73,7 +73,7 @@ export default function MyProfile() {
       {!signedIn ? (
         <LoginView />
       ) : (
-        <div className="flex w-full flex-col items-center">
+        <div className="flex w-full flex-col items-center px-12">
           <MyProfileHeader
             user={user}
             tags={tags}
@@ -87,7 +87,7 @@ export default function MyProfile() {
             pfpUrl={pfpUrl}
             setPfpUrl={setPfpUrl}
           />
-          <div className="bg-base-100 text-base-content flex w-3/5 max-w-3xl flex-col items-center justify-center space-y-24 rounded-b-lg">
+          <div className="bg-base-100 text-base-content flex w-full flex-col items-center justify-center rounded-b-lg">
             {selectedView.name === "Activity" && (
               <ActivityView comments={sortedComments} />
             )}

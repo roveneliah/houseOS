@@ -13,6 +13,7 @@ export default function Home() {
   const openApp = useAppSelector((state) => state.windows.primaryApp);
   const width = useAppSelector((state) => state.windows.primaryAppWidth);
   const height = useAppSelector((state) => state.windows.primaryAppHeight);
+  const padding = useAppSelector((state) => state.windows.primaryAppPadding);
   const quit = () => dispatch(quitApp());
 
   return (
@@ -25,7 +26,12 @@ export default function Home() {
 
       {/* // TODO: this should be part of layout */}
       {openApp && (
-        <AppFrame width={width} height={height} onClose={quit}>
+        <AppFrame
+          width={width}
+          height={height}
+          onClose={quit}
+          padding={padding}
+        >
           {openApp}
         </AppFrame>
       )}

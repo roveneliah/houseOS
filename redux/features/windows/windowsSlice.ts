@@ -8,6 +8,7 @@ interface WindowsState {
   primaryApp: ReactNode;
   primaryAppWidth?: number;
   primaryAppHeight?: number;
+  primaryAppPadding: number;
 }
 
 const initialState: WindowsState = {
@@ -19,6 +20,7 @@ const initialState: WindowsState = {
   primaryApp: undefined,
   primaryAppWidth: undefined,
   primaryAppHeight: undefined,
+  primaryAppPadding: 0,
 };
 
 export const windowsSlice = createSlice({
@@ -41,6 +43,7 @@ export const windowsSlice = createSlice({
       state.primaryApp = payload.app;
       state.primaryAppWidth = payload.width;
       state.primaryAppHeight = payload.height;
+      state.primaryAppPadding = payload.padding;
     },
     quitApp: (state) => {
       state.primaryApp = null;

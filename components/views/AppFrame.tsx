@@ -6,6 +6,7 @@ interface Props {
   width?: number;
   height?: number;
   onClose?: (...args: Array<any>) => any;
+  padding: number;
 }
 
 export default function AppFrame({
@@ -13,6 +14,7 @@ export default function AppFrame({
   width = 60,
   height = 60,
   onClose = () => {},
+  padding = 0,
 }: Props) {
   // TODO: Make sure if REOPENING to not use a new component.  How to remove entirely?
   const [open, close] = useBoolean(true);
@@ -30,7 +32,9 @@ export default function AppFrame({
         />
         <div className="btn-circle btn-xs border-base-content rounded-full border-4" />
       </div>
-      <div className="h-full w-full">{children}</div>
+      <div className={`h-full w-full`}>
+        <div className={`p-${padding}`}>{children}</div>
+      </div>
     </div>
   ) : (
     <></>

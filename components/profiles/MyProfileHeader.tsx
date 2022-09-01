@@ -4,8 +4,8 @@ import { TagsList } from "../me";
 
 export function MyProfileHeader(props: any) {
   return (
-    <div className="bg-base-300 text-base-content flex w-full flex-row justify-center pt-36">
-      <div className="flex w-3/5 max-w-3xl flex-col items-start space-y-12">
+    <div className="bg-base-200 text-base-content flex w-full flex-row justify-center pt-12">
+      <div className="flex w-full flex-col items-start space-y-12">
         <div className="flex w-full flex-row items-center justify-between">
           <div className="flex w-full flex-col items-start justify-start space-y-4">
             <div className="flex w-full flex-row justify-start space-x-2 pr-6">
@@ -31,7 +31,7 @@ export function MyProfileHeader(props: any) {
                 className="border-b-2 bg-transparent text-left text-5xl font-semibold caret-current outline-none"
               />
             ) : (
-              <p className="-ml-2 w-10/12 p-2 pr-4 text-left text-6xl font-bold">
+              <p className="-ml-2 w-10/12 p-2 pr-4 text-left text-5xl font-bold">
                 {props.user?.name}
               </p>
             )}

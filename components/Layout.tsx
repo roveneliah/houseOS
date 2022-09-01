@@ -25,6 +25,7 @@ import { useCycler } from "../hooks/generic/useCycler";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./search/CommandPalette"));
 import { filterActive } from "@/types/Proposal";
+import NewUserFlow from "./NewUserFlow";
 
 interface Props {
   children?: ReactNode;
@@ -62,11 +63,13 @@ export default function Layout({
   // Redux hooks, window management
   const dispatch = useAppDispatch();
   const toggleSearch = () => dispatch(toggle({ windowName: "search" }));
+  const launchCreateProfile = () => dispatch(launch({ app: <SignupModal /> }));
   const searchOpen = useAppSelector((state) => state.windows.open.search);
 
   // TODO: should load a lot of this in via redux, and then get from app state
   const commands: Array<Command> = useGetCommands();
   const user = useGetUserProfile();
+  const newUserFlow = useIsNewUser();
   const path = usePath();
   const proposals = useGetProposals(snapshotSpace);
   const countActive = length(filterActive(proposals));
@@ -120,7 +123,7 @@ export default function Layout({
             </a>
           )}
           <div className="hidden flex-row items-center space-x-4 px-4 sm:flex">
-            {/* <>
+            <>
               {!signedIn ? (
                 !isConnected ? (
                   isReconnecting ? (
@@ -166,12 +169,12 @@ export default function Layout({
               ) : (
                 <button
                   onClick={launchCreateProfile}
-                  className="border-base-content rounded-md border px-3 py-1"
+                  className="border-base-content rounded-md border px-3 py-1 text-sm"
                 >
                   Create Profile
                 </button>
               )}
-            </> */}
+            </>
             <button className="hidden font-mono text-sm sm:flex">
               {date.toDateString()}
             </button>
