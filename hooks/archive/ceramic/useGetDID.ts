@@ -1,6 +1,6 @@
 import { useClient } from "@self.id/framework";
 import { useEffect, useState } from "react";
-import { EthereumAddress } from "../../types/EthereumAddress";
+import { EthereumAddress } from "../../../types/EthereumAddress";
 
 export const useGetDID = (address: EthereumAddress) => {
   const client = useClient();

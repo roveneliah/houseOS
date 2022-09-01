@@ -2,7 +2,7 @@ import { useSignIn } from "@/hooks/useSignIn";
 import { capitalize } from "@/utils/capitalize";
 import { useState } from "react";
 import { useUserAddress } from "../../../hooks/ethereum/useUserAddress";
-import { useGetAllProposalTags } from "../../../hooks/proposals/useGetAllProposalTags";
+import { useGetAllProposalTags } from "../../../hooks/proposals";
 import { useListenProposalTags } from "../../../hooks/tags/useListenProposalTags";
 import { Proposal, ProposalState } from "../../../types/Proposal";
 import TagListBox from "../../apps/Profile/TagListBox";

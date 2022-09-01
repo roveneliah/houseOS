@@ -1,9 +1,9 @@
-import { EthereumAddress } from "../../types/EthereumAddress";
+import { EthereumAddress } from "../../../types/EthereumAddress";
 import { useGetCeramicUser } from "./useGetCeramicUser";
-import { User } from "../../types/User";
+import { User } from "../../../types/User";
 import { useEffect, useState } from "react";
-import { Maybe } from "../../types/Maybe";
-import { recordToUser } from "../../utils/archive/ceramic/recordToUser";
+import { Maybe } from "../../../types/Maybe";
+import { recordToUser } from "../../../utils/archive/ceramic/recordToUser";
 
 export const useGetUser = (address: EthereumAddress): Maybe<User> => {
   const record = useGetCeramicUser(address);

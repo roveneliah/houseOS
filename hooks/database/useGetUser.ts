@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/app/hooks";
 import { EthereumAddress } from "../../types/EthereumAddress";
 import { User } from "../../types/User";
 import { listenUser } from "../../utils/firebase/user";
-import { useKrauseBalance } from "../ethereum/useKrauseBalance";
+import { useKrauseBalance } from "../ethereum";
 
 export const useGetUser = (address: EthereumAddress | undefined): any => {
   const [user, setUser] = useState<any>({ loading: true });

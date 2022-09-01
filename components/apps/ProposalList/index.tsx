@@ -6,7 +6,7 @@ import {
   Proposal,
   ProposalState,
 } from "../../../types/Proposal";
-import { useGetProposals } from "../../../hooks/snapshot/useGetProposals";
+import { useGetProposals } from "../../../hooks/snapshot";
 import { useMemo, useState } from "react";
 
 import dynamic from "next/dynamic";

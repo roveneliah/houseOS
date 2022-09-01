@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { EthereumAddress } from "../../types/EthereumAddress";
+import { EthereumAddress } from "../../../types/EthereumAddress";
 import {
   usePublicRecord,
   useClient as useCeramicClient,

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useAccount, useConnect, useSignMessage } from "wagmi";
 import { defaultAvatar, snapshotSpace } from "../../../config";
-import { useVote } from "../../../hooks/snapshot/useVote";
+import { useVote } from "../../../hooks/snapshot";
 import { postComment } from "../../../utils/firebase/post";
 import { useGetUserProfile } from "../../../hooks/users/useGetUserProfile";
 import { useListenUserTags } from "../../../hooks/database/useListenUserTags";

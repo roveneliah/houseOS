@@ -15,7 +15,7 @@ import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
 import { toggle } from "@/redux/features/windows/windowsSlice";
-import { useGetProposals } from "@/hooks/snapshot/useGetProposals";
+import { useGetProposals } from "@/hooks/snapshot";
 import { length } from "ramda";
 import { useCycler } from "../../hooks/generic/useCycler";
 const SearchIcon = dynamic(() => import("../icons/SearchIcon"));

@@ -1,4 +1,4 @@
-import { Proposal } from "../../types/Proposal";
+import { Proposal } from "../../../types/Proposal";
 
 /**
  * DEPRECATED: useGetProposalStats is deprecated and will be removed

@@ -1,5 +1,9 @@
 import { BasicProfile, ViewerRecord } from "@self.id/framework";
-import { addTags, removeTag, updateName } from "../../../hooks/ceramic/ceramic";
+import {
+  addTags,
+  removeTag,
+  updateName,
+} from "../../../hooks/archive/ceramic/ceramic";
 import { User } from "../../../types/User";
 import { Maybe } from "../../../types/Maybe";
 

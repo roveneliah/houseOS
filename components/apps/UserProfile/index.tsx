@@ -1,6 +1,6 @@
 import { dao } from "../../../config";
 import { useGetUserProfile } from "../../../hooks/users/useGetUserProfile";
-import { useKrauseBalance } from "../../../hooks/ethereum/useKrauseBalance";
+import { useKrauseBalance } from "../../../hooks/ethereum";
 import { useListenUserTags } from "../../../hooks/database/useListenUserTags";
 import { useUserAddress } from "../../../hooks/ethereum/useUserAddress";
 import { useMemo, useRef, useState } from "react";

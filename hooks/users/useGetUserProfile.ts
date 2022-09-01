@@ -14,14 +14,8 @@ import {
 import { recordToUser } from "../../utils/archive/ceramic/recordToUser";
 // import { updateName } from "../ceramic/ceramic";
 import { useGetUser } from "../database/useGetUser";
-import { useKrauseBalance } from "../ethereum/useKrauseBalance";
+import { useKrauseBalance } from "../ethereum";
 import { useSignIn } from "../useSignIn";
-
-// CERAMIC
-// export const useGetUserProfile = (): User => {
-//   const record = useViewerRecord("basicProfile");
-//   return recordToUser(record);
-// };
 
 export const useGetUserProfile = () => {
   const { data: account } = useAccount();
