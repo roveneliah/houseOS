@@ -1,7 +1,9 @@
-import ArrowRightIcon from "@/components/icons/ArrowIcon";
-import AtIcon from "@/components/icons/AtIcon";
-import LinkIcon from "@/components/icons/LinkIcon";
-import QuestionIcon from "@/components/icons/QuestionIcon";
+import {
+  QuestionIcon,
+  LinkIcon,
+  ArrowRightIcon,
+  AtIcon,
+} from "@/components/icons";
 import { CommandFilters } from "@/components/search/views";
 import { Command } from "@/types/Command";
 import { User } from "@/types/User";
