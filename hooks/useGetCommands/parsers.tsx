@@ -20,6 +20,7 @@ import {
 import { Proposal } from "@/types/Proposal";
 import Profile from "@/components/profiles/[address]";
 import { ChatIcon } from "@/components/icons/ChatIcon";
+import { snapshotSpace } from "@/config";
 
 const createLinkCommand = (o: any): Command => ({
   ...o,
