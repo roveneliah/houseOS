@@ -74,7 +74,7 @@ export default function Layout({
   const path = usePath();
   const proposals = useGetProposals(snapshotSpace);
   const countActive = length(filterActive(proposals));
-  const date = new Date();
+  // const date = new Date();
 
   return (
     <div data-theme={themeName} className="no-scrollbar min-h-screen font-mono">
@@ -176,9 +176,9 @@ export default function Layout({
                 </button>
               )}
             </>
-            <button className="hidden font-mono text-sm sm:flex">
+            {/* <button className="hidden font-mono text-sm sm:flex">
               {date.toDateString()}
-            </button>
+            </button> */}
 
             <button
               className={`group hidden flex-row space-x-2 border-black bg-transparent hover:bg-transparent sm:flex`}

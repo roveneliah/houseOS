@@ -35,7 +35,7 @@ const ProposalPage = ({ id }: { id: string }) => {
   useCommand("ArrowLeft", prev);
 
   return (
-    <div className="bg-base-200 w-full p-12">
+    <div className="bg-base-200 w-full">
       <div className="flex w-full flex-row justify-center">
         <div className="text-base-content flex w-full flex-col items-start space-y-10 px-12">
           <ProposalHeader proposal={proposal} />

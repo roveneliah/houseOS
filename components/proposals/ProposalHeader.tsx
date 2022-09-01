@@ -99,7 +99,7 @@ export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
             <TagsList tags={tags} disabled={true} max={3} />
           </div>
         </div>
-        <p className="text-left text-6xl font-semibold">{proposal.title}</p>
+        <p className="text-left text-4xl font-semibold">{proposal.title}</p>
         {signedIn && showTags && (
           <TagListBox tags={allTags} address={address} size={"sm"} />
         )}
