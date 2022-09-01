@@ -6,7 +6,7 @@ import {
 } from "../../hooks/generic/useCommand";
 import { Command } from "../../types/Command";
 import { Dialog, Combobox, Transition } from "@headlessui/react";
-import SearchIcon from "../icons/SearchIcon";
+
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { useAppDispatch } from "@/redux/app/hooks";
 import { close, launch, toggle } from "@/redux/features/windows/windowsSlice";
@@ -17,6 +17,7 @@ import { formatLinkCommand } from "./formatLinkCommand";
 import { pageview, event } from "@/utils/google-analytics";
 import { useFormText } from "../../hooks/generic/useFormText";
 import { useWindowManager } from "../../hooks/useWindowManager";
+import { SearchIcon } from "../icons";
 
 interface Props {
   commands: Array<Command>;
@@ -142,7 +143,7 @@ export default function CommandPalette({
               <div className="text-gray-800">
                 <SearchIcon />
               </div>
-              
+
               <Combobox.Input
                 className="w-full border-0 border-white bg-transparent py-2 px-2 text-sm text-gray-800 placeholder-gray-400 outline-none"
                 placeholder={"Search the DAO..."}

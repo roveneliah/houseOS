@@ -12,14 +12,14 @@ import { useSignIn } from "../hooks/useSignIn";
 import dynamic from "next/dynamic";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
-import TagIcon from "@/components/icons/TagIcon";
-import UsersIcon from "@/components/icons/UsersIcon";
 import { ChatIcon } from "@/components/icons/ChatIcon";
 import { useAppSelector } from "../redux/app/hooks";
 import { FollowingView } from "@/components/profiles/FollowingView";
 import { TagsView } from "@/components/profiles/TagsView";
 import { MyProfileHeader } from "./profiles/MyProfileHeader";
 import { ActivityView } from "./profiles/ActivityView";
+import { RootState } from "@/redux/app/store";
+import { TagIcon, UsersIcon } from "./icons";
 
 const Layout = dynamic(() => import("./Layout"));
 const LoginView = dynamic(() => import("./profiles/LoginView"));
@@ -66,7 +66,7 @@ export default function MyProfile() {
   const friends = user?.friends;
   const [pfpUrl, setPfpUrl] = usePFP(address);
 
-  const users = useAppSelector((state: any) => state.users);
+  const users = useAppSelector((state: RootState) => state.users);
 
   return (
     <div className="bg-base-200 h-full w-full">

@@ -1,10 +1,12 @@
-import ListIcon from "../icons/ListIcon";
-import LinkIcon from "../icons/LinkIcon";
-import { ChatIcon } from "../icons/ChatIcon";
-import UsersIcon from "../icons/UsersIcon";
-import QuestionIcon from "../icons/QuestionIcon";
-import GroupIcon from "../icons/GroupIcon";
 import { BuildingIcon } from "../icons/BuildingIcon";
+import {
+  ChatIcon,
+  GroupIcon,
+  LinkIcon,
+  ListIcon,
+  QuestionIcon,
+  UsersIcon,
+} from "../icons";
 
 export enum CommandFilters {
   ALL = "ALL",

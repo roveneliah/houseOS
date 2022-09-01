@@ -1,6 +1,6 @@
 import ProposalPage from "@/components/proposals/[id]";
 import { useAppDispatch } from "@/redux/app/hooks";
-import { launch, open } from "@/redux/features/windows/windowsSlice";
+import { launch, open, quitApp } from "@/redux/features/windows/windowsSlice";
 import MyProfile from "../components/me";
 import ProposalsListPage from "../components/proposals";
 import SignupModal from "../components/SignupModal";
@@ -14,5 +14,6 @@ export const useAppLauncher = () => {
     launchSearch: () => dispatch(open({ windowName: "search" })),
     launchProposal: (id: string) => () =>
       dispatch(launch({ app: <ProposalPage id={id} /> })),
+    quit: () => dispatch(quitApp()),
   };
 };

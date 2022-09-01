@@ -10,9 +10,6 @@ import { useGetProposals } from "../../hooks/snapshot/useGetProposals";
 import { useMemo, useState } from "react";
 
 import dynamic from "next/dynamic";
-import LockedIcon from "../icons/LockedIcon";
-import ClockIcon from "../icons/ClockIcon";
-import ListIcon from "../icons/ListIcon";
 
 const StatusFilterTabs = dynamic(() => import("./StatusFilterTabs"));
 const ProposalListItem = dynamic(() => import("./ProposalListItem"));
@@ -23,6 +20,7 @@ import { useSingleSelect } from "../../hooks/generic/useSingleSelect";
 import { proposalTags, snapshotSpace } from "../../config";
 import { useOnKeydown } from "../../hooks/generic/useOnKeydown";
 import { next, prev } from "@/hooks/generic/useCycler";
+import { ClockIcon, ListIcon, LockedIcon } from "../icons";
 
 export enum StateFilters {
   Active,

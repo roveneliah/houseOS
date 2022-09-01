@@ -3,18 +3,13 @@ import { intersection, prop } from "ramda";
 
 import { useListenProposalTags } from "../../hooks/tags/useListenProposalTags";
 
-const ProposalPage = dynamic(() => import("@/components/proposals/[id]"));
 const TagsList = dynamic(() => import("../profiles/TagsList"));
-import LockedIcon from "../icons/LockedIcon";
-import ClockIcon from "../icons/ClockIcon";
 
 import { Proposal } from "@/types/Proposal";
 import { Tag } from "@/types/Tag";
-
-import { useAppDispatch } from "@/redux/app/hooks";
-import { launch } from "@/redux/features/windows/windowsSlice";
 import { snapshotSpace } from "@/config";
 import { useAppLauncher } from "@/hooks/useAppLauncher";
+import { ClockIcon, LockedIcon } from "../icons";
 
 export interface Props {
   proposal: Proposal;

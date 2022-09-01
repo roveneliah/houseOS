@@ -15,14 +15,14 @@ import { Tag } from "@/types/Tag";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
 import { ChatIcon } from "@/components/icons/ChatIcon";
-import TagIcon from "@/components/icons/TagIcon";
-import UsersIcon from "@/components/icons/UsersIcon";
 import { useAppSelector } from "@/redux/app/hooks";
 import { useUserAddress } from "@/hooks/ethereum/useUserAddress";
 import { TagsView } from "@/components/profiles/TagsView";
 import { FollowingView } from "@/components/profiles/FollowingView";
 import { ProfileHeader } from "./ProfileHeader";
 import { ActivityView } from "./ActivityView";
+import { RootState } from "@/redux/app/store";
+import { TagIcon, UsersIcon } from "../icons";
 
 const LoadingView = dynamic(() => import("@/components/profiles/LoadingView"));
 export const TagsList = dynamic(() => import("@/components/profiles/TagsList"));
@@ -40,7 +40,7 @@ export default function Profile({
   const { data: ensName } = useEnsName({ address });
   const comments: Array<Comment> = useComments(address);
   const { hasProfile: signedIn } = useSignIn();
-  const users = useAppSelector((state: any) => state.users);
+  const users = useAppSelector((state: RootState) => state.users);
   const allTags = useGetAllUserTags(address);
 
   const {

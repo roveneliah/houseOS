@@ -6,10 +6,8 @@ import { useUserAddress } from "../../hooks/ethereum/useUserAddress";
 import { useGetAllProposalTags } from "../../hooks/proposals/useGetAllProposalTags";
 import { useListenProposalTags } from "../../hooks/tags/useListenProposalTags";
 import { Proposal, ProposalState } from "../../types/Proposal";
-import ClockIcon from "../icons/ClockIcon";
-import LinkIcon from "../icons/LinkIcon";
-import LockedIcon from "../icons/LockedIcon";
 import TagListBox from "../profiles/TagListBox";
+import { ClockIcon, LinkIcon, LockedIcon } from "../icons";
 
 export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
   const tags = useListenProposalTags(proposal.id);

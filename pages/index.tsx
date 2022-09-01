@@ -7,14 +7,23 @@ import { Footer } from "../components/Footer";
 import { DesktopIcons } from "../components/DesktopIcons";
 import ListFrame from "@/components/views/ListFrame";
 const Layout = dynamic(() => import("../components/Layout"));
+import { RootState } from "@/redux/app/store";
+import { useAppLauncher } from "@/hooks/useAppLauncher";
 
 export default function Home() {
-  const dispatch = useAppDispatch();
-  const openApp = useAppSelector((state) => state.windows.primaryApp);
-  const width = useAppSelector((state) => state.windows.primaryAppWidth);
-  const height = useAppSelector((state) => state.windows.primaryAppHeight);
-  const padding = useAppSelector((state) => state.windows.primaryAppPadding);
-  const quit = () => dispatch(quitApp());
+  const openApp = useAppSelector(
+    (state: RootState) => state.windows.primaryApp
+  );
+  const width = useAppSelector(
+    (state: RootState) => state.windows.primaryAppWidth
+  );
+  const height = useAppSelector(
+    (state: RootState) => state.windows.primaryAppHeight
+  );
+  const padding = useAppSelector(
+    (state: RootState) => state.windows.primaryAppPadding
+  );
+  const { quit } = useAppLauncher();
 
   return (
     <Layout fixedOpen={false} noOpacity={true}>

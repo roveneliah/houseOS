@@ -12,21 +12,17 @@ import dynamic from "next/dynamic";
 import { useSIWE } from "@/hooks/useSIWE";
 import { usePath } from "@/hooks/usePath";
 import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
-import SignupModal from "./SignupModal";
 import Image from "next/image";
-import AppFrame from "./views/AppFrame";
 import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
-import { close, launch, toggle } from "@/redux/features/windows/windowsSlice";
+import { toggle } from "@/redux/features/windows/windowsSlice";
 import { useGetProposals } from "@/hooks/snapshot/useGetProposals";
-import { compose, filter, length, prop, propEq } from "ramda";
-import { Proposal, ProposalState } from "@/types/Proposal";
-import XIcon from "./icons/XIcon";
+import { length } from "ramda";
 import { useCycler } from "../hooks/generic/useCycler";
 const SearchIcon = dynamic(() => import("./icons/SearchIcon"));
 const CommandPalette = dynamic(() => import("./search/CommandPalette"));
 import { filterActive } from "@/types/Proposal";
-import NewUserFlow from "./NewUserFlow";
 import { useAppLauncher } from "@/hooks/useAppLauncher";
+import { RootState } from "@/redux/app/store";
 
 interface Props {
   children?: ReactNode;
@@ -65,7 +61,9 @@ export default function Layout({
   const dispatch = useAppDispatch();
   const toggleSearch = () => dispatch(toggle({ windowName: "search" }));
   const { launchCreateProfile } = useAppLauncher();
-  const searchOpen = useAppSelector((state) => state.windows.open.search);
+  const searchOpen = useAppSelector(
+    (state: RootState) => state.windows.open.search
+  );
 
   // TODO: should load a lot of this in via redux, and then get from app state
   const commands: Array<Command> = useGetCommands();

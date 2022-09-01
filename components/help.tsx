@@ -1,5 +1,3 @@
-import ClockIcon from "@/components/icons/ClockIcon";
-import LockedIcon from "@/components/icons/LockedIcon";
 import { capitalize } from "@/utils/capitalize";
 import { dao, defaultAvatar, proposalTags } from "@/config";
 import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
@@ -10,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { prop } from "ramda";
 import { useState } from "react";
+import { ClockIcon, LockedIcon } from "./icons";
 const Layout = dynamic(() => import("./Layout"));
 
 const exampleTags: { tag: string }[] = [
