@@ -6,7 +6,7 @@ interface Props {
   width?: number;
   height?: number;
   onClose?: (...args: Array<any>) => any;
-  padding: number;
+  padding?: number;
 }
 
 export default function AppFrame({
