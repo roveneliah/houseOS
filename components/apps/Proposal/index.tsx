@@ -1,19 +1,19 @@
 import dynamic from "next/dynamic";
 import { ReactNode, useState } from "react";
 import type { NextPage } from "next";
-import { useGetComments } from "../../hooks/database/useGetComments";
-import { snapshotSpace } from "../../config";
-import { fetchProposal } from "../../utils/snapshot/fetchProposal";
-import { useCommand } from "../../hooks/generic/useCommand";
-import { Comment } from "../../types/Comment";
-import { Proposal } from "../../types/Proposal";
+import { useGetComments } from "../../../hooks/database/useGetComments";
+import { snapshotSpace } from "../../../config";
+import { fetchProposal } from "../../../utils/snapshot/fetchProposal";
+import { useCommand } from "../../../hooks/generic/useCommand";
+import { Comment } from "../../../types/Comment";
+import { Proposal } from "../../../types/Proposal";
 import createHook from "@/hooks/createHook";
-import CommentList from "./CommentList";
+import CommentList from "../ProposalList/CommentList";
 import { fetchProposals } from "@/utils/snapshot/fetchProposals";
-const Layout = dynamic(() => import("../Layout"));
-const ProposalHeader = dynamic(() => import("./ProposalHeader"));
-const ChoiceFilters = dynamic(() => import("./ChoiceFilters"));
-const CommentView = dynamic(() => import("./CommentView"));
+const Layout = dynamic(() => import("../../home/Layout"));
+const ProposalHeader = dynamic(() => import("../ProposalList/ProposalHeader"));
+const ChoiceFilters = dynamic(() => import("../ProposalList/ChoiceFilters"));
+const CommentView = dynamic(() => import("../ProposalList/CommentView"));
 
 enum View {
   Comment,

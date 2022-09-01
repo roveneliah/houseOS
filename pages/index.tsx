@@ -1,12 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
-import AppFrame from "@/components/views/AppFrame";
-import { quitApp, toggle } from "@/redux/features/windows/windowsSlice";
+import AppFrame from "@/components/layout/AppFrame";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Footer } from "../components/Footer";
-import { DesktopIcons } from "../components/DesktopIcons";
-import ListFrame from "@/components/views/ListFrame";
-const Layout = dynamic(() => import("../components/Layout"));
+import { Footer } from "../components/home/Footer";
+import { DesktopIcons } from "../components/home/DesktopIcons";
+const Layout = dynamic(() => import("../components/home/Layout"));
 import { RootState } from "@/redux/app/store";
 import { useAppLauncher } from "@/hooks/useAppLauncher";
 
@@ -44,14 +42,6 @@ export default function Home() {
           {openApp}
         </AppFrame>
       )}
-      {/* <ListFrame
-        title="test list"
-        list={[
-          { name: "a", onClick: () => console.log("a") },
-          { name: "b", description: "yolo" },
-          { name: "c" },
-        ]}
-      /> */}
     </Layout>
   );
 }

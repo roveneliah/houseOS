@@ -1,13 +1,13 @@
 import { useSignIn } from "@/hooks/useSignIn";
-import { TagsList } from "@/components/me";
 import { capitalize } from "@/utils/capitalize";
 import { useState } from "react";
-import { useUserAddress } from "../../hooks/ethereum/useUserAddress";
-import { useGetAllProposalTags } from "../../hooks/proposals/useGetAllProposalTags";
-import { useListenProposalTags } from "../../hooks/tags/useListenProposalTags";
-import { Proposal, ProposalState } from "../../types/Proposal";
-import TagListBox from "../profiles/TagListBox";
-import { ClockIcon, LinkIcon, LockedIcon } from "../icons";
+import { useUserAddress } from "../../../hooks/ethereum/useUserAddress";
+import { useGetAllProposalTags } from "../../../hooks/proposals/useGetAllProposalTags";
+import { useListenProposalTags } from "../../../hooks/tags/useListenProposalTags";
+import { Proposal, ProposalState } from "../../../types/Proposal";
+import TagListBox from "../../apps/Profile/TagListBox";
+import { ClockIcon, LinkIcon, LockedIcon } from "../../icons";
+import TagsList from "../Profile/TagsList";
 
 export default function ProposalHeader({ proposal }: { proposal: Proposal }) {
   const tags = useListenProposalTags(proposal.id);

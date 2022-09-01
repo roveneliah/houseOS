@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Proposal } from "../../types/Proposal";
-import { toPercent } from "../../utils/toPercent";
+import { Proposal } from "../../../types/Proposal";
+import { toPercent } from "../../../utils/toPercent";
 
 interface Props {
   proposal: Proposal;

@@ -37,6 +37,12 @@ const voteQuery = (proposalId: string, voter: EthereumAddress) => `query {
   }
 }`;
 
-export const fetchVote = async (proposalId: string, voter: EthereumAddress) => {
+export const fetchVote = async ({
+  proposalId,
+  voter,
+}: {
+  proposalId: string;
+  voter: EthereumAddress;
+}) => {
   return await query(voteQuery(proposalId, voter));
 };

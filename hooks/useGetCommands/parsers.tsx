@@ -18,7 +18,7 @@ import {
   where,
 } from "ramda";
 import { Proposal } from "@/types/Proposal";
-import Profile from "@/components/profiles/[address]";
+import Profile from "@/components/apps/Profile";
 import { ChatIcon } from "@/components/icons/ChatIcon";
 import { snapshotSpace } from "@/config";
 

@@ -8,9 +8,9 @@ import { useCommand } from "../hooks/generic/useCommand";
 import { useSignIn } from "../hooks/useSignIn";
 import { Maybe } from "../types/Maybe";
 import Image from "next/image";
-import TagsList from "./profiles/TagsList";
 import { concat, filter } from "ramda";
 import { ChatIcon, LinkIcon, UsersIcon } from "./icons";
+import TagsList from "./apps/Profile/TagsList";
 
 export default function NewUserFlow() {
   const [name, setName] = useState<Maybe<string>>();

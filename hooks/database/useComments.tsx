@@ -27,7 +27,10 @@ export const useComments = (
               const proposal = proposals.find(
                 (p: Proposal) => p.id === comment.proposalId
               );
-              const [vote] = await fetchVote(comment.proposalId, address);
+              const [vote] = await fetchVote({
+                proposalId: comment.proposalId,
+                voter: address,
+              });
               return {
                 author: comment.author,
                 body: comment.body,

@@ -1,4 +1,4 @@
-import { useAudioPlayer } from "../hooks/useAudioPlayer";
+import { useAudioPlayer } from "../../hooks/useAudioPlayer";
 
 export function AudioPlayer() {
   const { audioPlayer, playing, toggle, track } = useAudioPlayer();

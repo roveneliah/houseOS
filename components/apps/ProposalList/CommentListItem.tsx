@@ -1,7 +1,6 @@
 import { useUserAddress } from "@/hooks/ethereum/useUserAddress";
 import Image from "next/image";
-import { gt, lt, intersection, length, compose, prop } from "ramda";
-import TagsList from "../profiles/TagsList";
+import { intersection, length, prop } from "ramda";
 import { User } from "@/types/User";
 import { useListenUserTags } from "@/hooks/database/useListenUserTags";
 import { useGetUser } from "@/hooks/database/useGetUser";

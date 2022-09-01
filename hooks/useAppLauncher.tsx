@@ -1,8 +1,8 @@
-import ProposalPage from "@/components/proposals/[id]";
+import ProposalPage from "@/components/apps/Proposal";
 import { useAppDispatch } from "@/redux/app/hooks";
 import { launch, open, quitApp } from "@/redux/features/windows/windowsSlice";
-import MyProfile from "../components/me";
-import ProposalsListPage from "../components/proposals";
+import MyProfile from "../components/apps/UserProfile";
+import ProposalsListPage from "../components/apps/ProposalList";
 import SignupModal from "../components/SignupModal";
 
 export const useAppLauncher = () => {

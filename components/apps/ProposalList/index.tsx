@@ -5,22 +5,22 @@ import {
   isActive,
   Proposal,
   ProposalState,
-} from "../../types/Proposal";
-import { useGetProposals } from "../../hooks/snapshot/useGetProposals";
+} from "../../../types/Proposal";
+import { useGetProposals } from "../../../hooks/snapshot/useGetProposals";
 import { useMemo, useState } from "react";
 
 import dynamic from "next/dynamic";
 
 const StatusFilterTabs = dynamic(() => import("./StatusFilterTabs"));
 const ProposalListItem = dynamic(() => import("./ProposalListItem"));
-const Layout = dynamic(() => import("../Layout"));
-const TagSelector = dynamic(() => import("../tags/TagSelector"));
+const Layout = dynamic(() => import("../../home/Layout"));
+const TagSelector = dynamic(() => import("../../tags/TagSelector"));
 
-import { useSingleSelect } from "../../hooks/generic/useSingleSelect";
-import { proposalTags, snapshotSpace } from "../../config";
-import { useOnKeydown } from "../../hooks/generic/useOnKeydown";
+import { useSingleSelect } from "../../../hooks/generic/useSingleSelect";
+import { proposalTags, snapshotSpace } from "../../../config";
+import { useOnKeydown } from "../../../hooks/generic/useOnKeydown";
 import { next, prev } from "@/hooks/generic/useCycler";
-import { ClockIcon, ListIcon, LockedIcon } from "../icons";
+import { ClockIcon, ListIcon, LockedIcon } from "../../icons";
 
 export enum StateFilters {
   Active,

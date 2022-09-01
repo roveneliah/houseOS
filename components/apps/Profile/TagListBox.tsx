@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Tag } from "../../types/Tag";
+import { Tag } from "@/types/Tag";
 
 export default function TagListBox({
   address,

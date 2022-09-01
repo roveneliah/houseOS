@@ -1,5 +1,5 @@
+import { dao, defaultAvatar } from "@/config";
 import Image from "next/image";
-import { dao, defaultAvatar } from "../../config";
 import TagsList from "./TagsList";
 
 export function ProfileHeader(props: any) {

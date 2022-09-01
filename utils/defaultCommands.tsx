@@ -1,6 +1,6 @@
-import Help from "@/components/help";
-import MyProfile from "@/components/me";
-import ProposalsListPage from "@/components/proposals";
+import Help from "@/components/apps/help";
+import MyProfile from "@/components/apps/UserProfile";
+import ProposalsListPage from "@/components/apps/ProposalList";
 import { snapshotSpace, snapshotUrl } from "@/config";
 
 export default [

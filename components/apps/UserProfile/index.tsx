@@ -1,29 +1,27 @@
-import { dao } from "../config";
-import { useGetUserProfile } from "../hooks/users/useGetUserProfile";
-import { useKrauseBalance } from "../hooks/ethereum/useKrauseBalance";
-import { useListenUserTags } from "../hooks/database/useListenUserTags";
-import { useUserAddress } from "../hooks/ethereum/useUserAddress";
+import { dao } from "../../../config";
+import { useGetUserProfile } from "../../../hooks/users/useGetUserProfile";
+import { useKrauseBalance } from "../../../hooks/ethereum/useKrauseBalance";
+import { useListenUserTags } from "../../../hooks/database/useListenUserTags";
+import { useUserAddress } from "../../../hooks/ethereum/useUserAddress";
 import { useMemo, useRef, useState } from "react";
-import { useGetAllUserTags } from "../hooks/tags/useGetAllUserTags";
-import { useComments } from "../hooks/database/useComments";
-import { usePFP } from "../hooks/usePFP";
-import { useSignIn } from "../hooks/useSignIn";
+import { useGetAllUserTags } from "../../../hooks/tags/useGetAllUserTags";
+import { useComments } from "../../../hooks/database/useComments";
+import { usePFP } from "../../../hooks/database/usePFP";
+import { useSignIn } from "../../../hooks/useSignIn";
 
 import dynamic from "next/dynamic";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
 import { ChatIcon } from "@/components/icons/ChatIcon";
-import { useAppSelector } from "../redux/app/hooks";
-import { FollowingView } from "@/components/profiles/FollowingView";
-import { TagsView } from "@/components/profiles/TagsView";
-import { MyProfileHeader } from "./profiles/MyProfileHeader";
-import { ActivityView } from "./profiles/ActivityView";
+import { useAppSelector } from "../../../redux/app/hooks";
+import { FollowingView } from "@/components/apps/Profile/FollowingView";
+import { MyProfileHeader } from "../Profile/MyProfileHeader";
 import { RootState } from "@/redux/app/store";
-import { TagIcon, UsersIcon } from "./icons";
+import { TagIcon, UsersIcon } from "../../icons";
+import { ActivityView } from "../Profile/ActivityView";
+import { TagsView } from "../Profile/TagsView";
 
-const Layout = dynamic(() => import("./Layout"));
-const LoginView = dynamic(() => import("./profiles/LoginView"));
-export const TagsList = dynamic(() => import("./profiles/TagsList"));
+const LoginView = dynamic(() => import("../../apps/Profile/LoginView"));
 
 export default function MyProfile() {
   const user = useGetUserProfile(); // all this

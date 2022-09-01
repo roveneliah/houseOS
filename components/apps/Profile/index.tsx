@@ -1,13 +1,10 @@
-import { useAccount, useEnsName } from "wagmi";
-import Layout from "../Layout";
-import { useKrauseBalance } from "../../hooks/ethereum/useKrauseBalance";
-import { getUser, getUsers } from "../../utils/firebase/user";
-import { useListenUserTags } from "../../hooks/database/useListenUserTags";
-import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
+import { useEnsName } from "wagmi";
+import { useListenUserTags } from "../../../hooks/database/useListenUserTags";
+import { useGetUserProfile } from "../../../hooks/users/useGetUserProfile";
 import { useGetUser } from "@/hooks/database/useGetUser";
-import { Comment } from "../../types/Comment";
-import { useComments } from "../../hooks/database/useComments";
-import { useGetAllUserTags } from "../../hooks/tags/useGetAllUserTags";
+import { Comment } from "../../../types/Comment";
+import { useComments } from "../../../hooks/database/useComments";
+import { useGetAllUserTags } from "../../../hooks/tags/useGetAllUserTags";
 
 import dynamic from "next/dynamic";
 import { useSignIn } from "@/hooks/useSignIn";
@@ -17,15 +14,17 @@ import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
 import { ChatIcon } from "@/components/icons/ChatIcon";
 import { useAppSelector } from "@/redux/app/hooks";
 import { useUserAddress } from "@/hooks/ethereum/useUserAddress";
-import { TagsView } from "@/components/profiles/TagsView";
-import { FollowingView } from "@/components/profiles/FollowingView";
-import { ProfileHeader } from "./ProfileHeader";
-import { ActivityView } from "./ActivityView";
-import { RootState } from "@/redux/app/store";
-import { TagIcon, UsersIcon } from "../icons";
+import { FollowingView } from "@/components/apps/Profile/FollowingView";
 
-const LoadingView = dynamic(() => import("@/components/profiles/LoadingView"));
-export const TagsList = dynamic(() => import("@/components/profiles/TagsList"));
+import { RootState } from "@/redux/app/store";
+import { TagIcon, UsersIcon } from "../../icons";
+import { ActivityView } from "./ActivityView";
+import { TagsView } from "./TagsView";
+import { ProfileHeader } from "./ProfileHeader";
+
+const LoadingView = dynamic(
+  () => import("@/components/apps/Profile/LoadingView")
+);
 
 export default function Profile({
   address: userAddress,

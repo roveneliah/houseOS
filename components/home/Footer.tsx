@@ -1,4 +1,4 @@
-import { AudioPlayer } from "./AudioPlayer";
+import { AudioPlayer } from "../playground/AudioPlayer";
 
 export function Footer({ audio = false }) {
   return (

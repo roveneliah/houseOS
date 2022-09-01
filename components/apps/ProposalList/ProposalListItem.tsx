@@ -1,15 +1,15 @@
 import dynamic from "next/dynamic";
 import { intersection, prop } from "ramda";
 
-import { useListenProposalTags } from "../../hooks/tags/useListenProposalTags";
+import { useListenProposalTags } from "../../../hooks/tags/useListenProposalTags";
 
-const TagsList = dynamic(() => import("../profiles/TagsList"));
+const TagsList = dynamic(() => import("../../apps/Profile/TagsList"));
 
 import { Proposal } from "@/types/Proposal";
 import { Tag } from "@/types/Tag";
 import { snapshotSpace } from "@/config";
 import { useAppLauncher } from "@/hooks/useAppLauncher";
-import { ClockIcon, LockedIcon } from "../icons";
+import { ClockIcon, LockedIcon } from "../../icons";
 
 export interface Props {
   proposal: Proposal;

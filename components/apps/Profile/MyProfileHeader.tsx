@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { defaultAvatar } from "../../config";
-import { TagsList } from "../me";
+import { defaultAvatar } from "../../../config";
+import TagsList from "./TagsList";
 
 export function MyProfileHeader(props: any) {
   return (

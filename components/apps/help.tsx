@@ -3,13 +3,11 @@ import { dao, defaultAvatar, proposalTags } from "@/config";
 import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { Proposal, ProposalState } from "@/types/Proposal";
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { prop } from "ramda";
 import { useState } from "react";
-import { ClockIcon, LockedIcon } from "./icons";
-const Layout = dynamic(() => import("./Layout"));
+import { ClockIcon, LockedIcon } from "../icons";
 
 const exampleTags: { tag: string }[] = [
   "Good Person",

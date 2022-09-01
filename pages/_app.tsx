@@ -1,7 +1,9 @@
 import dynamic from "next/dynamic";
 import "../styles/globals.css";
 import type { AppProps, NextWebVitalsMetric } from "next/app";
-const Web3Provider = dynamic(() => import("../components/Web3Provider"));
+const Web3Provider = dynamic(
+  () => import("../components/providers/Web3Provider")
+);
 import { store } from "../redux/app/store";
 import { Provider as ReduxProvider } from "react-redux";
 import Script from "next/script";

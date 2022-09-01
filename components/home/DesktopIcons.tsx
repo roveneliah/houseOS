@@ -1,8 +1,8 @@
 import { snapshotSpace, snapshotUrl } from "@/config";
 import { useIsNewUser } from "@/hooks/useIsNewUser";
 import Image from "next/image";
-import Help from "./help";
-import { useAppLauncher } from "../hooks/useAppLauncher";
+import Help from "../apps/help";
+import { useAppLauncher } from "../../hooks/useAppLauncher";
 
 export function DesktopIcons() {
   const isNewUser = useIsNewUser();

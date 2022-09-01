@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { EthereumAddress } from "../../types/EthereumAddress";
-import { dao, defaultAvatar } from "../../config";
-import { useGetUser } from "../../hooks/database/useGetUser";
-import { useListenUserTags } from "../../hooks/database/useListenUserTags";
+import { EthereumAddress } from "@/types/EthereumAddress";
 import { useEffect, useState } from "react";
+import { useListenUserTags } from "@/hooks/database/useListenUserTags";
+import { useGetUser } from "@/hooks/database/useGetUser";
+import { defaultAvatar } from "@/config";
 
 export default function ProfilePreview({
   address,

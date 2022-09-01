@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { EthereumAddress } from "../../types/EthereumAddress";
+import { EthereumAddress } from "@/types/EthereumAddress";
 
 const ProfilePreview = dynamic(() => import("./ProfilePreview"));
 

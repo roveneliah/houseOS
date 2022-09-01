@@ -5,7 +5,7 @@ import { Proposal } from "@snapshot-labs/snapshot.js/dist/sign/types";
 import dynamic from "next/dynamic";
 import { map } from "ramda";
 import { userTags } from "@/config";
-import TagSelector from "../tags/TagSelector";
+import TagSelector from "../../tags/TagSelector";
 const CommentListItem = dynamic(() => import("./CommentListItem"));
 
 interface Props {
