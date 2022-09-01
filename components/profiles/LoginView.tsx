@@ -2,8 +2,8 @@ import { dao } from "@/config";
 
 export default function LoginView() {
   return (
-    <div className="flex w-full flex-row justify-center px-72 pt-36">
-      <div className="bg-base-100 text-base-content flex w-[30vw] flex-col space-y-6 rounded-lg p-8">
+    <div className="flex w-full flex-row justify-center pt-36">
+      <div className="bg-base-100 text-base-content flex w-[50vw] flex-col space-y-6 rounded-lg p-8">
         <p className="text-2xl font-bold">
           Please log in to view your profile.
         </p>
