@@ -2,7 +2,7 @@ import { tagUser, untagUser } from "../../utils/firebase/user";
 import { EthereumAddress } from "../../types/EthereumAddress";
 import { useGetUserProfile } from "../users/useGetUserProfile";
 import { useEffect, useState } from "react";
-import { useSignIn } from "../useSignIn";
+import { useSignIn } from "../sign-in/useSignIn";
 
 // TODO: merge into one hook that returns both functions (tag, untag, toggle) from user
 export const useTagUser = () => {

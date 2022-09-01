@@ -4,10 +4,10 @@ import { useKrauseBalance } from "../../../hooks/ethereum";
 import { useListenUserTags } from "../../../hooks/database/useListenUserTags";
 import { useUserAddress } from "../../../hooks/ethereum/useUserAddress";
 import { useMemo, useRef, useState } from "react";
-import { useGetAllUserTags } from "../../../hooks/tags/useGetAllUserTags";
+import { useGetAllUserTags } from "../../../hooks/database/tags/useGetAllUserTags";
 import { useComments } from "../../../hooks/database/useComments";
 import { usePFP } from "../../../hooks/database/usePFP";
-import { useSignIn } from "../../../hooks/useSignIn";
+import { useSignIn } from "../../../hooks/sign-in/useSignIn";
 
 import dynamic from "next/dynamic";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";

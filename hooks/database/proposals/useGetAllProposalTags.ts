@@ -1,8 +1,8 @@
-import { proposalTags } from "../../config";
+import { proposalTags } from "../../../config";
 
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
-import { listenProposalTags } from "../../utils/firebase/post";
+import { listenProposalTags } from "../../../utils/firebase/post";
 import { useTagProposal } from "../tags/useTagProposal";
 import { useUntagProposal } from "../tags/useUntagProposal";
 

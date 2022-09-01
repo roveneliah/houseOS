@@ -5,7 +5,7 @@ import {
   signInWithCustomToken,
   signOut as signOutFirebase,
 } from "firebase/auth";
-import { Maybe } from "../types/Maybe";
+import { Maybe } from "../../types/Maybe";
 
 export const useFirebase = () => {
   // TODO: init value should be the result of the api call...

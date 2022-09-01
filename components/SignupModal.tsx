@@ -3,7 +3,7 @@ import { dao, defaultAvatar, userTags } from "../config";
 import { createUser } from "../utils/firebase/user";
 import { useUserAddress } from "../hooks/ethereum/useUserAddress";
 import { useRouter } from "next/router";
-import { useSignIn } from "../hooks/useSignIn";
+import { useSignIn } from "../hooks/sign-in/useSignIn";
 import { Maybe } from "../types/Maybe";
 import { concat, filter, mergeRight } from "ramda";
 

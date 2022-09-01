@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAccount, useNetwork, useSignMessage } from "wagmi";
 import { SiweMessage } from "siwe";
-import { useGetUserProfile } from "./users/useGetUserProfile";
+import { useGetUserProfile } from "../users/useGetUserProfile";
 
 export const useSIWE = () => {
   const user = useGetUserProfile();

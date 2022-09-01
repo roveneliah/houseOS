@@ -4,7 +4,7 @@ import {
   ArrowRightIcon,
   AtIcon,
 } from "@/components/icons";
-import { CommandFilters } from "@/components/search/views";
+import { CommandFilters } from "@/config/search/views";
 import { Command } from "@/types/Command";
 import { User } from "@/types/User";
 import {

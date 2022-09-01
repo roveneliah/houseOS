@@ -1,5 +1,5 @@
-import { useAppDispatch } from "../redux/app/hooks";
-import { track as trackAddress } from "../redux/features/users/usersSlice";
+import { useAppDispatch } from "../../redux/app/hooks";
+import { track as trackAddress } from "../../redux/features/users/usersSlice";
 import { EthereumAddress } from "@/types/EthereumAddress";
 import { listenUser } from "@/utils/firebase/user";
 import { compose } from "ramda";

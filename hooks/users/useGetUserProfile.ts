@@ -11,11 +11,10 @@ import {
   updateName,
   setProfilePic,
 } from "../../utils/firebase/user";
-import { recordToUser } from "../../utils/archive/ceramic/recordToUser";
 // import { updateName } from "../ceramic/ceramic";
 import { useGetUser } from "../database/useGetUser";
 import { useKrauseBalance } from "../ethereum";
-import { useSignIn } from "../useSignIn";
+import { useSignIn } from "../sign-in/useSignIn";
 
 export const useGetUserProfile = () => {
   const { data: account } = useAccount();

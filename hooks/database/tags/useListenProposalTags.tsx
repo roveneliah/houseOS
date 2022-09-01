@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
-import { listenProposalTags } from "../../utils/firebase/post";
-import { useSignIn } from "../useSignIn";
+import { listenProposalTags } from "../../../utils/firebase/post";
+import { useSignIn } from "../../sign-in/useSignIn";
 import { useTagProposal } from "./useTagProposal";
 import { useUntagProposal } from "./useUntagProposal";
 

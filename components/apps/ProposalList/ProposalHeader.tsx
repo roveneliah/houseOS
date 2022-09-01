@@ -1,9 +1,9 @@
-import { useSignIn } from "@/hooks/useSignIn";
+import { useSignIn } from "@/hooks/sign-in/useSignIn";
 import { capitalize } from "@/utils/capitalize";
 import { useState } from "react";
 import { useUserAddress } from "../../../hooks/ethereum/useUserAddress";
-import { useGetAllProposalTags } from "../../../hooks/proposals";
-import { useListenProposalTags } from "../../../hooks/tags/useListenProposalTags";
+import { useGetAllProposalTags } from "../../../hooks/database/proposals";
+import { useListenProposalTags } from "../../../hooks/database/tags/useListenProposalTags";
 import { Proposal, ProposalState } from "../../../types/Proposal";
 import TagListBox from "../../apps/Profile/TagListBox";
 import { ClockIcon, LinkIcon, LockedIcon } from "../../icons";

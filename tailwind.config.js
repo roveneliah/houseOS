@@ -1,4 +1,4 @@
-const { themes } = require("./config.js");
+const { themes } = require("./config");
 
 module.exports = {
   content: [

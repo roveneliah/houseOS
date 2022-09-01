@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { intersection, prop } from "ramda";
 
-import { useListenProposalTags } from "../../../hooks/tags/useListenProposalTags";
+import { useListenProposalTags } from "../../../hooks/database/tags/useListenProposalTags";
 
 const TagsList = dynamic(() => import("../../apps/Profile/TagsList"));
 

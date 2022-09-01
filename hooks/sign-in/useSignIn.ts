@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useFirebase } from "./useFirebase";
-import { useIsNewUser } from "./useIsNewUser";
+import { useFirebase } from "./useFirebaseAuth";
+import { useIsNewUser } from "../useIsNewUser";
 import { useSIWE } from "./useSIWE";
 
 export const useSignIn = () => {

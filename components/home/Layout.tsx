@@ -6,10 +6,9 @@ import { Command } from "../../types/Command";
 import { useConnect, useDisconnect, useEnsName } from "wagmi";
 import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
 import { useUserAddress } from "../../hooks/ethereum/useUserAddress";
-import { useSignIn } from "../../hooks/useSignIn";
+import { useSignIn } from "../../hooks/sign-in/useSignIn";
 import { useIsNewUser } from "../../hooks/useIsNewUser";
 import dynamic from "next/dynamic";
-import { useSIWE } from "@/hooks/useSIWE";
 import { usePath } from "@/hooks/usePath";
 import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
 import Image from "next/image";
@@ -23,6 +22,7 @@ const CommandPalette = dynamic(() => import("../search/CommandPalette"));
 import { filterActive } from "@/types/Proposal";
 import { useAppLauncher } from "@/hooks/useAppLauncher";
 import { RootState } from "@/redux/app/store";
+import { useSIWE } from "@/hooks/sign-in/useSIWE";
 
 interface Props {
   children?: ReactNode;

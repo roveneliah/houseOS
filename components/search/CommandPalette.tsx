@@ -12,7 +12,7 @@ import { useAppDispatch } from "@/redux/app/hooks";
 import { close, launch, toggle } from "@/redux/features/windows/windowsSlice";
 import { any, anyPass } from "ramda";
 import { contains } from "../../utils/contains";
-import { CommandFilters, views } from "./views";
+import { CommandFilters, views } from "../../config/search/views";
 import { formatLinkCommand } from "./formatLinkCommand";
 import { pageview, event } from "@/utils/google-analytics";
 import { useFormText } from "../../hooks/generic/useFormText";

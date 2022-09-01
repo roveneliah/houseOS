@@ -4,10 +4,10 @@ import { useGetUserProfile } from "../../../hooks/users/useGetUserProfile";
 import { useGetUser } from "@/hooks/database/useGetUser";
 import { Comment } from "../../../types/Comment";
 import { useComments } from "../../../hooks/database/useComments";
-import { useGetAllUserTags } from "../../../hooks/tags/useGetAllUserTags";
+import { useGetAllUserTags } from "../../../hooks/database/tags/useGetAllUserTags";
 
 import dynamic from "next/dynamic";
-import { useSignIn } from "@/hooks/useSignIn";
+import { useSignIn } from "@/hooks/sign-in/useSignIn";
 import { Tag } from "@/types/Tag";
 import { useSingleSelect } from "@/hooks/generic/useSingleSelect";
 import { useOnKeydown } from "@/hooks/generic/useOnKeydown";

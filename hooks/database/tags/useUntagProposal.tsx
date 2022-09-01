@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { EthereumAddress } from "../../types/EthereumAddress";
-import { untagProposal } from "../../utils/firebase/post";
-import { useGetUserProfile } from "../users/useGetUserProfile";
+import { EthereumAddress } from "../../../types/EthereumAddress";
+import { untagProposal } from "../../../utils/firebase/post";
+import { useGetUserProfile } from "../../users/useGetUserProfile";
 
 export const useUntagProposal = () => {
   const user = useGetUserProfile();

@@ -1,4 +1,4 @@
-import { BuildingIcon } from "../icons/BuildingIcon";
+import { BuildingIcon } from "../../components/icons/BuildingIcon";
 import {
   ChatIcon,
   GroupIcon,
@@ -6,7 +6,7 @@ import {
   ListIcon,
   QuestionIcon,
   UsersIcon,
-} from "../icons";
+} from "../../components/icons";
 
 export enum CommandFilters {
   ALL = "ALL",

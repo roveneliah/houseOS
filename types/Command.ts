@@ -1,4 +1,4 @@
-import { CommandFilters } from "@/components/search/views";
+import { CommandFilters } from "@/config/search/views";
 import { ReactNode } from "react";
 
 export interface Command {

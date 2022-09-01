@@ -6,7 +6,7 @@ import { useVote } from "../../../hooks/snapshot";
 import { postComment } from "../../../utils/firebase/post";
 import { useGetUserProfile } from "../../../hooks/users/useGetUserProfile";
 import { useListenUserTags } from "../../../hooks/database/useListenUserTags";
-import { useSignIn } from "@/hooks/useSignIn";
+import { useSignIn } from "@/hooks/sign-in/useSignIn";
 
 interface Homie {
   name: String;
