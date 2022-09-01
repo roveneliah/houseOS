@@ -69,7 +69,7 @@ export default function MyProfile() {
   const users = useAppSelector((state: any) => state.users);
 
   return (
-    <Layout>
+    <div className="bg-base-200 h-full w-full">
       {!signedIn ? (
         <LoginView />
       ) : (
@@ -106,6 +106,6 @@ export default function MyProfile() {
           </div>
         </div>
       )}
-    </Layout>
+    </div>
   );
 }

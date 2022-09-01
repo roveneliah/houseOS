@@ -33,7 +33,7 @@ export default function AppFrame({
         <div className="btn-circle btn-xs border-base-content rounded-full border-4" />
       </div>
       <div className={`h-full w-full`}>
-        <div className={`p-${padding}`}>{children}</div>
+        <div className={`h-full w-full p-${padding}`}>{children}</div>
       </div>
     </div>
   ) : (
