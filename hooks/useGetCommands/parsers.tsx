@@ -58,12 +58,12 @@ const categorySocial = where({
 export const parseSocial = (commands: any): Command =>
   defaultTo([])(commands?.links?.filter(categorySocial).map(createSocialLink));
 
-const createQuestionLink = (o: any): Command => ({
+export const createQuestionLink = (o: any): Command => ({
   ...o,
   type: CommandFilters.QUESTIONS,
   icon: QuestionIcon,
 });
-const categoryQuestion = where({ type: equals("QUESTION") });
+export const categoryQuestion = where({ type: equals("QUESTION") });
 export const parseQuestions = (commands: any) =>
   defaultTo([])(
     commands?.links?.filter(categoryQuestion).map(createQuestionLink)

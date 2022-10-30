@@ -55,7 +55,7 @@ export default function CommandPalette({
   const queryMatch = contains(query);
   const keywordMatch = any(contains(query));
   const queryHit = (option: any) =>
-    noInput || queryMatch(option.name) || keywordMatch(option.keywords || []);
+    noInput || queryMatch(option.name || "") || keywordMatch(option.keywords || []);
 
   // TODO: find ramda fn for this kind of "fallback" login
   const commandTypeMatches = ({ type }: { type: CommandFilters }) =>
@@ -71,7 +71,7 @@ export default function CommandPalette({
   const show = fixedOpen || isOpen;
 
   return (
-    <Transition.Root show={show} as={Fragment} afterLeave={clear}>
+    <Transition.Root show={show} as={Fragment} afterLeave={() => { clear(); closeSearch(); }}>
       <Dialog
         open={show}
         onClose={closeSearch}
@@ -149,7 +149,6 @@ export default function CommandPalette({
                 placeholder={"Search the DAO..."}
                 displayValue={() => query}
                 autoComplete="false"
-                autoFocus={true}
                 onChange={updateQuery}
               />
             </div>

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { dao, snapshotSpace, snapshotUrl, themes } from "../../config";
 import { useGetCommands } from "../../hooks/useGetCommands";
 import { Command } from "../../types/Command";
@@ -72,7 +72,7 @@ export default function Layout({
   const path = usePath();
   const proposals = useGetProposals(snapshotSpace);
   const countActive = length(filterActive(proposals));
-  // const date = new Date();
+  const date = new Date();
 
   return (
     <div data-theme={themeName} className="no-scrollbar min-h-screen font-mono">
@@ -122,7 +122,7 @@ export default function Layout({
             </a>
           )}
           <div className="hidden flex-row items-center space-x-4 px-4 sm:flex">
-            <>
+            {/* <>
               {!signedIn ? (
                 !isConnected ? (
                   isReconnecting ? (
@@ -173,19 +173,19 @@ export default function Layout({
                   Create Profile
                 </button>
               )}
-            </>
-            {/* <button className="hidden font-mono text-sm sm:flex">
+            </> */}
+            <button className="hidden font-mono text-sm sm:flex px-1">
               {date.toDateString()}
-            </button> */}
+            </button>
 
-            <button
+            {/* <button
               className={`group hidden flex-row space-x-2 border-black bg-transparent hover:bg-transparent sm:flex`}
               onClick={!searchOpen ? toggleSearch : () => {}}
             >
               <div className={`rounded-md pr-2  pl-3 pb-1 pt-2`}>
                 <SearchIcon />
               </div>
-            </button>
+            </button> */}
           </div>
         </div>
         {children}

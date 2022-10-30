@@ -4,7 +4,7 @@ import { useGetUsers } from "@/hooks/database/useGetUsers";
 import { commands, dao, snapshotSpace } from "@/config";
 import defaultCommands from "@/utils/defaultCommands";
 import { prioritize } from "@/utils/prioritize";
-import { propEq } from "ramda";
+import { map, propEq } from "ramda";
 import { concatAll } from "../../utils/concatAll";
 
 import {
@@ -13,6 +13,8 @@ import {
   parseSocial,
   parseQuestions,
   parseDefaults,
+  createQuestionLink,
+  categoryQuestion,
 } from "./parsers";
 import { QuestionIcon } from "@/components/icons";
 
@@ -23,13 +25,13 @@ export const useGetCommands = (): Array<Command> => {
   // const userCommands = users?.map(createUserCommand) || [];
 
   const prioritizeQuestions = prioritize(propEq("icon", QuestionIcon));
+  const parseQuestions = (command: Command) => categoryQuestion(command) ? createQuestionLink(command) : command
   return prioritizeQuestions(
     concatAll(
       parseDefaults(defaultCommands),
       parseLinks(commands),
       parseSocial(commands),
       parseDAOCommands(commands),
-      parseQuestions(commands)
-    )
+    ).map(parseQuestions)
   );
 };

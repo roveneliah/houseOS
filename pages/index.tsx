@@ -3,10 +3,10 @@ import AppFrame from "@/components/layout/AppFrame";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Footer } from "../components/home/Footer";
-import { DesktopIcons } from "../components/home/DesktopIcons";
 const Layout = dynamic(() => import("../components/home/Layout"));
 import { RootState } from "@/redux/app/store";
 import { useAppLauncher } from "@/hooks/useAppLauncher";
+import { DesktopIconsBasic } from "@/components/home/DesktopIconsBasic";
 
 export default function Home() {
   const openApp = useAppSelector(
@@ -24,11 +24,11 @@ export default function Home() {
   const { quit } = useAppLauncher();
 
   return (
-    <Layout fixedOpen={false} noOpacity={true}>
+    <Layout fixedOpen={true} noOpacity={true}>
       <div className="absolute z-auto -mt-12 flex h-full flex-col justify-center font-mono">
         <Image src="/LogoGlobe.svg" width={6000} height={6000} />
       </div>
-      <DesktopIcons />
+      <DesktopIconsBasic />
       <Footer />
 
       {/* // TODO: this should be part of layout */}
