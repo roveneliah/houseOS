@@ -49,6 +49,42 @@ interface Props {
   noOpacity?: boolean;
 }
 
+// Create a single provider instance
+const provider = new ethers.providers.InfuraProvider(
+  "mainnet",
+  process.env.NEXT_PUBLIC_INFURA_KEY
+);
+
+// Simple cache implementation
+const cache = new Map<string, { value: string; timestamp: number }>();
+const CACHE_DURATION = 60000; // 1 minute in milliseconds
+
+const fetchWithCache = async (key: string, fetchFn: () => Promise<string>) => {
+  const now = Date.now();
+  const cached = cache.get(key);
+  if (cached && now - cached.timestamp < CACHE_DURATION) {
+    return cached.value;
+  }
+  const value = await fetchFn();
+  cache.set(key, { value, timestamp: now });
+  return value;
+};
+
+const retryFetch = async (
+  fetchFn: () => Promise<string>,
+  retries = 3
+): Promise<string> => {
+  try {
+    return await fetchFn();
+  } catch (error) {
+    if (retries > 0) {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second before retrying
+      return retryFetch(fetchFn, retries - 1);
+    }
+    throw error;
+  }
+};
+
 export default function Layout({
   children,
   noOpacity = false,
@@ -109,80 +145,90 @@ export default function Layout({
 
   useEffect(() => {
     const fetchBalances = async () => {
+      console.log("fetchBalances");
       if (address) {
-        const provider = new ethers.providers.InfuraProvider(
-          "mainnet",
-          process.env.NEXT_PUBLIC_INFURA_KEY
-        );
-
-        // Fetch ERC20 balance
         const erc20Abi = ["function balanceOf(address) view returns (uint256)"];
+        const erc721Abi = [
+          "function balanceOf(address) view returns (uint256)",
+        ];
+
         const krauseContract = new ethers.Contract(
           KRAUSE_TOKEN_ADDRESS,
           erc20Abi,
           provider
         );
-        const krauseBalanceWei = await krauseContract.balanceOf(address);
-        setKrauseBalance(
-          parseFloat(ethers.utils.formatEther(krauseBalanceWei)).toFixed(2)
-        );
-
-        // Fetch NFT balance
-        const erc721Abi = [
-          "function balanceOf(address) view returns (uint256)",
-        ];
         const nftContract = new ethers.Contract(
           NFT_TICKET_ADDRESS,
           erc721Abi,
           provider
         );
-        const nftBalanceWei = await nftContract.balanceOf(address);
-        setNftBalance(nftBalanceWei.toString());
-
         const krauseCourtPiecesContract = new ethers.Contract(
           KRAUSE_COURT_PIECES_ADDRESS,
           erc721Abi,
           provider
         );
-        const krauseCourtPiecesBalanceWei =
-          await krauseCourtPiecesContract.balanceOf(address);
-        setKrauseCourtPiecesBalance(krauseCourtPiecesBalanceWei.toString());
-
-        // Fetch treasury balances
-        const treasuryEthBalanceWei = await provider.getBalance(
-          KRAUSEHOUSE_ETH_ADDRESS
-        );
-        setTreasuryEthBalance(
-          parseFloat(ethers.utils.formatEther(treasuryEthBalanceWei)).toFixed(2)
-        );
-
-        const treasuryKrauseBalanceWei = await krauseContract.balanceOf(
-          KRAUSEHOUSE_ETH_ADDRESS
-        );
-        setTreasuryKrauseBalance(
-          parseFloat(
-            ethers.utils.formatEther(treasuryKrauseBalanceWei)
-          ).toFixed(2)
-        );
-
         const seedContract = new ethers.Contract(
           SEED_TOKEN_ADDRESS,
           erc20Abi,
           provider
         );
-        const treasurySeedBalanceWei = await seedContract.balanceOf(
-          KRAUSEHOUSE_ETH_ADDRESS
-        );
-        setTreasurySeedBalance(
-          parseFloat(ethers.utils.formatEther(treasurySeedBalanceWei)).toFixed(
-            2
-          )
-        );
 
-        const treasuryNftBalanceWei = await nftContract.balanceOf(
-          KRAUSEHOUSE_ETH_ADDRESS
-        );
-        setTreasuryNftBalance(treasuryNftBalanceWei.toString());
+        try {
+          const [
+            krauseBalance,
+            nftBalance,
+            krauseCourtPiecesBalance,
+            treasuryEthBalance,
+            treasuryKrauseBalance,
+            treasurySeedBalance,
+            treasuryNftBalance,
+          ] = await Promise.all([
+            fetchWithCache(`krause-${address}`, () =>
+              retryFetch(() => krauseContract.balanceOf(address))
+            ),
+            fetchWithCache(`nft-${address}`, () =>
+              retryFetch(() => nftContract.balanceOf(address))
+            ),
+            fetchWithCache(`krauseCourt-${address}`, () =>
+              retryFetch(() => krauseCourtPiecesContract.balanceOf(address))
+            ),
+            fetchWithCache(`eth-${KRAUSEHOUSE_ETH_ADDRESS}`, () =>
+              retryFetch(() => provider.getBalance(KRAUSEHOUSE_ETH_ADDRESS))
+            ),
+            fetchWithCache(`krause-${KRAUSEHOUSE_ETH_ADDRESS}`, () =>
+              retryFetch(() =>
+                krauseContract.balanceOf(KRAUSEHOUSE_ETH_ADDRESS)
+              )
+            ),
+            fetchWithCache(`seed-${KRAUSEHOUSE_ETH_ADDRESS}`, () =>
+              retryFetch(() => seedContract.balanceOf(KRAUSEHOUSE_ETH_ADDRESS))
+            ),
+            fetchWithCache(`nft-${KRAUSEHOUSE_ETH_ADDRESS}`, () =>
+              retryFetch(() => nftContract.balanceOf(KRAUSEHOUSE_ETH_ADDRESS))
+            ),
+          ]);
+
+          setKrauseBalance(
+            parseFloat(ethers.utils.formatEther(krauseBalance)).toFixed(2)
+          );
+          setNftBalance(nftBalance.toString());
+          setKrauseCourtPiecesBalance(krauseCourtPiecesBalance.toString());
+          setTreasuryEthBalance(
+            parseFloat(ethers.utils.formatEther(treasuryEthBalance)).toFixed(2)
+          );
+          setTreasuryKrauseBalance(
+            parseFloat(ethers.utils.formatEther(treasuryKrauseBalance)).toFixed(
+              2
+            )
+          );
+          setTreasurySeedBalance(
+            parseFloat(ethers.utils.formatEther(treasurySeedBalance)).toFixed(2)
+          );
+          setTreasuryNftBalance(treasuryNftBalance.toString());
+        } catch (error) {
+          console.error("Error fetching balances:", error);
+          // Optionally, set an error state or show a notification to the user
+        }
       }
     };
 
