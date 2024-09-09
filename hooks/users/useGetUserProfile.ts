@@ -1,4 +1,4 @@
-import { useViewerRecord } from "@self.id/framework";
+// import { useViewerRecord } from "@self.id/framework";
 import { useAccount, useEnsAddress, useEnsName } from "wagmi";
 import { EthereumAddress } from "../../types/EthereumAddress";
 import { User } from "../../types/User";

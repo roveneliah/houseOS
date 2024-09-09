@@ -20,9 +20,9 @@ export const useVote = (
       proposal: proposalId,
       type: "single-choice",
       choice: choice + 1,
-      metadata: JSON.stringify({
-        comment: message,
-      }),
+      // metadata: JSON.stringify({
+      //   comment: message,
+      // }),
     });
   };
 

@@ -28,6 +28,7 @@ export default function ProfilePreview({
       <div className="flex w-full flex-row space-x-4 px-6 py-4">
         <a href={`/profiles/${address}`}>
           <Image
+            alt="User Avatar"
             src={profileUrl || defaultAvatar}
             width={60}
             height={60}

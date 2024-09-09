@@ -70,6 +70,7 @@ export default function CommentView({ proposal, back, choice }: any) {
           <div className="flex flex-row items-center space-x-2">
             <div className="min-w-fit">
               <Image
+                alt="User Avatar"
                 src={user?.avatarSrc || defaultAvatar}
                 width={50}
                 height={50}

@@ -19,7 +19,12 @@ export function DesktopIcons() {
         onClick={launchSearch}
         className="flex cursor-pointer flex-col items-center space-y-1"
       >
-        <Image src="/desktop-icons/Computer.png" width={50} height={50} />
+        <Image
+          src="/desktop-icons/Computer.png"
+          alt="Search"
+          width={50}
+          height={50}
+        />
         <p className="font-mono">Search</p>
       </div>
       {/* <a
@@ -33,13 +38,23 @@ export function DesktopIcons() {
       </a> */}
       <button onClick={isNewUser ? launchCreateProfile : launchProfile}>
         <div className="flex flex-col items-center space-y-1">
-          <Image src="/desktop-icons/Suit.png" width={40} height={50} />
+          <Image
+            src="/desktop-icons/Suit.png"
+            width={40}
+            height={50}
+            alt="Profile"
+          />
           <p className="font-mono">Profile</p>
         </div>
       </button>
       <button onClick={launchProposalView}>
         <div className="flex flex-col items-center space-y-1">
-          <Image src="/desktop-icons/Doc.png" width={40} height={50} />
+          <Image
+            src="/desktop-icons/Doc.png"
+            width={40}
+            height={50}
+            alt="Proposals"
+          />
           <p className="font-mono">Proposals</p>
         </div>
       </button>

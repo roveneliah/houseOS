@@ -1,9 +1,15 @@
 import Head from "next/head";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { dao, snapshotSpace, snapshotUrl, themes } from "../../config";
 import { useGetCommands } from "../../hooks/useGetCommands";
 import { Command } from "../../types/Command";
-import { useConnect, useDisconnect, useEnsName } from "wagmi";
+import {
+  useAccount,
+  useBalance,
+  useConnect,
+  useDisconnect,
+  useEnsName,
+} from "wagmi";
 // import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
 import { useUserAddress } from "../../hooks/ethereum/useUserAddress";
 import { useSignIn } from "../../hooks/sign-in/useSignIn";
@@ -24,6 +30,7 @@ import { useAppLauncher } from "@/hooks/useAppLauncher";
 import { RootState } from "@/redux/app/store";
 import { useSIWE } from "@/hooks/sign-in/useSIWE";
 const WalletSidebar = dynamic(() => import("../wallet/WalletSidebar"));
+import { injected } from "wagmi/connectors";
 
 import { ethers } from "ethers";
 
@@ -33,6 +40,8 @@ const KRAUSE_COURT_PIECES_ADDRESS =
   "0x591E13ed6C78c0dc715336947db818ddB85a6ffE";
 const SEED_TOKEN_ADDRESS = "0xf76d80200226ac250665139b9e435617e4ba55f9";
 const KRAUSEHOUSE_ETH_ADDRESS = "0xE4762eAcEbDb7585D32079fdcbA5Bb94eb5d76F2";
+
+const ConnectButton = dynamic(() => import("../wallet/ConnectButton"));
 
 interface Props {
   children?: ReactNode;
@@ -52,22 +61,17 @@ export default function Layout({
   useOnKeydown("]", nextTheme);
 
   // Connection hooks
-  const {
-    connect,
-    connectors,
-    isConnected,
-    isDisconnected,
-    isConnecting,
-    isReconnecting,
-  } = useConnect();
-  const address = useUserAddress();
+  const { connect, connectors } = useConnect();
+  const { address, isConnected, isReconnecting } = useAccount();
+
+  // const address = useUserAddress();
   // const { signOut, signIn, signedIn } = useSignIn();
   const { signedIn, signIn, signOut } = useSIWE();
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
   const connector = connectors[1];
 
-  const displayName = ensName || address;
+  const displayName = useMemo(() => ensName || address, [ensName, address]);
 
   // Redux hooks, window management
   // const dispatch = useAppDispatch();
@@ -84,7 +88,7 @@ export default function Layout({
   const path = usePath();
   const proposals = useGetProposals(snapshotSpace);
   const countActive = length(filterActive(proposals));
-  const date = new Date();
+  // const date = new Date();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(isConnected);
   const [krauseBalance, setKrauseBalance] = useState<string>("0");
@@ -208,14 +212,19 @@ export default function Layout({
         <div className="fixed z-50 flex w-full flex-row items-center justify-between overflow-hidden border-b border-base-content bg-base-200 px-4 py-2 sm:bottom-auto sm:top-0 sm:z-10 sm:p-0">
           <div className="flex px-4 sm:hidden">
             <a href="/">
-              <Image src="/initials.svg" height={40} width={30} />
+              <Image
+                alt="House OS"
+                src="/initials.svg"
+                height={40}
+                width={30}
+              />
             </a>
           </div>
           <div className="breadcrumbs hidden self-center px-4 font-mono text-base-content sm:flex">
             <ul>
               <li className="relative h-[3vh] w-[2vw]">
                 <a href="/">
-                  <Image src="/initials.svg" layout="fill" />
+                  <Image alt="House OS" src="/initials.svg" layout="fill" />
                 </a>
               </li>
               {path.map(({ pathSlice, route }, i) => (
@@ -232,40 +241,7 @@ export default function Layout({
               <div className="px-4 text-sm">{countActive} Live Proposals</div>
             </a>
           )}
-          <div className="hidden flex-row items-center space-x-4 px-4 sm:flex">
-            <>
-              {!isConnected ? (
-                isReconnecting ? (
-                  <button className="btn loading btn-sm rounded-md border-black bg-transparent font-normal normal-case hover:bg-transparent">
-                    Reconnecting
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => connect(connector)}
-                    className="btn btn-sm rounded-md bg-transparent font-normal normal-case hover:bg-transparent"
-                  >
-                    Connect Wallet
-                  </button>
-                )
-              ) : (
-                <button className="group btn btn-sm rounded-md bg-transparent font-normal normal-case hover:bg-transparent">
-                  <p>{displayName}</p>
-                </button>
-              )}
-            </>
-            {/* <button className="hidden font-mono text-sm sm:flex px-1">
-              {date.toDateString()}
-            </button> */}
-
-            {/* <button
-              className={`group hidden flex-row space-x-2 border-black bg-transparent hover:bg-transparent sm:flex`}
-              onClick={!searchOpen ? toggleSearch : () => {}}
-            >
-              <div className={`rounded-md pr-2  pl-3 pb-1 pt-2`}>
-                <SearchIcon />
-              </div>
-            </button> */}
-          </div>
+          <ConnectButton />
         </div>
         {children}
       </main>
@@ -275,7 +251,7 @@ export default function Layout({
             setIsSidebarOpen(false);
             disconnect();
           }}
-          address={address}
+          address={address ?? null}
           krauseBalance={krauseBalance}
           nftBalance={nftBalance}
           krauseCourtPiecesBalance={krauseCourtPiecesBalance}

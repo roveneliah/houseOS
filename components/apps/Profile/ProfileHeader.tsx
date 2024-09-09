@@ -37,6 +37,7 @@ export function ProfileHeader(props: any) {
           <div className="hidden rounded-full lg:block">
             <Image
               src={props.avatarSrc || defaultAvatar}
+              alt="User Avatar"
               width={150}
               height={150}
               className="rounded-full"

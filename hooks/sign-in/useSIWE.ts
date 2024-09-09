@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useAccount, useNetwork, useSignMessage } from "wagmi";
+import { useAccount, useChainId, useNetwork, useSignMessage } from "wagmi";
 import { SiweMessage } from "siwe";
 import { useGetUserProfile } from "../users/useGetUserProfile";
 
@@ -8,7 +8,7 @@ export const useSIWE = () => {
   const hodler = user?.hodler;
 
   const { data: account } = useAccount();
-  const { activeChain } = useNetwork();
+  const chainId = useChainId()
   const { signMessageAsync } = useSignMessage();
 
   const [state, setState] = useState<{
@@ -21,9 +21,8 @@ export const useSIWE = () => {
   const signIn = useCallback(async () => {
     try {
       const address = account?.address;
-      const chainId = activeChain?.id;
       console.log(
-        `Trying to SIWE ${account?.address} on chain ${activeChain?.id}`
+        `Trying to SIWE ${account?.address} on chain ${chainId}`
       );
 
       if (!address || !chainId) return;
@@ -71,7 +70,7 @@ export const useSIWE = () => {
 
       setState((x: any) => ({ ...x, error, loading: false }));
     }
-  }, [account?.address, activeChain, hodler]);
+  }, [account?.address, chainId, hodler]);
 
   // Fetch user when:
   useEffect(() => {

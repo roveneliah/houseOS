@@ -184,6 +184,7 @@ export default function NewUserFlow() {
                       src={defaultAvatar}
                       width={80}
                       height={80}
+                      alt="User Avatar"
                       className="cursor-pointer rounded-full"
                     />
                   </a>
@@ -298,6 +299,7 @@ export default function NewUserFlow() {
                     width={80}
                     height={80}
                     className="cursor-pointer rounded-full"
+                    alt="User Avatar"
                   />
                 </a>
                 <div className="flex w-full flex-col items-start justify-center space-y-2">

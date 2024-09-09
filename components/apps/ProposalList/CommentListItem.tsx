@@ -45,6 +45,7 @@ export default function CommentListItem({
                 height={60}
                 className="cursor-pointer rounded-full"
                 objectFit="contain"
+                alt="User Avatar"
               />
             </a>
           </div>

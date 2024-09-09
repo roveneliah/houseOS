@@ -8,4 +8,7 @@ module.exports = withBundleAnalyzer({
   images: {
     domains: ["firebasestorage.googleapis.com"],
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 });

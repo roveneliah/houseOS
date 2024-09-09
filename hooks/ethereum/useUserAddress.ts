@@ -4,5 +4,5 @@ import { Maybe } from "../../types/Maybe";
 
 export const useUserAddress = (): Maybe<EthereumAddress> => {
   const { data: account } = useAccount();
-  return account?.address;
+  return account?.address ?? null;
 };

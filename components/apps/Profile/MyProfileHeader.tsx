@@ -44,6 +44,7 @@ export function MyProfileHeader(props: any) {
               src={props.pfpUrl || defaultAvatar}
               width={150}
               height={150}
+              alt="User Avatar"
               className="rounded-full"
             />
             <div className="absolute hidden min-h-full min-w-full flex-col items-center justify-center rounded-full bg-black/50 group-hover:flex">

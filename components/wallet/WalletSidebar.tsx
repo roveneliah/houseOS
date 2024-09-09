@@ -5,7 +5,7 @@ import { useSIWE } from "@/hooks/sign-in/useSIWE";
 
 interface WalletSidebarProps {
   onClose: () => void;
-  address: string;
+  address: string | null;
   krauseBalance: string;
   nftBalance: string;
   krauseCourtPiecesBalance: string;
@@ -16,6 +16,14 @@ interface WalletSidebarProps {
 }
 
 type Section = "wallet" | "treasury" | "portfolio" | "links";
+
+type AssetName =
+  | "$KRAUSE"
+  | "Genesis Tickets"
+  | "Krause Court Pieces"
+  | "ETH"
+  | "$SEED"
+  | "NFTs";
 
 const WalletSidebar: React.FC<WalletSidebarProps> = ({
   onClose,
@@ -37,7 +45,7 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
     return parts.join(".");
   };
 
-  const assetDescriptions = {
+  const assetDescriptions: Record<AssetName, string> = {
     $KRAUSE:
       "Krause House's governance token used to vote on proposals.  5 million supply total.",
     "Genesis Tickets": "Original NFTs representing membership in Krause House.",
@@ -50,7 +58,7 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
   };
 
   const renderAssetItem = (
-    item: { balance: string; name: string },
+    item: { balance: string; name: AssetName },
     isWallet: boolean = true
   ) => (
     <div className="rounded-lg border border-gray-300 p-4">
@@ -87,7 +95,9 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
                 balance: krauseCourtPiecesBalance,
                 name: "Krause Court Pieces",
               },
-            ].map((item, index) => renderAssetItem(item))}
+            ].map((item) =>
+              renderAssetItem(item as { balance: string; name: AssetName })
+            )}
           </div>
         );
       case "treasury":
@@ -98,7 +108,12 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
               { balance: treasuryKrauseBalance, name: "$KRAUSE" },
               { balance: treasurySeedBalance, name: "$SEED" },
               { balance: treasuryNftBalance, name: "NFTs" },
-            ].map((item, index) => renderAssetItem(item, false))}
+            ].map((item) =>
+              renderAssetItem(
+                item as { balance: string; name: AssetName },
+                false
+              )
+            )}
           </div>
         );
       case "portfolio":
@@ -221,7 +236,7 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
   };
 
   return (
-    <div className="fixed right-0 bottom-0 top-0 z-50 h-full w-full overflow-y-auto rounded-lg border bg-base-200 p-4 md:m-2 md:w-96 md:border-black md:shadow-lg">
+    <div className="fixed bottom-0 right-0 top-0 z-50 h-full w-full overflow-y-auto rounded-lg border bg-base-200 p-4 md:m-2 md:w-96 md:border-black md:shadow-lg">
       <div className="mb-4 flex flex-row items-center justify-between">
         <div className="flex flex-row items-center justify-start">
           <a href="/" className="mr-4 mt-1">

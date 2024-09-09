@@ -225,6 +225,7 @@ export default function Help() {
                               width={150}
                               height={150}
                               className="rounded-full"
+                              alt="User Avatar"
                             />
                           </div>
                         </div>

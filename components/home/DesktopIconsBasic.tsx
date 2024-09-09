@@ -9,7 +9,12 @@ export function DesktopIconsBasic() {
     <div className="absolute bottom-12 flex w-full flex-row justify-between px-16 sm:top-24 sm:left-10 sm:w-fit sm:flex-col  sm:justify-start sm:space-x-0 sm:space-y-8 sm:px-0">
       <a target="_blank" href="https://discord.gg/wAjEq3CM">
         <div className="flex flex-col items-center space-y-1">
-          <Image src="/desktop-icons/Computer.png" width={50} height={50} />
+          <Image
+            alt="Discord"
+            src="/desktop-icons/Computer.png"
+            width={50}
+            height={50}
+          />
           <p className="font-mono">Discord</p>
         </div>
       </a>
@@ -33,13 +38,23 @@ export function DesktopIconsBasic() {
       </a> */}
       <a target="_blank" href="https://snapshot.org/#/krausehouse.eth/">
         <div className="flex flex-col items-center space-y-1">
-          <Image src="/desktop-icons/Suit.png" width={40} height={50} />
+          <Image
+            alt="Voting"
+            src="/desktop-icons/Suit.png"
+            width={40}
+            height={50}
+          />
           <p className="font-mono">Voting</p>
         </div>
       </a>
       <a target="_blank" href="https://www.ballhogs.club/">
         <div className="flex flex-col items-center space-y-1">
-          <Image src="/desktop-icons/Doc.png" width={40} height={50} />
+          <Image
+            alt="FAQ"
+            src="/desktop-icons/Doc.png"
+            width={40}
+            height={50}
+          />
           <p className="font-mono">FAQ</p>
         </div>
       </a>

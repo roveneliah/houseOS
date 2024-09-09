@@ -35,7 +35,7 @@ export default function TxnBuilder() {
   return (
     <Layout fixedOpen={false} noOpacity={true}>
       <div className="absolute z-auto -mt-12 flex h-full flex-col justify-center font-mono">
-        <Image src="/LogoGlobe.svg" width={6000} height={6000} />
+        <Image src="/LogoGlobe.svg" width={6000} height={6000} alt="logo" />
       </div>
       <DesktopIcons />
       <Footer />
@@ -47,12 +47,14 @@ export default function TxnBuilder() {
           onClose={quit}
           padding={padding}
         >
-          <div className="flex flex-col items-start bg-base-200 p-12 h-full w-full"><p>
-            Transaction Builder</p>
+          <div className="flex flex-col items-start bg-base-200 p-12 h-full w-full">
+            <p>
+              Transaction Builder
+            </p>
             <textarea rows={4} value={text} onChange={updateText} className="w-1/2"></textarea>
             <button onClick={() => setRes(() => getTxn(text))}>Build</button>
             {res && <p>{res}</p>}
-            </div>
+          </div>
         </AppFrame>
       
     </Layout>

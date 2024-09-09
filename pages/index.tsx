@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <Layout fixedOpen={false} noOpacity={true}>
       <div className="absolute z-auto -mt-12 flex h-full flex-col justify-center font-mono">
-        <Image src="/LogoGlobe.svg" width={6000} height={6000} />
+        <Image src="/LogoGlobe.svg" width={6000} height={6000} alt="Logo" />
       </div>
       <DesktopIconsBasic />
       <Footer />
