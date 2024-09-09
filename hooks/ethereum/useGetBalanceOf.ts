@@ -1,5 +1,6 @@
 // import { erc20ABI, useContractRead } from "wagmi";
-import { useContractRead, erc20ABI } from "wagmi";
+import { useReadContract } from "wagmi";
+import { erc20Abi } from "viem";
 import { EthereumAddress } from "../../types/EthereumAddress";
 import { Maybe } from "../../types/Maybe";
 
@@ -20,23 +21,17 @@ export const useGetBalanceOf = ({
     isError,
     isLoading,
     error,
-  } = useContractRead(
-    {
-      addressOrName: tokenAddress,
-      contractInterface: erc20ABI,
-    },
-    "balanceOf",
-    {
-      args: address,
-    }
-  );
-  const { data: decimals } = useContractRead(
-    {
-      addressOrName: tokenAddress,
-      contractInterface: erc20ABI,
-    },
-    "decimals"
-  );
+  } = useReadContract({
+    address: tokenAddress,
+    abi: erc20Abi,
+    args: [address],
+    functionName: "balanceOf",
+  });
+  const { data: decimals } = useReadContract({
+    address: tokenAddress,
+    abi: erc20Abi,
+    functionName: "decimals",
+  });
 
   const adjustment = 10 ** Number(decimals);
   const adjusted = Number(balance) / adjustment;
