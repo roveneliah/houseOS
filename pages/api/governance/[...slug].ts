@@ -3,7 +3,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = Array<any>
 
-const curr = "https://github.com/Krause-House/org/tree/fce91f81f34f16b8f462f91dad56064e60a56ee5"
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
