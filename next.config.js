@@ -5,9 +5,9 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
-  images: {
-    domains: ["firebasestorage.googleapis.com"],
-  },
+  // images: {
+  //   domains: ["firebasestorage.googleapis.com"],
+  // },
   typescript: {
     ignoreBuildErrors: true,
   },
