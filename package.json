@@ -10,6 +10,9 @@
     "test:ci": "yarn jest --ci",
     "deploy": "vercel"
   },
+  "resolutions": {
+    "string-width": "4.2.3"
+  },
   "dependencies": {
     "@headlessui/react": "^1.6.4",
     "@heroicons/react": "^1.0.6",
@@ -35,8 +38,7 @@
     "sharp": "^0.30.7",
     "siwe": "^1.1.6",
     "viem": "2.x",
-    "wagmi": "^2.12.9",
-    "string-width": "^3.2.3"
+    "wagmi": "^2.12.9"
   },
   "devDependencies": {
     "@redux-devtools/core": "^3.13.1",
