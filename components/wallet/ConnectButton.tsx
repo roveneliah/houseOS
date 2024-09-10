@@ -1,6 +1,12 @@
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 import React, { useEffect, useState } from "react";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { injected } from "wagmi/connectors";
+import {
+  injected,
+  walletConnect,
+  coinbaseWallet,
+  metaMask,
+} from "wagmi/connectors";
 
 const ConnectButton = () => {
   // Use hooks to manage connection state
@@ -11,6 +17,8 @@ const ConnectButton = () => {
 
   // State to track if the component is mounted
   const [isMounted, setIsMounted] = useState(false);
+
+  const { open, close } = useWeb3Modal();
 
   // Set isMounted to true after the component mounts
   useEffect(() => {
@@ -38,7 +46,8 @@ const ConnectButton = () => {
         </button>
       ) : (
         <button
-          onClick={() => connect({ connector: injected() })}
+          // onClick={() => connect({ connector: injected() })}
+          onClick={() => open()}
           className="btn btn-sm rounded-md bg-transparent font-normal normal-case hover:bg-transparent"
         >
           Connect Wallet

@@ -193,7 +193,11 @@ export default function Layout({
               retryFetch(() => krauseCourtPiecesContract.balanceOf(address))
             ),
             fetchWithCache(`eth-${KRAUSEHOUSE_ETH_ADDRESS}`, () =>
-              retryFetch(() => provider.getBalance(KRAUSEHOUSE_ETH_ADDRESS))
+              retryFetch(() =>
+                provider
+                  .getBalance(KRAUSEHOUSE_ETH_ADDRESS)
+                  .then((balance) => ethers.utils.formatEther(balance))
+              )
             ),
             fetchWithCache(`krause-${KRAUSEHOUSE_ETH_ADDRESS}`, () =>
               retryFetch(() =>
