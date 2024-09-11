@@ -25,13 +25,15 @@ export default function Home() {
 
   return (
     <Layout fixedOpen={false} noOpacity={true}>
-      <div className="absolute z-auto -mt-12 flex h-full flex-col justify-center font-mono">
+      <div className="absolute z-auto -mt-12 hidden h-full flex-col justify-center font-mono sm:flex">
         <Image src="/LogoGlobe.svg" width={6000} height={6000} alt="Logo" />
       </div>
-      <DesktopIconsBasic />
+      <div className="hidden sm:block">
+        <DesktopIconsBasic />
+      </div>
+
       <Footer />
 
-      {/* // TODO: this should be part of layout */}
       {openApp && (
         <AppFrame
           width={width}

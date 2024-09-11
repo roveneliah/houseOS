@@ -1,17 +1,8 @@
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
-import {
-  injected,
-  walletConnect,
-  coinbaseWallet,
-  metaMask,
-} from "wagmi/connectors";
 
 const ConnectButton = () => {
-  // Use hooks to manage connection state
-  const { connect } = useConnect();
-
   const { address, isConnected, isReconnecting } = useAccount();
   const { disconnect } = useDisconnect();
 
@@ -35,7 +26,7 @@ const ConnectButton = () => {
 
   // Render the connect buttons only after the component has mounted
   return (
-    <div className="hidden flex-row items-center space-x-4 px-4 sm:flex">
+    <div className="flex flex-row items-center space-x-4 px-4">
       {isConnected ? (
         <button
           className="group btn btn-sm rounded-md bg-transparent font-normal normal-case hover:bg-transparent"

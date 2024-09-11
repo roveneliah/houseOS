@@ -26,6 +26,60 @@ type AssetName =
   | "$SEED"
   | "NFTs";
 
+export const LinksContent = () => (
+  <div className="mt-8 space-y-6">
+    {[
+      {
+        title: "Governance",
+        description: "Participate in Krause House decision-making",
+        url: "https://snapshot.org/#/krausehouse.eth",
+      },
+      {
+        title: "Discord",
+        description: "Join our community chat",
+        url: "https://discord.gg/wAjEq3CM",
+      },
+      {
+        title: "Twitter",
+        description: "Follow us on Twitter",
+        url: "https://twitter.com/KrauseHouseDAO",
+      },
+      {
+        title: "FAQ",
+        description: "Learn more about Krause House",
+        url: "https://docs.krausehouse.club",
+      },
+      {
+        title: "Krause House Website",
+        description: "Learn more about Krause House",
+        url: "https://krausehouse.club",
+      },
+      {
+        title: "Ball Hogs Website",
+        description: "Learn more about the Ball Hogs",
+        url: "https://www.ballhogs.club/",
+      },
+      {
+        title: "Blog",
+        description: "Read our latest updates and announcements",
+        url: "https://krausehouse.mirror.xyz/",
+      },
+    ].map((link) => (
+      <div key={link.title} className="rounded-lg border border-gray-300 p-4">
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block"
+        >
+          <h3 className="text-lg font-bold">{link.title}</h3>
+          <p className="mt-2 text-sm text-gray-600">{link.description}</p>
+        </a>
+      </div>
+    ))}
+  </div>
+);
+
 const WalletSidebar: React.FC<WalletSidebarProps> = ({
   onClose,
   address,
@@ -173,60 +227,6 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
     </div>
   );
 
-  const renderLinksContent = () => (
-    <div className="mt-8 space-y-6">
-      {[
-        {
-          title: "Governance",
-          description: "Participate in Krause House decision-making",
-          url: "https://snapshot.org/#/krausehouse.eth",
-        },
-        {
-          title: "Discord",
-          description: "Join our community chat",
-          url: "https://discord.gg/wAjEq3CM",
-        },
-        {
-          title: "Twitter",
-          description: "Follow us on Twitter",
-          url: "https://twitter.com/KrauseHouseDAO",
-        },
-        {
-          title: "FAQ",
-          description: "Learn more about Krause House",
-          url: "https://docs.krausehouse.club",
-        },
-        {
-          title: "Krause House Website",
-          description: "Learn more about Krause House",
-          url: "https://krausehouse.club",
-        },
-        {
-          title: "Ball Hogs Website",
-          description: "Learn more about the Ball Hogs",
-          url: "https://www.ballhogs.club/",
-        },
-        {
-          title: "Blog",
-          description: "Read our latest updates and announcements",
-          url: "https://krausehouse.mirror.xyz/",
-        },
-      ].map((link) => (
-        <div key={link.title} className="rounded-lg border border-gray-300 p-4">
-          <a
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block"
-          >
-            <h3 className="text-lg font-bold">{link.title}</h3>
-            <p className="mt-2 text-sm text-gray-600">{link.description}</p>
-          </a>
-        </div>
-      ))}
-    </div>
-  );
-
   const renderContent = () => {
     switch (activeSection) {
       case "wallet":
@@ -236,7 +236,7 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
       case "portfolio":
         return renderPortfolioContent();
       case "links":
-        return renderLinksContent();
+        return <LinksContent />;
     }
   };
 

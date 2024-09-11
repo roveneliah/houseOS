@@ -55,7 +55,9 @@ export default function CommandPalette({
   const queryMatch = contains(query);
   const keywordMatch = any(contains(query));
   const queryHit = (option: any) =>
-    noInput || queryMatch(option.name || "") || keywordMatch(option.keywords || []);
+    noInput ||
+    queryMatch(option.name || "") ||
+    keywordMatch(option.keywords || []);
 
   // TODO: find ramda fn for this kind of "fallback" login
   const commandTypeMatches = ({ type }: { type: CommandFilters }) =>
@@ -71,11 +73,18 @@ export default function CommandPalette({
   const show = fixedOpen || isOpen;
 
   return (
-    <Transition.Root show={show} as={Fragment} afterLeave={() => { clear(); closeSearch(); }}>
+    <Transition.Root
+      show={show}
+      as={Fragment}
+      afterLeave={() => {
+        clear();
+        closeSearch();
+      }}
+    >
       <Dialog
         open={show}
         onClose={closeSearch}
-        className="fixed bottom-[0vh] z-40 mx-auto flex w-full flex-col justify-end overflow-y-auto sm:inset-[15vh] sm:h-fit sm:w-[70vw] sm:flex-none lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
+        className="fixed bottom-[0vh] z-50 mx-auto flex w-full flex-col justify-end overflow-y-auto sm:inset-[15vh] sm:h-fit sm:w-[70vw] sm:flex-none lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw]"
       >
         <Transition.Child
           enter="duration-300 ease-out"
@@ -110,16 +119,16 @@ export default function CommandPalette({
               !command.link && closeSearch();
             }}
             as="div"
-            className="border-base-content  bg-base-100 group relative flex h-screen flex-col justify-end overflow-hidden overflow-y-auto font-mono ring-1 ring-black/5 sm:h-auto sm:max-h-fit sm:rounded-lg sm:border-4 sm:shadow-black"
+            className="group  relative flex h-screen flex-col justify-end overflow-hidden overflow-y-auto border-base-content bg-base-100 font-mono ring-1 ring-black/5 sm:h-auto sm:max-h-fit sm:rounded-lg sm:border-4 sm:shadow-black"
           >
-            <div className="bg-base-200 hidden flex-row justify-start space-x-2 p-4 py-2 outline-none sm:flex">
+            <div className="hidden flex-row justify-start space-x-2 bg-base-200 p-4 py-2 outline-none sm:flex">
               <button
                 onClick={closeSearch}
-                className="btn-circle btn-xs border-base-content border-4 outline-none"
+                className="btn-circle btn-xs border-4 border-base-content outline-none"
               />
-              <div className="btn-circle btn-xs border-base-content border-4"></div>
+              <div className="btn-circle btn-xs border-4 border-base-content"></div>
             </div>
-            <div className="bg-base-200 border-base-content order-2 flex flex-row justify-start overflow-hidden border-t-0 text-gray-700 group-target:hidden group-open:hidden group-focus-visible:hidden sm:order-2 sm:border-t">
+            <div className="order-2 flex flex-row justify-start overflow-hidden border-t-0 border-base-content bg-base-200 text-gray-700 group-target:hidden group-open:hidden group-focus-visible:hidden sm:order-2 sm:border-t">
               {views.map(({ title, view, icon }, i): any => (
                 <div
                   key={i}
@@ -145,7 +154,7 @@ export default function CommandPalette({
               </div>
 
               <Combobox.Input
-                className="w-full border-0 border-white bg-transparent py-2 px-2 text-sm text-gray-800 placeholder-gray-400 outline-none"
+                className="w-full border-0 border-white bg-transparent px-2 py-2 text-sm text-gray-800 placeholder-gray-400 outline-none"
                 placeholder={"Search the DAO..."}
                 displayValue={() => query}
                 autoComplete="false"
@@ -162,14 +171,14 @@ export default function CommandPalette({
               ) : formattedCommands.length > 0 ? (
                 <Combobox.Options
                   static
-                  className="no-scrollbar divide-base-200 h-fit max-h-[90vh] justify-end divide-y overflow-hidden overflow-y-scroll border-black px-2 py-4 sm:max-h-96 sm:justify-start sm:rounded-lg sm:border-t sm:border-t-0"
+                  className="no-scrollbar h-fit max-h-[90vh] justify-end divide-y divide-base-200 overflow-hidden overflow-y-scroll border-black px-2 py-4 sm:max-h-96 sm:justify-start sm:rounded-lg sm:border-t sm:border-t-0"
                 >
                   <div className="flex min-h-0 flex-col-reverse sm:flex-col">
                     {formattedCommands.map((command, i) => (
                       <Combobox.Option value={command} key={i}>
                         {({ active }) => (
                           <div
-                            className={`space-x-1 rounded-lg py-3 px-4 ${
+                            className={`space-x-1 rounded-lg px-4 py-3 ${
                               active && " bg-gray-300/50"
                             }`}
                           >
@@ -179,7 +188,7 @@ export default function CommandPalette({
                               className="outline-none"
                             >
                               <div
-                                className={`text-neutral-content flex flex-row items-center justify-start space-x-2 ${
+                                className={`flex flex-row items-center justify-start space-x-2 text-neutral-content ${
                                   command.className || ""
                                 }`}
                               >
@@ -203,7 +212,7 @@ export default function CommandPalette({
                 </div>
               )}
             </div>
-            <div className="text-neutral-content bg-base-200 hidden flex-row items-center space-x-2 px-3 py-2 sm:order-4 sm:flex">
+            <div className="hidden flex-row items-center space-x-2 bg-base-200 px-3 py-2 text-neutral-content sm:order-4 sm:flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -220,11 +229,11 @@ export default function CommandPalette({
               </svg>
               <p className="text-xs">
                 Use{" "}
-                <span className="text-neutral-content mx-1 cursor-none rounded-lg">
+                <span className="mx-1 cursor-none rounded-lg text-neutral-content">
                   ⌘→
                 </span>{" "}
                 and{" "}
-                <span className="text-neutral-content mx-1 cursor-none rounded-lg">
+                <span className="mx-1 cursor-none rounded-lg text-neutral-content">
                   ⌘←
                 </span>{" "}
                 to switch between filters.
