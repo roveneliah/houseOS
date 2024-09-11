@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { PowerIcon } from "../icons/PowerIcon";
 import { useSIWE } from "@/hooks/sign-in/useSIWE";
@@ -13,6 +13,7 @@ interface WalletSidebarProps {
   treasuryKrauseBalance: string;
   treasurySeedBalance: string;
   treasuryNftBalance: string;
+  displayName: string;
 }
 
 type Section = "wallet" | "treasury" | "portfolio" | "links";
@@ -35,9 +36,9 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
   treasuryKrauseBalance,
   treasurySeedBalance,
   treasuryNftBalance,
+  displayName,
 }) => {
   const [activeSection, setActiveSection] = useState<Section>("wallet");
-  const [expandedAsset, setExpandedAsset] = useState<string | null>(null);
 
   const formatNumber = (num: string) => {
     const parts = num.split(".");
@@ -57,181 +58,185 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
     NFTs: "Non-fungible tokens owned by the Krause House treasury.",
   };
 
-  const renderAssetItem = (
-    item: { balance: string; name: AssetName },
-    isWallet: boolean = true
-  ) => (
-    <div className="rounded-lg border border-gray-300 p-4">
-      <p className="text-3xl font-bold">{formatNumber(item.balance)}</p>
-      <p className="mb-2 text-gray-500">{item.name}</p>
-      <p className="text-sm text-gray-600">{assetDescriptions[item.name]}</p>
-      {isWallet && item.name !== "$KRAUSE" && (
+  const renderWalletContent = () => (
+    <div className="mt-8 space-y-6">
+      <div className="rounded-lg border border-gray-300 p-4">
+        <p className="text-3xl font-bold">{formatNumber(krauseBalance)}</p>
+        <p className="mb-2 text-gray-500">$KRAUSE</p>
+        <p className="text-sm text-gray-600">{assetDescriptions["$KRAUSE"]}</p>
+      </div>
+      <div className="rounded-lg border border-gray-300 p-4">
+        <p className="text-3xl font-bold">{formatNumber(nftBalance)}</p>
+        <p className="mb-2 text-gray-500">Genesis Tickets</p>
+        <p className="text-sm text-gray-600">
+          {assetDescriptions["Genesis Tickets"]}
+        </p>
         <div className="mt-2">
           <a
-            href={`https://opensea.io/collection/${
-              item.name === "Genesis Tickets"
-                ? "krause-house-tickets"
-                : "krausecourt"
-            }`}
+            href="https://opensea.io/collection/krause-house-tickets"
             target="_blank"
             rel="noopener noreferrer"
           >
             <button className="bg-black/10 p-2 text-sm">View on OpenSea</button>
           </a>
         </div>
-      )}
+      </div>
+      <div className="rounded-lg border border-gray-300 p-4">
+        <p className="text-3xl font-bold">
+          {formatNumber(krauseCourtPiecesBalance)}
+        </p>
+        <p className="mb-2 text-gray-500">Krause Court Pieces</p>
+        <p className="text-sm text-gray-600">
+          {assetDescriptions["Krause Court Pieces"]}
+        </p>
+        <div className="mt-2">
+          <a
+            href="https://opensea.io/collection/krausecourtpieces"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="bg-black/10 p-2 text-sm">View on OpenSea</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderTreasuryContent = () => (
+    <div className="mt-8 space-y-6">
+      <div className="rounded-lg border border-gray-300 p-4">
+        <p className="text-3xl font-bold">{formatNumber(treasuryEthBalance)}</p>
+        <p className="mb-2 text-gray-500">ETH</p>
+        <p className="text-sm text-gray-600">{assetDescriptions["ETH"]}</p>
+      </div>
+      <div className="rounded-lg border border-gray-300 p-4">
+        <p className="text-3xl font-bold">
+          {formatNumber(treasuryKrauseBalance)}
+        </p>
+        <p className="mb-2 text-gray-500">$KRAUSE</p>
+        <p className="text-sm text-gray-600">{assetDescriptions["$KRAUSE"]}</p>
+      </div>
+      <div className="rounded-lg border border-gray-300 p-4">
+        <p className="text-3xl font-bold">
+          {formatNumber(treasurySeedBalance)}
+        </p>
+        <p className="mb-2 text-gray-500">$SEED</p>
+        <p className="text-sm text-gray-600">{assetDescriptions["$SEED"]}</p>
+      </div>
+      <div className="rounded-lg border border-gray-300 p-4">
+        <p className="text-3xl font-bold">{formatNumber(treasuryNftBalance)}</p>
+        <p className="mb-2 text-gray-500">NFTs</p>
+        <p className="text-sm text-gray-600">{assetDescriptions["NFTs"]}</p>
+      </div>
+    </div>
+  );
+
+  const renderPortfolioContent = () => (
+    <div className="mt-8 space-y-6">
+      <div className="rounded-lg border border-gray-300 p-4">
+        <h3 className="mb-4 text-xl font-bold">Ball Hogs</h3>
+        <p className="mb-4 text-gray-500">
+          Krause House's first portfolio investment. The Ball Hogs are a part of
+          the Big3, a 3v3 league started by Ice Cube, and coached by the legend
+          Rick Barry.
+        </p>
+        <div className="space-y-2">
+          {[
+            { text: "Roster", url: "https://big3.com/teams/ball-hogs/" },
+            {
+              text: "Youtube",
+              url: "https://www.youtube.com/@BIG3_BallHogs/videos",
+            },
+            {
+              text: "Ball Hogs Merch",
+              url: "https://www.ballhogs.club/collections/all",
+            },
+            {
+              text: "Get Tickets",
+              url: "https://www.ballhogs.club/collections/all",
+            },
+          ].map((link) => (
+            <a
+              key={link.text}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <button className="w-full bg-black/10 p-2 text-left text-sm">
+                {link.text}
+              </button>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderLinksContent = () => (
+    <div className="mt-8 space-y-6">
+      {[
+        {
+          title: "Governance",
+          description: "Participate in Krause House decision-making",
+          url: "https://snapshot.org/#/krausehouse.eth",
+        },
+        {
+          title: "Discord",
+          description: "Join our community chat",
+          url: "https://discord.gg/wAjEq3CM",
+        },
+        {
+          title: "Twitter",
+          description: "Follow us on Twitter",
+          url: "https://twitter.com/KrauseHouseDAO",
+        },
+        {
+          title: "FAQ",
+          description: "Learn more about Krause House",
+          url: "https://docs.krausehouse.club",
+        },
+        {
+          title: "Krause House Website",
+          description: "Learn more about Krause House",
+          url: "https://krausehouse.club",
+        },
+        {
+          title: "Ball Hogs Website",
+          description: "Learn more about the Ball Hogs",
+          url: "https://www.ballhogs.club/",
+        },
+        {
+          title: "Blog",
+          description: "Read our latest updates and announcements",
+          url: "https://krausehouse.mirror.xyz/",
+        },
+      ].map((link) => (
+        <div key={link.title} className="rounded-lg border border-gray-300 p-4">
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+          >
+            <h3 className="text-lg font-bold">{link.title}</h3>
+            <p className="mt-2 text-sm text-gray-600">{link.description}</p>
+          </a>
+        </div>
+      ))}
     </div>
   );
 
   const renderContent = () => {
     switch (activeSection) {
       case "wallet":
-        return (
-          <div className="mt-8 space-y-6">
-            {[
-              { balance: krauseBalance, name: "$KRAUSE" },
-              { balance: nftBalance, name: "Genesis Tickets" },
-              {
-                balance: krauseCourtPiecesBalance,
-                name: "Krause Court Pieces",
-              },
-            ].map((item) =>
-              renderAssetItem(item as { balance: string; name: AssetName })
-            )}
-          </div>
-        );
+        return renderWalletContent();
       case "treasury":
-        return (
-          <div className="mt-8 space-y-6">
-            {[
-              { balance: treasuryEthBalance, name: "ETH" },
-              { balance: treasuryKrauseBalance, name: "$KRAUSE" },
-              { balance: treasurySeedBalance, name: "$SEED" },
-              { balance: treasuryNftBalance, name: "NFTs" },
-            ].map((item) =>
-              renderAssetItem(
-                item as { balance: string; name: AssetName },
-                false
-              )
-            )}
-          </div>
-        );
+        return renderTreasuryContent();
       case "portfolio":
-        return (
-          <div className="mt-8 space-y-6">
-            <div className="rounded-lg border border-gray-300 p-4">
-              <h3 className="mb-4 text-xl font-bold">Ball Hogs</h3>
-              <p className="mb-4 text-gray-500">
-                Krause House's first portfolio investment. The Ball Hogs are a
-                part of the Big3, a 3v3 league started by Ice Cube, and coached
-                by the legend Rick Barry.
-              </p>
-              <div className="space-y-2">
-                <a
-                  href="https://big3.com/teams/ball-hogs/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <button className="w-full bg-black/10 p-2 text-left text-sm">
-                    Roster
-                  </button>
-                </a>
-                <a
-                  href="https://www.youtube.com/@BIG3_BallHogs/videos"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <button className="w-full bg-black/10 p-2 text-left text-sm">
-                    Youtube
-                  </button>
-                </a>
-                <a
-                  href="https://www.ballhogs.club/collections/all"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <button className="w-full bg-black/10 p-2 text-left text-sm">
-                    Ball Hogs Merch
-                  </button>
-                </a>
-
-                <a
-                  href="https://www.ballhogs.club/collections/all"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <button className="w-full bg-black/10 p-2 text-left text-sm">
-                    Get Tickets
-                  </button>
-                </a>
-              </div>
-            </div>
-            {/* You can add more teams here in the future */}
-          </div>
-        );
+        return renderPortfolioContent();
       case "links":
-        return (
-          <div className="mt-8 space-y-6">
-            {[
-              {
-                title: "Governance",
-                description: "Participate in Krause House decision-making",
-                url: "https://snapshot.org/#/krausehouse.eth",
-              },
-              {
-                title: "Discord",
-                description: "Join our community chat",
-                url: "https://discord.gg/wAjEq3CM",
-              },
-              {
-                title: "Twitter",
-                description: "Follow us on Twitter",
-                url: "https://twitter.com/KrauseHouseDAO",
-              },
-              {
-                title: "FAQ",
-                description: "Learn more about Krause House",
-                url: "https://docs.krausehouse.club",
-              },
-              {
-                title: "Krause House Website",
-                description: "Learn more about Krause House",
-                url: "https://krausehouse.club",
-              },
-              {
-                title: "Ball Hogs Website",
-                description: "Learn more about the Ball Hogs",
-                url: "https://www.ballhogs.club/",
-              },
-              {
-                title: "Blog",
-                description: "Read our latest updates and announcements",
-                url: "https://krausehouse.mirror.xyz/",
-              },
-            ].map((link, index) => (
-              <div
-                key={index}
-                className="rounded-lg border border-gray-300 p-4"
-              >
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <h3 className="text-lg font-bold">{link.title}</h3>
-                  <p className="mt-2 text-sm text-gray-600">
-                    {link.description}
-                  </p>
-                </a>
-              </div>
-            ))}
-          </div>
-        );
+        return renderLinksContent();
     }
   };
 
@@ -242,7 +247,7 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
           <a href="/" className="mr-4 mt-1">
             <Image src="/initials.svg" height={30} width={30} alt="Logo" />
           </a>
-          <p>{`${address.slice(0, 6)}...${address.slice(-4)}`}</p>
+          <p>{displayName}</p>
         </div>
         <button onClick={onClose} className="text-gray-600">
           <PowerIcon strokeWidth={2} />

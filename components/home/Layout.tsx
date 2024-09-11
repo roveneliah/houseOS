@@ -10,10 +10,6 @@ import {
   useDisconnect,
   useEnsName,
 } from "wagmi";
-// import { useGetUserProfile } from "../../hooks/users/useGetUserProfile";
-import { useUserAddress } from "../../hooks/ethereum/useUserAddress";
-import { useSignIn } from "../../hooks/sign-in/useSignIn";
-import { useIsNewUser } from "../../hooks/useIsNewUser";
 import dynamic from "next/dynamic";
 import { usePath } from "@/hooks/usePath";
 import { useOnKeydown } from "@/hooks/generic/useOnKeydown";
@@ -85,6 +81,36 @@ const retryFetch = async (
   }
 };
 
+const createContract = (address: string, abi: string[]) =>
+  new ethers.Contract(address, abi, provider);
+
+const formatBalance = (balance: ethers.BigNumber, decimals = 18) =>
+  parseFloat(ethers.utils.formatUnits(balance, decimals)).toFixed(2);
+
+const formatIntegerBalance = (balance: ethers.BigNumber) =>
+  ethers.utils.formatUnits(balance, 0);
+
+const fetchBalance = async (
+  contract: ethers.Contract,
+  method: string,
+  address: string,
+  formatAsInteger = false
+) => {
+  const balance = await contract[method](address);
+  return formatAsInteger
+    ? formatIntegerBalance(balance)
+    : formatBalance(balance);
+};
+
+const fetchEthBalance = async (address: string) => {
+  const balance = await provider.getBalance(address);
+  return formatBalance(balance);
+};
+
+const createBalanceFetcher =
+  (contract: ethers.Contract, method: string) => (address: string) =>
+    fetchBalance(contract, method, address);
+
 export default function Layout({
   children,
   noOpacity = false,
@@ -97,17 +123,12 @@ export default function Layout({
   useOnKeydown("]", nextTheme);
 
   // Connection hooks
-  const { connect, connectors } = useConnect();
   const { address, isConnected, isReconnecting } = useAccount();
 
   // const address = useUserAddress();
   // const { signOut, signIn, signedIn } = useSignIn();
-  const { signedIn, signIn, signOut } = useSIWE();
+  // const { signedIn, signIn, signOut } = useSIWE();
   const { disconnect } = useDisconnect();
-  const { data: ensName } = useEnsName({ address });
-  const connector = connectors[1];
-
-  const displayName = useMemo(() => ensName || address, [ensName, address]);
 
   // Redux hooks, window management
   // const dispatch = useAppDispatch();
@@ -116,6 +137,12 @@ export default function Layout({
   // const searchOpen = useAppSelector(
   //   (state: RootState) => state.windows.open.search
   // );
+
+  const { data: ensName } = useEnsName({ address });
+  const displayName = useMemo(
+    () => ensName || `${address?.slice(0, 6)}...${address?.slice(-4)}`,
+    [ensName, address]
+  );
 
   // TODO: should load a lot of this in via redux, and then get from app state
   const commands: Array<Command> = useGetCommands();
@@ -131,11 +158,12 @@ export default function Layout({
   const [nftBalance, setNftBalance] = useState<string>("0");
   const [krauseCourtPiecesBalance, setKrauseCourtPiecesBalance] =
     useState<string>("0");
-  const [treasuryEthBalance, setTreasuryEthBalance] = useState<string>("0");
-  const [treasuryKrauseBalance, setTreasuryKrauseBalance] =
-    useState<string>("0");
-  const [treasurySeedBalance, setTreasurySeedBalance] = useState<string>("0");
-  const [treasuryNftBalance, setTreasuryNftBalance] = useState<string>("0");
+  const [treasuryBalances, setTreasuryBalances] = useState({
+    eth: "0",
+    krause: "0",
+    seed: "0",
+    nft: "0",
+  });
 
   useEffect(() => {
     if (isConnected) {
@@ -152,83 +180,33 @@ export default function Layout({
           "function balanceOf(address) view returns (uint256)",
         ];
 
-        const krauseContract = new ethers.Contract(
-          KRAUSE_TOKEN_ADDRESS,
-          erc20Abi,
-          provider
-        );
-        const nftContract = new ethers.Contract(
-          NFT_TICKET_ADDRESS,
-          erc721Abi,
-          provider
-        );
-        const krauseCourtPiecesContract = new ethers.Contract(
+        const krauseContract = createContract(KRAUSE_TOKEN_ADDRESS, erc20Abi);
+        const nftContract = createContract(NFT_TICKET_ADDRESS, erc721Abi);
+        const krauseCourtPiecesContract = createContract(
           KRAUSE_COURT_PIECES_ADDRESS,
-          erc721Abi,
-          provider
+          erc721Abi
         );
-        const seedContract = new ethers.Contract(
-          SEED_TOKEN_ADDRESS,
-          erc20Abi,
-          provider
+
+        const fetchKrauseBalance = createBalanceFetcher(
+          krauseContract,
+          "balanceOf"
         );
+        const fetchNftBalance = (address: string) =>
+          fetchBalance(nftContract, "balanceOf", address, true);
+        const fetchKrauseCourtPiecesBalance = (address: string) =>
+          fetchBalance(krauseCourtPiecesContract, "balanceOf", address, true);
 
         try {
-          const [
-            krauseBalance,
-            nftBalance,
-            krauseCourtPiecesBalance,
-            treasuryEthBalance,
-            treasuryKrauseBalance,
-            treasurySeedBalance,
-            treasuryNftBalance,
-          ] = await Promise.all([
-            fetchWithCache(`krause-${address}`, () =>
-              retryFetch(() => krauseContract.balanceOf(address))
-            ),
-            fetchWithCache(`nft-${address}`, () =>
-              retryFetch(() => nftContract.balanceOf(address))
-            ),
-            fetchWithCache(`krauseCourt-${address}`, () =>
-              retryFetch(() => krauseCourtPiecesContract.balanceOf(address))
-            ),
-            fetchWithCache(`eth-${KRAUSEHOUSE_ETH_ADDRESS}`, () =>
-              retryFetch(() =>
-                provider
-                  .getBalance(KRAUSEHOUSE_ETH_ADDRESS)
-                  .then((balance) => ethers.utils.formatEther(balance))
-              )
-            ),
-            fetchWithCache(`krause-${KRAUSEHOUSE_ETH_ADDRESS}`, () =>
-              retryFetch(() =>
-                krauseContract.balanceOf(KRAUSEHOUSE_ETH_ADDRESS)
-              )
-            ),
-            fetchWithCache(`seed-${KRAUSEHOUSE_ETH_ADDRESS}`, () =>
-              retryFetch(() => seedContract.balanceOf(KRAUSEHOUSE_ETH_ADDRESS))
-            ),
-            fetchWithCache(`nft-${KRAUSEHOUSE_ETH_ADDRESS}`, () =>
-              retryFetch(() => nftContract.balanceOf(KRAUSEHOUSE_ETH_ADDRESS))
-            ),
-          ]);
+          const [krauseBalance, nftBalance, krauseCourtPiecesBalance] =
+            await Promise.all([
+              fetchKrauseBalance(address),
+              fetchNftBalance(address),
+              fetchKrauseCourtPiecesBalance(address),
+            ]);
 
-          setKrauseBalance(
-            parseFloat(ethers.utils.formatEther(krauseBalance)).toFixed(2)
-          );
-          setNftBalance(nftBalance.toString());
-          setKrauseCourtPiecesBalance(krauseCourtPiecesBalance.toString());
-          setTreasuryEthBalance(
-            parseFloat(ethers.utils.formatEther(treasuryEthBalance)).toFixed(2)
-          );
-          setTreasuryKrauseBalance(
-            parseFloat(ethers.utils.formatEther(treasuryKrauseBalance)).toFixed(
-              2
-            )
-          );
-          setTreasurySeedBalance(
-            parseFloat(ethers.utils.formatEther(treasurySeedBalance)).toFixed(2)
-          );
-          setTreasuryNftBalance(treasuryNftBalance.toString());
+          setKrauseBalance(krauseBalance);
+          setNftBalance(nftBalance);
+          setKrauseCourtPiecesBalance(krauseCourtPiecesBalance);
         } catch (error) {
           console.error("Error fetching balances:", error);
           // Optionally, set an error state or show a notification to the user
@@ -238,6 +216,40 @@ export default function Layout({
 
     fetchBalances();
   }, [address]);
+
+  useEffect(() => {
+    const fetchTreasuryBalances = async () => {
+      const erc20Abi = ["function balanceOf(address) view returns (uint256)"];
+      const erc721Abi = ["function balanceOf(address) view returns (uint256)"];
+
+      const krauseContract = createContract(KRAUSE_TOKEN_ADDRESS, erc20Abi);
+      const seedContract = createContract(SEED_TOKEN_ADDRESS, erc20Abi);
+      const nftContract = createContract(NFT_TICKET_ADDRESS, erc721Abi);
+
+      const fetchKrauseBalance = createBalanceFetcher(
+        krauseContract,
+        "balanceOf"
+      );
+      const fetchSeedBalance = createBalanceFetcher(seedContract, "balanceOf");
+      const fetchNftBalance = (address: string) =>
+        fetchBalance(nftContract, "balanceOf", address, true);
+
+      try {
+        const [eth, krause, seed, nft] = await Promise.all([
+          fetchEthBalance(KRAUSEHOUSE_ETH_ADDRESS),
+          fetchKrauseBalance(KRAUSEHOUSE_ETH_ADDRESS),
+          fetchSeedBalance(KRAUSEHOUSE_ETH_ADDRESS),
+          fetchNftBalance(KRAUSEHOUSE_ETH_ADDRESS),
+        ]);
+
+        setTreasuryBalances({ eth, krause, seed, nft });
+      } catch (error) {
+        console.error("Error fetching treasury balances:", error);
+      }
+    };
+
+    fetchTreasuryBalances();
+  }, []);
 
   return (
     <div data-theme={themeName} className="no-scrollbar min-h-screen font-mono">
@@ -305,10 +317,11 @@ export default function Layout({
           krauseBalance={krauseBalance}
           nftBalance={nftBalance}
           krauseCourtPiecesBalance={krauseCourtPiecesBalance}
-          treasuryEthBalance={treasuryEthBalance}
-          treasuryKrauseBalance={treasuryKrauseBalance}
-          treasurySeedBalance={treasurySeedBalance}
-          treasuryNftBalance={treasuryNftBalance}
+          treasuryEthBalance={treasuryBalances.eth}
+          treasuryKrauseBalance={treasuryBalances.krause}
+          treasurySeedBalance={treasuryBalances.seed}
+          treasuryNftBalance={treasuryBalances.nft}
+          displayName={displayName}
         />
       )}
     </div>

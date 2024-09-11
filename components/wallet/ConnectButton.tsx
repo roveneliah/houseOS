@@ -1,6 +1,6 @@
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-import React, { useEffect, useState } from "react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import React, { useEffect, useMemo, useState } from "react";
+import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
 import {
   injected,
   walletConnect,
@@ -20,6 +20,9 @@ const ConnectButton = () => {
 
   const { open, close } = useWeb3Modal();
 
+  const { data: ensName } = useEnsName({ address });
+  const displayName = useMemo(() => ensName || address, [ensName, address]);
+
   // Set isMounted to true after the component mounts
   useEffect(() => {
     setIsMounted(true);
@@ -38,7 +41,7 @@ const ConnectButton = () => {
           className="group btn btn-sm rounded-md bg-transparent font-normal normal-case hover:bg-transparent"
           onClick={() => disconnect()}
         >
-          {address ? address : "Connected"}
+          {displayName}
         </button>
       ) : isReconnecting ? (
         <button className="btn loading btn-sm rounded-md border-black bg-transparent font-normal normal-case hover:bg-transparent">
