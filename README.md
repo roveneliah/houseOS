@@ -86,3 +86,19 @@ pnpm create next-app --example with-tailwindcss with-tailwindcss-app
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)). -->
+
+## Supabase Setup
+
+Polls use a Supabase backend. Create a project at [supabase.com](https://supabase.com) and add two tables:
+
+- `polls`: `id` (uuid, primary key), `question` (text), `options` (text[])
+- `votes`: `id` (uuid), `poll_id` (uuid reference to polls.id), `option_id` (int), `address` (text), `weight` (numeric), `comment` (text)
+
+Expose an anon public API key and URL then create a `.env.local` file with:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=public-anon-key
+```
+
+The local dev server will read these values to connect to Supabase.
