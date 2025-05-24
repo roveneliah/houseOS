@@ -11,6 +11,7 @@ export function DesktopIcons() {
     launchProfile,
     launchSearch,
     launchProposalView,
+    launchPolls,
   } = useAppLauncher();
 
   return (
@@ -56,6 +57,17 @@ export function DesktopIcons() {
             alt="Proposals"
           />
           <p className="font-mono">Proposals</p>
+        </div>
+      </button>
+      <button onClick={launchPolls}>
+        <div className="flex flex-col items-center space-y-1">
+          <Image
+            src="/desktop-icons/Files.png"
+            width={40}
+            height={50}
+            alt="Polls"
+          />
+          <p className="font-mono">Polls</p>
         </div>
       </button>
       {/* <div
