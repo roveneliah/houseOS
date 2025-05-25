@@ -86,3 +86,16 @@ pnpm create next-app --example with-tailwindcss with-tailwindcss-app
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)). -->
+
+## Supabase Setup
+
+Create a project at [supabase.com](https://supabase.com) and obtain the **URL** and **anon key** from Project Settings.
+
+Add these values to `.env.local` in the root of the repo:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=<your-supabase-url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-supabase-anon-key>
+```
+
+The app expects a table named **`Proposals`** with columns `id`, `vote_id`, `question`, `body`, `created_at`, and `created_by`.
