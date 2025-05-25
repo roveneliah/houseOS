@@ -9,6 +9,7 @@ import { toggle } from "@/redux/features/windows/windowsSlice";
 export function DesktopIconsBasic() {
   const dispatch = useAppDispatch();
   const toggleSearch = () => dispatch(toggle({ windowName: "search" }));
+  const { launchPolls } = useAppLauncher();
   return (
     <div className="absolute bottom-12 w-full flex-row justify-between px-16 sm:left-10 sm:top-24 sm:flex sm:w-fit sm:flex-col  sm:justify-start sm:space-x-0 sm:space-y-8 sm:px-0">
       <a target="_blank" href="https://www.krausehouse.club/media/">
@@ -78,6 +79,12 @@ export function DesktopIconsBasic() {
           <p className="font-mono">Voting</p>
         </div>
       </a>
+      <button onClick={launchPolls}>
+        <div className="flex flex-col items-center space-y-1">
+          <Image src="/desktop-icons/Files.png" width={40} height={50} alt="Polls" />
+          <p className="font-mono">Polls</p>
+        </div>
+      </button>
     </div>
   );
 }
